@@ -14,6 +14,8 @@ Installation
 License
 =======
 
+pergola is released under the GNU General Public License 3.0. A copy
+of this license is in the LICENSE file.
 
 """
 
