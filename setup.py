@@ -3,6 +3,7 @@ from distutils.core import setup
 setup(name='pergola',
       version='0.1',
       description='A library to visualize behavioral data in a genome browser',
+      long_description= open('README.md').read(),
       url='http://github.com/cbcrg/pergola',
       author='Jose Espinosa-Carrasco',
       author_email='espinosacarrascoj@gmail.com',
