@@ -8,6 +8,11 @@ class IntData:
     .. attribute:: delimiter
        Character use to separate values of the same record in file (default "\t").
     
+    .. attribute:: header
+       Indicates the presence of a header.
+       * `False` if there is no header. Fields should the be provided using fields param
+       * `True` if the file have a header line with names. This names should match names in ontology_dict (default).
+    
     list with the behavioral fields corresponding each column in the original file
     
     :return: IntData object
@@ -17,6 +22,7 @@ class IntData:
     def __init__(self, path, ontology_dict, **kwargs):
         self.path = check_path(path)
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', None))
+        self.header = kwargs.get('header',True)
         
     def _check_delimiter (self, path, delimiter):
         """ 
