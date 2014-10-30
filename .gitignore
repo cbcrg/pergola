@@ -1,2 +1,9 @@
 *~
 /build/*
+*.pyc
+*.idea
+/doc/_build/*
+/doc/_static/*
+/doc/_templates/*
+.project
+.pydevproject
