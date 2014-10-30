@@ -26,6 +26,7 @@ class IntData:
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', None))
         self.header = kwargs.get('header',True)
         self.fieldsB = self._set_fields_b(kwargs.get('fields'))
+        self.fieldsG = self._set_fields_g(ontology_dict) 
         
     def _check_delimiter (self, path, delimiter):
         """ 
@@ -33,7 +34,9 @@ class IntData:
          
         :param path: :py:func:`str` name of path to a behavioral file in the form of a csv file
         :param delimiter: :py:func:`str` delimiter used in the file ("tab", ";", "space") 
-         
+        
+        return delimiter
+        
         """
                         
         self.inFile  = open(path, "rb")
@@ -64,7 +67,7 @@ class IntData:
         
         :param None fields: :py:func:`list` with the behavioral fields corresponding each column in the file
         
-        :return: a list with the behavioral fields
+        :return: list with the behavioral fields
             
         """ 
         self.inFile  = open(self.path, "rb")
@@ -112,3 +115,21 @@ class IntData:
         self.inFile.close()
         
         return fieldsB
+    
+    def _set_fields_g (self, ontology_dict):
+        """
+        Extracts the correspondence of fields in genomic grammar of the behavioral file.
+        
+        :param ontology_dict: relationship between genomic and behavioral data (:py:class:`dict`)
+        
+        :return: list with the corresponding genomics names of the fields inside behavioral (input) data
+         
+        """
+            
+        if all(field_b in ontology_dict for field_b in self.fieldsB):
+            name_fields_g = [ontology_dict [k] for k in self.fieldsB]
+        else:    
+            raise ValueError("Fields param \"%s\" contains a field not present in config_file \"%s\"" 
+                             % ("\",\"".join(self.fieldsB), "\",\"".join(ontology_dict.keys())))
+
+        return name_fields_g
