@@ -2,6 +2,7 @@
 30 Oct 2014
 
 """
+from re import match
 
 class ConfigInfo():
     """
@@ -69,3 +70,15 @@ class ConfigInfo():
                 self.write(value, indent+1)
             else:
                 print '\t' * (indent+1) + str(value)
+
+def check_path(path):
+    """ 
+    Check whether the input file exists and is accessible and if OK returns path
+    :param path: path to the intervals file
+    """
+    assert isinstance(path, basestring), "Expected string or unicode, found %s." % type(path)
+    try:
+        open(path, "r")
+    except IOError:
+        raise IOError('File does not exist: %s' % path)
+    return path      

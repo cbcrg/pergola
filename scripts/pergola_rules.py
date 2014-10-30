@@ -6,8 +6,8 @@
 Script to run pergola from the command line
 """
 
-from re       import match
 from pergola  import structures
+from pergola  import input
 from argparse import ArgumentParser, ArgumentTypeError
 import os
 
@@ -15,12 +15,21 @@ import os
 def main():
     parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data')
     parser.add_argument('-i','--input', help='Input file path', required=True, metavar="PATH")
-
+    parser.add_argument('-c','--config_file',help='''Configuration file with the ontology between fields in behavioral file
+                        'and genome browser grammar''', 
+                        required=False, metavar="ONTOLOGY_FILE")
+    
+    
     args = parser.parse_args()
     
     print("Input file: %s" % args.input )
+    print("Configuration file: %s" % args.config_file)
     
-def parseNumRange(string):
+    ## CONFIGURATION FILE
+    configFilePath = args.config_file
+    configFileDict = input.ConfigInfo(configFilePath)
+
+def parse_num_range(string):
     m = re.match(r'(\d+)(?:-(\d+))?$', string)
 
     if not m:
