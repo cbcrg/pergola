@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from distutils.core import setup
 
 setup(name='pergola',
@@ -9,4 +11,5 @@ setup(name='pergola',
       author_email='espinosacarrascoj@gmail.com',
       license='GNU General Public License 3.0',
       packages=['pergola'],
+      scripts = ['scripts/pergola_rules.py'],
       zip_safe=False)
