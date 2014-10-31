@@ -31,6 +31,7 @@ class IntData:
         self.fieldsB = self._set_fields_b(kwargs.get('fields'))
         self.fieldsG = self._set_fields_g(ontology_dict)
         self.data, self.min, self.max = self._new_read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
+        self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
         
     def _check_delimiter (self, path, delimiter):
         """ 
@@ -147,10 +148,10 @@ class IntData:
             chromEnd
         :param False intervals: if True pergola creates intervals from the field set
             as chromStart, 
-            
-        TODO add example of input file structure and the output of the function
         
         return: list with intervals contained in file, minimum and maximum values inside the file 
+        
+        TODO add example of input file structure and the output of the function
         
         """
         
@@ -256,3 +257,46 @@ class IntData:
         self.inFile.close()
 #         dataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
         return (list_data, p_min, p_max)
+    
+    def get_field_items(self, data, field="dataTypes", default=None): 
+        """
+        Reads the unique values inside a field and returns them as a set
+        If default is set and field does not exist in the data then the field is
+        added to the the data and set to default value
+        
+        :param data: :py:func:`list` with the intervals read from data 
+        :param field: :py:func:`str` field from data from which to inferred set of 
+            unique values
+        :param None default: if field is not present in data is created and set to 
+            default
+            
+        return: set with unique values inside field
+        
+        """
+
+        set_fields = set()
+        
+        if field in self.fieldsG:
+            i =  self.fieldsG.index(field)
+            
+            idx_field = self.fieldsG.index(field)
+            field = [field]    
+            
+            for row in self.data:
+                set_fields.add(row[idx_field])    
+        elif default:
+            new_data = list()
+            new_field = (default,)
+            
+            set_fields.add(default)
+            
+            for row in self.data:
+                row = row + new_field
+                new_data.append(row)    
+            
+            self.data = new_data
+            self.fieldsG.append(str(field))
+        else:
+            raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
+        
+        return set_fields
