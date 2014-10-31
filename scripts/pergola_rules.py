@@ -33,7 +33,8 @@ def main():
     #Reading data
     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence)
     structures.write_chr (intData)
-    print intData.read()
+#     intData = intData.read(relative_coord=True)
+    print intData.read(relative_coord=True)
     
 def parse_num_range(string):
     m = re.match(r'(\d+)(?:-(\d+))?$', string)

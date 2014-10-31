@@ -337,15 +337,16 @@ class IntData:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
            
         idx_fields2rel = [10000000000000]
-        print >>stderr, "Relative coordinates set true", relative_coord 
+        print >>stderr, "Relative coordinates set to:", relative_coord 
            
         if relative_coord:             
-            print >>stderr, "Relative coordinates is true"
             
-            if fields2rel is None and intervals:
+            if fields2rel is None:
                 _f2rel = ["chromStart","chromEnd"] 
-            elif fields2rel is None and not intervals:
-                _f2rel = ["chromStart"]    
+#             if fields2rel is None and intervals: #TODO
+#                 _f2rel = ["chromStart","chromEnd"] 
+#             elif fields2rel is None and not intervals:
+#                 _f2rel = ["chromStart"]    
             else:
                 if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
                 _f2rel = [f for f in fields2rel if f in self.fieldsG]
@@ -355,12 +356,40 @@ class IntData:
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
             
-            self.data = self.time2rel_time(idx_fields2rel)
+            print idx_fields2rel
+            self.data = self._time2rel_time(idx_fields2rel)
                 
         idx_fields2int = [10000000000000]
         
         return self.data
 #         return dataIter(self.data)
+
+    def _time2rel_time(self, i_fields):
+        """
+        Calculates relative values of selected data columns 
+        
+        :param i_fields: :py:func:`list` with data columns to calculate relative values
+        
+        :return: list of tuples (like self.data)
+        
+        TODO check whether field for min and max is the same as the one selected by i_fields otherwise
+        give either exception of warning
+        """
+        data_rel = list()
+    
+        for row in self.data:
+            temp = []
+            for i in range(len(row)):
+                
+                if i in i_fields:
+                    temp.append(row[i]- self.min)
+                else:
+                    temp.append(row[i])
+    
+            data_rel.append((tuple(temp)))   
+            
+        return (data_rel)
+        
 
 def write_chr(self, mode="w", path_w=None):
     """
