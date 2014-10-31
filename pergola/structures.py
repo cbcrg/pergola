@@ -30,7 +30,7 @@ class IntData:
         self.header = kwargs.get('header',True)
         self.fieldsB = self._set_fields_b(kwargs.get('fields'))
         self.fieldsG = self._set_fields_g(ontology_dict)
-        self.data, self.min, self.max = self._new_read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
+        self.data, self.min, self.max = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
         
     def _check_delimiter (self, path, delimiter):
@@ -140,7 +140,7 @@ class IntData:
 
         return name_fields_g
     
-    def _new_read(self, multiply_t=1, intervals=False):
+    def _read(self, multiply_t=1, intervals=False):
         """
         Reads the information inside the input file and returns minimun and maximun.
         
