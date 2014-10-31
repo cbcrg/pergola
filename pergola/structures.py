@@ -1,3 +1,6 @@
+from input import check_path
+from csv   import reader
+
 class IntData: 
     """
     Generic class for input data
@@ -23,10 +26,11 @@ class IntData:
     """
     def __init__(self, path, ontology_dict, **kwargs):
         self.path = check_path(path)
-        self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', None))
+        self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = kwargs.get('header',True)
         self.fieldsB = self._set_fields_b(kwargs.get('fields'))
-        self.fieldsG = self._set_fields_g(ontology_dict) 
+        self.fieldsG = self._set_fields_g(ontology_dict)
+        self.data, self.min, self.max = self._new_read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         
     def _check_delimiter (self, path, delimiter):
         """ 
@@ -41,7 +45,8 @@ class IntData:
                         
         self.inFile  = open(path, "rb")
         
-        for row in self.inFile:            
+        for row in self.inFile:
+                    
             if row.count(delimiter) >= 1: break
             else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(self.delimiter))
             
@@ -71,7 +76,7 @@ class IntData:
             
         """ 
         self.inFile  = open(self.path, "rb")
-        self.reader = csv.reader(self.inFile, delimiter=self.delimiter)       
+        self.reader =  reader(self.inFile, delimiter=self.delimiter)       
         
         if self.header:            
             header = self.reader.next()
@@ -133,3 +138,121 @@ class IntData:
                              % ("\",\"".join(self.fieldsB), "\",\"".join(ontology_dict.keys())))
 
         return name_fields_g
+    
+    def _new_read(self, multiply_t=1, intervals=False):
+        """
+        Reads the information inside the input file and returns minimun and maximun.
+        
+        :param 1 multiply: multiplies the values of the field set as chromStart and 
+            chromEnd
+        :param False intervals: if True pergola creates intervals from the field set
+            as chromStart, 
+            
+        TODO add example of input file structure and the output of the function
+        
+        return: list with intervals contained in file, minimum and maximum values inside the file 
+        
+        """
+        
+        list_data = list()
+        self.inFile  = open(self.path, "rb")
+        self.reader = reader(self.inFile, delimiter='\t')
+        self.reader.next()
+                        
+        _int_points = ["chromStart", "chromEnd"]
+        idx_fields2int = [10000000000000]
+        i_new_field = [10000000000000]                                    
+        
+        if intervals:             
+            print >>sys.stderr, "Intervals inferred from timepoints"
+            _time_points = ["chromStart"]
+            f_int_end = "chromEnd"
+        
+            if f_int_end in self.fieldsG:
+                raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
+                
+            try:
+                idx_fields2int = [self.fieldsG.index(f) for f in _time_points]              
+            except ValueError:
+                raise ValueError("Parameter intervals=True needs that field '%s' is in file is not missing %s." 
+                                 % (f, self.path))
+            
+            self.fieldsG.append(f_int_end)   
+            i_new_field = [len(self.fieldsG) - 1]
+        
+        try:            
+            f=""
+            name_fields2mult = [f for f in _int_points if f in self.fieldsG] 
+            idx_fields2mult = [self.fieldsG.index(f) for f in name_fields2mult]
+                 
+        except ValueError:
+            raise ValueError("Field '%s' not in file %s." % (f, self.path))
+        
+        p_min = None
+        p_max = None
+        
+        _start_f = ["chromStart"]
+        try:
+            i_min = [self.fieldsG.index(f) for f in _start_f]              
+        except ValueError:
+            raise ValueError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
+            
+        _end_f = ["chromEnd"]
+        try:
+            i_max = [self.fieldsG.index(f) for f in _end_f]              
+        except ValueError:
+            raise ValueError("Field '%s' for max interval calculation time not in file %s." % (f, self.path))
+              
+        v = 0
+        p_v = 0
+        first = True
+        p_temp = []
+        
+        for interv in self.reader:            
+            temp = []            
+            
+            for i in range(len(self.fieldsG)): 
+                if i in idx_fields2mult and i in idx_fields2int:
+                    v = int(float(interv[i]) * multiply_t)
+                    temp.append(v)
+                    p_v = v - 1
+                    if intervals: last_start = v
+                elif i in i_new_field and i in idx_fields2mult:
+                    if first:
+                        pass
+                    else:
+                        p_temp.append(p_v)                        
+                elif i in idx_fields2mult and i not in idx_fields2int:
+                    v = int(float(interv[i]) * multiply_t)
+                    temp.append(v)
+                else:
+                    v = interv[i]              
+                    temp.append(v)
+                
+                if i in i_min:
+                    if p_min is None: p_min = v
+                    if p_min > v: p_min = v
+                
+                if i in i_max:
+                    if i_max == i_new_field:
+                        if first: pass
+                        if p_max is None: p_max = p_v
+                        if p_max < p_v: p_max = p_v
+                    else:
+                        if p_max is None: p_max = v
+                        if p_max < v: p_max = v
+            if first:
+                first = False 
+                p_temp = temp
+            else:               
+                list_data.append((tuple(p_temp))) 
+                p_temp = temp
+            
+        # last line of the file when intervals are generated
+        if intervals: temp.append(last_start + 1)
+
+        list_data.append((tuple(temp)))             
+
+        self.inFile.close()
+#         dataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
+        return (list_data, p_min, p_max)
