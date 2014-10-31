@@ -14,6 +14,19 @@ _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),
               'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
               'txt': ('DataIter', '', '.txt')}
 
+_black_gradient = ["226,226,226", "198,198,198", "170,170,170", "141,141,141", "113,113,113", "85,85,85", "56,56,56", "28,28,28", "0,0,0"]
+_blue_gradient = ["229,229,254", "203,203,254", "178,178,254", "152,152,254", "127,127,254", "102,102,254", "76,76,173", "51,51,162", "0,0,128"]
+_red_gradient = ["254,172,182", "254,153,162", "254,134,142", "254,115,121", "254,96,101", "254,77,81", "254,57,61", "254,38,40", "254,19,20"]
+_green_gradient = ["203,254,203", "178,254,178", "152,254,152", "127,254,127", "102,254,102", "76,254,76", "51,254,51", "0,254,0", "25,115,25"]
+
+_dict_colors = {
+                'black' : _black_gradient,
+                'blue' : _blue_gradient,
+                'red' : _red_gradient,
+                'green' : _green_gradient}
+
+_intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000]
+
 class IntData: 
     """
     Generic class for input data
@@ -522,7 +535,6 @@ class IntData:
         _dict_col_grad = assign_color (self.dataTypes)
             
         for row in track:
-            print row
             temp_list = []
             temp_list.append("chr1")
             temp_list.append(row[i_chr_start])
@@ -581,7 +593,7 @@ class DataIter(object):
     def next(self):
         return self.data.next()
 
-    def write(self, mode="w"):#modify maybe I have to change the method name now is the same as the os.write()???
+    def write(self, mode="w"):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
         
         if not(isinstance(self, DataIter)):
             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
@@ -590,12 +602,6 @@ class DataIter(object):
             file_ext = _dict_file.get(self.format)[2]      
         except KeyError:
             raise ValueError("File types not supported \'%s\'"%(self.format))
-                                                           
-#         if self.track is "":  # modify
-#             self.track = "1"
-        
-#         if self.dataType is "":
-#             self.dataType = "a"
                 
         name_file = "tr_" + self.track + "_dt_" + self.dataType + file_ext
         print >>sys.stderr, "File %s generated" % name_file       
@@ -631,4 +637,43 @@ class Bed(DataIter):
         kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']        
         
         DataIter.__init__(self,data,**kwargs)
+        
+def assign_color (set_dataTypes, color_restrictions=None):
+    """
+    Assign colors to fields, it is optional to set given color to given fields, for example set water to blue
+    different data types get a different color in a circular manner
+    
+    :param set_dataTypes: (list) each of the fields that should be linked to colors
+    :param color_restrictions: (dict) fields with colors set by the user
+    """
+    d_dataType_color = {}
+    colors_not_used = []
+    
+    if color_restrictions is not None:
+        rest_colors = (list (color_restrictions.values()))
+
+        #If there are restricted colors they should be on the default colors list
+        if not all(colors in _dict_colors for colors in rest_colors):
+            raise ValueError("Not all restricted colors are available") 
+        
+        #If there are fields link to related colors they also must be in the data type list 
+        if not all(key in set_dataTypes for key in color_restrictions):                      
+            raise ValueError("Some values of data types provided as color restriction are not present in the file")
+            
+        for dataType in color_restrictions:
+            d_dataType_color[dataType] = _dict_colors[color_restrictions[dataType]] 
+    
+        colors_not_used = _dict_colors.keys()
+        colors_not_used.remove (color_restrictions[dataType])
+
+    for dataType in set_dataTypes:        
+        if not colors_not_used:
+            colors_not_used = _dict_colors.keys() 
+        
+        if dataType in d_dataType_color:
+            print ("Data type color gradient already set '%s'."%(dataType))
+        else:
+            d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
+            
+    return d_dataType_color
         
