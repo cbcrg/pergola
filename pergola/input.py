@@ -15,6 +15,8 @@ class ConfigInfo():
     .. attribute::  correspondence 
        Dictionary with keys fields in behavioral file and values correspondence in genomic grammar
     
+    :return: ConfigInfo object
+    
     """
     
     def __init__(self, path, **kwargs):
@@ -59,8 +61,6 @@ class ConfigInfo():
         Writes correspondence between the genomic and the behavioral data 
          
         :param 0 indent: :py:func:`int` set indent to be used when writing 
-        
-        return delimiter
         
         """
         for key, value in self.correspondence.iteritems():

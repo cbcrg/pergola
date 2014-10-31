@@ -40,7 +40,7 @@ class IntData:
         :param path: :py:func:`str` name of path to a behavioral file in the form of a csv file
         :param delimiter: :py:func:`str` delimiter used in the file ("tab", ";", "space") 
         
-        return delimiter
+        :return: delimiter
         
         """
                         
@@ -149,7 +149,7 @@ class IntData:
         :param False intervals: if True pergola creates intervals from the field set
             as chromStart, 
         
-        return: list with intervals contained in file, minimum and maximum values inside the file 
+        :return: list with intervals contained in file, minimum and maximum values inside the file 
         
         TODO add example of input file structure and the output of the function
         
@@ -270,7 +270,7 @@ class IntData:
         :param None default: if field is not present in data is created and set to 
             default
             
-        return: set with unique values inside field
+        :return: set with unique values inside field
         
         """
 
