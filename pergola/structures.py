@@ -4,6 +4,9 @@ from os import getcwd
 from os.path import join
 from sys import stderr
 
+_genome_file_ext = ".fa"
+_generic_nt = "N"
+
 class IntData: 
     """
     Generic class for input data
@@ -309,18 +312,17 @@ def write_chr(self, mode="w", path_w=None):
     Creates a fasta file of the length of the range of value inside the IntData object
     that will be use for the mapping the data into it
     
+    :param mode: :py:func:`str` mode to use by default write 
+    
     """
     chrom = 'chr1'
     if not path_w: 
-        pwd = getcwd ()
+        pwd = getcwd()
         print >>stderr, """Chromosome fasta like file will be dump into %s be set to %s 
                              as it has not been set using path_w""", pwd
-    
-    _pwd = pwd
-    _genomeFileExt = ".fa"  
-    genericNt = "N"    
-    genomeFile = open(join(_pwd, chrom + _genomeFileExt), mode)        
+
+    genomeFile = open(join(pwd, chrom + _genome_file_ext), mode)        
     genomeFile.write(">" + chrom + "\n")
-    genomeFile.write (genericNt * (self.max - self.min))
+    genomeFile.write (_generic_nt * (self.max - self.min))
     genomeFile.close()
-    print('Genome fasta file created: %s' % (chrom + _genomeFileExt))
+    print >>stderr, 'Genome fasta file created: %s' % (pwd + chrom + _genome_file_ext)
