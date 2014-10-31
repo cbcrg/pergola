@@ -397,12 +397,15 @@ class IntData:
             
         return (data_rel)
 
-    def convert(self, mode = 'bed', **kwargs):
+    def convert(self, mode='bed', **kwargs):
         """
-        :param i_fields: :py:func:`list`
-        :param bed mode: :py:class: `bed` object returned, other options are  :py:class: `bedGraph`
-         
-        :return: object/s of the class set by mode 
+        Calls function to convert data (as a list of tuples) into a dictionary of 
+        the one or several object of class set by mode
+        
+        :param bed mode: class of the output objects returned set to  `bed` by
+            default
+                
+        :return: dictionary containing object/s of the class set by mode 
         
         """
         kwargs['relative_coord'] = kwargs.get("relative_coord",False)
@@ -412,35 +415,41 @@ class IntData:
         if mode not in _dict_file: 
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
         
-        dict_tracks = (self._convert2single_track(self.read(**kwargs), mode, **kwargs))
+        dict_tracks = (self._convert2single_track(self.read(**kwargs), mode, **kwargs)) #TODO
+#         dict_tracks = (self._convert2single_track(self.data, mode, **kwargs)) #TODO
         
         return (dict_tracks)
         
-    def _convert2single_track (self, data_tuple,  mode=None, **kwargs):
+    def _convert2single_track (self, data_tuples,  mode=None, **kwargs):
         """
-        Transform data into a bed file if all the necessary fields present
+        Split data (as a list of tuples) into one or several objects depending on options 
+        selected. Each object will correspond to a track in the genome browser
+        
+        :param data_tuples: list of tuples containing data
+        :param None mode: class of each single track that will be hold in dictionary
+            
+        :return: dictionary of tracks
+        
         """   
         dict_split = {}
         
-        ###################
         ### Data is separated by track and dataTypes
         idx_fields2split = [self.fieldsG.index("track"), self.fieldsG.index("dataTypes")]
-        data_tuple = sorted(data_tuple,key=itemgetter(*idx_fields2split))
+        data_tuples = sorted(data_tuples, key=itemgetter(*idx_fields2split))
         
-        for key,group in groupby(data_tuple, itemgetter(*idx_fields2split)):
+        for key,group in groupby(data_tuples, itemgetter(*idx_fields2split)):
             if not dict_split.has_key(key[0]):
                 dict_split [key[0]] = {}
             dict_split [key[0]][key[1]] = tuple(group)
         
-        ###################
-        ### Filtering tracks
+        ### Tracks not set in tracks option are filtered out
         sel_tracks = []
         if not kwargs.get('tracks'):
             pass
         else:
             sel_tracks = map(str, kwargs.get("tracks",[]))
                 
-        #When any tracks are selected we consider that any track should be removed
+        ### When any tracks are selected we consider that no track should be removed
         if sel_tracks != []:
             tracks2rm = self.tracks.difference(sel_tracks)            
             dict_split = self.remove (dict_split, tracks2rm)
@@ -448,8 +457,7 @@ class IntData:
         
         d_track_merge = {} 
         
-        ###################
-        ###tracks_merge                 
+        ### If tracks_merge is set we combine tracks selected                 
         if not kwargs.get('tracks_merge'):
             d_track_merge = dict_split
         else:
@@ -462,8 +470,7 @@ class IntData:
         
         d_dataTypes_merge = {}
         
-        ##################
-        # Joining the dataTypes or natures
+        ### If set we join the dataTypes or natures
         if not kwargs.get('dataTypes_actions') or kwargs.get('dataTypes_actions') == 'one_per_channel':
             d_dataTypes_merge = d_track_merge
         elif kwargs.get('dataTypes_actions') == 'all':
@@ -481,16 +488,19 @@ class IntData:
                                    
         window = kwargs.get("window", 300)
         
-        #Output    
+        ### Assigning data to output dictionary    
         for k, d in d_dataTypes_merge.items():
             for k_2, d_2 in d.items():
-#                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataType=k_2, color=_dict_col_grad[k_2])
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataType=k_2)
                        
         return (track_dict)
     
     def track_convert2bed (self, track, in_call=False, restrictedColors=None, **kwargs):
-        #fields pass to read should be the ones of bed file
+        """
+        Converts a single track that 
+        """
+        
+        #This fields are mandatory in objects of class Bed
         _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
         
         #Check whether these fields are in the original otherwise raise exception
@@ -512,6 +522,7 @@ class IntData:
         _dict_col_grad = assign_color (self.dataTypes)
             
         for row in track:
+            print row
             temp_list = []
             temp_list.append("chr1")
             temp_list.append(row[i_chr_start])
