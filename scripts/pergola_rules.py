@@ -11,7 +11,6 @@ from pergola  import input
 from argparse import ArgumentParser, ArgumentTypeError
 import os
 
-
 def main():
     parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data')
     parser.add_argument('-i','--input', help='Input file path', required=True, metavar="PATH")
@@ -25,9 +24,14 @@ def main():
     print("Input file: %s" % args.input )
     print("Configuration file: %s" % args.config_file)
     
-    ## CONFIGURATION FILE
-    configFilePath = args.config_file
-    configFileDict = input.ConfigInfo(configFilePath)
+    path = args.input
+    
+    #Configuration file
+    config_file_path = args.config_file
+    config_file_dict = input.ConfigInfo(config_file_path)
+    
+    #Reading data
+    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence)
 
 def parse_num_range(string):
     m = re.match(r'(\d+)(?:-(\d+))?$', string)

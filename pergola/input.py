@@ -75,6 +75,7 @@ def check_path(path):
     """ 
     Check whether the input file exists and is accessible and if OK returns path
     :param path: path to the intervals file
+    
     """
     assert isinstance(path, basestring), "Expected string or unicode, found %s." % type(path)
     try:

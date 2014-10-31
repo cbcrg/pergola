@@ -25,5 +25,6 @@ from pergola import printTest
 from structures import IntData
 from input import ConfigInfo
 
+
 # def readme():
 #     print "A library to visualize behavioral data in a genome browser"
