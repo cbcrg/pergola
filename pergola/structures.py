@@ -3,9 +3,16 @@ from csv   import reader
 from os import getcwd
 from os.path import join
 from sys import stderr
+from operator import itemgetter
+from itertools import groupby
 
 _genome_file_ext = ".fa"
 _generic_nt = "N"
+
+#Contains class and file extension
+_dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
+              'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
+              'txt': ('DataIter', '', '.txt')}
 
 class IntData: 
     """
@@ -261,7 +268,7 @@ class IntData:
         list_data.append((tuple(temp)))             
 
         self.inFile.close()
-#         dataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
+#         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
         return (list_data, p_min, p_max)
     
     def get_field_items(self, data, field="dataTypes", default=None): 
@@ -362,7 +369,7 @@ class IntData:
         idx_fields2int = [10000000000000]
         
         return self.data
-#         return dataIter(self.data)
+#         return DataIter(self.data)
 
     def _time2rel_time(self, i_fields):
         """
@@ -389,8 +396,140 @@ class IntData:
             data_rel.append((tuple(temp)))   
             
         return (data_rel)
-        
 
+    def convert(self, mode = 'bed', **kwargs):
+        """
+        :param i_fields: :py:func:`list`
+        :param bed mode: :py:class: `bed` object returned, other options are  :py:class: `bedGraph`
+         
+        :return: object/s of the class set by mode 
+        
+        """
+        kwargs['relative_coord'] = kwargs.get("relative_coord",False)
+        
+        print >> stderr, self.fieldsG
+            
+        if mode not in _dict_file: 
+            raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
+        
+        dict_tracks = (self._convert2single_track(self.read(**kwargs), mode, **kwargs))
+        
+        return (dict_tracks)
+        
+    def _convert2single_track (self, data_tuple,  mode=None, **kwargs):
+        """
+        Transform data into a bed file if all the necessary fields present
+        """   
+        dict_split = {}
+        
+        ###################
+        ### Data is separated by track and dataTypes
+        idx_fields2split = [self.fieldsG.index("track"), self.fieldsG.index("dataTypes")]
+        data_tuple = sorted(data_tuple,key=itemgetter(*idx_fields2split))
+        
+        for key,group in groupby(data_tuple, itemgetter(*idx_fields2split)):
+            if not dict_split.has_key(key[0]):
+                dict_split [key[0]] = {}
+            dict_split [key[0]][key[1]] = tuple(group)
+        
+        ###################
+        ### Filtering tracks
+        sel_tracks = []
+        if not kwargs.get('tracks'):
+            pass
+        else:
+            sel_tracks = map(str, kwargs.get("tracks",[]))
+                
+        #When any tracks are selected we consider that any track should be removed
+        if sel_tracks != []:
+            tracks2rm = self.tracks.difference(sel_tracks)            
+            dict_split = self.remove (dict_split, tracks2rm)
+            print >> sys.stderr, "Removed tracks are:", ' '.join(tracks2rm)
+        
+        d_track_merge = {} 
+        
+        ###################
+        ###tracks_merge                 
+        if not kwargs.get('tracks_merge'):
+            d_track_merge = dict_split
+        else:
+            tracks_merge = kwargs.get('tracks_merge',self.tracks)
+            if not all(tracks in self.tracks for tracks in tracks_merge):
+                raise ValueError ("Tracks to merge: %s, are not in the track list: " % ",".join("'{0}'".format(n) for n in tracks_merge), ",".join("'{0}'".format(n) for n in self.tracks))
+            print >>sys.stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
+            
+            d_track_merge = self.join_by_track(dict_split, tracks_merge)       
+        
+        d_dataTypes_merge = {}
+        
+        ##################
+        # Joining the dataTypes or natures
+        if not kwargs.get('dataTypes_actions') or kwargs.get('dataTypes_actions') == 'one_per_channel':
+            d_dataTypes_merge = d_track_merge
+        elif kwargs.get('dataTypes_actions') == 'all':
+            d_dataTypes_merge = self.join_by_dataType(d_track_merge, mode)
+    
+        track_dict = {}                        
+   
+        #######
+        # Generating track dict (output)
+        #validacion del diccionario para imprimir o lo que sea
+        #mirar si es un diccionario de diccionarios la primera validacion hay que desarrolarla 
+        for k, v in d_track_merge.items():
+            if isinstance(v,dict):
+                print "Is a dictionary"#del
+                                   
+        window = kwargs.get("window", 300)
+        
+        #Output    
+        for k, d in d_dataTypes_merge.items():
+            for k_2, d_2 in d.items():
+#                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataType=k_2, color=_dict_col_grad[k_2])
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataType=k_2)
+                       
+        return (track_dict)
+    
+    def track_convert2bed (self, track, in_call=False, restrictedColors=None, **kwargs):
+        #fields pass to read should be the ones of bed file
+        _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
+        
+        #Check whether these fields are in the original otherwise raise exception
+        try:
+            [self.fieldsG.index(f) for f in _bed_fields]
+        except ValueError:
+            raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
+
+        if (not in_call and len(self.tracks) != 1):
+            raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
+        
+        i_track = self.fieldsG.index("track")
+        i_chr_start = self.fieldsG.index("chromStart")
+        i_chr_end = self.fieldsG.index("chromEnd")
+        i_data_value = self.fieldsG.index("dataValue")
+        i_data_types = self.fieldsG.index("dataTypes")
+        
+        #Generate dictionary of field and color gradients
+        _dict_col_grad = assign_color (self.dataTypes)
+            
+        for row in track:
+            temp_list = []
+            temp_list.append("chr1")
+            temp_list.append(row[i_chr_start])
+            temp_list.append(row[i_chr_end])
+            temp_list.append(row[i_data_types]) 
+            temp_list.append(row[i_data_value])   
+            temp_list.append("+")
+            temp_list.append(row[i_chr_start])
+            temp_list.append(row[i_chr_end])
+            for v in _intervals:
+                if float(row[i_data_value]) <= v:
+                    j = _intervals.index(v)
+                    d_type = row [self.fieldsG.index("dataTypes")]
+                    color = _dict_col_grad[d_type][j]
+                    break
+            temp_list.append(color)          
+            
+            yield(tuple(temp_list))
 def write_chr(self, mode="w", path_w=None):
     """
     Creates a fasta file of the length of the range of value inside the IntData object
@@ -410,3 +549,75 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile.write (_generic_nt * (self.max - self.min))
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (pwd + chrom + _genome_file_ext)
+
+class DataIter(object):
+    def __init__(self, data, fields=None, **kwargs):
+        if isinstance(data,(tuple)):            
+            data = iter(data)
+        
+        if not fields:
+            raise ValueError("Must specify a 'fields' attribute for %s." % self.__str__())
+        
+        self.data = data
+        self.fields = fields       
+        self.format = kwargs.get("format",'txt')
+        self.track = kwargs.get('track', "")
+        self.dataType = kwargs.get('dataType', "")
+        
+    def __iter__(self):
+        return self.data
+
+    def next(self):
+        return self.data.next()
+
+    def write(self, mode="w"):#modify maybe I have to change the method name now is the same as the os.write()???
+        
+        if not(isinstance(self, DataIter)):
+            raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
+        
+        try:
+            file_ext = _dict_file.get(self.format)[2]      
+        except KeyError:
+            raise ValueError("File types not supported \'%s\'"%(self.format))
+                                                           
+#         if self.track is "":  # modify
+#             self.track = "1"
+        
+#         if self.dataType is "":
+#             self.dataType = "a"
+                
+        name_file = "tr_" + self.track + "_dt_" + self.dataType + file_ext
+        print >>sys.stderr, "File %s generated" % name_file       
+
+        track_file = open(os.path.join(_pwd, name_file), mode)
+                
+        #Annotation track to set the genome browser interface
+        annotation_track = ''
+        if self.format == 'bed':
+            annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataType + '\"' + " " + '\"description=' + self.track + " " + self.dataType + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
+        elif self.format == 'bedGraph':
+            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataType + '\"' + " " + '\"description=' + self.track + "_" + self.dataType + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
+        
+            track_file.write (annotation_track + "\n")
+           
+        for row in self.data: 
+            track_file.write('\t'.join(str(i) for i in row))
+            track_file.write("\n")      
+        track_file.close()
+          
+class Bed(DataIter):
+    """
+    dataInt class for bed file format data
+    
+    Fields used in this application are:
+        
+         ['chr','start','end','name','score','strand',
+          'thick_start','thick_end','item_rgb']
+          
+    """
+    def __init__(self, data, **kwargs):
+        kwargs['format'] = 'bed'
+        kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']        
+        
+        DataIter.__init__(self,data,**kwargs)
+        
