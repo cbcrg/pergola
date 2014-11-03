@@ -572,6 +572,7 @@ def write_chr(self, mode="w", path_w=None):
     
     """
     chrom = 'chr1'
+    
     if not path_w: 
         pwd = getcwd()
         print >>stderr, """Chromosome fasta like file will be dump into %s be set to %s 
@@ -603,8 +604,12 @@ class DataIter(object):
     def next(self):
         return self.data.next()
 
-    def write(self, mode="w"):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
+    def write(self, mode="w", path=None):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
         
+        if not path: 
+            pwd = getcwd()
+        print >> stderr, "No path selected, files dump into \"path=\": ", pwd 
+                             
         if not(isinstance(self, DataIter)):
             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
         
@@ -614,9 +619,9 @@ class DataIter(object):
             raise ValueError("File types not supported \'%s\'"%(self.format))
                 
         name_file = "tr_" + self.track + "_dt_" + self.dataType + file_ext
-        print >>sys.stderr, "File %s generated" % name_file       
+        print >> stderr, "File %s generated" % name_file       
 
-        track_file = open(os.path.join(_pwd, name_file), mode)
+        track_file = open(join(pwd, name_file), mode)
                 
         #Annotation track to set the genome browser interface
         annotation_track = ''

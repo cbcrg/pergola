@@ -35,9 +35,22 @@ def main():
     structures.write_chr (intData)
 #     intData = intData.read(relative_coord=True)
 #     print intData.read(relative_coord=True)
-    bed_str =  intData.convert()
+    bed_str =  intData.convert(relative_coord=True)
     
-    print bed_str
+#     print bed_str
+    for key in bed_str:
+        print "key.......: ",key
+        bedSingle = bed_str[key]
+        bedSingle.write()
+#         for i in bedSingle:
+#             print i 
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
 def parse_num_range(string):
     m = re.match(r'(\d+)(?:-(\d+))?$', string)
 
