@@ -582,7 +582,135 @@ class IntData:
             temp_list.append(color)          
             
             yield(tuple(temp_list))
+
+    def track_convert2bedGraph(self, track, in_call=False, window=300):
+        """
+        Converts a single data belonging to a single track in a list of tuples in
+            an object of class BedGraph. The data is grouped in time windows.
             
+            :param track: :py:func:`list` of tuples containing data of a single track
+            :param False in_call: If False the call to the function is from the user otherwise
+                is from inside :py:func: `convert2single_track()`
+            :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
+                 
+            :return: BedGraph object
+        """
+        
+        #This fields are mandatory in objects of class BedGraph
+        _bed_fields = ["track","chromStart","chromEnd","dataValue"] 
+        
+        #Check whether these fields are in the original otherwise raise exception
+        try:
+            idx_f = [self.fieldsG.index(f) for f in _bed_fields]                          
+        except ValueError:
+            raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
+        
+        if (not in_call and len(self.tracks)  != 1):            
+            raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bedGraph" % (self.path))
+        
+        i_track = self.fieldsG.index("track")
+        i_chr_start = self.fieldsG.index("chromStart")
+        i_chr_end = self.fieldsG.index("chromEnd")
+        i_data_value = self.fieldsG.index("dataValue")
+        ini_window = 0
+        delta_window = window      
+        end_window = delta_window
+        partial_value = 0 
+        cross_interv_dict = {}
+        
+        #When the tracks have been join it is necessary to order by chr_start
+        track = sorted(track, key=itemgetter(*[i_chr_start]))
+                              
+        for row in track:
+            temp_list = []
+            chr_start = row[i_chr_start]
+            chr_end = row[i_chr_end]
+            data_value = float(row[i_data_value])
+            self.fieldsG.index(f) 
+            
+            #Intervals happening after the current window
+            #if there is a value accumulated it has to be dumped otherwise 0
+            if chr_start > end_window:
+                while (end_window < chr_start):                                      
+                    partial_value = partial_value + cross_interv_dict.get(ini_window,0)
+                    temp_list.append("chr1")
+                    temp_list.append(ini_window)
+                    temp_list.append(end_window)
+                    temp_list.append(partial_value)
+                    partial_value = 0
+                    ini_window += delta_window + 1
+                    end_window += delta_window + 1                                 
+                    yield(tuple(temp_list))
+                    temp_list = []
+    
+                #Value must to be weighted between intervals
+                if chr_end > end_window:                
+                    value2weight = data_value
+                    end_w = end_window
+                    start_new = chr_start
+                    end_new = chr_end
+                    
+                    for start_w in range (ini_window, chr_end, delta_window):
+                        weighted_value = 0
+                        
+                        if (end_w == start_w):
+                            weighted_value = (end_w - start_new + 1) / (end_new - start_new)
+                        else:     
+                            weighted_value = (end_w - start_new) / (end_new - start_new)
+                            
+                        weighted_value *= value2weight
+                        cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)                      
+                        start_new = end_w
+                        value2weight = value2weight - weighted_value                        
+    
+                        if ((end_w + delta_window) >= chr_end):
+                            new_start_w = start_w + delta_window
+                            cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
+                            break
+                        
+                        end_w = end_w + delta_window
+                else:
+                    partial_value = partial_value + data_value
+                            
+            elif (chr_start <= end_window and chr_start >= ini_window):
+                if chr_end <= end_window:
+                    partial_value = partial_value + data_value                 
+                
+                else:
+                    value2weight = data_value
+                    end_w = end_window
+                    start_new = chr_start
+                    end_new = chr_end
+                    
+                    for start_w in range (ini_window, chr_end, delta_window):
+                        weighted_value = 0
+                        
+                        if (end_w == start_w):
+                            weighted_value = (end_w - start_new + 1) / (end_new - start_new)
+                        else:    
+                            weighted_value = (end_w - start_new) / (end_new - start_new)
+                            
+                        weighted_value *= value2weight
+                        cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)
+                        start_new = end_w
+                        value2weight = value2weight - weighted_value
+                        
+                        if ((end_w + delta_window) >= chr_end):
+                            new_start_w = start_w + delta_window
+                            cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
+                            break
+                        
+                        end_w = end_w + delta_window
+            else:
+                print >>sys.stderr,("FATAL ERROR: Something went wrong")
+        
+        #Last value just printed out
+        temp_list.append("chr1")
+        temp_list.append(ini_window)
+        temp_list.append(end_window)
+        temp_list.append(data_value)
+        yield(tuple(temp_list))
+                    
 def write_chr(self, mode="w", path_w=None):
     """
     Creates a fasta file of the length of the range of value inside the IntData object
@@ -668,14 +796,36 @@ class Bed(DataIter):
           'thick_start','thick_end','item_rgb']
     
     :return: Bed object
+     
         
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
         kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']        
-        
+
         DataIter.__init__(self,data,**kwargs)
+
+class BedGraph(DataIter):
+    """
+    dataInt class for bedGraph file format data
+    
+    .. attribute:: color
+       Gradient of colors that assign by value to display in the genome browser
+       
+    Fields used in this application are:
         
+         ['chr','start','end', 'score']
+    
+    :return: BedGraph object  
+
+          
+    """
+    def __init__(self,data,**kwargs):
+        kwargs['format'] = 'bedGraph'
+        kwargs['fields'] = ['chr','start','end','score']        
+        self.color = kwargs.get('color',_blue_gradient)
+        DataIter.__init__(self,data,**kwargs)
+                
 def assign_color (set_dataTypes, color_restrictions=None):
     """
     Assign colors to fields, it is optional to set given color to given fields, for example set water to blue
