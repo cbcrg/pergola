@@ -528,17 +528,19 @@ class IntData:
                        
         return (track_dict)
     
-    #TODO I can make this function more general as remove from dictionary it can be use outside
+    
     def remove (self, dict_t, tracks2remove):
         """
-        Removes from a dictionary of tracks that is the imput of the function those that are 
+        Removes selected tracks from a dictionary of tracks that is the input of the function those that are 
         set by tracks2remove
         
         :param dict_t: py:func:`dict` dictionary containing one or more tracks, keys represent each 
             of these tracks
         :param tracks2remove: :py:func:`list` of tracks to remove from the dict_t
              
-        :return: dict_t dictionary that contains tracks not removed from the dictionary
+        :return: dict_t dictionary, that contains the remaining tracks
+        
+        #TODO I can make this function more general as remove from dictionary it can be use outside
         
         """
         for key in tracks2remove:
@@ -550,8 +552,47 @@ class IntData:
                 self.tracks.remove(key)
                 
         return (dict_t)
+    
+    def join_by_track(self, dict_t, tracks2join):  
+        """
+        Join the selected tracks from a dictionary of tracks that is the input 
+        of the function
+        
+        :param dict_t: py:func:`dict` dictionary containing one or more tracks, 
+            keys represent each of these tracks
+        :param tracks2join: :py:func:`list` of tracks to join in a single track
+             
+        :return: d_track_merge dictionary that contains the joined tracks
+        
+        TODO What if I give to the function only some tracks to join, what happen
+            to the remaining tracks
+         
+        """
+        
+        d_track_merge = {} 
+        new_tracks = set()
+        
+        for key, nest_dict in dict_t.items():
+            
+            if key not in tracks2join: 
+                print "Track not use because was not set when join_by_track is called: %s" % key
+                continue
+            
+            if not d_track_merge.has_key('_'.join(tracks2join)):
+                d_track_merge['_'.join(tracks2join)] = {}
+                new_tracks.add('_'.join(tracks2join))
+            
+            for key_2, data in nest_dict.items():                            
+                if not d_track_merge['_'.join(tracks2join)].has_key(key_2):
+                    d_track_merge['_'.join(tracks2join)] [key_2]= data
+                else:  
+                    d_track_merge['_'.join(tracks2join)] [key_2] = d_track_merge['_'.join(tracks2join)] [key_2] + data
+
+        self.tracks = new_tracks
+                   
+        return (d_track_merge)
      
-    def track_convert2bed (self, track, in_call=False, restricted_colors=None, **kwargs):
+    def track_convert2bed(self, track, in_call=False, restricted_colors=None, **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
         an object of class Bed
