@@ -496,7 +496,9 @@ class IntData:
         else:
             tracks_merge = kwargs.get('tracks_merge',self.tracks)
             if not all(tracks in self.tracks for tracks in tracks_merge):
-                raise ValueError ("Tracks to merge: %s, are not in the track list: " % ",".join("'{0}'".format(n) for n in tracks_merge), ",".join("'{0}'".format(n) for n in self.tracks))
+                raise ValueError ("Tracks to merge: %s, are not in the track list: " % 
+                                  ",".join("'{0}'".format(n) for n in tracks_merge), 
+                                  ",".join("'{0}'".format(n) for n in self.tracks))
             print >> stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
             
             d_track_merge = self.join_by_track(dict_split, tracks_merge)       
@@ -555,11 +557,10 @@ class IntData:
     
     def join_by_track(self, dict_t, tracks2join):  
         """
-        Join the selected tracks from a dictionary of tracks that is the input 
-        of the function
+        Join tracks by track name or id 
         
-        :param dict_t: py:func:`dict` dictionary containing one or more tracks, 
-            keys represent each of these tracks
+        :param dict_t: py:func:`dict` containing one or more tracks, keys 
+            represent each of these tracks
         :param tracks2join: :py:func:`list` of tracks to join in a single track
              
         :return: d_track_merge dictionary that contains the joined tracks
@@ -591,7 +592,43 @@ class IntData:
         self.tracks = new_tracks
                    
         return (d_track_merge)
-     
+    
+    
+    def join_by_dataType (self, dict_d, mode):
+        """
+        Join tracks by dataType
+        
+        :param dict_d: py:func:`dict` containing one or more tracks, primary key 
+            are tracks id and secondary tracks are dataTypes
+        :param mode: :py:func:`str` class of the object that is going to be 
+            generated
+             
+        :return: d_dataTypes_merge dictionary that contains the joined tracks
+         
+        """
+        d_dataTypes_merge = {}
+        
+        for key, nest_dict in dict_d.items():
+            
+            d_dataTypes_merge[key] = {}
+            new_dataTypes = set()
+            
+            for key_2, data in nest_dict.items(): 
+                
+                if not d_dataTypes_merge[key].has_key('_'.join(nest_dict.keys())):
+                    d_dataTypes_merge[key]['_'.join(nest_dict.keys())] = data
+                    new_dataTypes.add('_'.join(nest_dict.keys())) 
+                else:                    
+                    d_dataTypes_merge[key]['_'.join(nest_dict.keys())] = d_dataTypes_merge[key]['_'.join(nest_dict.keys())] + data
+                    new_dataTypes.add('_'.join(nest_dict.keys()))          
+        
+        #New dataTypes only set if objects is bedGraph. Bed objects needs to 
+        #know all original dataTypes to display them with different colors
+        if mode == 'bedGraph':
+            self.dataTypes = new_dataTypes
+
+        return (d_dataTypes_merge)
+    
     def track_convert2bed(self, track, in_call=False, restricted_colors=None, **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
@@ -787,8 +824,8 @@ def write_chr(self, mode="w", path_w=None):
     
     if not path_w: 
         pwd = getcwd()
-        print >>stderr, """Chromosome fasta like file will be dump into %s be set to %s 
-                             as it has not been set using path_w""", pwd
+        print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (pwd)
 
     genomeFile = open(join(pwd, chrom + _genome_file_ext), mode)        
     genomeFile.write(">" + chrom + "\n")
