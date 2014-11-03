@@ -497,7 +497,7 @@ class IntData:
             tracks_merge = kwargs.get('tracks_merge',self.tracks)
             if not all(tracks in self.tracks for tracks in tracks_merge):
                 raise ValueError ("Tracks to merge: %s, are not in the track list: " % ",".join("'{0}'".format(n) for n in tracks_merge), ",".join("'{0}'".format(n) for n in self.tracks))
-            print >>sys.stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
+            print >> stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
             
             d_track_merge = self.join_by_track(dict_split, tracks_merge)       
         
@@ -766,7 +766,7 @@ class IntData:
                         
                         end_w = end_w + delta_window
             else:
-                print >>sys.stderr,("FATAL ERROR: Something went wrong")
+                print >> stderr,("FATAL ERROR: Something went wrong")
         
         #Last value just printed out
         temp_list.append("chr1")
