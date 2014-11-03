@@ -44,8 +44,27 @@ class IntData:
     
     .. attribute:: fieldsB
         List with the behavioral fields corresponding each column in the file
-        
     
+    .. attribute:: fieldsG
+        List with the genimic fields corresponding each column in the file    
+    
+    .. attribute:: data
+        List of tuples containing the data read from the file
+    
+    .. attribute:: min
+        First time value in the file. Read from field set as "chromStart"
+    
+    .. attribute:: max
+        Last timepoint in the file. Read from field set as "chromEnd"
+    
+    .. attribute:: dataTypes
+        All different dataTypes that appear in the data read from "dataTypes" field.
+        If dataTypes field not in file, all intervals are set as belonging to dataTypes "a"
+
+    .. attribute:: tracks
+        Set of tracks in the file. Read from "tracks" field.
+        If tracks field not in file, all intervals are set as belonging to track "1" 
+        
     :return: IntData object
     
      
@@ -58,6 +77,7 @@ class IntData:
         self.fieldsG = self._set_fields_g(ontology_dict)
         self.data, self.min, self.max = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
+        self.tracks  =  self.get_field_items(field="track", data = self.data, default="1")
         
     def _check_delimiter (self, path, delimiter):
         """ 
