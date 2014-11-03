@@ -30,8 +30,6 @@ def main():
     print >> stderr, "Input file: %s" % args.input
     print >> stderr, "Configuration file: %s" % args.config_file
     print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
-    print >> stderr, "List of files: ", args.list
-    print >> stderr, "List of files: ", args.range
     
     path = args.input
     
@@ -43,24 +41,23 @@ def main():
     sel_tracks = args.tracks 
     
     # Handling list or range of tracks to join if set
-    # No deberian poder existir los dos
-    print "@@@@@@@@@@",type(args.list)
     if args.list and args.range:
-        print "arg.list arg.range", args.list, args.range
-        
-    if (args.list):
+        raise ValueError("Argument -l/--list and -r/--range are not compatible. " \
+        "As both arguments set a tracks to join.")    
+    elif (args.list):
         tracks2merge = args.list
     elif (args.range):
         tracks2merge = args.range
     else:
         tracks2merge = ""
-    tracks2merge = args.list
-
+    
+    if tracks2merge: print >> stderr, "Tracks to join are: ", tracks2merge
+    
 
     ################
     # Reading data
     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence)
-    print "____________",intData.tracks
+#     print "____________",intData.tracks
 #     print "::::::::", intData.data
     structures.write_chr (intData)
 #     intData = intData.read(relative_coord=True)
