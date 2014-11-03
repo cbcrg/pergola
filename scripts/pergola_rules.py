@@ -10,6 +10,7 @@ from pergola  import structures
 from pergola  import input
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr
+from re import match
 import os
 
 def main():
@@ -20,7 +21,8 @@ def main():
                         'and genome browser grammar''')
     parser.add_argument('-t','--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                         help='List of selected tracks')
-    parser.add_argument('-l','--list', help='Numeric list of tracks', required=False, type=str, nargs='+')### string allowed as some tracks could be named as: track_1, track2....
+    parser.add_argument('-l','--list', help='Numeric list of tracks to be joined in a single genomic like file', required=False, type=str, nargs='+')### string allowed as some tracks could be named as: track_1, track2....
+    parser.add_argument('-r','--range', help='Numeric range of tracksto be joined in a single genomic like file', required=False, type=parse_num_range)
     
     args = parser.parse_args()
     
@@ -29,6 +31,7 @@ def main():
     print >> stderr, "Configuration file: %s" % args.config_file
     print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
     print >> stderr, "List of files: ", args.list
+    print >> stderr, "List of files: ", args.range
     
     path = args.input
     
@@ -39,6 +42,18 @@ def main():
     #Tracks selected by user
     sel_tracks = args.tracks 
     
+    # Handling list or range of tracks to join if set
+    # No deberian poder existir los dos
+    print "@@@@@@@@@@",type(args.list)
+    if args.list and args.range:
+        print "arg.list arg.range", args.list, args.range
+        
+    if (args.list):
+        tracks2merge = args.list
+    elif (args.range):
+        tracks2merge = args.range
+    else:
+        tracks2merge = ""
     tracks2merge = args.list
 
 
@@ -73,7 +88,7 @@ def main():
                                     
                                     
 def parse_num_range(string):
-    m = re.match(r'(\d+)(?:-(\d+))?$', string)
+    m = match(r'(\d+)(?:-(\d+))?$', string)
 
     if not m:
         raise ArgumentTypeError("'" + string + "' is not a range of number. Expected '0-5' or '2'.")
