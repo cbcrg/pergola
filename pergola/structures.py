@@ -486,7 +486,7 @@ class IntData:
         if sel_tracks != []:
             tracks2rm = self.tracks.difference(sel_tracks)            
             dict_split = self.remove (dict_split, tracks2rm)
-            print >> sys.stderr, "Removed tracks are:", ' '.join(tracks2rm)
+            print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
         
         d_track_merge = {} 
         
@@ -528,6 +528,29 @@ class IntData:
                        
         return (track_dict)
     
+    #TODO I can make this function more general as remove from dictionary it can be use outside
+    def remove (self, dict_t, tracks2remove):
+        """
+        Removes from a dictionary of tracks that is the imput of the function those that are 
+        set by tracks2remove
+        
+        :param dict_t: py:func:`dict` dictionary containing one or more tracks, keys represent each 
+            of these tracks
+        :param tracks2remove: :py:func:`list` of tracks to remove from the dict_t
+             
+        :return: dict_t dictionary that contains tracks not removed from the dictionary
+        
+        """
+        for key in tracks2remove:
+            key = str(key)
+    
+            dict_t.pop(key, None)
+    
+            if key in self.tracks:
+                self.tracks.remove(key)
+                
+        return (dict_t)
+     
     def track_convert2bed (self, track, in_call=False, restricted_colors=None, **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
