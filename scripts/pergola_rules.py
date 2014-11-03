@@ -20,14 +20,15 @@ def main():
                         'and genome browser grammar''')
     parser.add_argument('-t','--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                         help='List of selected tracks')
+    parser.add_argument('-l','--list', help='Numeric list of tracks', required=False, type=str, nargs='+')### string allowed as some tracks could be named as: track_1, track2....
     
     args = parser.parse_args()
     
-    print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
-
+     
     print >> stderr, "Input file: %s" % args.input
     print >> stderr, "Configuration file: %s" % args.config_file
-    print >> stderr, "Configuration file: %s" % args.config_file
+    print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
+    print >> stderr, "List of files: ", args.list
     
     path = args.input
     
@@ -38,22 +39,25 @@ def main():
     #Tracks selected by user
     sel_tracks = args.tracks 
     
-    
-    #Reading data
+    tracks2merge = args.list
+
+
+    ################
+    # Reading data
     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence)
     print "____________",intData.tracks
 #     print "::::::::", intData.data
     structures.write_chr (intData)
 #     intData = intData.read(relative_coord=True)
 #     print intData.read(relative_coord=True)
-
-    
+  
+      
     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
     ## funcion comun para procesar esto en las dos opciones
     ## however tracks_merge are the trakcs to be join
-    bed_str =  intData.convert(relative_coord=True, mode = 'bedGraph', tracks=sel_tracks)
-     
+    bed_str =  intData.convert(relative_coord=True, mode = 'bedGraph', tracks=sel_tracks, tracks_merge=tracks2merge)
+       
 #     print bed_str
     for key in bed_str:
         print "key.......: ",key
