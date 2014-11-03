@@ -415,7 +415,7 @@ class IntData:
         Calls function to convert data (as a list of tuples) into a dictionary of 
         the one or several object of class set by mode
         
-        :param bed mode: class of the output objects returned set to  `bed` by
+        :param bed mode: class of the output objects returned set to `bed` by
             default
                 
         :return: dictionary containing object/s of the class set by mode 
@@ -491,8 +491,8 @@ class IntData:
     
         track_dict = {}                        
    
-        #######
-        # Generating track dict (output)
+        
+        ### Generating track dict (output)
         #validacion del diccionario para imprimir o lo que sea
         #mirar si es un diccionario de diccionarios la primera validacion hay que desarrolarla 
         for k, v in d_track_merge.items():
@@ -508,9 +508,18 @@ class IntData:
                        
         return (track_dict)
     
-    def track_convert2bed (self, track, in_call=False, restrictedColors=None, **kwargs):
+    def track_convert2bed (self, track, in_call=False, restricted_colors=None, **kwargs):
         """
-        Converts a single track that 
+        Converts a single data belonging to a single track in a list of tuples in
+        an object of class Bed
+        
+        :param track: :py:func:`list` of tuples containing data of a single track
+        :param False in_call: If False the call to the function is from the user otherwise
+            is from inside :py:func: `convert2single_track()`
+        :param None restricted_colors: Set colors not to be used #TODO this is not clear example??
+             
+        :return: Bed object
+        
         """
         
         #This fields are mandatory in objects of class Bed
@@ -553,6 +562,7 @@ class IntData:
             temp_list.append(color)          
             
             yield(tuple(temp_list))
+            
 def write_chr(self, mode="w", path_w=None):
     """
     Creates a fasta file of the length of the range of value inside the IntData object
@@ -624,13 +634,16 @@ class DataIter(object):
           
 class Bed(DataIter):
     """
-    dataInt class for bed file format data
+    A dataIter object dessigned to include the fields that are specific
+    of bed files
     
-    Fields used in this application are:
+    Specific fields used are::
         
          ['chr','start','end','name','score','strand',
           'thick_start','thick_end','item_rgb']
-          
+    
+    :return: Bed object
+        
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
@@ -645,6 +658,9 @@ def assign_color (set_dataTypes, color_restrictions=None):
     
     :param set_dataTypes: (list) each of the fields that should be linked to colors
     :param color_restrictions: (dict) fields with colors set by the user
+    
+    :return: d_dataType_color dictionary with dataTypes as keys and colors as values
+    
     """
     d_dataType_color = {}
     colors_not_used = []
