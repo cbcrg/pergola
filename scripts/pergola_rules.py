@@ -19,21 +19,23 @@ _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even', 'join_list'
 def main():
     parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data')
     parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
-    parser.add_argument('-c','--config_file', required=False, metavar="ONTOLOGY_FILE",
+    parser.add_argument('-c', '--config_file', required=False, metavar="ONTOLOGY_FILE",
                         help='''Configuration file with the ontology between fields in behavioral file
                         'and genome browser grammar''')
-    parser.add_argument('-t','--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
+    parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                         help='List of selected tracks')
     parser.add_argument('-l','--list', required=False, metavar="LIST_OF_TRACKS", type=str, nargs='+',
                         help='Numeric list of tracks to be joined in a single genomic like file')### string allowed as some tracks could be named as: track_1, track2....
-    parser.add_argument('-r','--range', required=False, type=parse_num_range,
+    parser.add_argument('-r', '--range', required=False, type=parse_num_range,
                         help='Numeric range of tracks to be joined in a single genomic like file')
-    parser.add_argument('-a','--track_actions', required=False, choices=_tr_act_options,
+    parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
                         help='Option of action with tracks selected, split_all, join_all,' + \
                              ' join_odd, join_even, join_range or join_list')
-    parser.add_argument('-d','--dataTypes_actions', required=False, choices=_dt_act_options,
+    parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
                         help='Unique values of dataTypes field should be dumped on' + \
                              ' different data structures or not')
+    parser.add_argument('-f', '--format', required=False, type=str,
+                        help='Write file output format (bed or bedGraph)')
     
     args = parser.parse_args()
     
@@ -76,11 +78,20 @@ def main():
     dataTypes_act = args.dataTypes_actions
     print >> stderr, "@@@Pergola_rules.py dataTypes actions are: ", dataTypes_act
     
+    # Handling argument format
+    write_format = args.format
     
-    
-    
-    
-    
+    if write_format:
+        print >> stderr, "@@@Pergola_rules.py format to write files: ", write_format
+    else:
+        write_format='bed'
+        print >>stderr, "@@@Pergola_rules.py format to write files has been set" \
+                        " to default value:", write_format
+#         print >> stderr, " " \ 
+#                           "to default value: ", 
+                          
+#         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
+#                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence)
@@ -97,7 +108,7 @@ def main():
     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
     ## funcion comun para procesar esto en las dos opciones
     ## however tracks_merge are the trakcs to be join
-    bed_str =  intData.convert(relative_coord=True, mode = 'bedGraph', tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
+    bed_str =  intData.convert(relative_coord=True, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
        
 #     print bed_str
     for key in bed_str:
@@ -137,7 +148,7 @@ def read_track_actions (tracks, track_action = "split_all"):
         raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in tr_act_options])))
     
     tracks2merge = ""
-    print >> stderr, "Tracks to merge are: ", ",".join(tracks2merge)
+    
     if track_action == "join_all":
         tracks2merge = tracks
     elif track_action == 'join_odd':
@@ -146,6 +157,7 @@ def read_track_actions (tracks, track_action = "split_all"):
         tracks2merge = set([t for t in tracks if not int(t) % 2])
     else:
         tracks2merge = ""
+        
     print >> stderr,"Tracks to merge are: ", ",".join("'{0}'".format(t) for t in tracks2merge)
        
     if not tracks2merge:
