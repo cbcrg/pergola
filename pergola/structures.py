@@ -183,7 +183,16 @@ class IntData:
         else:    
             raise ValueError("Fields param \"%s\" contains a field not present in config_file \"%s\"" 
                              % ("\",\"".join(self.fieldsB), "\",\"".join(ontology_dict.keys())))
-
+        
+        #Input file at least should have two fields that correspond to:
+        mandatory_fields = ["chromStart", "dataValue"]
+        
+        if not all(f in name_fields_g for f in mandatory_fields):
+            raise ValueError("Input file mandatory fields  are \"chromStart\" and \"chromEnd\" \n" \
+                             "Your current assigned fields are \"%s\"\n" \
+                             "TIP: Check your ontology_file"                               
+                             % ("\",\"".join(name_fields_g)))
+        
         return name_fields_g
     
     def _read(self, multiply_t=1, intervals=False):
@@ -205,7 +214,7 @@ class IntData:
         self.inFile  = open(self.path, "rb")
         self.reader = reader(self.inFile, delimiter='\t')
         self.reader.next()
-                        
+                            
         _int_points = ["chromStart", "chromEnd"]
         idx_fields2int = [10000000000000]
         i_new_field = [10000000000000]                                    
