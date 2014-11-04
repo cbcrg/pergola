@@ -214,13 +214,15 @@ class IntData:
         self.inFile  = open(self.path, "rb")
         self.reader = reader(self.inFile, delimiter='\t')
         self.reader.next()
-                            
+        
+#         # Field assign to data value should be an integer or float#del 
+#         print type() 
         _int_points = ["chromStart", "chromEnd"]
         idx_fields2int = [10000000000000]
         i_new_field = [10000000000000]                                    
         
         if intervals:             
-            print >>stderr, "Intervals inferred from timepoints"
+            print >>stderr, "Intervals will be inferred from timepoints"
             _time_points = ["chromStart"]
             f_int_end = "chromEnd"
         
@@ -269,9 +271,23 @@ class IntData:
         
         for interv in self.reader:            
             temp = []            
-            
+                                    
             for i in range(len(self.fieldsG)): 
-                if i in idx_fields2mult and i in idx_fields2int:
+                               
+                # Values in idx_fields2int have to be integers
+                if i in idx_fields2mult:
+                    if first and (float(interv[i]) * multiply_t < 1):
+                        raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
+                                          "TIP: If you have to transform value from lets say " \
+                                          "seconds to miliseconds try using multiply_t."
+                                          )
+                    elif (int(float(interv[i]) * multiply_t) <= 0) and not first:                        
+                        raise ValueError ("Values in chromStart and chromEnd should be integer.\n" \
+                                          "TIP: If you have to transform value from lets say " \
+                                          "seconds to miliseconds try using multiply_t."
+                                          )
+                    
+                if i in idx_fields2mult and i in idx_fields2int:                                                             
                     v = int(float(interv[i]) * multiply_t)
                     temp.append(v)
                     p_v = v - 1
