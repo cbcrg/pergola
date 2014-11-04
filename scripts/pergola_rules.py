@@ -10,7 +10,7 @@ from pergola  import structures
 from pergola  import input
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr
-from re import match
+from re       import match
 import os
 
 _dt_act_options = ['all', 'one_per_channel']
@@ -36,11 +36,11 @@ def main():
                              ' different data structures or not')
     parser.add_argument('-f', '--format', required=False, type=str,
                         help='Write file output format (bed or bedGraph)')
-    
+    parser.add_argument('-e', '--relative_coord', required=False, action='store_true', default=False,
+                        help='Write file output format (bed or bedGraph)')
     args = parser.parse_args()
     
-     
-    print >> stderr, "Input file: %s" % args.input
+    print >> stderr, "Input file: %s" % args.input 
     print >> stderr, "Configuration file: %s" % args.config_file
     print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
     
@@ -87,6 +87,10 @@ def main():
         write_format='bed'
         print >>stderr, "@@@Pergola_rules.py format to write files has been set" \
                         " to default value:", write_format
+     
+    # Handling relative coordinates
+    print >> stderr, "Relative coordinates set to: %s" % args.relative_coord
+    relative_coord = args.relative_coord
 #         print >> stderr, " " \ 
 #                           "to default value: ", 
                           
@@ -94,37 +98,48 @@ def main():
 #                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
-    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=True)
+#     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=True, multiply_t=1000)
+    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=False)
+#     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
+    
+    # intData.data although relative_coord is set does not work
+#     print intData.data
+    print "----min value",intData.min
+    print "----max value",intData.max
     
     if track_act: tracks2merge = read_track_actions(tracks=intData.tracks, track_action=track_act)
-    
+     
 #     print "____________",intData.tracks
 #     print "::::::::", intData.data
-    structures.write_chr (intData)
+
+    
+#     structures.write_chr (intData)#mantain
+    
 #     intData = intData.read(relative_coord=True)
 #     print intData.read(relative_coord=True)
-  
-      
+   
+       
 #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
 #     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
 #     ## funcion comun para procesar esto en las dos opciones
 #     ## however tracks_merge are the trakcs to be join
-#     bed_str =  intData.convert(relative_coord=True, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
-#     
-#     print bed_str
-#     for key in bed_str:
-#         print "key.......: ",key
-#         bedSingle = bed_str[key]
-#         bedSingle.write()
-# #         for i in bedSingle:
-# #             print i 
-                                      
-    iter=intData.read(intervals=True)
+    bed_str =  intData.convert(relative_coord=relative_coord, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
+#     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
+      
+    print bed_str
+    for key in bed_str:
+        print "key.......: ",key
+        bedSingle = bed_str[key]
+        bedSingle.write()
+#         for i in bedSingle:
+#             print i 
+    print intData.fieldsG                                   
+#     iter=intData.read(intervals=True)
 #buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
-
-    for  i in iter:
-        print i                                  
-                                    
+  
+#     for  i in iter:
+#         print i                                  
+                                      
                                     
                                     
                                     
