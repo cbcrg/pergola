@@ -37,7 +37,12 @@ def main():
     parser.add_argument('-f', '--format', required=False, type=str,
                         help='Write file output format (bed or bedGraph)')
     parser.add_argument('-e', '--relative_coord', required=False, action='store_true', default=False,
-                        help='Write file output format (bed or bedGraph)')
+                        help='Sets first timepoint to 0 and make all the others relative to this' \
+                             'timepoint')
+    parser.add_argument('-n', '--intervals', required=False, action='store_true', default=False,
+                        help='Set startChrom and endChrom from just a timepoint in the file' \
+                             'using field set as startChrom')
+    
     args = parser.parse_args()
     
     print >> stderr, "Input file: %s" % args.input 
@@ -91,6 +96,10 @@ def main():
     # Handling relative coordinates
     print >> stderr, "Relative coordinates set to: %s" % args.relative_coord
     relative_coord = args.relative_coord
+    
+    # Handling intervals
+    print >> stderr, "Intervals parameter set to: %s" % args.intervals
+    intervals = args.intervals
 #         print >> stderr, " " \ 
 #                           "to default value: ", 
                           
@@ -99,7 +108,7 @@ def main():
     ################
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=True, multiply_t=1000)
-    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=False)
+    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=intervals)
 #     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
     # intData.data although relative_coord is set does not work
