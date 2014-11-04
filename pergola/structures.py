@@ -248,7 +248,10 @@ class IntData:
         try:
             i_max = [self.fieldsG.index(f) for f in _end_f]              
         except ValueError:
-            raise ValueError("Field '%s' for max interval calculation time not in file %s." % (f, self.path))
+            raise ValueError("Field '%s' for max interval calculation time not in file %s \n" \
+                             "TIP: If your file contains timepoints you can transform them to intervals" \
+                             " setting the field containing them to chromStart and setting intervals=True" 
+                             % (f, self.path))
               
         v = 0
         p_v = 0
