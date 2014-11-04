@@ -277,16 +277,13 @@ class IntData:
             for i in range(len(self.fieldsG)): 
                                
                 # Values in idx_fields2int have to be integers
-                if i in idx_fields2mult:
-                    if first and (float(interv[i]) * multiply_t < 1):
+                if i in idx_fields2int:
+                    a = int(float(interv[i]) * multiply_t)
+                    b = float(interv[i]) * multiply_t
+                    if a-b != 0:
                         raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
-                                          "TIP: If you have to transform value from lets say " \
-                                          "seconds to miliseconds try using multiply_t."
-                                          )
-                    elif (int(float(interv[i]) * multiply_t) <= 0) and not first:                        
-                        raise ValueError ("Values in chromStart and chromEnd should be integer.\n" \
-                                          "TIP: If you have to transform value from lets say " \
-                                          "seconds to miliseconds try using multiply_t.")
+                                        "TIP: If you have to transform value from lets say " \
+                                        "seconds to miliseconds try using multiply_t.")
 
                 # Field assign to data value should be an integer or float        
                 if i in idx_dataValue:                    
