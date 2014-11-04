@@ -94,9 +94,10 @@ def main():
 #                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
-    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence)
+    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=True)
     
-    tracks2merge = read_track_actions(tracks=intData.tracks, track_action=track_act)
+    if track_act: tracks2merge = read_track_actions(tracks=intData.tracks, track_action=track_act)
+    
 #     print "____________",intData.tracks
 #     print "::::::::", intData.data
     structures.write_chr (intData)
@@ -104,21 +105,25 @@ def main():
 #     print intData.read(relative_coord=True)
   
       
-    ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
-    ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
-    ## funcion comun para procesar esto en las dos opciones
-    ## however tracks_merge are the trakcs to be join
-    bed_str =  intData.convert(relative_coord=True, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
-       
+#     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
+#     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
+#     ## funcion comun para procesar esto en las dos opciones
+#     ## however tracks_merge are the trakcs to be join
+#     bed_str =  intData.convert(relative_coord=True, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
+#     
 #     print bed_str
-    for key in bed_str:
-        print "key.......: ",key
-        bedSingle = bed_str[key]
-        bedSingle.write()
-#         for i in bedSingle:
-#             print i 
+#     for key in bed_str:
+#         print "key.......: ",key
+#         bedSingle = bed_str[key]
+#         bedSingle.write()
+# #         for i in bedSingle:
+# #             print i 
                                       
-                                      
+    iter=intData.read(intervals=True)
+#buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
+
+    for  i in iter:
+        print i                                  
                                     
                                     
                                     
@@ -145,7 +150,7 @@ def read_track_actions (tracks, track_action = "split_all"):
     """
     
     if track_action not in _tr_act_options:
-        raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in tr_act_options])))
+        raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in _tr_act_options])))
     
     tracks2merge = ""
     
