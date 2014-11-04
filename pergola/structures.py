@@ -857,7 +857,7 @@ class DataIter(object):
         
         if not path: 
             pwd = getcwd()
-        print >> stderr, "No path selected, files dump into \"path=\": ", pwd 
+        print >> stderr, "No path selected, files dump into path: ", pwd 
                              
         if not(isinstance(self, DataIter)):
             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
