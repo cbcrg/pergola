@@ -380,13 +380,15 @@ class IntData:
         print >>stderr, "Relative coordinates set to:", relative_coord 
            
         if relative_coord:             
-            
-            if fields2rel is None:
+                
+            if fields2rel is None and intervals: 
                 _f2rel = ["chromStart","chromEnd"] 
-#             if fields2rel is None and intervals: #TODO
-#                 _f2rel = ["chromStart","chromEnd"] 
-#             elif fields2rel is None and not intervals:
-#                 _f2rel = ["chromStart"]    
+            elif fields2rel is None and not intervals:
+                if "chromEnd" in self.fieldsG:
+                    _f2rel = ["chromStart","chromEnd"] 
+                else:
+                    _f2rel = ["chromStart"]
+                    
             else:
                 if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
                 _f2rel = [f for f in fields2rel if f in self.fieldsG]
@@ -402,7 +404,7 @@ class IntData:
         idx_fields2int = [10000000000000]
         
         return self.data
-#         return DataIter(self.data)
+#         return DataIter(self.data) #TODO assess whether there is any difference in this two lines of code
 
     def _time2rel_time(self, i_fields):
         """
@@ -443,8 +445,8 @@ class IntData:
         """
         kwargs['relative_coord'] = kwargs.get("relative_coord",False)
         
-        print >> stderr, self.fieldsG
-            
+        print >> stderr, self.fieldsG         
+        
         if mode not in _dict_file: 
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
         
