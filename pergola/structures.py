@@ -215,8 +215,9 @@ class IntData:
         self.reader = reader(self.inFile, delimiter='\t')
         self.reader.next()
         
-#         # Field assign to data value should be an integer or float#del 
-#         print type() 
+        # Field assign to data value should be an integer or float
+        idx_dataValue = [self.fieldsG.index("dataValue")]
+         
         _int_points = ["chromStart", "chromEnd"]
         idx_fields2int = [10000000000000]
         i_new_field = [10000000000000]                                    
@@ -250,6 +251,7 @@ class IntData:
         p_max = None
         
         _start_f = ["chromStart"]
+        
         try:
             i_min = [self.fieldsG.index(f) for f in _start_f]              
         except ValueError:
@@ -284,9 +286,16 @@ class IntData:
                     elif (int(float(interv[i]) * multiply_t) <= 0) and not first:                        
                         raise ValueError ("Values in chromStart and chromEnd should be integer.\n" \
                                           "TIP: If you have to transform value from lets say " \
-                                          "seconds to miliseconds try using multiply_t."
-                                          )
-                    
+                                          "seconds to miliseconds try using multiply_t.")
+
+                # Field assign to data value should be an integer or float        
+                if i in idx_dataValue:                    
+                    try:
+                        float(interv[i])
+                    except ValueError:
+                        raise ValueError("Values in dataValue should be numerical not others: %s.\n" %
+                                          interv[i]) 
+                
                 if i in idx_fields2mult and i in idx_fields2int:                                                             
                     v = int(float(interv[i]) * multiply_t)
                     temp.append(v)
