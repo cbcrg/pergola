@@ -443,7 +443,6 @@ class IntData:
         idx_fields2int = [10000000000000]
         
 #         return self.data
-        print ".............in read self.dataTypes are",self.dataTypes#del
         return DataIter(self.data, self.fieldsG, dataTypes=self.dataTypes) #TODO assess whether there is any difference in this two lines of code
 
     def _time2rel_time(self, i_fields):
@@ -886,11 +885,11 @@ class DataIter(object):
         
         self.data = data
         self.fields = fields
-        print "......dataTypes in DataIter are:", dataTypes
+        print "......dataTypes in DataIter are:", dataTypes#del
         self.dataTypes = dataTypes 
-        print "......dataTypes in DataIter are:",self.dataTypes      
+        print "......dataTypes in DataIter are:",self.dataTypes#del      
         self.format = kwargs.get("format",'txt')
-        self.track = kwargs.get('track', "")
+        self.track = kwargs.get('track', "1")
         
     def __iter__(self):
         return self.data
@@ -936,7 +935,6 @@ class DataIter(object):
         dict_split = {}
         
         ### Data is separated by track and dataTypes
-        print "index for ..... track..........",self.fields.index("track")#del
         idx_fields2split = [self.fields.index("track"), self.fields.index("dataTypes")]
         data_tuples = sorted(data_tuples, key=itemgetter(*idx_fields2split))
         
@@ -1132,7 +1130,6 @@ class DataIter(object):
         i_data_types = self.fields.index("dataTypes")
         
         #Generate dictionary of field and color gradients
-        print "dataTypes are------------",self.dataTypes
         _dict_col_grad = assign_color (self.dataTypes)
             
         for row in track:
@@ -1296,9 +1293,12 @@ class DataIter(object):
             file_ext = _dict_file.get(self.format)[2]      
         except KeyError:
             raise ValueError("File types not supported \'%s\'"%(self.format))
-                
-        print "dataTypes are--------------",self.dataTypes#del
-        name_file = "tr_" + self.track + "_dt_" + self.dataTypes + file_ext
+        
+        conc_dataTypes = self.dataTypes
+        if isinstance(conc_dataTypes, set):
+            conc_dataTypes="_".join(self.dataTypes)        
+                        
+        name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
         print >> stderr, "File %s generated" % name_file       
 
         track_file = open(join(pwd, name_file), mode)
@@ -1313,8 +1313,8 @@ class DataIter(object):
             track_file.write (annotation_track + "\n")
            
         for row in self.data: 
-            track_file.save_track('\t'.join(str(i) for i in row))
-            track_file.save_track("\n")      
+            track_file.write('\t'.join(str(i) for i in row))
+            track_file.write("\n")      
         track_file.close()
           
 class Bed(DataIter):
