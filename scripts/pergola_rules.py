@@ -34,14 +34,16 @@ def main():
     parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
                         help='Unique values of dataTypes field should be dumped on' + \
                              ' different data structures or not')
-    parser.add_argument('-f', '--format', required=False, type=str,
+    parser.add_argument('-f', '--format', required=False, type=str, 
                         help='Write file output format (bed or bedGraph)')
-    parser.add_argument('-e', '--relative_coord', required=False, action='store_true', default=False,
-                        help='Sets first timepoint to 0 and make all the others relative to this' \
-                             'timepoint')
-    parser.add_argument('-n', '--intervals', required=False, action='store_true', default=False,
+    parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
+                        default=False, metavar="True", help='Sets first timepoint' \
+                        ' to 0 and make all the others relative to this timepoint')
+    parser.add_argument('-n', '--intervals', required=False, metavar="True", action='store_true', default=False,
                         help='Set startChrom and endChrom from just a timepoint in the file' \
                              'using field set as startChrom')
+    parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
+                        help='Multiplies value in dataValue by the given value')
     
     args = parser.parse_args()
     
@@ -100,19 +102,28 @@ def main():
     # Handling intervals
     print >> stderr, "Intervals parameter set to: %s" % args.intervals
     intervals = args.intervals
-#         print >> stderr, " " \ 
-#                           "to default value: ", 
+    
+    # Handling multiply_factor
+    multiply_f = args.multiply_factor
+    if multiply_f:
+        print >>stderr, "Multiply factor parameter set to: %s" % args.multiply_factor                        
+    else:
+        multiply_f = 1
+        
                           
 #         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
 #                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
-#     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=True, multiply_t=1000)
-    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=intervals)
+#     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=intervals, multiply_t=1000)
+    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=intervals, multiply_t=multiply_f)
 #     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
     # intData.data although relative_coord is set does not work
-#     print intData.data
+    print "intData.data"
+    print intData.data
+    print "intData.read()"
+    print intData.read(relative_coord=relative_coord)
     print "----min value",intData.min
     print "----max value",intData.max
     
@@ -128,26 +139,26 @@ def main():
 #     print intData.read(relative_coord=True)
    
        
-#     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
-#     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
-#     ## funcion comun para procesar esto en las dos opciones
-#     ## however tracks_merge are the trakcs to be join
-    bed_str =  intData.convert(relative_coord=relative_coord, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
-#     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
-      
-    print bed_str
-    for key in bed_str:
-        print "key.......: ",key
-        bedSingle = bed_str[key]
-        bedSingle.write()
-#         for i in bedSingle:
-#             print i 
-    print intData.fieldsG                                   
-#     iter=intData.read(intervals=True)
-#buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
-  
-#     for  i in iter:
-#         print i                                  
+# #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
+# #     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
+# #     ## funcion comun para procesar esto en las dos opciones
+# #     ## however tracks_merge are the trakcs to be join
+#     bed_str =  intData.convert(relative_coord=relative_coord, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
+# #     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
+#       
+#     print bed_str
+#     for key in bed_str:
+#         print "key.......: ",key
+#         bedSingle = bed_str[key]
+#         bedSingle.write()
+# #         for i in bedSingle:
+# #             print i 
+#     print intData.fieldsG                                   
+# #     iter=intData.read(intervals=True)
+# #buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
+#   
+# #     for  i in iter:
+# #         print i                                  
                                       
                                     
                                     
