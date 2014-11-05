@@ -37,9 +37,9 @@ def main():
     parser.add_argument('-f', '--format', required=False, type=str, 
                         help='Write file output format (bed or bedGraph)')
     parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
-                        default=False, metavar="True", help='Sets first timepoint' \
+                        default=False, help='Sets first timepoint' \
                         ' to 0 and make all the others relative to this timepoint')
-    parser.add_argument('-n', '--intervals', required=False, metavar="True", action='store_true', default=False,
+    parser.add_argument('-n', '--intervals', required=False, action='store_true', default=False,
                         help='Set startChrom and endChrom from just a timepoint in the file' \
                              'using field set as startChrom')
     parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
