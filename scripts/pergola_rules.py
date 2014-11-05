@@ -19,9 +19,9 @@ _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even', 'join_list'
 def main():
     parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data')
     parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
-    parser.add_argument('-c', '--config_file', required=False, metavar="ONTOLOGY_FILE",
-                        help='''Configuration file with the ontology between fields in behavioral file
-                        'and genome browser grammar''')
+    parser.add_argument('-o', '--ontology_file', required=False, metavar="ONTOLOGY_FILE",
+                        help='File with the ontology between fields in behavioral file' + \
+                        'and genome browser grammar')
     parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                         help='List of selected tracks')
     parser.add_argument('-l','--list', required=False, metavar="LIST_OF_TRACKS", type=str, nargs='+',
