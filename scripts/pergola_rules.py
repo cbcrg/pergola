@@ -48,14 +48,14 @@ def main():
     args = parser.parse_args()
     
     print >> stderr, "Input file: %s" % args.input 
-    print >> stderr, "Configuration file: %s" % args.config_file
+    print >> stderr, "Configuration file: %s" % args.ontology_file
     print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
     
     path = args.input
     
     #Configuration file
-    config_file_path = args.config_file
-    config_file_dict = input.ConfigInfo(config_file_path)
+    ontol_file_path = args.ontology_file
+    ontol_file_dict = input.ConfigInfo(ontol_file_path)
     
     #Tracks selected by user
     sel_tracks = args.tracks 
@@ -115,9 +115,9 @@ def main():
 #                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
-#     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=intervals, multiply_t=1000)
-    intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, intervals=intervals, multiply_t=multiply_f)
-#     intData = structures.IntData(path, ontology_dict=config_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
+#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=1000)
+    intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=multiply_f)
+#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
     # intData.data although relative_coord is set does not work
     print "intData.data"
