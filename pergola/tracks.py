@@ -3,7 +3,7 @@ from sys import stderr
 from os.path import join
 from operator import itemgetter
 from itertools import groupby
- 
+from numpy import arange 
 #Contains class and file extension
 _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
               'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
@@ -37,7 +37,8 @@ class TrackStream(object):
         print "......dataTypes in DataIter are:",self.dataTypes#del      
         self.format = kwargs.get("format",'txt')
         self.track = kwargs.get('track', "1")
-        self.range = kwargs.get('range', None)
+        self.range_values = kwargs.get('range_values', None)
+        print "...............ranges_values are here",self.range_values #del
         
     def __iter__(self):
         return self.data
@@ -204,7 +205,8 @@ class DataIter(TrackStream):
         ### Assigning data to output dictionary    
         for k, d in d_dataTypes_merge.items():
             for k_2, d_2 in d.items():
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2)
+                print "#####################",self.range_values#del
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values)
                        
         return (track_dict)
     
@@ -341,7 +343,11 @@ class DataIter(TrackStream):
         
         #Generate dictionary of field and color gradients
         _dict_col_grad = assign_color (self.dataTypes)
-            
+        
+#         print "the list of ",range(float(self.range_values[0]),float(self.range_values[1]))
+        step = (float(self.range_values[1]) - float(self.range_values[0])) / 10
+        print "the list of ......................................................",list (arange(float(self.range_values[0]),float(self.range_values[1]), step))
+        _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))   
         for row in track:
             temp_list = []
             temp_list.append("chr1")
