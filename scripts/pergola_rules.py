@@ -8,6 +8,7 @@ Script to run pergola from the command line
 
 from pergola  import structures
 from pergola  import input
+# from pergola  import tracks
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr
 from re       import match
@@ -117,13 +118,14 @@ def main():
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=1000)
     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=multiply_f)
+    print "..............",intData.range
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
     # intData.data although relative_coord is set does not work
     print "intData.data"
-    print intData.data
+#     print intData.data
     print "intData.read()"
-    print intData.read(relative_coord=relative_coord)
+#     print intData.read(relative_coord=relative_coord)
     print "----min value",intData.min
     print "----max value",intData.max
     
@@ -136,29 +138,40 @@ def main():
 #     structures.write_chr (intData)#mantain
     
 #     intData = intData.read(relative_coord=True)
-#     print intData.read(relative_coord=True)
-   
-       
-# #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
-# #     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
-# #     ## funcion comun para procesar esto en las dos opciones
-# #     ## however tracks_merge are the trakcs to be join
+    data_read = intData.read(relative_coord=True)
+    print "************",type (data_read.data) #list of tuples
+    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>",data_read.dataTypes
+    data_read.save_track()
+    
+    for i in data_read.data:
+#         print i
+        pass
+    
+    
+    bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
+     
+#     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
+#     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
+#     ## funcion comun para procesar esto en las dos opciones
+#     ## however tracks_merge are the trakcs to be join
 #     bed_str =  intData.convert(relative_coord=relative_coord, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
-# #     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
-#       
-#     print bed_str
-#     for key in bed_str:
-#         print "key.......: ",key
-#         bedSingle = bed_str[key]
-#         bedSingle.write()
-# #         for i in bedSingle:
-# #             print i 
+#     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
+       
+    print bed_str
+    for key in bed_str:
+        print "key.......: ",key
+        bedSingle = bed_str[key]
+        bedSingle.save_track()
+        bedSingle.convert(mode=write_format, tracks=sel_tracks) #This a problem!!! Before I was not inheriting all this functions
+        
+#         for i in bedSingle:
+#             print i 
 #     print intData.fieldsG                                   
-# #     iter=intData.read(intervals=True)
-# #buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
-#   
-# #     for  i in iter:
-# #         print i                                  
+#     iter=intData.read(intervals=True)
+#buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
+    
+#     for  i in iter:
+#         print i                                  
                                       
                                     
                                     

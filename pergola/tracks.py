@@ -22,7 +22,7 @@ _dict_colors = {
 
 _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000]
 
-class DataIter(object):
+class TrackStream(object):
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
         if isinstance(data,(tuple)):            
             data = iter(data)
@@ -37,6 +37,7 @@ class DataIter(object):
         print "......dataTypes in DataIter are:",self.dataTypes#del      
         self.format = kwargs.get("format",'txt')
         self.track = kwargs.get('track', "1")
+        self.range = kwargs.get('range', None)
         
     def __iter__(self):
         return self.data
@@ -44,6 +45,68 @@ class DataIter(object):
     def next(self):
         return self.data.next()
     
+    def save_track(self, mode="w", path=None):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
+        
+        if not path: 
+            pwd = getcwd()
+        print >> stderr, "No path selected, files dump into path: ", pwd 
+                             
+        if not(isinstance(self, TrackStream)):
+            raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
+        
+        try:
+            file_ext = _dict_file.get(self.format)[2]      
+        except KeyError:
+            raise ValueError("File types not supported \'%s\'"%(self.format))
+        
+        conc_dataTypes = self.dataTypes
+        if isinstance(conc_dataTypes, set):
+            conc_dataTypes="_".join(self.dataTypes)        
+                        
+        name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
+        print >> stderr, "File %s generated" % name_file       
+
+        track_file = open(join(pwd, name_file), mode)
+                
+        #Annotation track to set the genome browser interface
+        annotation_track = ''
+        if self.format == 'bed':
+            annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
+        elif self.format == 'bedGraph':
+            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
+        
+            track_file.write (annotation_track + "\n")
+           
+        for row in self.data: 
+            track_file.write('\t'.join(str(i) for i in row))
+            track_file.write("\n")      
+        track_file.close()
+    
+class DataIter(TrackStream):
+    def __init__(self, data, fields=None, dataTypes=None, **kwargs):
+            TrackStream.__init__(self, data, fields, dataTypes, **kwargs)
+#     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
+#         if isinstance(data,(tuple)):            
+#             data = iter(data)
+#         
+#         if not fields:
+#             raise ValueError("Must specify a 'fields' attribute for %s." % self.__str__())
+#         
+#         self.data = data
+#         self.fields = fields
+#         print "......dataTypes in DataIter are:", dataTypes#del
+#         self.dataTypes = dataTypes 
+#         print "......dataTypes in DataIter are:",self.dataTypes#del      
+#         self.format = kwargs.get("format",'txt')
+#         self.track = kwargs.get('track', "1")
+#         self.range = kwargs.get('range', None)
+#         
+#     def __iter__(self):
+#         return self.data
+# 
+#     def next(self):
+#         return self.data.next()
+
     def convert(self, mode='bed', **kwargs):
         """
         Calls function to convert data (as a list of tuples) into a dictionary of 
@@ -427,44 +490,44 @@ class DataIter(object):
         temp_list.append(data_value)
         yield(tuple(temp_list))
         
-    def save_track(self, mode="w", path=None):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
-        
-        if not path: 
-            pwd = getcwd()
-        print >> stderr, "No path selected, files dump into path: ", pwd 
-                             
-        if not(isinstance(self, DataIter)):
-            raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
-        
-        try:
-            file_ext = _dict_file.get(self.format)[2]      
-        except KeyError:
-            raise ValueError("File types not supported \'%s\'"%(self.format))
-        
-        conc_dataTypes = self.dataTypes
-        if isinstance(conc_dataTypes, set):
-            conc_dataTypes="_".join(self.dataTypes)        
-                        
-        name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
-        print >> stderr, "File %s generated" % name_file       
-
-        track_file = open(join(pwd, name_file), mode)
-                
-        #Annotation track to set the genome browser interface
-        annotation_track = ''
-        if self.format == 'bed':
-            annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
-        elif self.format == 'bedGraph':
-            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
-        
-            track_file.write (annotation_track + "\n")
-           
-        for row in self.data: 
-            track_file.write('\t'.join(str(i) for i in row))
-            track_file.write("\n")      
-        track_file.close()
-          
-class Bed(DataIter):
+#     def save_track(self, mode="w", path=None):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
+#         
+#         if not path: 
+#             pwd = getcwd()
+#         print >> stderr, "No path selected, files dump into path: ", pwd 
+#                              
+#         if not(isinstance(self, DataIter)):
+#             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
+#         
+#         try:
+#             file_ext = _dict_file.get(self.format)[2]      
+#         except KeyError:
+#             raise ValueError("File types not supported \'%s\'"%(self.format))
+#         
+#         conc_dataTypes = self.dataTypes
+#         if isinstance(conc_dataTypes, set):
+#             conc_dataTypes="_".join(self.dataTypes)        
+#                         
+#         name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
+#         print >> stderr, "File %s generated" % name_file       
+# 
+#         track_file = open(join(pwd, name_file), mode)
+#                 
+#         #Annotation track to set the genome browser interface
+#         annotation_track = ''
+#         if self.format == 'bed':
+#             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
+#         elif self.format == 'bedGraph':
+#             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
+#         
+#             track_file.write (annotation_track + "\n")
+#            
+#         for row in self.data: 
+#             track_file.write('\t'.join(str(i) for i in row))
+#             track_file.write("\n")      
+#         track_file.close()
+              
+class Bed(TrackStream):
     """
     A dataIter object dessigned to include the fields that are specific
     of bed files
@@ -480,11 +543,10 @@ class Bed(DataIter):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
-        kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']        
+        kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']
+        TrackStream.__init__(self,data,**kwargs)
 
-        DataIter.__init__(self,data,**kwargs)
-
-class BedGraph(DataIter):
+class BedGraph(TrackStream):
     """
     dataInt class for bedGraph file format data
     
@@ -503,7 +565,7 @@ class BedGraph(DataIter):
         kwargs['format'] = 'bedGraph'
         kwargs['fields'] = ['chr','start','end','score']        
         self.color = kwargs.get('color',_blue_gradient)
-        DataIter.__init__(self,data,**kwargs)
+        TrackStream.__init__(self,data,**kwargs)
                 
 def assign_color (set_dataTypes, color_restrictions=None):
     """

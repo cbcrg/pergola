@@ -60,6 +60,7 @@ class IntData:
         self.fieldsB = self._set_fields_b(kwargs.get('fields'))
         self.fieldsG = self._set_fields_g(ontology_dict)
         self.min = self.max = 0
+        self.range_values = 0
         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
         self.tracks  =  self.get_field_items(field="track", data = self.data, default="1")
@@ -250,7 +251,18 @@ class IntData:
                              "TIP: If your file contains timepoints you can transform them to intervals" \
                              " setting the field containing them to chromStart and setting intervals=True" 
                              % (f, self.path))
-              
+        
+        # Range of dataValue field
+        p_min_data_v = None
+        p_max_data_v = None
+        
+        _start_f = ["dataValue"]
+        
+        try:
+            i_data_value = [self.fieldsG.index(f) for f in _start_f]              
+        except ValueError:
+            raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
+        
         v = 0
         p_v = 0
         first = True
@@ -307,6 +319,13 @@ class IntData:
                     else:
                         if p_max is None: p_max = v
                         if p_max < v: p_max = v
+                
+                if i in i_data_value:
+                    if p_min_data_v is None: p_min_data_v = v
+                    if p_min_data_v > v: p_min_data_v = v
+                    if p_max_data_v is None: p_max_data_v = v
+                    if p_max_data_v < v: p_max_data_v = v
+                
             if first:
                 first = False 
                 p_temp = temp
@@ -323,6 +342,8 @@ class IntData:
         
         self.min = p_min
         self.max = p_max
+        self.range = [p_min_data_v, p_max_data_v]
+        
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
         return (list_data)
@@ -425,6 +446,8 @@ class IntData:
             self.data = self._time2rel_time(idx_fields2rel)
                 
         idx_fields2int = [10000000000000]
+        
+        #TODO now fields is not doing anything!!!
         
 #         return self.data
         return DataIter(self.data, self.fieldsG, dataTypes=self.dataTypes) #TODO assess whether there is any difference in this two lines of code
