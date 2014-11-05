@@ -24,7 +24,7 @@ __version__ = '0.1'
 from pergola import printTest
 from structures import IntData
 from input import ConfigInfo
-
+# from tracks import DataIter
 
 # def readme():
 #     print "A library to visualize behavioral data in a genome browser"

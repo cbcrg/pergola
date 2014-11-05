@@ -23,6 +23,7 @@ class ConfigInfo():
         self.path = check_path(path)
         self.correspondence = self._correspondence_from_config(self.path)
     
+    #TODO documentation
     def _correspondence_from_config(self, path):
         with open(path) as config_file:
             #Eliminates possible empty lines at the end
@@ -38,7 +39,7 @@ class ConfigInfo():
             else:
                 raise TypeError("Configuration file format is not recognized: \"%s\"." % (path))
                 
-                
+    #TODO documentation            
     def _tab_config(self, file_tab):
         dict_correspondence ={}
         
@@ -47,6 +48,7 @@ class ConfigInfo():
             dict_correspondence[row_split[0]] = row_split[1]
         return (dict_correspondence)    
     
+    #TODO documentation
     def _mapping_config(self, file_map):
         dict_correspondence ={}
        
