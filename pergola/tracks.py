@@ -20,7 +20,7 @@ _dict_colors = {
                 'red' : _red_gradient,
                 'green' : _green_gradient}
 
-_intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000]
+# _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000] #del
 
 class TrackStream(object):
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
@@ -32,13 +32,10 @@ class TrackStream(object):
         
         self.data = data
         self.fields = fields
-        print "......dataTypes in DataIter are:", dataTypes#del
-        self.dataTypes = dataTypes 
-        print "......dataTypes in DataIter are:",self.dataTypes#del      
+        self.dataTypes = dataTypes     
         self.format = kwargs.get("format",'txt')
         self.track = kwargs.get('track', "1")
         self.range_values = kwargs.get('range_values', None)
-        print "...............ranges_values are here",self.range_values #del
         
     def __iter__(self):
         return self.data
@@ -121,7 +118,7 @@ class DataIter(TrackStream):
         """
         kwargs['relative_coord'] = kwargs.get("relative_coord",False)
         
-        print >> stderr, self.fields        
+#         print >> stderr, self.fields #del       
         
         if mode not in _dict_file: 
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
@@ -205,7 +202,6 @@ class DataIter(TrackStream):
         ### Assigning data to output dictionary    
         for k, d in d_dataTypes_merge.items():
             for k_2, d_2 in d.items():
-                print "#####################",self.range_values#del
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values)
                        
         return (track_dict)
@@ -346,7 +342,7 @@ class DataIter(TrackStream):
         
 #         print "the list of ",range(float(self.range_values[0]),float(self.range_values[1]))
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 10
-        print "the list of ......................................................",list (arange(float(self.range_values[0]),float(self.range_values[1]), step))
+#         print "the list of ......................................................",list (arange(float(self.range_values[0]),float(self.range_values[1]), step))#del
         _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))   
         for row in track:
             temp_list = []

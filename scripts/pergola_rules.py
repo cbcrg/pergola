@@ -118,7 +118,7 @@ def main():
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=1000)
     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=multiply_f)
-    print "..............",intData.range
+#     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
     # intData.data although relative_coord is set does not work
@@ -139,8 +139,8 @@ def main():
     
 #     intData = intData.read(relative_coord=True)
     data_read = intData.read(relative_coord=True)
-    print "************",type (data_read.data) #list of tuples
-    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>",data_read.dataTypes
+    print "************type of data_read.data ",type (data_read.data) #list of tuples
+    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
     data_read.save_track()
     
     for i in data_read.data:
@@ -157,12 +157,12 @@ def main():
 #     bed_str =  intData.convert(relative_coord=relative_coord, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
 #     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
        
-    print bed_str
+#     print bed_str#del
     for key in bed_str:
         print "key.......: ",key
         bedSingle = bed_str[key]
         bedSingle.save_track()
-        bedSingle.convert(mode=write_format, tracks=sel_tracks) #This a problem!!! Before I was not inheriting all this functions
+#         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
         
 #         for i in bedSingle:
 #             print i 

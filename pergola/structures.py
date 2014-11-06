@@ -342,7 +342,7 @@ class IntData:
         
         self.min = p_min
         self.max = p_max
-        self.range = [p_min_data_v, p_max_data_v]
+        self.range_values = [p_min_data_v, p_max_data_v]
         
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
@@ -450,7 +450,7 @@ class IntData:
         #TODO now fields is not doing anything!!!
         
 #         return self.data
-        return DataIter(self.data, self.fieldsG, dataTypes=self.dataTypes) #TODO assess whether there is any difference in this two lines of code
+        return DataIter(self.data, self.fieldsG, dataTypes=self.dataTypes, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
 
     def _time2rel_time(self, i_fields):
         """
