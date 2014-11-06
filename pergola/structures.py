@@ -5,7 +5,7 @@ from os.path import join
 from sys import stderr
 # from operator import itemgetter
 # from itertools import groupby 
-from tracks import DataIter 
+from tracks import Track 
 
 _genome_file_ext = ".fa"
 _generic_nt = "N"
@@ -450,7 +450,7 @@ class IntData:
         #TODO now fields is not doing anything!!!
         
 #         return self.data
-        return DataIter(self.data, self.fieldsG, dataTypes=self.dataTypes, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
+        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
 
     def _time2rel_time(self, i_fields):
         """

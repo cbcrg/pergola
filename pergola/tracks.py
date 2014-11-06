@@ -7,7 +7,7 @@ from numpy import arange
 #Contains class and file extension
 _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
               'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
-              'txt': ('DataIter', '', '.txt')}
+              'txt': ('Track', '', '.txt')}
 
 _black_gradient = ["226,226,226", "198,198,198", "170,170,170", "141,141,141", "113,113,113", "85,85,85", "56,56,56", "28,28,28", "0,0,0"]
 _blue_gradient = ["229,229,254", "203,203,254", "178,178,254", "152,152,254", "127,127,254", "102,102,254", "76,76,173", "51,51,162", "0,0,128"]
@@ -22,7 +22,7 @@ _dict_colors = {
 
 # _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000] #del
 
-class TrackStream(object):
+class GenomicContainer(object):
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
         if isinstance(data,(tuple)):            
             data = iter(data)
@@ -49,7 +49,7 @@ class TrackStream(object):
             pwd = getcwd()
         print >> stderr, "No path selected, files dump into path: ", pwd 
                              
-        if not(isinstance(self, TrackStream)):
+        if not(isinstance(self, GenomicContainer)):
             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
         
         try:
@@ -80,9 +80,9 @@ class TrackStream(object):
             track_file.write("\n")      
         track_file.close()
     
-class DataIter(TrackStream):
+class Track(GenomicContainer):
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
-            TrackStream.__init__(self, data, fields, dataTypes, **kwargs)
+            GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 #     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
 #         if isinstance(data,(tuple)):            
 #             data = iter(data)
@@ -92,9 +92,9 @@ class DataIter(TrackStream):
 #         
 #         self.data = data
 #         self.fields = fields
-#         print "......dataTypes in DataIter are:", dataTypes#del
+#         print "......dataTypes in Track are:", dataTypes#del
 #         self.dataTypes = dataTypes 
-#         print "......dataTypes in DataIter are:",self.dataTypes#del      
+#         print "......dataTypes in Track are:",self.dataTypes#del      
 #         self.format = kwargs.get("format",'txt')
 #         self.track = kwargs.get('track', "1")
 #         self.range = kwargs.get('range', None)
@@ -498,7 +498,7 @@ class DataIter(TrackStream):
 #             pwd = getcwd()
 #         print >> stderr, "No path selected, files dump into path: ", pwd 
 #                              
-#         if not(isinstance(self, DataIter)):
+#         if not(isinstance(self, Track)):
 #             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
 #         
 #         try:
@@ -529,7 +529,7 @@ class DataIter(TrackStream):
 #             track_file.write("\n")      
 #         track_file.close()
               
-class Bed(TrackStream):
+class Bed(GenomicContainer):
     """
     A dataIter object dessigned to include the fields that are specific
     of bed files
@@ -546,9 +546,9 @@ class Bed(TrackStream):
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
         kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']
-        TrackStream.__init__(self,data,**kwargs)
+        GenomicContainer.__init__(self,data,**kwargs)
 
-class BedGraph(TrackStream):
+class BedGraph(GenomicContainer):
     """
     dataInt class for bedGraph file format data
     
@@ -567,7 +567,7 @@ class BedGraph(TrackStream):
         kwargs['format'] = 'bedGraph'
         kwargs['fields'] = ['chr','start','end','score']        
         self.color = kwargs.get('color',_blue_gradient)
-        TrackStream.__init__(self,data,**kwargs)
+        GenomicContainer.__init__(self,data,**kwargs)
                 
 def assign_color (set_dataTypes, color_restrictions=None):
     """
