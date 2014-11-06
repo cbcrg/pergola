@@ -407,7 +407,7 @@ class DataIter(TrackStream):
             chr_start = row[i_chr_start]
             chr_end = row[i_chr_end]
             data_value = float(row[i_data_value])
-            self.fieldsG.index(f) 
+            self.fields.index(f) 
             
             #Intervals happening after the current window
             #if there is a value accumulated it has to be dumped otherwise 0
