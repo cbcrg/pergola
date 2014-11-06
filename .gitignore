@@ -7,3 +7,6 @@
 /doc/_templates/*
 .project
 .pydevproject
+*.bed
+*.bedGraph
+*.txt
