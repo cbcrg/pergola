@@ -1,3 +1,11 @@
+"""
+======================
+Module: pergola.intervals
+======================
+
+.. module:: intervals
+"""
+
 from input import check_path
 from csv   import reader
 from os import getcwd
@@ -16,36 +24,50 @@ class IntData:
     Generic class for input data
     
     .. attribute:: path
+    
        Name of path to a csv/tab input file
     
     .. attribute:: delimiter
+    
        Character use to separate values of the same record in file (default "\t").
     
     .. attribute:: header
+    
        Indicates the presence of a header.
        * `False` if there is no header. Fields should the be provided using fields param
        * `True` if the file have a header line with names. This names should match names in ontology_dict (default).
     
     .. attribute:: fieldsB
+    
         List with the behavioral fields corresponding each column in the file
     
     .. attribute:: fieldsG
-        List with the genimic fields corresponding each column in the file    
     
-    .. attribute:: data
-        List of tuples containing the data read from the file
+        List with the genomic fields corresponding each column in the file    
     
     .. attribute:: min
+    
         First time value in the file. Read from field set as "chromStart"
     
     .. attribute:: max
+    
         Last timepoint in the file. Read from field set as "chromEnd"
     
+    .. attribute:: range_values
+    
+        Range of values inside dataValue field
+        
+    .. attribute:: data
+    
+        List of tuples containing the data read from the file
+    
     .. attribute:: dataTypes
+    
         All different dataTypes that appear in the data read from "dataTypes" field.
         If dataTypes field not in file, all intervals are set as belonging to dataTypes "a"
 
     .. attribute:: tracks
+    
         Set of tracks in the file. Read from "tracks" field.
         If tracks field not in file, all intervals are set as belonging to track "1" 
         
@@ -57,7 +79,7 @@ class IntData:
         self.path = check_path(path)
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = kwargs.get('header',True)
-        self.fieldsB = self._set_fields_b(kwargs.get('fields'))
+        self.fieldsB = self._set_fields_b(kwargs.get('fields_names'))
         self.fieldsG = self._set_fields_g(ontology_dict)
         self.min = self.max = 0
         self.range_values = 0
@@ -67,7 +89,7 @@ class IntData:
         
     def _check_delimiter (self, path, delimiter):
         """ 
-        Check whether the delimiter works, if delimiter is not set then tries ' ', '\t' and ';'
+        Check whether the set delimiter works, if delimiter not set then tries ' ', '\t' and ';'
          
         :param path: :py:func:`str` name of path to a behavioral file in the form of a csv file
         :param delimiter: :py:func:`str` delimiter used in the file ("tab", ";", "space") 
@@ -393,7 +415,7 @@ class IntData:
     
     
     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
-        """
+        """        
         Reads the data and converts it depending on selected options
         
         :param fields: :py:func:`list` with data columns to read
@@ -404,7 +426,13 @@ class IntData:
         :param fields2rel: :py:func:`list` with data columns to make relative
         :param 1 multiply: :py:func:`int` multiplies the values of the field set as chromStart and 
             chromEnd
-            
+        
+        A ver si esto funciona aqui :py:mod:`structures._read`
+        
+        :mod:`pickle`
+        
+        :mod:`pickle`
+        :func:`list`    
         :return: self.data
         
         """
