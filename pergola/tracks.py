@@ -162,7 +162,7 @@ class GenomicContainer(object):
         elif self.format == 'bedGraph':
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
         
-            track_file.write (annotation_track + "\n")
+        track_file.write (annotation_track + "\n")
            
         for row in self.data: 
             track_file.write('\t'.join(str(i) for i in row))
