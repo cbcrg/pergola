@@ -157,11 +157,12 @@ class GenomicContainer(object):
                 
         #Annotation track to set the genome browser interface
         annotation_track = ''
+        
         if self.format == 'bed':
             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
         elif self.format == 'bedGraph':
-            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
-        
+            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
+
         track_file.write (annotation_track + "\n")
            
         for row in self.data: 
@@ -212,7 +213,8 @@ class Track(GenomicContainer):
             
         :returns: dictionary of tracks
         
-        """   
+        """
+           
         dict_split = {}
         
         ### Data is separated by track and dataTypes
@@ -224,6 +226,9 @@ class Track(GenomicContainer):
                 dict_split [key[0]] = {}
             dict_split [key[0]][key[1]] = tuple(group)
         
+        #Generate dictionary of original fields and color gradients
+        _dict_col_grad = assign_color (self.dataTypes)
+        print _dict_col_grad
         ### Tracks not set in tracks option are filtered out
         sel_tracks = []
         if not kwargs.get('tracks'):
@@ -275,7 +280,10 @@ class Track(GenomicContainer):
         ### Assigning data to output dictionary    
         for k, d in d_dataTypes_merge.items():
             for k_2, d_2 in d.items():
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values)
+#                 print _dict_col_grad[k_2], k_2#del
+#                 color_grad = _dict_col_grad[k_2]
+#                 print color#del
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
                        
         return (track_dict)
     
@@ -375,6 +383,7 @@ class Track(GenomicContainer):
         #know all original dataTypes to display them with different colors
         if mode == 'bedGraph':
             self.dataTypes = new_dataTypes
+            _dict_col_grad = assign_color (self.dataTypes)
 
         return (d_dataTypes_merge)
     
@@ -600,10 +609,10 @@ class BedGraph(GenomicContainer):
     :returns: BedGraph object  
           
     """
-    def __init__(self,data,**kwargs):
+    def __init__(self, data, **kwargs):
         kwargs['format'] = 'bedGraph'
         kwargs['fields'] = ['chr','start','end','score']        
-        self.color = kwargs.get('color',_blue_gradient)
+        self.color_gradient = kwargs.get('color',_blue_gradient)
         GenomicContainer.__init__(self,data,**kwargs)
                 
 def assign_color (set_dataTypes, color_restrictions=None):
@@ -646,5 +655,5 @@ def assign_color (set_dataTypes, color_restrictions=None):
             print ("Data type color gradient already set '%s'."%(dataType))
         else:
             d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
-            
+    print ".........", d_dataType_color      
     return d_dataType_color
