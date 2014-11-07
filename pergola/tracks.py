@@ -449,14 +449,14 @@ class Track(GenomicContainer):
     def track_convert2bedGraph(self, track, in_call=False, window=300):
         """
         Converts a single data belonging to a single track in a list of tuples in
-            an object of class BedGraph. The data is grouped in time windows.
+        an object of class BedGraph. The data is grouped in time windows.
             
-            :param track: :py:func:`list` of tuples containing data of a single track
-            :param False in_call: If False the call to the function is from the user otherwise
-                is from inside :py:func: `convert2single_track()`
-            :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
+        :param track: :py:func:`list` of tuples containing data of a single track
+        :param False in_call: If False the call to the function is from the user otherwise
+            is from inside :py:func: `convert2single_track()`
+        :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
                  
-            :returns: BedGraph object
+        :returns: BedGraph object
         """
         
         #This fields are mandatory in objects of class BedGraph
@@ -577,9 +577,10 @@ class Track(GenomicContainer):
 class Bed(GenomicContainer):
     """
     A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
-    fields and features of bed files
+    fields and features of **bed files**
     
-    Default fields are::
+    Default fields are
+        ::
         
          ['chr','start','end','name','score','strand',
           'thick_start','thick_end','item_rgb']
@@ -597,12 +598,13 @@ class Bed(GenomicContainer):
 class BedGraph(GenomicContainer):
     """
     A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
-    fields and features of bedGraph files
+    fields and features of **bedGraph files**
     
     .. attribute:: color
        Gradient of colors that assign by value to display in the genome browser
        
-    Default fields are::
+    Default fields are
+        ::
         
          ['chr','start','end', 'score']
     
@@ -617,16 +619,27 @@ class BedGraph(GenomicContainer):
                 
 def assign_color (set_dataTypes, color_restrictions=None):
     """
-    Assign colors to fields by default , it is optional to set given color to given fields, for example set water to blue
-    different data types get a different color in a circular manner
+    Assign colors to fields randomly. It is optional to set given color to given 
+    dataTypes,  a restricted color will no be used for the remaining dataTypes.
     
-    :param set_dataTypes: (list) each of the fields that should be linked to colors
-    :param color_restrictions: (dict) fields with colors set by the user
+    :param set_dataTypes: :py:func:`set` containing dataTypes names that should 
+        be linked to color gradient
+    :param color_restrictions: A :py:func:`dict` that has as key dataTypes and as  
+        values colors that are set by the user          
+        ::  
+        
+            {'dataType': 'black'}
+            
+        Possible color gradients are
+        ::
+         
+             'black', 'blue', 'red', 'green' 
     
-    
-    :returns: d_dataType_color dictionary with dataTypes as keys and colors as values
+    :returns: d_dataType_color dictionary with dataTypes as keys and color gradients
+        as values
     
     """
+    print "is a set or a list",set_dataTypes
     d_dataType_color = {}
     colors_not_used = []
     
