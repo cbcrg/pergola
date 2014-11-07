@@ -6,7 +6,7 @@ Module: pergola.tracks
 .. module:: tracks
 
 This module  provides the structures to keep the data in genomic format.
-It provides a generic class :class:`~pergola.tracks.GenomicContainer` which have 
+It provides a generic class :class:`~pergola.tracks.GenomicContainer` which has 
 the general attributes and methods shared by all the other subclasses. 
 
 These subclasses provide special features for each type of data and are:
@@ -42,6 +42,7 @@ from os.path import join
 from operator import itemgetter
 from itertools import groupby
 from numpy import arange 
+
 #Contains class and file extension
 _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
               'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
@@ -62,16 +63,35 @@ _dict_colors = {
 
 class GenomicContainer(object):
     """
-    This class is not documented by the moment
+    This class provides the general attributes and methods shared by all the other
+    subclasses that contain the data after being read :func:`pergola.intervals.IntData.read`
+    or converted by :py:func:`pergola.tracks.Track.convert`
 
-    attributes and methods shared by all the other subclasses. These subclasses
-    provide special features for each type of data and are:
+    .. attribute:: data
     
+       Iterator yielding record of the genomic data
     
+    .. attribute:: fields
     
-    The documentation says this class is super 
-    Can I reference :class:`GenomicContainer`
+       List of name of each of the fields contained in records of data
     
+    .. attribute:: format
+       
+       Format to write file (extension) 
+    
+    .. attribute:: track
+       
+       String with the name of the track
+    
+    .. attribute:: range_values
+       
+       Range of values inside dataValue field
+       
+    ..
+       Indicates the presence of a header.
+       * `False` if there is no header. Fields should the be provided using fields param
+       * `True` if the file have a header line with names. This names should match names in ontology_dict (default).
+        
     """
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
         if isinstance(data,(tuple)):            
@@ -91,9 +111,26 @@ class GenomicContainer(object):
         return self.data
 
     def next(self):
+        """
+        
+        :return: next item in iterator
+         
+        """
         return self.data.next()
     
-    def save_track(self, mode="w", path=None):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
+    def save_track(self, mode="w", path=None):
+        """
+        Save the data in a file of format set by *self.format* 
+        
+        :param "w" mode: :py:func:`str` Only implemented write 'w' (default). 
+        
+        :param None path: Path to create file, py:func:`str`. If None (default) the 
+            file is dumped in the current working directory and prints a warning.  
+        
+        :return: Void
+        
+        
+        """
         
         if not path: 
             pwd = getcwd()
@@ -138,27 +175,6 @@ class Track(GenomicContainer):
     """
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
             GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
-#     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
-#         if isinstance(data,(tuple)):            
-#             data = iter(data)
-#         
-#         if not fields:
-#             raise ValueError("Must specify a 'fields' attribute for %s." % self.__str__())
-#         
-#         self.data = data
-#         self.fields = fields
-#         print "......dataTypes in Track are:", dataTypes#del
-#         self.dataTypes = dataTypes 
-#         print "......dataTypes in Track are:",self.dataTypes#del      
-#         self.format = kwargs.get("format",'txt')
-#         self.track = kwargs.get('track', "1")
-#         self.range = kwargs.get('range', None)
-#         
-#     def __iter__(self):
-#         return self.data
-# 
-#     def next(self):
-#         return self.data.next()
 
     def convert(self, mode='bed', **kwargs):
         """
