@@ -91,6 +91,8 @@ class GenomicContainer(object):
        Indicates the presence of a header.
        * `False` if there is no header. Fields should the be provided using fields param
        * `True` if the file have a header line with names. This names should match names in ontology_dict (default).
+       
+    :returns: GenomicContainer object
         
     """
     def __init__(self, data, fields=None, dataTypes=None, **kwargs):
@@ -113,7 +115,7 @@ class GenomicContainer(object):
     def next(self):
         """
         
-        :return: next item in iterator
+        :returns: next item in iterator
          
         """
         return self.data.next()
@@ -127,7 +129,7 @@ class GenomicContainer(object):
         :param None path: Path to create file, py:func:`str`. If None (default) the 
             file is dumped in the current working directory and prints a warning.  
         
-        :return: Void
+        :returns: Void
         
         
         """
@@ -184,7 +186,7 @@ class Track(GenomicContainer):
         :param bed mode: class of the output objects returned set to `bed` by
             default
                 
-        :return: dictionary containing object/s of the class set by mode 
+        :returns: dictionary containing object/s of the class set by mode 
         
         """
         kwargs['relative_coord'] = kwargs.get("relative_coord",False)
@@ -208,7 +210,7 @@ class Track(GenomicContainer):
         :param data_tuples: list of tuples containing data
         :param None mode: class of each single track that will be hold in dictionary
             
-        :return: dictionary of tracks
+        :returns: dictionary of tracks
         
         """   
         dict_split = {}
@@ -287,7 +289,7 @@ class Track(GenomicContainer):
             of these tracks
         :param tracks2remove: :py:func:`list` of tracks to remove from the dict_t
              
-        :return: dict_t dictionary, that contains the remaining tracks
+        :returns: dict_t dictionary, that contains the remaining tracks
         
         #TODO I can make this function more general as remove from dictionary it can be use outside
         
@@ -310,7 +312,7 @@ class Track(GenomicContainer):
             represent each of these tracks
         :param tracks2join: :py:func:`list` of tracks to join in a single track
              
-        :return: d_track_merge dictionary that contains the joined tracks
+        :returns: d_track_merge dictionary that contains the joined tracks
         
         TODO What if I give to the function only some tracks to join, what happen
             to the remaining tracks
@@ -350,7 +352,7 @@ class Track(GenomicContainer):
         :param mode: :py:func:`str` class of the object that is going to be 
             generated
              
-        :return: d_dataTypes_merge dictionary that contains the joined tracks
+        :returns: d_dataTypes_merge dictionary that contains the joined tracks
          
         """
         d_dataTypes_merge = {}
@@ -378,15 +380,15 @@ class Track(GenomicContainer):
     
     def track_convert2bed(self, track, in_call=False, restricted_colors=None, **kwargs):
         """
-        Converts a single data belonging to a single track in a list of tuples in
+        Converts data belonging to a single track (in the form of a list of tuples) in
         an object of class Bed
         
         :param track: :py:func:`list` of tuples containing data of a single track
         :param False in_call: If False the call to the function is from the user otherwise
             is from inside :py:func: `convert2single_track()`
         :param None restricted_colors: Set colors not to be used #TODO this is not clear example??
-             
-        :return: Bed object
+                
+        :returns: Bed object
         
         """
         
@@ -411,10 +413,10 @@ class Track(GenomicContainer):
         #Generate dictionary of field and color gradients
         _dict_col_grad = assign_color (self.dataTypes)
         
-#         print "the list of ",range(float(self.range_values[0]),float(self.range_values[1]))
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 10
-#         print "the list of ......................................................",list (arange(float(self.range_values[0]),float(self.range_values[1]), step))#del
+
         _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))   
+
         for row in track:
             temp_list = []
             temp_list.append("chr1")
@@ -445,7 +447,7 @@ class Track(GenomicContainer):
                 is from inside :py:func: `convert2single_track()`
             :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
                  
-            :return: BedGraph object
+            :returns: BedGraph object
         """
         
         #This fields are mandatory in objects of class BedGraph
@@ -562,89 +564,40 @@ class Track(GenomicContainer):
         temp_list.append(end_window)
         temp_list.append(data_value)
         yield(tuple(temp_list))
-        
-#     def save_track(self, mode="w", path=None):#modify maybe I have to change the method name now is the same as the os.write()??? #TODO
-#         
-#         if not path: 
-#             pwd = getcwd()
-#         print >> stderr, "No path selected, files dump into path: ", pwd 
-#                              
-#         if not(isinstance(self, Track)):
-#             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
-#         
-#         try:
-#             file_ext = _dict_file.get(self.format)[2]      
-#         except KeyError:
-#             raise ValueError("File types not supported \'%s\'"%(self.format))
-#         
-#         conc_dataTypes = self.dataTypes
-#         if isinstance(conc_dataTypes, set):
-#             conc_dataTypes="_".join(self.dataTypes)        
-#                         
-#         name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
-#         print >> stderr, "File %s generated" % name_file       
-# 
-#         track_file = open(join(pwd, name_file), mode)
-#                 
-#         #Annotation track to set the genome browser interface
-#         annotation_track = ''
-#         if self.format == 'bed':
-#             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
-#         elif self.format == 'bedGraph':
-#             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + '\"description=' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color[7] + ' altColor=' + self.color[8] + ' priority=20'        
-#         
-#             track_file.write (annotation_track + "\n")
-#            
-#         for row in self.data: 
-#             track_file.write('\t'.join(str(i) for i in row))
-#             track_file.write("\n")      
-#         track_file.close()
-              
+                      
 class Bed(GenomicContainer):
     """
-    A dataIter object dessigned to include the fields that are specific
-    of bed files
+    A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
+    fields and features of bed files
     
-    needs :class:`Track`.
-
-    needs :func:`read`.`read`. #del
-    
-    .. function:: pyfunc()
-
-       Describes a Python function.
-
-    Reference to :func:`pyfunc`.
-    
-    
-    
-
-    Specific fields used are::
+    Default fields are::
         
          ['chr','start','end','name','score','strand',
           'thick_start','thick_end','item_rgb']
     
-    :return: Bed object
-     
+    :returns: Bed object    
         
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
-        kwargs['fields'] = ['chr','start','end','name','score','strand','thick_start','thick_end','item_rgb']
+        kwargs['fields'] = ['chr','start','end','name','score','strand',
+                            'thick_start','thick_end','item_rgb']
+        
         GenomicContainer.__init__(self,data,**kwargs)
 
 class BedGraph(GenomicContainer):
     """
-    dataInt class for bedGraph file format data
+    A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
+    fields and features of bedGraph files
     
     .. attribute:: color
        Gradient of colors that assign by value to display in the genome browser
        
-    Fields used in this application are:
+    Default fields are::
         
          ['chr','start','end', 'score']
     
-    :return: BedGraph object  
-
+    :returns: BedGraph object  
           
     """
     def __init__(self,data,**kwargs):
@@ -655,15 +608,14 @@ class BedGraph(GenomicContainer):
                 
 def assign_color (set_dataTypes, color_restrictions=None):
     """
-    Assign colors to fields, it is optional to set given color to given fields, for example set water to blue
+    Assign colors to fields by default , it is optional to set given color to given fields, for example set water to blue
     different data types get a different color in a circular manner
     
     :param set_dataTypes: (list) each of the fields that should be linked to colors
     :param color_restrictions: (dict) fields with colors set by the user
     
-
     
-    :return: d_dataType_color dictionary with dataTypes as keys and colors as values
+    :returns: d_dataType_color dictionary with dataTypes as keys and colors as values
     
     """
     d_dataType_color = {}
