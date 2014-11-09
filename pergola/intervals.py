@@ -14,7 +14,7 @@ to map tracks that are genereted by the application
 
 """
 
-from input import check_path
+from mapping import check_path
 from csv   import reader
 from os import getcwd
 from os.path import join
