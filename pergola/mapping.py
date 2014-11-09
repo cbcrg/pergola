@@ -4,7 +4,7 @@
 """
 from re import match
 
-class ConfigInfo(): #cambiar ontologyInfo y quiza la libreria mapping
+class OntologyInfo(): #cambiar ontologyInfo y quiza la libreria mapping
     """
     Class holds a dictionary with the ontology between the genomic fields and the phenomics fields
     Ontology can be read both from a tabulated file or a ontology format file 

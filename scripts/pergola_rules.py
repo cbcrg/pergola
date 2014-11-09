@@ -6,8 +6,8 @@
 Script to run pergola from the command line
 """
 
-from pergola  import structures
-from pergola  import input
+from pergola  import intervals
+from pergola  import mapping
 # from pergola  import tracks
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr
@@ -40,7 +40,7 @@ def main():
     parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
                         default=False, help='Sets first timepoint' \
                         ' to 0 and make all the others relative to this timepoint')
-    parser.add_argument('-n', '--intervals', required=False, action='store_true', default=False,
+    parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', default=False,
                         help='Set startChrom and endChrom from just a timepoint in the file' \
                              'using field set as startChrom')
     parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
@@ -48,15 +48,15 @@ def main():
     
     args = parser.parse_args()
     
-    print >> stderr, "Input file: %s" % args.input 
-    print >> stderr, "Configuration file: %s" % args.ontology_file
-    print >> stderr, "@@@Pergola_rules.py Selected tracks are: ", args.tracks
+    print >> stderr, "@@@Pergola_rules.py: Input file: %s" % args.input 
+    print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % args.ontology_file
+    print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", args.tracks
     
     path = args.input
     
     #Configuration file
     ontol_file_path = args.ontology_file
-    ontol_file_dict = input.ConfigInfo(ontol_file_path)
+    ontol_file_dict = mapping.OntologyInfo(ontol_file_path)
     
     #Tracks selected by user
     sel_tracks = args.tracks 
@@ -97,17 +97,17 @@ def main():
                         " to default value:", write_format
      
     # Handling relative coordinates
-    print >> stderr, "Relative coordinates set to: %s" % args.relative_coord
+    print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to: %s" % args.relative_coord
     relative_coord = args.relative_coord
     
-    # Handling intervals
-    print >> stderr, "Intervals parameter set to: %s" % args.intervals
-    intervals = args.intervals
+    # Handling intervals_gen
+    print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to: %s" % args.intervals_gen
+    intervals_gen = args.intervals_gen
     
     # Handling multiply_factor
     multiply_f = args.multiply_factor
     if multiply_f:
-        print >>stderr, "Multiply factor parameter set to: %s" % args.multiply_factor                        
+        print >>stderr, "@@@Pergola_rules.py: Multiply factor parameter set to: %s" % args.multiply_factor                        
     else:
         multiply_f = 1
         
@@ -116,8 +116,9 @@ def main():
 #                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
-#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=1000)
-    intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals, multiply_t=multiply_f)
+#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=1000)
+#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
+    intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
@@ -135,10 +136,13 @@ def main():
 #     print "::::::::", intData.data
 
     
-#     structures.write_chr (intData)#mantain
+    intervals.write_chr (intData)#mantain
     
 #     intData = intData.read(relative_coord=True)
     data_read = intData.read(relative_coord=True)
+    
+#     intData.read(self, fields=None, relative_coord=False, intervals_gen=False, fields2rel=None, multiply_t=1,**kwargs):
+    
     print "************type of data_read.data ",type (data_read.data) #list of tuples
     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
     data_read.save_track()
@@ -161,13 +165,14 @@ def main():
     for key in bed_str:
         print "key.......: ",key
         bedSingle = bed_str[key]
+#         print "::::::::::::::",bedSingle.dataTypes
         bedSingle.save_track()
 #         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
         
 #         for i in bedSingle:
 #             print i 
 #     print intData.fieldsG                                   
-#     iter=intData.read(intervals=True)
+#     iter=intData.read(intervals_gen=True)
 #buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
     
 #     for  i in iter:
