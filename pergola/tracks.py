@@ -21,19 +21,6 @@ for Bed files.
 :py:class:`~pergola.tracks.BedGraph` :class:`~pergola.tracks.GenomicContainer` class 
 for BedGraph files.
 
-
-
-.. note:: This is a example of how to refer to function and classed do not delete
-.. note:: This module is :mod:`tracks`
-.. note:: Can I reference :func:`tracks.read`
-.. note:: Can I reference :py:class:`~pergola.tracks.GenomicContainer`
-
-
-I need to include in code.rst
-.. note:: .. automodule:: pergola.tracks
-.. note::   :members: read, GenomicContainer
-   
-.. note:: blabla
 """
 
 from os  import getcwd
@@ -668,5 +655,5 @@ def assign_color (set_dataTypes, color_restrictions=None):
             print ("Data type color gradient already set '%s'."%(dataType))
         else:
             d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
-    print ".........", d_dataType_color      
+    
     return d_dataType_color
