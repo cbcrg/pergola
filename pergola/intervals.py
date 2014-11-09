@@ -9,8 +9,6 @@ This module provides the way to read the input intervals files.
 It contains a class :class:`~pergola.intervals.IntData` which has 
 the attributes and methods needed for reading the data.
 
-These subclasses provide special features for each type of data and are:
- 
 :py:func:`~pergola.intervals.write_chr` generates a chromosome fasta file
 to map tracks that are genereted by the application
 
