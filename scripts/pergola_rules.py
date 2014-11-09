@@ -136,7 +136,7 @@ def main():
 #     print "::::::::", intData.data
 
     
-    intervals.write_chr (intData)#mantain
+    mapping.write_chr (intData)#mantain
     
 #     intData = intData.read(relative_coord=True)
     data_read = intData.read(relative_coord=True)

@@ -13,7 +13,13 @@ from a ontology file.
  
 """
 
-from re import match
+from re      import match
+from os      import getcwd
+from sys     import stderr
+from os.path import join
+
+_genome_file_ext = ".fa"
+_generic_nt = "N"
 
 class OntologyInfo(): #cambiar ontologyInfo y quiza la libreria mapping
     """
@@ -96,3 +102,26 @@ def check_path(path):
     except IOError:
         raise IOError('File does not exist: %s' % path)
     return path      
+
+def write_chr(self, mode="w", path_w=None):
+    """
+    
+    Creates a fasta file of the length of the range of value inside the IntData object
+    that will be use for the mapping the data into it
+    
+    :param mode: :py:func:`str` mode to use by default write 
+    
+    """
+    chrom = 'chr1'
+    
+    if not path_w: 
+        pwd = getcwd()
+        print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (pwd)
+
+    genomeFile = open(join(pwd, chrom + _genome_file_ext), mode)        
+    genomeFile.write(">" + chrom + "\n")
+    genomeFile.write (_generic_nt * (self.max - self.min))
+    genomeFile.close()
+    print >>stderr, 'Genome fasta file created: %s' % (pwd + chrom + _genome_file_ext)
+      
