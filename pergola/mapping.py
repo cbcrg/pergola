@@ -1,7 +1,18 @@
 """
-30 Oct 2014
+=======================
+Module: pergola.mapping
+=======================
 
+.. module:: mapping
+
+This module  provides the class and functions to map the fields of input files 
+into genomic fields.
+
+It provides a class :class:`~pergola.mapping.OntologyInfo` that reads the information
+from a ontology file.
+ 
 """
+
 from re import match
 
 class OntologyInfo(): #cambiar ontologyInfo y quiza la libreria mapping
