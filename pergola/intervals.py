@@ -313,7 +313,7 @@ class IntData:
                     try:
                         float(interv[i])
                     except ValueError:
-                        raise ValueError("Values in dataValue should be numerical not others: %s.\n" %
+                        raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
                                           interv[i]) 
                 
                 if i in idx_fields2mult and i in idx_fields2int:                                                             
