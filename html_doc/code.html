@@ -1,0 +1,650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AUTO GENERATED DOCUMENTATION &mdash; Pergola 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Pergola 0.1.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to Pergola’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Pergola’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pergola 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pergola">
+<span id="auto-generated-documentation"></span><h1>AUTO GENERATED DOCUMENTATION<a class="headerlink" href="#module-pergola" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>Pergola is a set of python modules for transforming your data in data visualizable
+in common genome browser</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>Pergola is released under the GNU General Public License 3.0. A copy
+of this license is in the LICENSE file.</p>
+</div>
+<span class="target" id="module-pergola.intervals"></span><div class="section" id="module-intervals">
+<span id="module-pergola-intervals"></span><h2>Module: pergola.intervals<a class="headerlink" href="#module-intervals" title="Permalink to this headline">¶</a></h2>
+<p>This module provides the way to read the input intervals files.
+It contains a class <a class="reference internal" href="#pergola.intervals.IntData" title="pergola.intervals.IntData"><code class="xref py py-class docutils literal"><span class="pre">IntData</span></code></a> which has 
+the attributes and methods needed for reading the data.</p>
+<p><code class="xref py py-func docutils literal"><span class="pre">write_chr()</span></code> generates a chromosome fasta file
+to map tracks that are genereted by the application</p>
+</div>
+<dl class="class">
+<dt id="pergola.intervals.IntData">
+<em class="property">class </em><code class="descclassname">pergola.intervals.</code><code class="descname">IntData</code><span class="sig-paren">(</span><em>path</em>, <em>ontology_dict</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/intervals.html#IntData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.intervals.IntData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic class for input data</p>
+<dl class="attribute">
+<dt id="intervals.IntData.path">
+<code class="descname">path</code><a class="headerlink" href="#intervals.IntData.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of path to a csv/tab input file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.delimiter">
+<code class="descname">delimiter</code><a class="headerlink" href="#intervals.IntData.delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Character use to separate values of the same record in file (default &#8221;   &#8221;).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.header">
+<code class="descname">header</code><a class="headerlink" href="#intervals.IntData.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the presence of a header.
+* <cite>False</cite> if there is no header. Fields should the be provided using fields param
+* <cite>True</cite> if the file have a header line with names. This names should match names in ontology_dict (default).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.fieldsB">
+<code class="descname">fieldsB</code><a class="headerlink" href="#intervals.IntData.fieldsB" title="Permalink to this definition">¶</a></dt>
+<dd><p>List with the behavioral fields corresponding each column in the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.fieldsG">
+<code class="descname">fieldsG</code><a class="headerlink" href="#intervals.IntData.fieldsG" title="Permalink to this definition">¶</a></dt>
+<dd><p>List with the genomic fields corresponding each column in the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.min">
+<code class="descname">min</code><a class="headerlink" href="#intervals.IntData.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>First time value in the file. Read from field set as &#8220;chromStart&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.max">
+<code class="descname">max</code><a class="headerlink" href="#intervals.IntData.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last timepoint in the file. Read from field set as &#8220;chromEnd&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.range_values">
+<code class="descname">range_values</code><a class="headerlink" href="#intervals.IntData.range_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range of values inside dataValue field</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.data">
+<code class="descname">data</code><a class="headerlink" href="#intervals.IntData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tuples containing the data read from the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.dataTypes">
+<code class="descname">dataTypes</code><a class="headerlink" href="#intervals.IntData.dataTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>All different dataTypes that appear in the data read from &#8220;dataTypes&#8221; field.
+If dataTypes field not in file, all intervals are set as belonging to dataTypes &#8220;a&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="intervals.IntData.tracks">
+<code class="descname">tracks</code><a class="headerlink" href="#intervals.IntData.tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of tracks in the file. Read from &#8220;tracks&#8221; field.
+If tracks field not in file, all intervals are set as belonging to track &#8220;1&#8221;</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">IntData object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pergola.intervals.IntData.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>fields=None</em>, <em>relative_coord=False</em>, <em>intervals=False</em>, <em>fields2rel=None</em>, <em>multiply_t=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/intervals.html#IntData.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.intervals.IntData.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the data and converts it depending on selected options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fields</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
+<li><strong>relative_coord</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in chromStart and chromEnd are
+make relative to the minimal value</li>
+<li><strong>intervals</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
+chromStart</li>
+<li><strong>fields2rel</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
+<li><strong>multiply</strong> (<em>1</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as chromStart and 
+chromEnd</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self.data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pergola.mapping"></span><div class="section" id="module-mapping">
+<span id="module-pergola-mapping"></span><h2>Module: pergola.mapping<a class="headerlink" href="#module-mapping" title="Permalink to this headline">¶</a></h2>
+<p>This module  provides the class and functions to map the fields of input files 
+into genomic fields.</p>
+<p>It provides a class <a class="reference internal" href="#pergola.mapping.OntologyInfo" title="pergola.mapping.OntologyInfo"><code class="xref py py-class docutils literal"><span class="pre">OntologyInfo</span></code></a> that reads the information
+from a ontology file.</p>
+<dl class="function">
+<dt id="pergola.mapping.write_chr">
+<code class="descclassname">pergola.mapping.</code><code class="descname">write_chr</code><span class="sig-paren">(</span><em>self</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/mapping.html#write_chr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.write_chr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a fasta file of the length of the range of value inside the IntData object
+that will be use for the mapping the data into it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pergola.mapping.check_path">
+<code class="descclassname">pergola.mapping.</code><code class="descname">check_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/mapping.html#check_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.check_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether the input file exists and is accessible and if OK returns path
+:param path: path to the intervals file</p>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="pergola.mapping.OntologyInfo">
+<em class="property">class </em><code class="descclassname">pergola.mapping.</code><code class="descname">OntologyInfo</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/mapping.html#OntologyInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.OntologyInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class holds a dictionary with the ontology between the genomic fields and the phenomics fields
+Ontology can be read both from a tabulated file or a ontology format file</p>
+<dl class="attribute">
+<dt id="mapping.OntologyInfo.path">
+<code class="descname">path</code><a class="headerlink" href="#mapping.OntologyInfo.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of/path to a configuration file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mapping.OntologyInfo.correspondence">
+<code class="descname">correspondence</code><a class="headerlink" href="#mapping.OntologyInfo.correspondence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary with keys fields in behavioral file and values correspondence in genomic grammar</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ConfigInfo object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pergola.mapping.OntologyInfo.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/mapping.html#OntologyInfo.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.OntologyInfo.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes correspondence between the genomic and the behavioral data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>0</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> set indent to be used when writing</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pergola.tracks"></span><div class="section" id="module-tracks">
+<span id="module-pergola-tracks"></span><h2>Module: pergola.tracks<a class="headerlink" href="#module-tracks" title="Permalink to this headline">¶</a></h2>
+<p>This module  provides the structures to keep the data in genomic format.
+It provides a generic class <a class="reference internal" href="#pergola.tracks.GenomicContainer" title="pergola.tracks.GenomicContainer"><code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></a> which has 
+the general attributes and methods shared by all the other subclasses.</p>
+<p>These subclasses provide special features for each type of data and are:</p>
+<p><a class="reference internal" href="#pergola.tracks.Track" title="pergola.tracks.Track"><code class="xref py py-class docutils literal"><span class="pre">Track</span></code></a> objects are generated by
+<a class="reference internal" href="#pergola.intervals.IntData.read" title="pergola.intervals.IntData.read"><code class="xref py py-func docutils literal"><span class="pre">pergola.intervals.IntData.read()</span></code></a> and hold the parsed and manipulated
+data as an iterator and the attributes generated when reading file</p>
+<p><a class="reference internal" href="#pergola.tracks.Bed" title="pergola.tracks.Bed"><code class="xref py py-class docutils literal"><span class="pre">Bed</span></code></a> <a class="reference internal" href="#pergola.tracks.GenomicContainer" title="pergola.tracks.GenomicContainer"><code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></a> class 
+for Bed files.</p>
+<p><a class="reference internal" href="#pergola.tracks.BedGraph" title="pergola.tracks.BedGraph"><code class="xref py py-class docutils literal"><span class="pre">BedGraph</span></code></a> <a class="reference internal" href="#pergola.tracks.GenomicContainer" title="pergola.tracks.GenomicContainer"><code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></a> class 
+for BedGraph files.</p>
+<dl class="function">
+<dt id="pergola.tracks.assign_color">
+<code class="descclassname">pergola.tracks.</code><code class="descname">assign_color</code><span class="sig-paren">(</span><em>set_dataTypes</em>, <em>color_restrictions=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#assign_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.assign_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign colors to fields randomly. It is optional to set given color to given 
+dataTypes,  a restricted color will no be used for the remaining dataTypes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>set_dataTypes</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> containing dataTypes names that should 
+be linked to color gradient</li>
+<li><strong>color_restrictions</strong> &#8211; <p>A <code class="xref py py-func docutils literal"><span class="pre">dict()</span></code> that has as key dataTypes and as  
+values colors that are set by the user</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;dataType&#39;</span><span class="p">:</span> <span class="s">&#39;black&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Possible color gradients are</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;red&#39;</span><span class="p">,</span> <span class="s">&#39;green&#39;</span> 
+</pre></div>
+</div>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">d_dataType_color dictionary with dataTypes as keys and color gradients
+as values</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="pergola.tracks.GenomicContainer">
+<em class="property">class </em><code class="descclassname">pergola.tracks.</code><code class="descname">GenomicContainer</code><span class="sig-paren">(</span><em>data</em>, <em>fields=None</em>, <em>dataTypes=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#GenomicContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.GenomicContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the general attributes and methods shared by all the other
+subclasses that contain the data after being read <a class="reference internal" href="#pergola.intervals.IntData.read" title="pergola.intervals.IntData.read"><code class="xref py py-func docutils literal"><span class="pre">pergola.intervals.IntData.read()</span></code></a>
+or converted by <a class="reference internal" href="#pergola.tracks.Track.convert" title="pergola.tracks.Track.convert"><code class="xref py py-func docutils literal"><span class="pre">pergola.tracks.Track.convert()</span></code></a></p>
+<dl class="attribute">
+<dt id="tracks.GenomicContainer.data">
+<code class="descname">data</code><a class="headerlink" href="#tracks.GenomicContainer.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator yielding record of the genomic data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tracks.GenomicContainer.fields">
+<code class="descname">fields</code><a class="headerlink" href="#tracks.GenomicContainer.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of name of each of the fields contained in records of data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tracks.GenomicContainer.format">
+<code class="descname">format</code><a class="headerlink" href="#tracks.GenomicContainer.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format to write file (extension)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tracks.GenomicContainer.track">
+<code class="descname">track</code><a class="headerlink" href="#tracks.GenomicContainer.track" title="Permalink to this definition">¶</a></dt>
+<dd><p>String with the name of the track</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tracks.GenomicContainer.range_values">
+<code class="descname">range_values</code><a class="headerlink" href="#tracks.GenomicContainer.range_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range of values inside dataValue field</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">GenomicContainer object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pergola.tracks.GenomicContainer.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#GenomicContainer.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.GenomicContainer.next" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">next item in iterator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pergola.tracks.GenomicContainer.save_track">
+<code class="descname">save_track</code><span class="sig-paren">(</span><em>mode='w'</em>, <em>path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#GenomicContainer.save_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.GenomicContainer.save_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the data in a file of format set by <em>self.format</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mode</strong> (<em>&#8220;w&#8221;</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> Only implemented write &#8216;w&#8217; (default).</li>
+<li><strong>path</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; Path to create file, py:func:<cite>str</cite>. If None (default) the 
+file is dumped in the current working directory and prints a warning.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pergola.tracks.Track">
+<em class="property">class </em><code class="descclassname">pergola.tracks.</code><code class="descname">Track</code><span class="sig-paren">(</span><em>data</em>, <em>fields=None</em>, <em>dataTypes=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is not commented</p>
+<p>inherits from <code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></p>
+<dl class="method">
+<dt id="pergola.tracks.Track.convert">
+<code class="descname">convert</code><span class="sig-paren">(</span><em>mode='bed'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track.convert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track.convert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls function to convert data (as a list of tuples) into a dictionary of 
+the one or several object of class set by mode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<em>bed</em>) &#8211; class of the output objects returned set to <cite>bed</cite> by
+default</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary containing object/s of the class set by mode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pergola.tracks.Track.join_by_dataType">
+<code class="descname">join_by_dataType</code><span class="sig-paren">(</span><em>dict_d</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track.join_by_dataType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track.join_by_dataType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join tracks by dataType</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dict_d</strong> &#8211; py:func:<cite>dict</cite> containing one or more tracks, primary key 
+are tracks id and secondary tracks are dataTypes</li>
+<li><strong>mode</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> class of the object that is going to be 
+generated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">d_dataTypes_merge dictionary that contains the joined tracks</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pergola.tracks.Track.join_by_track">
+<code class="descname">join_by_track</code><span class="sig-paren">(</span><em>dict_t</em>, <em>tracks2join</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track.join_by_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track.join_by_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join tracks by track name or id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dict_t</strong> &#8211; py:func:<cite>dict</cite> containing one or more tracks, keys 
+represent each of these tracks</li>
+<li><strong>tracks2join</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to join in a single track</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">d_track_merge dictionary that contains the joined tracks</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>TODO What if I give to the function only some tracks to join, what happen</dt>
+<dd>to the remaining tracks</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pergola.tracks.Track.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>dict_t</em>, <em>tracks2remove</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes selected tracks from a dictionary of tracks that is the input of the function those that are 
+set by tracks2remove</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dict_t</strong> &#8211; py:func:<cite>dict</cite> dictionary containing one or more tracks, keys represent each 
+of these tracks</li>
+<li><strong>tracks2remove</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to remove from the dict_t</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict_t dictionary, that contains the remaining tracks</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>#TODO I can make this function more general as remove from dictionary it can be use outside</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pergola.tracks.Track.track_convert2bed">
+<code class="descname">track_convert2bed</code><span class="sig-paren">(</span><em>track</em>, <em>in_call=False</em>, <em>restricted_colors=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track.track_convert2bed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track.track_convert2bed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts data belonging to a single track (in the form of a list of tuples) in
+an object of class Bed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>track</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
+<li><strong>in_call</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If False the call to the function is from the user otherwise
+is from inside :py:func: <cite>convert2single_track()</cite></li>
+<li><strong>restricted_colors</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; Set colors not to be used #TODO this is not clear example??</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Bed object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pergola.tracks.Track.track_convert2bedGraph">
+<code class="descname">track_convert2bedGraph</code><span class="sig-paren">(</span><em>track</em>, <em>in_call=False</em>, <em>window=300</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Track.track_convert2bedGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Track.track_convert2bedGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a single data belonging to a single track in a list of tuples in
+an object of class BedGraph. The data is grouped in time windows.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>track</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
+<li><strong>in_call</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If False the call to the function is from the user otherwise
+is from inside :py:func: <cite>convert2single_track()</cite></li>
+<li><strong>window</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> length of windows inside bedGraph file in seconds (default 300)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">BedGraph object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pergola.tracks.Bed">
+<em class="property">class </em><code class="descclassname">pergola.tracks.</code><code class="descname">Bed</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#Bed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.Bed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pergola.tracks.GenomicContainer" title="pergola.tracks.GenomicContainer"><code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></a> object designed to include specific 
+fields and features of <strong>bed files</strong></p>
+<dl class="docutils">
+<dt>Default fields are</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;chr&#39;</span><span class="p">,</span><span class="s">&#39;start&#39;</span><span class="p">,</span><span class="s">&#39;end&#39;</span><span class="p">,</span><span class="s">&#39;name&#39;</span><span class="p">,</span><span class="s">&#39;score&#39;</span><span class="p">,</span><span class="s">&#39;strand&#39;</span><span class="p">,</span>
+ <span class="s">&#39;thick_start&#39;</span><span class="p">,</span><span class="s">&#39;thick_end&#39;</span><span class="p">,</span><span class="s">&#39;item_rgb&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Bed object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pergola.tracks.BedGraph">
+<em class="property">class </em><code class="descclassname">pergola.tracks.</code><code class="descname">BedGraph</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pergola/tracks.html#BedGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.tracks.BedGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pergola.tracks.GenomicContainer" title="pergola.tracks.GenomicContainer"><code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></a> object designed to include specific 
+fields and features of <strong>bedGraph files</strong></p>
+<dl class="attribute">
+<dt id="tracks.BedGraph.color">
+<code class="descname">color</code><a class="headerlink" href="#tracks.BedGraph.color" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">Gradient of colors that assign by value to display in the genome browser</code></dt>
+<dd></dd></dl>
+
+<dl class="docutils">
+<dt>Default fields are</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;chr&#39;</span><span class="p">,</span><span class="s">&#39;start&#39;</span><span class="p">,</span><span class="s">&#39;end&#39;</span><span class="p">,</span> <span class="s">&#39;score&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BedGraph object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">AUTO GENERATED DOCUMENTATION</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#module-intervals">Module: pergola.intervals</a></li>
+<li><a class="reference internal" href="#module-mapping">Module: pergola.mapping</a></li>
+<li><a class="reference internal" href="#module-tracks">Module: pergola.tracks</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Pergola&#8217;s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/code.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Pergola’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Pergola 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Jose Espinosa-Carrasco.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b1.
+    </div>
+  </body>
+</html>
