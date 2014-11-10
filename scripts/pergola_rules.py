@@ -40,9 +40,9 @@ def main():
     parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
                         default=False, help='Sets first timepoint' \
                         ' to 0 and make all the others relative to this timepoint')
-    parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', default=False,
-                        help='Set startChrom and endChrom from just a timepoint in the file' \
-                             'using field set as startChrom')
+    parser.add_argument('-n', '--intervals_gen', required=False, metavar="INTERVALS", action='store_true', 
+                        default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
+                                            'using field set as startChrom')
     parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
                         help='Multiplies value in dataValue by the given value')
     
@@ -118,7 +118,8 @@ def main():
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=1000)
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
-    intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
+    intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, fields_names=["Time", "8 1Lever"], intervals_gen=intervals_gen, multiply_t=multiply_f)
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
