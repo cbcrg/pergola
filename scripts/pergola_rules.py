@@ -116,10 +116,12 @@ def main():
 #                         'as it has not been set using path_w' % (pwd)
     ################
     # Reading data
-#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=1000)
-#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals_gen=intervals_gen, multiply_t=multiply_f)
-    intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, fields_names=["Time", "8 1Lever"], intervals_gen=intervals_gen, multiply_t=multiply_f)
+#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
+#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+    intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
+                                fields_names=["Time", "8 1Lever"], intervals=intervals_gen, 
+                                multiply_t=multiply_f)
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
