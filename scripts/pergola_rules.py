@@ -15,7 +15,7 @@ from re       import match
 import os
 
 _dt_act_options = ['all', 'one_per_channel']
-_tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even', 'join_list'] 
+_tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
 def main():
     parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data')
@@ -94,7 +94,7 @@ def main():
     if write_format:
         print >> stderr, "@@@Pergola_rules.py format to write files: ", write_format
     else:
-        write_format='bed'
+        write_format='bed' # TODO simplify code, give default to arparse is simpler
         print >>stderr, "@@@Pergola_rules.py format to write files has been set" \
                         " to default value:", write_format
      
