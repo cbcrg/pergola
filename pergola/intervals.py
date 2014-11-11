@@ -83,7 +83,7 @@ class IntData:
         self.path = check_path(path)
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = kwargs.get('header',True)
-        self.fieldsB = self._set_fields_b(kwargs.get('fields_names'))
+        self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG = self._set_fields_g(ontology_dict)
         self.min = self.max = 0
         self.range_values = 0
@@ -298,15 +298,26 @@ class IntData:
             temp = []            
                                     
             for i in range(len(self.fieldsG)): 
-                               
+            #TODO                                   
                 # Values in idx_fields2int have to be integers
-                if i in idx_fields2int:
-                    a = int(float(interv[i]) * multiply_t)
-                    b = float(interv[i]) * multiply_t
-                    if a-b != 0:
-                        raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
-                                        "TIP: If you have to transform value from lets say " \
-                                        "seconds to miliseconds try using multiply_t.")
+#                 if i in idx_fields2int:
+#                     print interv[i]
+#                 
+#                     a = float(interv[i]) * multiply_t
+#                     print "---------", a
+#                     if a.is_integer():
+#                         pass
+#                     else:
+#                         raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
+#                                           "TIP: If you have to transform value from lets say " \
+#                                           "seconds to miliseconds try using multiply_t.")
+# #                     a = int(float(interv[i]) * multiply_t)
+#                     b = float(interv[i]) * multiply_t
+#                     print "-----", interv[i], a,b, int(float(interv[i]) * multiply_t), float(interv[i]) * multiply_t
+#                     if a-b != 0:
+#                         raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
+#                                         "TIP: If you have to transform value from lets say " \
+#                                         "seconds to miliseconds try using multiply_t.")
 
                 # Field assign to data value should be an integer or float        
                 if i in idx_dataValue:                    

@@ -45,6 +45,8 @@ def main():
                                             'using field set as startChrom')
     parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
                         help='Multiplies value in dataValue by the given value')
+    parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
+                        help='List of fields to read from input file')
     
     args = parser.parse_args()
     
@@ -110,7 +112,13 @@ def main():
         print >>stderr, "@@@Pergola_rules.py: Multiply factor parameter set to: %s" % args.multiply_factor                        
     else:
         multiply_f = 1
-        
+    
+    # Handling multiply_factor
+    fields2read = args.fields_read
+    if fields2read:
+        print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % args.fields_read                        
+    else:
+        fields2read = None    
                           
 #         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
 #                         'as it has not been set using path_w' % (pwd)
@@ -120,7 +128,7 @@ def main():
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
 #     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
-                                fields_names=["Time", "8 1Lever"], intervals=intervals_gen, 
+                                fields_names=fields2read, intervals=intervals_gen, 
                                 multiply_t=multiply_f)
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
@@ -155,7 +163,12 @@ def main():
         pass
     
     
-    bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
+    bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
+                                 dataTypes_actions=dataTypes_act)
+    
+    bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
+                                 dataTypes_actions=dataTypes_act, window=1)
+    
      
 #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
 #     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
