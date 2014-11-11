@@ -176,5 +176,34 @@ An example of a complete command line with all the options (not mutually exclusi
 pergola_rules.py -i "/path2file/input.int" -o "/path2file/ontology.txt" -t track_1 track_2 track_3 -a join_all -f bedGraph -e -n -m 1000 
 {% endhighlight bash %}
 
+## pergola module
 
+First you have to load your ontology:
+
+{% highlight python linenos %}
+from pergola  import mapping
+ontol_file_dict = mapping.OntologyInfo(path="path2file/ontology_file")
+{% endhighlight %}
+
+Once you have your ontology file load you can load your input file
+
+{% highlight python linenos %}
+from pergola  import intervals
+intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence)
+{% endhighlight %}
+
+You can create your chrom to map the resulting tracks in the genome browser in this way:
+
+{% highlight python linenos %}
+mapping.write_chr (intData)
+{% endhighlight %}
+
+You can read your data and output in the following way:
+
+{% highlight python linenos %}
+data_read = intData.read(relative_coord=True)
+
+for i in data_read.data:
+	print i
+{% endhighlight %}
 
