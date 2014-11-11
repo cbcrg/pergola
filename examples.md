@@ -1,13 +1,8 @@
 ---
 layout: default
 title: Examples
-weight: 2
+weight: 3
 ---
-
-## Examples
-
-### Using pergola_rules.py
-Pergola provides an script to run the module by the command line *pergola_rules.py*
 
 This script uses a series of flags to set its parameters:
 
@@ -60,7 +55,7 @@ CAGE	StartT	EndT	Nature	Value	Phase
 1	1335959483	1335959577	food_sc	0.04	habituation
 {% endhighlight bash %}
 
-You also need and ontology file (*ontology.txt*) that sets the relationship between the fields in *input.int* and the grammar of the genomebrowser, like the following:
+You also need and ontology file (*ontology.txt*) that sets the relationship between the fields in *input.int* and the genome browser grammar, like the following:
 
 {% highlight bash %}
 ! Mapping of behavioural fields into genome browser fields
@@ -72,6 +67,13 @@ behavioural_file:Nature > genome_file:dataTypes
 behavioural_file:Value > genome_file:dataValue
 behavioural_file:Phase > genome_file:chrom
 {% endhighlight bash %} 
+
+You can call *pergola_rules.py* as follow:
+
+{% highlight bash %}
+pergola_rules.py -i "/path2file/input.int" -o  "/path2file/ontology.txt"
+{% endhighlight bash %}
+
 
 {% highlight python linenos %}
 #!/usr/bin/env python
