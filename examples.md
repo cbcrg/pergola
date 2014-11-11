@@ -4,6 +4,18 @@ title: Examples
 weight: 3
 ---
 
+
+## General usage:
+ 
+Once you install pergola in your computer you can use in two different ways:
+
+##### 1. Calling *pergola_rules.py* a pergola script that is intalled with Pergola.
+
+##### 2. Directly write your own python scripts
+
+
+## 1. pergola_rules.py
+
 This script uses a series of flags to set its parameters:
 
 {% highlight bash %}
@@ -158,11 +170,11 @@ If your file has only timepoints and not intervals, this option allows you to ge
 
 Genome browsers only allow you to use you integers value to map, for this reason if time points for example are expressed as decimals (0.001 *s*) you can transform them to ms using *-m 1000*
 
+An example of a complete command line with all the options (not mutually exclusive) set is:
 
-N
+{% highlight bash %}
+pergola_rules.py -i "/path2file/input.int" -o "/path2file/ontology.txt" -t track_1 track_2 track_3 -a join_all -f bedGraph -e -n -m 1000 
+{% endhighlight bash %}
 
-{% highlight python linenos %}
-#!/usr/bin/env python
-import int2browser, operator, csv, argparse
-{% endhighlight %}
+
 
