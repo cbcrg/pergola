@@ -112,8 +112,6 @@ Each position of this file corresponds to the time unit we are using,  in our ex
 #### Additional parameters
 
 
-
-
 #### Using additional parameters
 
 ##### tracks
@@ -163,6 +161,31 @@ Sets first timepoint to 0 and make all the others relative to this timepoint
 ```
 
 If your file has only timepoints and not intervals, this option allows you to generate the intervals from them (the field containing timepoints must be set to startChrom in the ontology file)
+
+An example where you should use this option will be this file:
+
+{% highlight bash %}
+"Time"	"1 extraLFP"
+0	-30.98
+1	-5.19
+2	23.96
+3	-2.75
+4	12.82
+5	-8.24
+6	-20.60
+7	21.36
+8	-5.19
+{% endhighlight bash %}
+
+The only two mandatory fields in your file should be always, chromStart and dataValue, thus your ontology file should be like:
+
+{% highlight bash %}
+! Mapping of behavioural fields into genome browser fields
+!
+behavioural_file:Time > genome_file:chromStart
+behavioural_file:31 Keyboard > genome_file:dataTypes
+behavioural_file:1 extraLFP > genome_file:dataValue
+{% endhighlight bash %}
 
 ```
 -m, --multiply_factor n  
