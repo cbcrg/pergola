@@ -42,7 +42,7 @@ foo@bar$ pergola_rules.py
                         List of fields to read from input file
 {% endhighlight bash %}
 
-
+#### Simplest call
 
 The input of pergola is a csv file (*input.int*) like this one:
 
@@ -74,9 +74,95 @@ You can call *pergola_rules.py* as follow:
 pergola_rules.py -i "/path2file/input.int" -o  "/path2file/ontology.txt"
 {% endhighlight bash %}
 
+This call will generate a bed file, with the format described on the UCSC Genome Bioinformatics web site: [http://genome.ucsc.edu/FAQ/FAQformat](http://genome.ucsc.edu/FAQ/FAQformat "Bed format").
+Following our example above this will be the result:
+
+{% highlight bash %}
+track type=bed name="1_food_sc" "description=1 food_sc" visibility=2 itemRgb="On" priority=20
+chr1	522	616	food_sc	0.04	+	522	616	178,254,178
+chr1	1316	1402	food_sc	0.02	+	1316	1402	203,254,203
+chr1	1817	1845	food_sc	0.02	+	1817	1845	203,254,203
+chr1	8540	8851	food_sc	0.1	+	8540	8851	152,254,152
+chr1	8862	8914	food_sc	0.02	+	8862	8914	203,254,203
+chr1	13760	14054	food_sc	0.1	+	13760	14054	152,254,152
+chr1	18121	18511	food_sc	0.1	+	18121	18511	152,254,152
+chr1	18526	18805	food_sc	0.08	+	18526	18805	152,254,152
+chr1	18859	18942	food_sc	0.02	+	18859	18942	203,254,203
+{% endhighlight bash %} 
+
+In addition *pergola_rules.py* will generate a fasta file, simulating a chromosome. This file will be use to load our experiment in the genome browser of our choice as a genome so that we can map the generated tracks into it.
+Each position of this file corresponds to the time unit we are using,  in our example seconds, i.e. a single nucleotid will correspond to a second of our experiment.
+
+**NOTE:**
+
+	By default your file will be separated in as many tracks as different values are in field tracks and in field dataTypes. In our example for instance 4 files bed files will be generated as we have two tracks values (1 ,2) and two dataTypes (water, food_sc), thus generated files will be (tr_1_dt_food_sc.bed, tr_1_dt_water.bed, tr_2_food_sc.bed and tr_2_water.bed) 
+
+#### Additional parameters
+
+
+
+
+#### Using additional parameters
+
+##### tracks
+```
+--tracks/-t track_i track_j
+```
+
+You can set which tracks you want to read from your file if you set a tracks field in your ontology, and tracks field has more than one value (track_1, track_2)   
+
+```
+--list/-l track_i track_j
+```
+A list of all the tracks that you want to join in a single file.
+
+```
+--range/-r i j
+```
+
+If your tracks field holds numerical values (int) you can set the range of them to be joined in a single file
+ 
+```
+--a/-track_actions [split_all,join_all,join_odd,join_even,join_list]
+```
+
+Set the rule among the list to follow to join tracks in a single file. For instance join_all with join all of them, 
+
+
+**Note:**
+
+	This option is not compatible with --range/r or with --list/-l 
+
+```
+-f FORMAT, --format [bed, bedGraph]
+```
+
+Sets the format of the output file (bed, bedGraph)
+
+
+```
+-e/--relative_coord
+```
+
+Sets first timepoint to 0 and make all the others relative to this timepoint
+
+```
+-n, --intervals_gen  
+```
+
+If your file has only timepoints and not intervals, this option allows you to generate the intervals from them (the field containing timepoints must be set to startChrom in the ontology file)
+
+```
+-m, --multiply_factor n  
+```
+
+Genome browsers only allow you to use you integers value to map, for this reason if time points for example are expressed as decimals (0.001 *s*) you can transform them to ms using *-m 1000*
+
+
+N
 
 {% highlight python linenos %}
 #!/usr/bin/env python
 import int2browser, operator, csv, argparse
-
 {% endhighlight %}
+
