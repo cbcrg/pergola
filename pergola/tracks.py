@@ -409,9 +409,13 @@ class Track(GenomicContainer):
         #Generate dictionary of field and color gradients
         _dict_col_grad = assign_color (self.dataTypes)
         
-        step = (float(self.range_values[1]) - float(self.range_values[0])) / 10
+        step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
+        print "Step is ...", step
 
-        _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))   
+        _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
+        
+        print "Step is ...", _intervals
+   
 
         for row in track:
             temp_list = []
@@ -427,6 +431,9 @@ class Track(GenomicContainer):
                 if float(row[i_data_value]) <= v:
                     j = _intervals.index(v)
                     d_type = row [self.fields.index("dataTypes")]
+                    print "d_type is.-...............",d_type
+                    print "d_type is.-...............",j
+                    print "d_type is.-...............",_dict_col_grad[d_type]
                     color = _dict_col_grad[d_type][j]
                     break
             temp_list.append(color)          
