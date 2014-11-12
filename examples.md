@@ -136,12 +136,18 @@ If your tracks field holds numerical values (int) you can set the range of them 
 --a/-track_actions [split_all,join_all,join_odd,join_even,join_list]
 ```
 
-Set the rule among the list to follow to join tracks in a single file. For instance join_all with join all of them, 
+Set the rule among the list of possible arguments to follow. For instance join_all with join all tracks in a single file. 
 
 
 **Note:**
 
 	This option is not compatible with --range/r or with --list/-l 
+
+```
+-d/---dataTypes_actions [all,one_per_channel] 
+```
+
+Set the option to join dataTypes. All joins all the dataTypes in the same file and one_per_channel produce a file for each dataType.
 
 ```
 -f FORMAT, --format [bed, bedGraph]
