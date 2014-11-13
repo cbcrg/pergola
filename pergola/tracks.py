@@ -215,7 +215,7 @@ class Track(GenomicContainer):
         
         #Generate dictionary of original fields and color gradients
         _dict_col_grad = assign_color (self.dataTypes)
-        print _dict_col_grad
+        
         ### Tracks not set in tracks option are filtered out
         sel_tracks = []
         if not kwargs.get('tracks'):
@@ -408,14 +408,11 @@ class Track(GenomicContainer):
         
         #Generate dictionary of field and color gradients
         _dict_col_grad = assign_color (self.dataTypes)
-        print "range", self.range_values#del
+        
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
 
         _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
-        
-        print "Step is ...", _intervals
-   
-
+                
         for row in track:
             temp_list = []
             temp_list.append("chr1")
@@ -629,7 +626,6 @@ def assign_color (set_dataTypes, color_restrictions=None):
         as values
     
     """
-    print "is a set or a list",set_dataTypes
     d_dataType_color = {}
     colors_not_used = []
     

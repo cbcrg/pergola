@@ -381,7 +381,7 @@ class IntData:
         self.min = p_min
         self.max = p_max
         self.range_values = [p_min_data_v, p_max_data_v]
-        print "#####################", self.range_values
+        
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
         return (list_data)
