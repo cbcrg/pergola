@@ -177,7 +177,7 @@ class IntData:
                                   'an ordered list of columns names using fields')     
                 
         self.inFile.close()
-        
+        print "..............fieldsB",fieldsB
         return fieldsB
     
     def _set_fields_g (self, ontology_dict):
@@ -204,7 +204,7 @@ class IntData:
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))
-        
+        print "..............fieldsB",name_fields_g
         return name_fields_g
     
     def _read(self, multiply_t=1, intervals=False):
