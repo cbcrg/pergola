@@ -85,8 +85,8 @@ class IntData:
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = kwargs.get('header',True)
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
-#         self.fieldsG = self._set_fields_g(ontology_dict)
-        self.fieldsG = self._set_fields_g(ontology_dict)
+        self.fieldsG_dict = self._set_fields_g(ontology_dict)
+        self.fieldsG = []
         self.min = self.max = 0
         self.range_values = 0
         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
@@ -255,7 +255,7 @@ class IntData:
         
         # Field assign to data value should be an integer or float
 #         idx_dataValue = [self.fieldsG.index("dataValue")]#del
-        idx_dataValue = [self.fieldsG["dataValue"]]
+        idx_dataValue = [self.fieldsG_dict["dataValue"]]
         
         _int_points = ["chromStart", "chromEnd"]
         idx_fields2int = [10000000000000]
@@ -266,30 +266,30 @@ class IntData:
             _time_points = ["chromStart"]
             f_int_end = "chromEnd"
         
-            if f_int_end in self.fieldsG:
+            if f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
                 
             try:
 #                 idx_fields2int = [self.fieldsG.index(f) for f in _time_points]#del
-                idx_fields2int = [self.fieldsG[f] for f in _time_points]#del     
+                idx_fields2int = [self.fieldsG_dict[f] for f in _time_points]#del     
             except ValueError:
                 raise ValueError("Parameter intervals=True needs that field '%s' is in file is not missing %s." 
                                  % (f, self.path))
             
-#             self.fieldsG.append(f_int_end)#del
-            print "5555555555555555",(self.fieldsG)
+#             self.fieldsG_dict.append(f_int_end)#del
+            print "5555555555555555",(self.fieldsG_dict)
             i_new_field = len(self.fieldsB)
             
             print "new field index is:", i_new_field
-            self.fieldsG[f_int_end] = i_new_field
+            self.fieldsG_dict[f_int_end] = i_new_field
             
             i_new_field = [i_new_field]#del
         
         try:            
             f=""
-            name_fields2mult = [f for f in _int_points if f in self.fieldsG] 
-#             idx_fields2mult = [self.fieldsG.index(f) for f in name_fields2mult]#del
-            idx_fields2mult = [self.fieldsG[f] for f in name_fields2mult]                
+            name_fields2mult = [f for f in _int_points if f in self.fieldsG_dict] 
+#             idx_fields2mult = [self.fieldsG_dict.index(f) for f in name_fields2mult]#del
+            idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
         except ValueError:
             raise ValueError("Field '%s' not in file %s." % (f, self.path))
         
@@ -299,15 +299,15 @@ class IntData:
         _start_f = ["chromStart"]
         
         try:
-#             i_min = [self.fieldsG.index(f) for f in _start_f]
-            i_min = [self.fieldsG[f] for f in _start_f]              
+#             i_min = [self.fieldsG_dict.index(f) for f in _start_f]
+            i_min = [self.fieldsG_dict[f] for f in _start_f]              
         except ValueError:
             raise ValueError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
             
         _end_f = ["chromEnd"]
         try:
-#             i_max = [self.fieldsG.index(f) for f in _end_f]#del
-            i_max = [self.fieldsG[f] for f in _end_f]              
+#             i_max = [self.fieldsG_dict.index(f) for f in _end_f]#del
+            i_max = [self.fieldsG_dict[f] for f in _end_f]              
         except ValueError:
             raise ValueError("Field '%s' for max interval calculation time not in file %s \n" \
                              "TIP: If your file contains timepoints you can transform them to intervals" \
@@ -321,8 +321,8 @@ class IntData:
         _start_f = ["dataValue"]
         
         try:
-#             i_data_value = [self.fieldsG.index(f) for f in _start_f]#del          
-            i_data_value = [self.fieldsG[f] for f in _start_f]
+#             i_data_value = [self.fieldsG_dict.index(f) for f in _start_f]#del          
+            i_data_value = [self.fieldsG_dict[f] for f in _start_f]
         except ValueError:
             raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
         
@@ -331,14 +331,14 @@ class IntData:
         first = True
         p_temp = []
         
-        print "range in dicitioanry is", range(len(self.fieldsG))
+        print "range in dicitioanry is", range(len(self.fieldsG_dict))
                             
         for interv in self.reader:            
             temp = []            
             
-            for i in sorted(self.fieldsG.values()):
+            for i in sorted(self.fieldsG_dict.values()):
 #                 print "index are:", i#del
-#             for i in range(len(self.fieldsG)):#del 
+#             for i in range(len(self.fieldsG_dict)):#del 
             #TODO                                   
                 # Values in idx_fields2int have to be integers
 #                 if i in idx_fields2int:
@@ -430,7 +430,7 @@ class IntData:
         #Setting the data fields that output data have in the order they are
         data_fields = []
         
-        sorted_index_f = sorted(self.fieldsG.items(), key=itemgetter(1))
+        sorted_index_f = sorted(self.fieldsG_dict.items(), key=itemgetter(1))
         for field_gen in sorted_index_f:
             data_fields.append(field_gen[0])
         self.fieldsG = data_fields
