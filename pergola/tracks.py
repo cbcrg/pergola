@@ -407,8 +407,7 @@ class Track(GenomicContainer):
         i_data_types = self.fields.index("dataTypes")
         
         #Generate dictionary of field and color gradients
-        _dict_col_grad = assign_color (self.dataTypes)
-        
+        _dict_col_grad = assign_color (self.dataTypes)        
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
 
         _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))

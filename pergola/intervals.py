@@ -22,6 +22,7 @@ from sys import stderr
 # from operator import itemgetter
 # from itertools import groupby 
 from tracks import Track 
+from operator import itemgetter
 
 class IntData: 
     """
@@ -84,6 +85,7 @@ class IntData:
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = kwargs.get('header',True)
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
+#         self.fieldsG = self._set_fields_g(ontology_dict)
         self.fieldsG = self._set_fields_g(ontology_dict)
         self.min = self.max = 0
         self.range_values = 0
@@ -137,6 +139,8 @@ class IntData:
         self.inFile  = open(self.path, "rb")
         self.reader =  reader(self.inFile, delimiter=self.delimiter)       
         
+        fieldsB = []
+        
         if self.header:            
             header = self.reader.next()
             first_r = self.reader.next()
@@ -156,7 +160,13 @@ class IntData:
                                      "Also make sure you don't need to set header=False"
                                      % ("\",\"".join(fields), "\",\"".join(header)))
                 
-                fieldsB = fields
+                ori_fieldsB = [header[0].strip('# ')]+header[1:]  #del
+                                
+                for f in ori_fieldsB:
+                    if f in fields: fieldsB.append(f)
+                    else: fieldsB.append("")      
+                print "fields B all fields of header", fieldsB#del
+#                 fieldsB = fields
                      
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
@@ -189,23 +199,39 @@ class IntData:
         :return: list with the corresponding genomics names of the fields inside behavioral (input) data
          
         """
-            
-        if all(field_b in ontology_dict for field_b in self.fieldsB):
-            name_fields_g = [ontology_dict [k] for k in self.fieldsB]
-        else:    
-            raise ValueError("Fields param \"%s\" contains a field not present in config_file \"%s\"" 
-                             % ("\",\"".join(self.fieldsB), "\",\"".join(ontology_dict.keys())))
+        dict_fields_g = {}
+        i_field_b=0
+        
+        for field_B in self.fieldsB:
+            if field_B:
+                dict_fields_g[ontology_dict [field_B]] = i_field_b
+            i_field_b = i_field_b + 1
+                 
+        print "@@@@@@@@@2", dict_fields_g#del        
+        
+        name_fields_g = [ontology_dict[k] for k in self.fieldsB if k]   
+#         if all(field_b in ontology_dict for field_b in self.fieldsB):
+#             name_fields_g = [ontology_dict [k] for k in self.fieldsB]
+#         else:    
+#             raise ValueError("Fields param \"%s\" contains a field not present in config_file \"%s\"" 
+#                              % ("\",\"".join(self.fieldsB), "\",\"".join(ontology_dict.keys()))) #del 
+#          YA ESTA HECVHO ARRIBA
         
         #Input file at least should have two fields that correspond to:
         mandatory_fields = ["chromStart", "dataValue"]
         
-        if not all(f in name_fields_g for f in mandatory_fields):
-            raise ValueError("Input file mandatory fields  are \"chromStart\" and \"chromEnd\" \n" \
+        if not all(f in dict_fields_g.keys() for f in mandatory_fields):
+            raise ValueError("Input file mandatory fields  are \"chromStart\" and \"dataValue\" \n" \
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))
-        print "..............fieldsB",name_fields_g
-        return name_fields_g
+        
+#         name_fields_g.append("")#del 
+        
+        print "..............fieldsG",name_fields_g
+        
+        
+        return dict_fields_g
     
     def _read(self, multiply_t=1, intervals=False):
         """
@@ -228,8 +254,9 @@ class IntData:
         self.reader.next()
         
         # Field assign to data value should be an integer or float
-        idx_dataValue = [self.fieldsG.index("dataValue")]
-         
+#         idx_dataValue = [self.fieldsG.index("dataValue")]#del
+        idx_dataValue = [self.fieldsG["dataValue"]]
+        
         _int_points = ["chromStart", "chromEnd"]
         idx_fields2int = [10000000000000]
         i_new_field = [10000000000000]                                    
@@ -243,19 +270,26 @@ class IntData:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
                 
             try:
-                idx_fields2int = [self.fieldsG.index(f) for f in _time_points]              
+#                 idx_fields2int = [self.fieldsG.index(f) for f in _time_points]#del
+                idx_fields2int = [self.fieldsG[f] for f in _time_points]#del     
             except ValueError:
                 raise ValueError("Parameter intervals=True needs that field '%s' is in file is not missing %s." 
                                  % (f, self.path))
             
-            self.fieldsG.append(f_int_end)   
-            i_new_field = [len(self.fieldsG) - 1]
+#             self.fieldsG.append(f_int_end)#del
+            print "5555555555555555",(self.fieldsG)
+            i_new_field = len(self.fieldsB)
+            
+            print "new field index is:", i_new_field
+            self.fieldsG[f_int_end] = i_new_field
+            
+            i_new_field = [i_new_field]#del
         
         try:            
             f=""
             name_fields2mult = [f for f in _int_points if f in self.fieldsG] 
-            idx_fields2mult = [self.fieldsG.index(f) for f in name_fields2mult]
-                 
+#             idx_fields2mult = [self.fieldsG.index(f) for f in name_fields2mult]#del
+            idx_fields2mult = [self.fieldsG[f] for f in name_fields2mult]                
         except ValueError:
             raise ValueError("Field '%s' not in file %s." % (f, self.path))
         
@@ -265,13 +299,15 @@ class IntData:
         _start_f = ["chromStart"]
         
         try:
-            i_min = [self.fieldsG.index(f) for f in _start_f]              
+#             i_min = [self.fieldsG.index(f) for f in _start_f]
+            i_min = [self.fieldsG[f] for f in _start_f]              
         except ValueError:
             raise ValueError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
             
         _end_f = ["chromEnd"]
         try:
-            i_max = [self.fieldsG.index(f) for f in _end_f]              
+#             i_max = [self.fieldsG.index(f) for f in _end_f]#del
+            i_max = [self.fieldsG[f] for f in _end_f]              
         except ValueError:
             raise ValueError("Field '%s' for max interval calculation time not in file %s \n" \
                              "TIP: If your file contains timepoints you can transform them to intervals" \
@@ -285,7 +321,8 @@ class IntData:
         _start_f = ["dataValue"]
         
         try:
-            i_data_value = [self.fieldsG.index(f) for f in _start_f]              
+#             i_data_value = [self.fieldsG.index(f) for f in _start_f]#del          
+            i_data_value = [self.fieldsG[f] for f in _start_f]
         except ValueError:
             raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
         
@@ -294,10 +331,14 @@ class IntData:
         first = True
         p_temp = []
         
+        print "range in dicitioanry is", range(len(self.fieldsG))
+                            
         for interv in self.reader:            
             temp = []            
-                                    
-            for i in range(len(self.fieldsG)): 
+            
+            for i in sorted(self.fieldsG.values()):
+#                 print "index are:", i#del
+#             for i in range(len(self.fieldsG)):#del 
             #TODO                                   
                 # Values in idx_fields2int have to be integers
 #                 if i in idx_fields2int:
@@ -320,6 +361,7 @@ class IntData:
 #                                         "seconds to miliseconds try using multiply_t.")
 
                 # Field assign to data value should be an integer or float        
+#                 print ".........",idx_dataValue
                 if i in idx_dataValue:                    
                     try:
                         float(interv[i])
@@ -331,9 +373,11 @@ class IntData:
                     v = int(float(interv[i]) * multiply_t)
                     temp.append(v)
                     p_v = v - 1
+#                     print "v", v#del
+#                     raise ValueError ("culo")#del
                     if intervals: last_start = v
                 elif i in i_new_field and i in idx_fields2mult:
-                    if first:
+                    if first:                                                
                         pass
                     else:
                         p_temp.append(p_v)                        
@@ -341,6 +385,7 @@ class IntData:
                     v = int(float(interv[i]) * multiply_t)
                     temp.append(v)
                 else:
+#                     print "$$$$$$$$$$$4",i#del
                     v = interv[i]              
                     temp.append(v)
                 
@@ -381,6 +426,15 @@ class IntData:
         self.min = p_min
         self.max = p_max
         self.range_values = [p_min_data_v, p_max_data_v]
+        
+        #Setting the data fields that output data have in the order they are
+        data_fields = []
+        
+        sorted_index_f = sorted(self.fieldsG.items(), key=itemgetter(1))
+        for field_gen in sorted_index_f:
+            data_fields.append(field_gen[0])
+        self.fieldsG = data_fields
+        print "..........", sorted_index_f
         
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
@@ -424,6 +478,7 @@ class IntData:
             
             self.data = new_data
             self.fieldsG.append(str(field))
+#             self.fieldsG[field] = 10000000#del
         else:
             raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
         
@@ -450,6 +505,7 @@ class IntData:
         # If fields is not set then I all the data columns are processed
         if fields is None:
             fields = self.fieldsG
+#             fields = self.fieldsG.keys()#del
             indexL = range(len(self.fieldsG))
         else:
             try:
@@ -477,6 +533,7 @@ class IntData:
                 
             try:
                 idx_fields2rel = [self.fieldsG.index(f) for f in _f2rel]                
+#                 idx_fields2rel = [self.fieldsG[f] for f in _f2rel]#del
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
             
