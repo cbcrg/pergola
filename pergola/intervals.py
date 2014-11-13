@@ -346,7 +346,7 @@ class IntData:
                 
                 if i in i_min:
                     if p_min is None: p_min = v
-                    if p_min > v: p_min = v
+                    if p_min > v: p_min = v                    
                 
                 if i in i_max:
                     if i_max == i_new_field:
@@ -358,6 +358,7 @@ class IntData:
                         if p_max < v: p_max = v
                 
                 if i in i_data_value:
+                    v = float(v)                    
                     if p_min_data_v is None: p_min_data_v = v
                     if p_min_data_v > v: p_min_data_v = v
                     if p_max_data_v is None: p_max_data_v = v
@@ -380,7 +381,7 @@ class IntData:
         self.min = p_min
         self.max = p_max
         self.range_values = [p_min_data_v, p_max_data_v]
-        
+        print "#####################", self.range_values
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
         return (list_data)
