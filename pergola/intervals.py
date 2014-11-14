@@ -166,7 +166,7 @@ class IntData:
                     if f in fields: fieldsB.append(f)
                     else: fieldsB.append("")      
                 print "fields B all fields of header", fieldsB#del
-#                 fieldsB = fields
+                fieldsB = fields
                      
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
@@ -205,9 +205,7 @@ class IntData:
         for field_B in self.fieldsB:
             if field_B:
                 dict_fields_g[ontology_dict [field_B]] = i_field_b
-            i_field_b = i_field_b + 1
-                 
-        print "@@@@@@@@@2", dict_fields_g#del        
+            i_field_b = i_field_b + 1                    
         
         name_fields_g = [ontology_dict[k] for k in self.fieldsB if k]   
 #         if all(field_b in ontology_dict for field_b in self.fieldsB):
@@ -224,12 +222,7 @@ class IntData:
             raise ValueError("Input file mandatory fields  are \"chromStart\" and \"dataValue\" \n" \
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
-                             % ("\",\"".join(name_fields_g)))
-        
-#         name_fields_g.append("")#del 
-        
-        print "..............fieldsG",name_fields_g
-        
+                             % ("\",\"".join(name_fields_g)))            
         
         return dict_fields_g
     
@@ -254,7 +247,6 @@ class IntData:
         self.reader.next()
         
         # Field assign to data value should be an integer or float
-#         idx_dataValue = [self.fieldsG.index("dataValue")]#del
         idx_dataValue = [self.fieldsG_dict["dataValue"]]
         
         _int_points = ["chromStart", "chromEnd"]
@@ -270,14 +262,11 @@ class IntData:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
                 
             try:
-#                 idx_fields2int = [self.fieldsG.index(f) for f in _time_points]#del
-                idx_fields2int = [self.fieldsG_dict[f] for f in _time_points]#del     
+                idx_fields2int = [self.fieldsG_dict[f] for f in _time_points]     
             except ValueError:
                 raise ValueError("Parameter intervals=True needs that field '%s' is in file is not missing %s." 
                                  % (f, self.path))
             
-#             self.fieldsG_dict.append(f_int_end)#del
-            print "5555555555555555",(self.fieldsG_dict)
             i_new_field = len(self.fieldsB)
             
             print "new field index is:", i_new_field
@@ -288,7 +277,6 @@ class IntData:
         try:            
             f=""
             name_fields2mult = [f for f in _int_points if f in self.fieldsG_dict] 
-#             idx_fields2mult = [self.fieldsG_dict.index(f) for f in name_fields2mult]#del
             idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
         except ValueError:
             raise ValueError("Field '%s' not in file %s." % (f, self.path))
@@ -306,7 +294,6 @@ class IntData:
             
         _end_f = ["chromEnd"]
         try:
-#             i_max = [self.fieldsG_dict.index(f) for f in _end_f]#del
             i_max = [self.fieldsG_dict[f] for f in _end_f]              
         except ValueError:
             raise ValueError("Field '%s' for max interval calculation time not in file %s \n" \
@@ -321,7 +308,6 @@ class IntData:
         _start_f = ["dataValue"]
         
         try:
-#             i_data_value = [self.fieldsG_dict.index(f) for f in _start_f]#del          
             i_data_value = [self.fieldsG_dict[f] for f in _start_f]
         except ValueError:
             raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
@@ -373,19 +359,20 @@ class IntData:
                     v = int(float(interv[i]) * multiply_t)
                     temp.append(v)
                     p_v = v - 1
-#                     print "v", v#del
-#                     raise ValueError ("culo")#del
+                    
                     if intervals: last_start = v
+                    
                 elif i in i_new_field and i in idx_fields2mult:
                     if first:                                                
                         pass
                     else:
-                        p_temp.append(p_v)                        
+                        p_temp.append(p_v)  
+                                              
                 elif i in idx_fields2mult and i not in idx_fields2int:
                     v = int(float(interv[i]) * multiply_t)
                     temp.append(v)
+                
                 else:
-#                     print "$$$$$$$$$$$4",i#del
                     v = interv[i]              
                     temp.append(v)
                 
@@ -478,7 +465,6 @@ class IntData:
             
             self.data = new_data
             self.fieldsG.append(str(field))
-#             self.fieldsG[field] = 10000000#del
         else:
             raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
         
@@ -505,7 +491,6 @@ class IntData:
         # If fields is not set then I all the data columns are processed
         if fields is None:
             fields = self.fieldsG
-#             fields = self.fieldsG.keys()#del
             indexL = range(len(self.fieldsG))
         else:
             try:
@@ -533,11 +518,9 @@ class IntData:
                 
             try:
                 idx_fields2rel = [self.fieldsG.index(f) for f in _f2rel]                
-#                 idx_fields2rel = [self.fieldsG[f] for f in _f2rel]#del
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
             
-#             print idx_fields2rel#del
             self.data = self._time2rel_time(idx_fields2rel)
                 
         idx_fields2int = [10000000000000]

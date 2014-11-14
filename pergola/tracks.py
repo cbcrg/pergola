@@ -177,9 +177,7 @@ class Track(GenomicContainer):
         :returns: dictionary containing object/s of the class set by mode 
         
         """
-        kwargs['relative_coord'] = kwargs.get("relative_coord",False)
-        
-#         print >> stderr, self.fields #del       
+        kwargs['relative_coord'] = kwargs.get("relative_coord",False)     
         
         if mode not in _dict_file: 
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
