@@ -244,7 +244,8 @@ class IntData:
         list_data = list()
         self.inFile  = open(self.path, "rb")
         self.reader = reader(self.inFile, delimiter='\t')
-        self.reader.next()
+        
+        if self.header: self.reader.next()
         
         # Field assign to data value should be an integer or float
         idx_dataValue = [self.fieldsG_dict["dataValue"]]
