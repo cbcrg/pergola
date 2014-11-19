@@ -13,3 +13,5 @@ setup(name='pergola',
       packages=['pergola'],
       scripts = ['scripts/pergola_rules.py'],
       zip_safe=False)
+
+# mandatory package to add are argparse
