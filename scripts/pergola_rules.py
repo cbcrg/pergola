@@ -127,9 +127,12 @@ def main():
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
 #     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
+#                                 fields_names=fields2read, intervals=intervals_gen, 
+#                                 multiply_t=multiply_f)
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
-                                multiply_t=multiply_f)
+                                multiply_t=multiply_f, header=False)
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
@@ -163,8 +166,8 @@ def main():
         pass
     
     
-    bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-                                 dataTypes_actions=dataTypes_act)
+#     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
+#                                  dataTypes_actions=dataTypes_act)
     
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  dataTypes_actions=dataTypes_act, window=1)
