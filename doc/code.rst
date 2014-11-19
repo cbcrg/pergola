@@ -1,4 +1,4 @@
-AUTO GENERATED DOCUMENTATION
+DOCUMENTATION
 ============================
 
 .. automodule:: pergola

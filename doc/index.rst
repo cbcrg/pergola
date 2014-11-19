@@ -6,7 +6,10 @@
 Welcome to Pergola's documentation!
 ===================================
 
-This is my introduction to this project 
+Pergola is a set of python modules for transforming your data in data visualizable
+in common genome browser
+
+
 Contents:
 
 .. toctree::
