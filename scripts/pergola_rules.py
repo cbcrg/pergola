@@ -137,7 +137,7 @@ def main():
 #                                 multiply_t=multiply_f)
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
-                                multiply_t=multiply_f, header=False)
+                                multiply_t=multiply_f, header=True)
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
@@ -149,7 +149,7 @@ def main():
     print "----min value",intData.min
     print "----max value",intData.max
     
-    if track_act: tracks2merge = read_track_actions(tracks=intData.tracks, track_action=track_act)
+    if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
      
 #     print "____________",intData.tracks
 #     print "::::::::", intData.data
@@ -217,35 +217,6 @@ def main():
 #     set_range=set(['{0}'.format(t) for t in list_range]) #str because track can be set in the form of track_1 for instance
 #     
 #     return set_range
-
-def read_track_actions (tracks, track_action = "split_all"):
-    """ 
-    Read track actions and returns a set with the tracks to be joined
-    
-    :param tracks: (set) of tracks to which track_action should be applied set([1,2])
-    :param track_action: (str) option to join tracks (join_all, split_all, join_odd, join_evens) 
-    """
-    
-    if track_action not in _tr_act_options:
-        raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in _tr_act_options])))
-    
-    tracks2merge = ""
-    
-    if track_action == "join_all":
-        tracks2merge = tracks
-    elif track_action == 'join_odd':
-        tracks2merge = set([t for t in tracks if int(t) % 2])
-    elif track_action == 'join_even':
-        tracks2merge = set([t for t in tracks if not int(t) % 2])
-    else:
-        tracks2merge = ""
-        
-    print >> stderr,"Tracks to merge are: ", ",".join("'{0}'".format(t) for t in tracks2merge)
-       
-    if not tracks2merge:
-        print >> stderr,("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks)))
-        
-    return (tracks2merge)
 
 if __name__ == '__main__':
     exit(main())

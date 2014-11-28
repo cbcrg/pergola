@@ -30,6 +30,35 @@ def parse_num_range(string):
     
     return set_range
 
+def read_track_actions (tracks, track_action = "split_all"):
+    """ 
+    Read track actions and returns a set with the tracks to be joined
+    
+    :param tracks: (set) of tracks to which track_action should be applied set([1,2])
+    :param track_action: (str) option to join tracks (join_all, split_all, join_odd, join_evens) 
+    """
+    
+    if track_action not in _tr_act_options:
+        raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in _tr_act_options])))
+    
+    tracks2merge = ""
+    
+    if track_action == "join_all":
+        tracks2merge = tracks
+    elif track_action == 'join_odd':
+        tracks2merge = set([t for t in tracks if int(t) % 2])
+    elif track_action == 'join_even':
+        tracks2merge = set([t for t in tracks if not int(t) % 2])
+    else:
+        tracks2merge = ""
+        
+    print >> stderr,"Tracks to merge are: ", ",".join("'{0}'".format(t) for t in tracks2merge)
+       
+    if not tracks2merge:
+        print >> stderr,("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks)))
+        
+    return (tracks2merge)
+
 parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
 parser.add_argument('-o', '--ontology_file', required=True, metavar="ONTOLOGY_FILE",
