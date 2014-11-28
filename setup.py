@@ -11,7 +11,7 @@ setup(name='pergola',
       author_email='espinosacarrascoj@gmail.com',
       license='GNU General Public License 3.0',
       packages=['pergola'],
-      scripts = ['scripts/pergola_rules.py'],
+      scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py'],
       zip_safe=False)
 
 # mandatory package to add are argparse
