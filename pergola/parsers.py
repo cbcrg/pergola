@@ -5,20 +5,29 @@ Module: pergola.parsers
 
 .. module:: parsers
 
-This module provides the way to read the input intervals files.
-It contains a class :class:`~pergola.intervals.IntData` which has 
-the attributes and methods needed for reading the data.
+This module provides the way to read scripts options provided by pergola library.
 
-:py:func:`~pergola.intervals.write_chr` generates a chromosome fasta file
-to map tracks that are genereted by the application
 
 """
+
 from argparse import ArgumentParser
+from re       import match
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
 
 def parse_num_range(string):
+    """ 
+    This function generate a numeric range from a string containing the boundaries
+    From 1-4 generates a string  
+    
+    :param tracks: :py:func:`set` of tracks to which track_action should be applied set([1,2])
+    :param delimiter: :py:func:`str` option to join tracks (join_all, split_all, join_odd, join_evens)
+            
+    :return: :py:func:`set` with all the numbers in range as strings
+    
+    """
+    
     m = match(r'(\d+)(?:-(\d+))?$', string)
 
     if not m:
@@ -34,8 +43,11 @@ def read_track_actions (tracks, track_action = "split_all"):
     """ 
     Read track actions and returns a set with the tracks to be joined
     
-    :param tracks: (set) of tracks to which track_action should be applied set([1,2])
-    :param track_action: (str) option to join tracks (join_all, split_all, join_odd, join_evens) 
+    :param tracks: :py:func:`set` of tracks to which track_action should be applied set([1,2])
+    :param track_action: :py:func:`str` option to join tracks (join_all, split_all, join_odd, join_evens)
+    
+    :return: :py:func:`set` of tracks to be joined
+     
     """
     
     if track_action not in _tr_act_options:
@@ -58,6 +70,7 @@ def read_track_actions (tracks, track_action = "split_all"):
         print >> stderr,("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks)))
         
     return (tracks2merge)
+
 
 parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
