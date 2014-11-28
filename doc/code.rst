@@ -23,6 +23,8 @@ DOCUMENTATION
 	:members:
 .. autoclass:: pergola.tracks.BedGraph
 	:members:
+.. automodule:: pergola.parsers
+   :members:
 
 .. |br| raw:: html
 
