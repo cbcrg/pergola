@@ -3,6 +3,7 @@
 from bcbio import isatab
 
 rec = isatab.parse("/Users/jespinosa/software/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB")
+rec = isatab.parse("/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB")
 study = rec.studies[0]
 assay = rec.studies[0].assays[0]
 
