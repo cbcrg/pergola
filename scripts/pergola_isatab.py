@@ -22,7 +22,9 @@ def main():
     print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.ontology_file
     print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: ", args.tracks
 
-
+#Make a function that retrieves files in isatab table and return it as a dictionary
+    
+#hacer una funcion que recoja todos los archivos del isatab y los meta en un diccionario
 
 if __name__ == '__main__':
     exit(main())
