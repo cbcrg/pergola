@@ -28,9 +28,14 @@ def main():
 
     # I have to check whether when a isatab folder is given if it is actually a folder or a file
     # difference with -i
-    if os.path.isdir(isatab_ref):
-        print "Is a directory"
-        print "Directory is", args.input 
+    if not os.path.isdir(args.input):
+        raise ValueError ("Argument input must be a folder containning data in isatab format")
+    
+    rec = isatab.parse(args.input)
+    study= rec.studies[0]
+    print study.nodes.keys() 
+    
+    
         #print "directory is ", args.input
 #It might be interesting to implement a append option
 
