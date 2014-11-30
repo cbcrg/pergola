@@ -6,6 +6,8 @@
 Script to run pergola from the command line using isatab format
 """
 
+space = " "
+
 from pergola import parsers
 from pergola  import intervals
 from pergola  import mapping
@@ -41,9 +43,12 @@ def main():
 #         print "studies are", i
         
         for j in i.assays:
-            print "assays are:", j
+            #print "assays are:", j
             for file in j.nodes.keys():
                 print "file is :", file
+                print ("")
+                print ("pergola_rules.py" + space + "-i" + space + file + space + "-o" + space + args.ontology_file) 
+#                 os.system("pergola_rules.py")
 #     for i in rec.assays:
 #         print "assays", i    
     
