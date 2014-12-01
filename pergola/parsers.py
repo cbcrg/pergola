@@ -10,7 +10,7 @@ This module provides the way to read scripts options provided by pergola library
 
 """
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
 
 _dt_act_options = ['all', 'one_per_channel']
@@ -101,5 +101,3 @@ parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=F
                     help='Multiplies value in dataValue by the given value')
 parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
                     help='List of fields to read from input file')
-
-
