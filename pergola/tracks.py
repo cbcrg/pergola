@@ -163,8 +163,9 @@ class Track(GenomicContainer):
     
     inherits from :py:class:`GenomicContainer`
     """
-    def __init__(self, data, fields=None, dataTypes=None, **kwargs):
-            GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
+    def __init__(self, data, fields=None, dataTypes=None, list_tracks=None, **kwargs):
+        self.list_tracks=list_tracks 
+        GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 
     def convert(self, mode='bed', **kwargs):
         """
@@ -223,7 +224,8 @@ class Track(GenomicContainer):
                 
         ### When any tracks are selected we consider that no track should be removed
         if sel_tracks != []:
-            tracks2rm = self.tracks.difference(sel_tracks)            
+            print "-------",self.list_tracks #del
+            tracks2rm = self.list_tracks.difference(sel_tracks)            
             dict_split = self.remove (dict_split, tracks2rm)
             print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
         
@@ -233,11 +235,11 @@ class Track(GenomicContainer):
         if not kwargs.get('tracks_merge'):
             d_track_merge = dict_split
         else:
-            tracks_merge = kwargs.get('tracks_merge',self.tracks)
-            if not all(tracks in self.tracks for tracks in tracks_merge):
+            tracks_merge = kwargs.get('tracks_merge',self.list_tracks)
+            if not all(tracks in self.list_tracks for tracks in tracks_merge):
                 raise ValueError ("Tracks to merge: %s, are not in the track list: " % 
                                   ",".join("'{0}'".format(n) for n in tracks_merge), 
-                                  ",".join("'{0}'".format(n) for n in self.tracks))
+                                  ",".join("'{0}'".format(n) for n in self.list_tracks))
             print >> stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
             
             d_track_merge = self.join_by_track(dict_split, tracks_merge)       
@@ -292,8 +294,8 @@ class Track(GenomicContainer):
     
             dict_t.pop(key, None)
     
-            if key in self.tracks:
-                self.tracks.remove(key)
+            if key in self.list_tracks:
+                self.list_tracks.remove(key)
                 
         return (dict_t)
     
