@@ -19,18 +19,18 @@ from pergola import parsers
 # _dt_act_options = ['all', 'one_per_channel']
 # _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
-def main():
-    parser = ArgumentParser(parents=[parsers.parser])
+def main(path, ontol_file_path, tracks=None, list=None, range=None, track_actions=None, 
+         dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
+         multiply_factor=None, fields_read=None):
     
-    args = parser.parse_args()
-    print >> stderr, "@@@Pergola_rules.py: Input file: %s" % args.input 
-    print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % args.ontology_file
+#     parser = ArgumentParser(parents=[parsers.parser])
+#     
+#     args = parser.parse_args()
+    print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
+    print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % ontol_file_path
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", args.tracks
     
-    path = args.input
-    
     #Configuration file
-    ontol_file_path = args.ontology_file
     ontol_file_dict = mapping.OntologyInfo(ontol_file_path)
     
     #Tracks selected by user
@@ -174,5 +174,9 @@ def main():
                                     
                                
 
-if __name__ == '__main__':    
-    exit(main())
+if __name__ == '__main__':
+        
+    parser = ArgumentParser(parents=[parsers.parser])
+    args = parser.parse_args()
+    
+    exit(main(path=args.input, ontol_file_path=args.ontology_file, tracks=args.tracks))
