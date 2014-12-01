@@ -11,10 +11,12 @@ sp = " "
 from pergola import parsers
 from pergola  import intervals
 from pergola  import mapping
+# from scripts import pergola_rules
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr
 import os
 from bcbio import isatab
+import pergola_rules
 
 def main():
     parser = ArgumentParser(parents=[parsers.parser])
@@ -30,30 +32,30 @@ def main():
 #                        sp + format + sp + relative_coord + sp + 
 #                        multiply_factor + sp + fields_read) 
     
-    relative_coord = ""
-    track_actions = ""
-    dataTypes_actions = ""
-    format = ""
-    multiply_factor = ""
-    fields_read = ""
-    
-    if args.relative_coord:
-        relative_coord = "-e"
-        
-    if args.track_actions:
-        track_actions = "-a " + args.track_actions
-    
-    if args.dataTypes_actions:
-        dataTypes_actions = "-d " + args.dataTypes_actions
-    
-    if args.format:
-        format = "-f " + args.format
-    
-    if args.multiply_factor:
-        multiply_factor = "-f " + args.multiply_factor
-        
-    if args.fields_read: 
-        fields_read = "-m " + args.fields_read
+#     relative_coord = ""
+#     track_actions = ""
+#     dataTypes_actions = ""
+#     format = ""
+#     multiply_factor = ""
+#     fields_read = ""
+#     
+#     if args.relative_coord:
+#         relative_coord = "-e"
+#         
+#     if args.track_actions:
+#         track_actions = "-a " + args.track_actions
+#     
+#     if args.dataTypes_actions:
+#         dataTypes_actions = "-d " + args.dataTypes_actions
+#     
+#     if args.format:
+#         format = "-f " + args.format
+#     
+#     if args.multiply_factor:
+#         multiply_factor = "-f " + args.multiply_factor
+#         
+#     if args.fields_read: 
+#         fields_read = "-m " + args.fields_read
                 
     #Make a function that retrieves files in isatab table and return it as a dictionary
 #     isatab_ref = "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB"
@@ -75,35 +77,22 @@ def main():
         for j in i.assays:
             #print "assays are:", j
             for file in j.nodes.keys():
+                print "file to process is ------------------",file
+                
+                pergola_rules.main(path=file, ontol_file_path=args.ontology_file, 
+                                   sel_tracks=args.tracks, list=args.list, range=args.range, 
+                                   track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
+                                   write_format=args.format, relative_coord=args.relative_coord, 
+                                   intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor, 
+                                   fields2read=args.fields_read)
+                
 #                 print "file is :", file
-                print ("")
-                print ("pergola_rules.py" + sp + "-i" + sp + file + sp + "-o" + sp + args.ontology_file + sp +
-                       track_actions + sp + dataTypes_actions + 
-                       sp + format + sp + relative_coord + sp + 
-                       multiply_factor + sp + fields_read) 
+#                 print ("")
+#                 print ("pergola_rules.py" + sp + "-i" + sp + file + sp + "-o" + sp + args.ontology_file + sp +
+#                        track_actions + sp + dataTypes_actions + 
+#                        sp + format + sp + relative_coord + sp + 
+#                        multiply_factor + sp + fields_read) 
 #                 os.system("pergola_rules.py")
-
-
-# parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
-#                     help='Option of action with tracks selected, split_all, join_all,' + \
-#                          ' join_odd, join_even, join_range or join_list')
-# parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
-#                     help='Unique values of dataTypes field should be dumped on' + \
-#                          ' different data structures or not')
-# parser.add_argument('-f', '--format', required=False, type=str, 
-#                     help='Write file output format (bed or bedGraph)')
-# parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
-#                     default=False, help='Sets first timepoint' \
-#                     ' to 0 and make all the others relative to this timepoint')
-# parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
-#                     default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
-#                                         'using field set as startChrom')
-# parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
-#                     help='Multiplies value in dataValue by the given value')
-# parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
-#                     help='List of fields to read from input file')
-
-
 
 #     for i in rec.assays:
 #         print "assays", i    
