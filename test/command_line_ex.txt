@@ -1,0 +1,7 @@
+pergola_rules.py -i "/home/kadomu/git/pergola/test/shortDev.int" -o /home/kadomu/git/pergola/test/b2g.txt 
+
+pergola_rules.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -o -t 1
+
+
+#Pergola isatab
+pergola_isatab.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -o "/home/kadomu/git/pergola/test/b2g.txt"
