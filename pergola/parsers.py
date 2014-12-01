@@ -10,6 +10,7 @@ This module provides the way to read scripts options provided by pergola library
 
 """
 
+from sys      import stderr
 from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
 
