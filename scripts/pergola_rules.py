@@ -9,7 +9,7 @@ Script to run pergola from the command line
 from pergola  import intervals
 from pergola  import mapping
 # from pergola  import tracks
-from argparse import ArgumentParser, ArgumentTypeError
+from argparse import ArgumentParser
 from sys      import stderr
 # from re       import match
 import os
@@ -19,7 +19,7 @@ from pergola import parsers
 # _dt_act_options = ['all', 'one_per_channel']
 # _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
-def main(path, ontol_file_path, tracks=None, list=None, range=None, track_actions=None, 
+def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_factor=None, fields_read=None):
     
@@ -28,13 +28,12 @@ def main(path, ontol_file_path, tracks=None, list=None, range=None, track_action
 #     args = parser.parse_args()
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % ontol_file_path
-    print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", args.tracks
+    
+    #Tracks selected by user
+    print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
     #Configuration file
     ontol_file_dict = mapping.OntologyInfo(ontol_file_path)
-    
-    #Tracks selected by user
-    sel_tracks = args.tracks 
     
     # Handling list or range of tracks to join if set
     if args.list and args.range:
@@ -55,11 +54,11 @@ def main(path, ontol_file_path, tracks=None, list=None, range=None, track_action
                           "--track_actions -a, please change your options")
     
     track_act = args.track_actions
-    print >> stderr, "@@@Pergola_rules.py Track actions are: ", track_act
+    print >> stderr, "@@@Pergola_rules.py: Track actions are: ", track_act
     
     # Handling argument dataTypes actions
     dataTypes_act = args.dataTypes_actions
-    print >> stderr, "@@@Pergola_rules.py dataTypes actions are: ", dataTypes_act
+    print >> stderr, "@@@Pergola_rules.py: dataTypes actions are: ", dataTypes_act
     
     # Handling argument format
     write_format = args.format
@@ -106,6 +105,10 @@ def main(path, ontol_file_path, tracks=None, list=None, range=None, track_action
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
                                 multiply_t=multiply_f, header=True)
+    
+    
+    print "tracks before call are------------------------",intData.tracks
+    
 #     print "..............",intData.range_values #del
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
@@ -118,7 +121,8 @@ def main(path, ontol_file_path, tracks=None, list=None, range=None, track_action
     print "----max value",intData.max
     
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
-     
+    
+    print "tracks 2 merge .....................",tracks2merge
 #     print "____________",intData.tracks
 #     print "::::::::", intData.data
 
@@ -129,9 +133,10 @@ def main(path, ontol_file_path, tracks=None, list=None, range=None, track_action
     data_read = intData.read(relative_coord=True)
     
 #     intData.read(self, fields=None, relative_coord=False, intervals_gen=False, fields2rel=None, multiply_t=1,**kwargs):
-    
+    print "haber que hay aqui", data_read.list_tracks
     print "************type of data_read.data ",type (data_read.data) #list of tuples
     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
+    print ":::::::::::::::::::::", type (data_read)
     data_read.save_track()
     
     for i in data_read.data:
@@ -179,4 +184,8 @@ if __name__ == '__main__':
     parser = ArgumentParser(parents=[parsers.parser])
     args = parser.parse_args()
     
-    exit(main(path=args.input, ontol_file_path=args.ontology_file, tracks=args.tracks))
+    exit(main(path=args.input, ontol_file_path=args.ontology_file, sel_tracks=args.tracks, 
+              list=args.list, range=args.range, track_actions=args.track_actions, 
+              dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
+              relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
+              multiply_factor=args.multiply_factor, fields_read=args.fields_read))
