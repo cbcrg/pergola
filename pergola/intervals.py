@@ -529,7 +529,7 @@ class IntData:
         #TODO now fields is not doing anything!!!
         
 #         return self.data
-        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
+        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
 
     def _time2rel_time(self, i_fields):
         """
