@@ -21,9 +21,9 @@ from pergola import parsers
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_factor=None, fields_read=None):
+         multiply_f=None, fields2read=None):
     
-#     parser = ArgumentParser(parents=[parsers.parser])
+#     parser = ArgumentParser(parents=[parsers.parser]) #del
 #     
 #     args = parser.parse_args()
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
@@ -36,33 +36,31 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     ontol_file_dict = mapping.OntologyInfo(ontol_file_path)
     
     # Handling list or range of tracks to join if set
-    if args.list and args.range:
+    if list and range:
         raise ValueError("Argument -l/--list and -r/--range are not compatible. " \
                          "As both arguments set a tracks to join.")    
-    elif (args.list):
-        tracks2merge = args.list
-    elif (args.range):
-        tracks2merge = args.range
+    elif (list):
+        tracks2merge = list
+    elif (range):
+        tracks2merge = range
     else:
         tracks2merge = ""
     
     if tracks2merge: print >> stderr, "Tracks to join are: ", tracks2merge
     
     # Handling argument track actions
-    if tracks2merge and args.track_actions:
+    if tracks2merge and track_actions:
         raise ValueError ("Options --list -l or --range -r are incompatible with " \
                           "--track_actions -a, please change your options")
     
-    track_act = args.track_actions
+    track_act = track_actions
     print >> stderr, "@@@Pergola_rules.py: Track actions are: ", track_act
     
     # Handling argument dataTypes actions
-    dataTypes_act = args.dataTypes_actions
+    dataTypes_act = dataTypes_actions
     print >> stderr, "@@@Pergola_rules.py: dataTypes actions are: ", dataTypes_act
     
-    # Handling argument format
-    write_format = args.format
-    
+    # Handling argument format    
     if write_format:
         print >> stderr, "@@@Pergola_rules.py format to write files: ", write_format
     else:
@@ -71,24 +69,20 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
                         " to default value:", write_format
      
     # Handling relative coordinates
-    print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to: %s" % args.relative_coord
-    relative_coord = args.relative_coord
+    print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to: %s" % relative_coord
     
     # Handling intervals_gen
-    print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to: %s" % args.intervals_gen
-    intervals_gen = args.intervals_gen
+    print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to: %s" % intervals_gen
     
     # Handling multiply_factor
-    multiply_f = args.multiply_factor
     if multiply_f:
-        print >>stderr, "@@@Pergola_rules.py: Multiply factor parameter set to: %s" % args.multiply_factor                        
+        print >>stderr, "@@@Pergola_rules.py: Multiply factor parameter set to: %s" % multiply_f                        
     else:
         multiply_f = 1
     
     # Handling multiply_factor
-    fields2read = args.fields_read
     if fields2read:
-        print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % args.fields_read                        
+        print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % fields2read                        
     else:
         fields2read = None    
                           
@@ -188,4 +182,4 @@ if __name__ == '__main__':
               list=args.list, range=args.range, track_actions=args.track_actions, 
               dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
               relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
-              multiply_factor=args.multiply_factor, fields_read=args.fields_read))
+              multiply_f=args.multiply_factor, fields2read=args.fields_read))
