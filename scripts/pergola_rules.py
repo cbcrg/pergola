@@ -21,7 +21,7 @@ from pergola import parsers
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_f=None, fields2read=None):
+         multiply_f=None, fields2read=None, header=True):
     
 #     parser = ArgumentParser(parents=[parsers.parser]) #del
 #     
@@ -80,6 +80,8 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     else:
         multiply_f = 1
     
+    print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
+    
     # Handling multiply_factor
     if fields2read:
         print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % fields2read                        
@@ -98,7 +100,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #                                 multiply_t=multiply_f)
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
-                                multiply_t=multiply_f, header=True)
+                                multiply_t=multiply_f, header=False)
     
     
     print "tracks before call are------------------------",intData.tracks

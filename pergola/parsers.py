@@ -100,5 +100,8 @@ parser.add_argument('-n', '--intervals_gen', required=False, action='store_true'
                                         'using field set as startChrom')
 parser.add_argument('-m', '--multiply_factor', metavar='N', type=int, required=False,
                     help='Multiplies value in dataValue by the given value')
+parser.add_argument('-nh', '--no-header', required=False, action='store_true', 
+                    default=False, help='Data file contains no header')
 parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
                     help='List of fields to read from input file')
+
