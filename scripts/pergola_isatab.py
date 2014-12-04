@@ -15,7 +15,7 @@ from pergola  import mapping
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr
 import os
-from bcbio import isatab
+# from bcbio import isatab
 import pergola_rules
 
 def main():
@@ -65,26 +65,30 @@ def main():
     if not os.path.isdir(args.input):
         raise ValueError ("Argument input must be a folder containning data in isatab format")
     
-    rec = isatab.parse(args.input)
-    study= rec.studies[0]
-#     print study.nodes.keys() 
     
-    #Sample name are the key shared by both study and assay
+    parsers.parse_isatab_assays (args.input)
     
-    for i in rec.studies:
-#         print "studies are", i
-        
-        for j in i.assays:
-            #print "assays are:", j
-            for file in j.nodes.keys():
-                print "file to process is ------------------",file
-                
-                pergola_rules.main(path=file, ontol_file_path=args.ontology_file, 
-                                   sel_tracks=args.tracks, list=args.list, range=args.range, 
-                                   track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
-                                   write_format=args.format, relative_coord=args.relative_coord, 
-                                   intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor, 
-                                   fields2read=args.fields_read)
+    
+#     rec = isatab.parse(args.input)
+#     study= rec.studies[0]
+# #     print study.nodes.keys() 
+#     
+#     #Sample name are the key shared by both study and assay
+#     
+#     for i in rec.studies:
+# #         print "studies are", i
+#         
+#         for j in i.assays:
+#             #print "assays are:", j
+#             for file in j.nodes.keys():
+#                 print "file to process is ------------------",file
+#                 
+#                 pergola_rules.main(path=file, ontol_file_path=args.ontology_file, 
+#                                    sel_tracks=args.tracks, list=args.list, range=args.range, 
+#                                    track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
+#                                    write_format=args.format, relative_coord=args.relative_coord, 
+#                                    intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor, 
+#                                    fields2read=args.fields_read)
                 
 #                 print "file is :", file
 #                 print ("")
@@ -104,7 +108,7 @@ def main():
 #         node=study.nodes[k]
 #         print node.assays.keys()
 #         
-    nodes=study.nodes
+#     nodes=study.nodes
     
 #     for node in nodes:
 #         print "node------------", node ["Raw Data File"]

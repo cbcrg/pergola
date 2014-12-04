@@ -13,6 +13,8 @@ This module provides the way to read scripts options provided by pergola library
 from sys      import stderr
 from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
+from bcbio import isatab
+from os import path
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
@@ -71,6 +73,36 @@ def read_track_actions (tracks, track_action = "split_all"):
         print >> stderr,("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks)))
         
     return (tracks2merge)
+
+def parse_isatab_assays (isatab_dir):
+    """ 
+    Read all files contained in isatab format to be processed by pergola
+    
+    :param isatab_dir: :py:func:`str` containing the path to isatab data folder
+    
+    :return: :py:func:`dict` of files to be processed by pergola
+     
+    """
+    dict_files = {}
+    
+    if not path.isdir(isatab_dir):
+        raise ValueError ("Argument input must be a folder containning data in isatab format")
+    
+    rec = isatab.parse(isatab_dir)
+    
+    #Sample name are the key shared by both study and assay
+    for i in rec.studies:
+#         print "studies are", i
+#         print "..................",i.assays
+#         print i.assays.node['metadata']
+        for j in i.assays:
+            print "assays are:", j
+#             print "-----------", j.nodes
+            for file in j.nodes.keys():
+                print j.nodes[file].metadata['Sample Name']
+                pass
+#                 print "file to process is ------------------",file
+    return 0
 
 
 parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
