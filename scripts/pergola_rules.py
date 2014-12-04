@@ -21,7 +21,7 @@ from pergola import parsers
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_f=None, fields2read=None, header=True):
+         multiply_f=None, no_header=False, fields2read=None):
     
 #     parser = ArgumentParser(parents=[parsers.parser]) #del
 #     
@@ -82,6 +82,12 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
+    header_sw = True
+    
+    if no_header:
+        header_sw = False
+        print >> stderr, "@@@Pergola_rules.py: Data file has header set to: ", header_sw
+
     # Handling multiply_factor
     if fields2read:
         print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % fields2read                        
@@ -100,7 +106,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #                                 multiply_t=multiply_f)
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
-                                multiply_t=multiply_f, header=False)
+                                multiply_t=multiply_f, header=header_sw)
     
     
     print "tracks before call are------------------------",intData.tracks
@@ -184,4 +190,4 @@ if __name__ == '__main__':
               list=args.list, range=args.range, track_actions=args.track_actions, 
               dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
               relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
-              multiply_f=args.multiply_factor, fields2read=args.fields_read))
+              multiply_f=args.multiply_factor, no_header=args.no_header, fields2read=args.fields_read))
