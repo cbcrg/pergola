@@ -32,3 +32,17 @@ node.metadata["Organism"]
 
 
 
+### Old code of pergola_isatab
+rec = isatab.parse(args.input)
+study= rec.studies[0]
+#     print study.nodes.keys() 
+
+#Sample name are the key shared by both study and assay
+
+for i in rec.studies:
+#         print "studies are", i
+    
+    for j in i.assays:
+        #print "assays are:", j
+        for file in j.nodes.keys():
+            print "file to process is ------------------",file
