@@ -100,9 +100,10 @@ def parse_isatab_assays (isatab_dir):
 #             print "-----------", j.nodes
             for file in j.nodes.keys():
                 print j.nodes[file].metadata['Sample Name']
+                dict_files[j.nodes[file].metadata['Sample Name']] = file
                 pass
 #                 print "file to process is ------------------",file
-    return 0
+    return dict_files
 
 
 parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
