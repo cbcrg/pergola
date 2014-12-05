@@ -27,36 +27,6 @@ def main():
     print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.ontology_file
     print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: ", args.tracks
     
-#     print ("pergola_rules.py" + sp + "-i" + sp + file + sp + "-o" + sp + args.ontology_file + sp +
-#                        track_actions + sp + dataTypes_actions + 
-#                        sp + format + sp + relative_coord + sp + 
-#                        multiply_factor + sp + fields_read) 
-    
-#     relative_coord = ""
-#     track_actions = ""
-#     dataTypes_actions = ""
-#     format = ""
-#     multiply_factor = ""
-#     fields_read = ""
-#     
-#     if args.relative_coord:
-#         relative_coord = "-e"
-#         
-#     if args.track_actions:
-#         track_actions = "-a " + args.track_actions
-#     
-#     if args.dataTypes_actions:
-#         dataTypes_actions = "-d " + args.dataTypes_actions
-#     
-#     if args.format:
-#         format = "-f " + args.format
-#     
-#     if args.multiply_factor:
-#         multiply_factor = "-f " + args.multiply_factor
-#         
-#     if args.fields_read: 
-#         fields_read = "-m " + args.fields_read
-                
     #Make a function that retrieves files in isatab table and return it as a dictionary
 #     isatab_ref = "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB"
 
