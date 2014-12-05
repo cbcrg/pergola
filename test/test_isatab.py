@@ -46,3 +46,36 @@ for i in rec.studies:
         #print "assays are:", j
         for file in j.nodes.keys():
             print "file to process is ------------------",file
+
+
+# parse_isatab_assays(isatab_dir) function with all prints            
+def parse_isatab_assays (isatab_dir):
+    """ 
+    Read all files contained in isatab format to be processed by pergola
+    
+    :param isatab_dir: :py:func:`str` containing the path to isatab data folder
+    
+    :return: :py:func:`dict` of files to be processed by pergola
+     
+    """
+    dict_files = {}
+    
+    if not path.isdir(isatab_dir):
+        raise ValueError ("Argument input must be a folder containning data in isatab format")
+    
+    rec = isatab.parse(isatab_dir)
+    
+    #Sample name are the key shared by both study and assay
+    for i in rec.studies:
+#         print "studies are", i
+#         print "..................",i.assays
+#         print i.assays.node['metadata']
+        for j in i.assays:
+            print "assays are:", j
+#             print "-----------", j.nodes
+            for file in j.nodes.keys():
+                print j.nodes[file].metadata['Sample Name']
+                dict_files[j.nodes[file].metadata['Sample Name']] = file
+                pass
+#                 print "file to process is ------------------",file
+    return dict_files            
