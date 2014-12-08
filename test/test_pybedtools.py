@@ -10,3 +10,8 @@ a = pybedtools.example_bedtool('/home/kadomu/git/pergola/tr_1_2_dt_food_sc.bed')
 b = pybedtools.example_bedtool('/home/kadomu/git/pergola/tr_1_2_dt_water.bed')
 c = a.intersect(b)
 c.saveas("/home/kadomu/git/pergola/a_inter_b.bed")
+
+#Intersections
+(a-b-c).count()  # unique to a
+(a+b-c).count()  # in a and b, not c
+(a+b+c).count()  # common to all
