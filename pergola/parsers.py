@@ -83,7 +83,7 @@ def parse_isatab_assays (isatab_dir):
     :return: :py:func:`dict` of files to be processed by pergola
      
     """
-    dict_files = {}
+    dict_files = dict()
     
     if not path.isdir(isatab_dir):
         raise ValueError ("Argument input must be a folder containning data in isatab format")
@@ -96,12 +96,15 @@ def parse_isatab_assays (isatab_dir):
 #         print "..................",i.assays
 #         print i.assays.node['metadata']
         for j in i.assays:
-            print "assays are:", j
+#             print "assays are:", j
 #             print "-----------", j.nodes
             for file in j.nodes.keys():
-                print j.nodes[file].metadata['Sample Name']
-                dict_files[j.nodes[file].metadata['Sample Name']] = file
-                pass
+#                 print j.nodes[file].metadata['Sample Name'][0]
+                key = j.nodes[file].metadata['Sample Name'][0]
+#                 print "key.................", key
+#                 print "---------------type", type (dict_files)
+#                 print "-------------------------",type (key)
+                dict_files[key] = file
 #                 print "file to process is ------------------",file
     return dict_files
 

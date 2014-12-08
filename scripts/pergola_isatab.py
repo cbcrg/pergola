@@ -32,8 +32,8 @@ def main():
     if not os.path.isdir(args.input):
         raise ValueError ("Argument input must be a folder containning data in isatab format")
     
-    parsers.parse_isatab_assays (args.input)
-    
+    dict_files = parsers.parse_isatab_assays (args.input)
+    print dict_files
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':
