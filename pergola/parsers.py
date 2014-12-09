@@ -82,13 +82,14 @@ def parse_isatab_assays (isatab_dir):
     
     :return: :py:func:`dict` of files to be processed by pergola
      
+    TODO: This functions needs that the assays to be process are tag some way
     """
     dict_files = dict()
     
     if not path.isdir(isatab_dir):
         raise ValueError ("Argument input must be a folder containning data in isatab format")
     
-    rec = isatab.parse(isatab_dir)
+    rec = isatab.parse(isatab_dir) 
     
     #Sample name are the key shared by both study and assay
     for i in rec.studies:
