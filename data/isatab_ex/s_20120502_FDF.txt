@@ -1,0 +1,5 @@
+"Source Name"	"Protocol REF"	"Sample Name"	"Characteristics[Organism]"	"Term Source REF"	"Term Accession Number"	"Characteristics[Organism Part]"	"Term Source REF"	"Term Accession Number"	"Factor Value[Diet]"	"Unit"	"Term Source REF"	"Term Accession Number"
+"CRG.Group-1.Subject-1"	"sample collection"	"CRG.Group-1.Subject-1"	"Mus musculus"	""	""	"Sample 1"	""	""	"SC"	"gram"	""	""
+"CRG.Group-1.Subject-2"	"sample collection"	"CRG.Group-1.Subject-2"	"Mus musculus"	""	""	"Sample 1"	""	""	"SC"	"gram"	""	""
+"CRG.Group-2.Subject-1"	"sample collection"	"CRG.Group-2.Subject-1"	"Mus musculus"	""	""	"Sample 1"	""	""	"HF"	"gram"	""	""
+"CRG.Group-2.Subject-2"	"sample collection"	"CRG.Group-2.Subject-2"	"Mus musculus"	""	""	"Sample 1"	""	""	"HF"	"gram"	""	""
