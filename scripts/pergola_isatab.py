@@ -49,7 +49,7 @@ url_file.retrieve(url, path_file)
 
 # urlretrieve("https://raw.githubusercontent.com/cbcrg/pergola/master/dat/feeding_beh_files/20120502_FDF_CRG_hab_DevW1_W2_filt_c1.csv", "/users/cn/jespinosa/Desktop/test.csv")
         
-exit("culo...................")          
+# exit("culo...................") #del         
 
 def main():
     parser = ArgumentParser(parents=[parsers.parser])
@@ -65,8 +65,24 @@ def main():
     if not os.path.isdir(args.input):
         raise ValueError ("Argument input must be a folder containning data in isatab format")
     
+    # It might be interesting to check inside the function whether files are url or in path
     dict_files = parsers.parse_isatab_assays (args.input)
     print dict_files
+    
+    # First try with files in local then with url
+    for key in dict_files:
+        file_path = dict_files[key]
+        print "key %s -----value %s"% (key, dict_files[key]) 
+        print "file............" ,dict_files[key]
+    
+        pergola_rules.main(path=dict_files[key], ontol_file_path=args.ontology_file,
+                           sel_tracks=args.tracks, list=args.list, range=args.range,
+                           track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
+                           write_format=args.format, relative_coord=args.relative_coord,
+                           intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor,
+                           fields2read=args.fields_read)
+
+    exit ("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")    
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':
