@@ -13,10 +13,43 @@ from pergola  import intervals
 from pergola  import mapping
 # from scripts import pergola_rules
 from argparse import ArgumentParser, ArgumentTypeError
-from sys      import stderr
+from sys      import stderr, exit
 import os
 # from bcbio import isatab
 import pergola_rules
+
+
+from urllib import urlretrieve, URLopener
+
+url = "https://raw.githubusercontent.com/cbcrg/pergola/master/data/feeding_beh_files/20120502_FDF_CRG_hab_DevW1_W2_filt_c1.csv" 
+file_name = url.split('/')[-1]
+
+from os.path import expanduser
+home_dir = expanduser('~')
+
+path_pergola = os.path.join(home_dir,".pergola/projects")
+if not os.path.exists(path_pergola):
+    os.makedirs(path_pergola)
+
+path_file = os.path.join(path_pergola, file_name)
+print "...............",home_dir
+print "...............",path_file
+
+# exit("culo...................")#del
+
+
+print "file name is::::::::::::::::::::::::::", path_file
+
+# "/users/cn/jespinosa/Desktop/test.csv"
+
+
+url_file = URLopener()
+
+url_file.retrieve(url, path_file)
+
+# urlretrieve("https://raw.githubusercontent.com/cbcrg/pergola/master/dat/feeding_beh_files/20120502_FDF_CRG_hab_DevW1_W2_filt_c1.csv", "/users/cn/jespinosa/Desktop/test.csv")
+        
+exit("culo...................")          
 
 def main():
     parser = ArgumentParser(parents=[parsers.parser])
