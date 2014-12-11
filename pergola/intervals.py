@@ -187,7 +187,7 @@ class IntData:
                                   'an ordered list of columns names using fields')     
                 
         self.inFile.close()
-        print "..............fieldsB",fieldsB
+#         print "..............fieldsB",fieldsB #del
         return fieldsB
     
     def _set_fields_g (self, ontology_dict):
@@ -204,6 +204,14 @@ class IntData:
         
         for field_B in self.fieldsB:
             if field_B:
+                try:
+                    ontology_dict [field_B]
+                except KeyError:
+                    raise KeyError ("Field %s is not map in your ontology mapping. " \
+                                    "TIP: Fields that are not use from the input data have to be set to dummy" \
+                                    "in the ontology mapping. Example: behavioural_file:%s > genome_file:dummy"                               
+                                    % (field_B, field_B))                                                                                                        
+
                 dict_fields_g[ontology_dict [field_B]] = i_field_b
             i_field_b = i_field_b + 1                    
         
