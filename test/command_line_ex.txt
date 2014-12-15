@@ -8,7 +8,7 @@ pergola_isatab.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab f
 pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -o "/home/kadomu/git/pergola/test/b2g.txt"
 # WORK
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
-
+pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt" -f bedGraph -e
 
 #Pergola electrophisiology
 pergola_rules.py -i "/home/kadomu/Dropbox/pergola/electroTest_2f.txt" -o "/home/kadomu/Dropbox/pergola/ontolElectro_2fields.txt" -n

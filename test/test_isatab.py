@@ -4,6 +4,7 @@ from bcbio import isatab
 
 rec = isatab.parse("/Users/jespinosa/software/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB")
 rec = isatab.parse("/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB")
+rec = isatab.parse("/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex")
 study = rec.studies[0]
 assay = rec.studies[0].assays[0]
 
@@ -23,9 +24,12 @@ print study.nodes.keys()
 
 ##Number of studies
 len(rec.studies)
+print rec
 
-for i in rec.studies:
-    print i
+st = ""
+for i in rec.studies: 
+    print "studies are", i
+    st = i
     
 node=study.nodes["CRG.Group-1.Subject-1"]
 node.metadata["Organism"]
@@ -39,14 +43,19 @@ study= rec.studies[0]
 
 #Sample name are the key shared by both study and assay
 
+
+# Example of how I should take the name of the file using the field of the assay
+# table called raw data file, this should be explained in the documentation
+# If the raw data file is always read as the node then I can directly get it as the name of the file
+# the documentation is not very nice
+# I can read an example file from the web and si if it works
 for i in rec.studies:
-#         print "studies are", i
     
     for j in i.assays:
-        #print "assays are:", j
+        print "assays are:", j
         for file in j.nodes.keys():
-            print "file to process is ------------------",file
-
+#             print "file to process is ------------------",file
+            print j.nodes[file].metadata['Raw Data File'][0]
 
 # parse_isatab_assays(isatab_dir) function with all prints            
 def parse_isatab_assays (isatab_dir):
