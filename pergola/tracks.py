@@ -461,7 +461,8 @@ class Track(GenomicContainer):
         i_chr_start = self.fields.index("chromStart")
         i_chr_end = self.fields.index("chromEnd")
         i_data_value = self.fields.index("dataValue")
-        ini_window = 0
+#         ini_window = 0 #ojo
+        ini_window = 1
         delta_window = window      
         end_window = delta_window
         partial_value = 0 
@@ -487,8 +488,10 @@ class Track(GenomicContainer):
                     temp_list.append(end_window)
                     temp_list.append(partial_value)
                     partial_value = 0
-                    ini_window += delta_window + 1
-                    end_window += delta_window + 1                                 
+#                     ini_window += delta_window + 1 #ojo
+                    ini_window += delta_window
+#                     end_window += delta_window + 1 #ojo
+                    end_window += delta_window                                 
                     yield(tuple(temp_list))
                     temp_list = []
     
@@ -549,8 +552,8 @@ class Track(GenomicContainer):
                             cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
                             break
                         
-                        end_w = end_w + delta_window
-            else:
+                        end_w = end_w + delta_window    
+            else:            
                 print >> stderr,("FATAL ERROR: Something went wrong")
         
         #Last value just printed out
