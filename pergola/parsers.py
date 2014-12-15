@@ -14,7 +14,7 @@ from sys      import stderr
 from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
 from bcbio import isatab
-from os import path
+from os import path, makedirs
 from urllib2 import urlopen, HTTPError
 
 _dt_act_options = ['all', 'one_per_channel']
@@ -122,24 +122,24 @@ def check_assay_pointer (pointer, download_path):
     try:
         url_file = urlopen(pointer)
          
-        if not os.path.exists(download_path):
-            os.makedirs(download_path)
+        if not path.exists(download_path):
+            makedirs(download_path)
          
         file_name = pointer.split('/')[-1]
-        path_file = os.path.join(download_path, file_name)
+        path_file = path.join(download_path, file_name)
          
         #Check whether file is already created
-        if not os.path.exists(path_file):
+        if not path.exists(path_file):
             local_file = open(path_file, "w")
             local_file.write(url_file.read())
-            print "File %s has been correctly downloaded to %s", (file_name, download_path)   
+            print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)   
         else:
-            print "File has already been downloaded before\n"
+            print "\nFile has already been downloaded before\n"
             
     except ValueError, HTTPError:
         try:
             f = open(pointer)
-            print "File %s is already in system"%pointer
+            print "\nFile %s is already in system"%pointer
         except IOError:
             raise IOError("Pointer inside isatab assays table is either a file in your system or a valid URL")
 
