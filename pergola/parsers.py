@@ -109,6 +109,35 @@ def parse_isatab_assays (isatab_dir):
 #                 print "file to process is ------------------",file
     return dict_files
 
+def check_assay_pointer (pointer):
+    """
+    Checks whether the argument pointer is the path to a local file or it is a URL
+    If it is a URL it downloads the file to $HOME/.pergola if it has not been previously downloaded 
+        
+    :param pointer: :py:func:`str` path to a file or URL
+             
+    """
+    try:
+        url_file = urlopen(pointer)
+         
+        if not os.path.exists(path_pergola):
+            os.makedirs(path_pergola)
+         
+        file_name = pointer.split('/')[-1]
+        path_file = os.path.join(path_pergola, file_name)
+         
+        #Check whether file is already created
+        if not os.path.exists(path_file):
+            local_file = open(path_file, "w")
+            local_file.write(url_file.read())
+        else:
+            print "File has already been downloaded before\n"
+            
+    except ValueError, HTTPError:
+        try:
+            f = open(pointer)
+        except IOError:
+            raise IOError("Pointer inside isatab assays table is either a file in your system or a valid URL")
 
 parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
