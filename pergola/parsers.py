@@ -15,6 +15,7 @@ from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
 from bcbio import isatab
 from os import path
+from urllib2 import urlopen, HTTPError
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
