@@ -21,7 +21,7 @@ from pergola import parsers
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_f=None, no_header=False, fields2read=None):
+         multiply_f=None, no_header=False, fields2read=None, window_size=None):
     
 #     parser = ArgumentParser(parents=[parsers.parser]) #del
 #     
@@ -93,7 +93,12 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
         print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % fields2read                        
     else:
         fields2read = None    
-                          
+    
+    if window_size:
+        print >>stderr, "@@@Pergola_rules.py: Window size set to: %d" % window_size
+    else:
+        window_size = 300
+        print >>stderr, "@@@Pergola_rules.py: Window size set to default: %d" % window_size
 #         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
 #                         'as it has not been set using path_w' % (pwd)
     ################
@@ -151,7 +156,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #                                  dataTypes_actions=dataTypes_act)
     
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-                                 dataTypes_actions=dataTypes_act, window=300)
+                                 dataTypes_actions=dataTypes_act, window=window_size)
     
      
 #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
@@ -191,4 +196,5 @@ if __name__ == '__main__':
               list=args.list, range=args.range, track_actions=args.track_actions, 
               dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
               relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
-              multiply_f=args.multiply_factor, no_header=args.no_header, fields2read=args.fields_read))
+              multiply_f=args.multiply_factor, no_header=args.no_header, 
+              fields2read=args.fields_read, window_size=args.window_size))

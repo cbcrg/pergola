@@ -62,7 +62,7 @@ def main():
                            track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
                            write_format=args.format, relative_coord=args.relative_coord,
                            intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor,
-                           fields2read=args.fields_read)
+                           fields2read=args.fields_read, window_size=args.window_size)
 
 #It might be interesting to implement a append option
 

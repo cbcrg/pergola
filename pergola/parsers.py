@@ -178,4 +178,5 @@ parser.add_argument('-nh', '--no_header', required=False, action='store_true',
                     default=False, help='Data file contains no header')
 parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
                     help='List of fields to read from input file')
-
+parser.add_argument('-w', '--window_size', required=False, metavar="WINDOW_SIZE", type=int, 
+                    help='Window size for bedGraph intervals')
