@@ -558,7 +558,7 @@ class IntData:
             for i in range(len(row)):
                 
                 if i in i_fields:
-                    temp.append(row[i]- self.min)
+                    temp.append(row[i]- self.min + 1)
                 else:
                     temp.append(row[i])
     
