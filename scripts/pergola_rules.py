@@ -115,12 +115,12 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
     
     # intData.data although relative_coord is set does not work
-    print "intData.data"
+#     print "intData.data"#del
 #     print intData.data
-    print "intData.read()"
+#     print "intData.read()"#del
 #     print intData.read(relative_coord=relative_coord)
-    print "----min value",intData.min
-    print "----max value",intData.max
+#     print "----min value",intData.min #del
+#     print "----max value",intData.max #del
     
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
     
@@ -135,10 +135,11 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     data_read = intData.read(relative_coord=True)
     
 #     intData.read(self, fields=None, relative_coord=False, intervals_gen=False, fields2rel=None, multiply_t=1,**kwargs):
-    print "haber que hay aqui", data_read.list_tracks
-    print "************type of data_read.data ",type (data_read.data) #list of tuples
+#     print "haber que hay aqui", data_read.list_tracks#del
+#     print "************type of data_read.data ",type (data_read.data) #list of tuples#del
     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
-    print ":::::::::::::::::::::", type (data_read)
+#     print ":::::::::::::::::::::", type (data_read)#del
+    # Save the data in a text file similar to the original read file
     data_read.save_track()
     
     for i in data_read.data:
@@ -150,7 +151,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #                                  dataTypes_actions=dataTypes_act)
     
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-                                 dataTypes_actions=dataTypes_act, window=1)
+                                 dataTypes_actions=dataTypes_act, window=300)
     
      
 #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove

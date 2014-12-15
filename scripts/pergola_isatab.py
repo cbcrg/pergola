@@ -56,18 +56,14 @@ def main():
         print "key %s -----value %s"% (key, dict_files[key])
         file_path = parsers.check_assay_pointer(pointer_file, download_path=path_pergola) 
         print "File name is::::::::::::::::::::::::::%s   \n" % file_path
-        
-        # Here I would implement the download or checking if the file is in local
-        # This way you might be able to just download files that you want to process
-        
-#         pergola_rules.main(path=dict_files[key], ontol_file_path=args.ontology_file,
-#                            sel_tracks=args.tracks, list=args.list, range=args.range,
-#                            track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
-#                            write_format=args.format, relative_coord=args.relative_coord,
-#                            intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor,
-#                            fields2read=args.fields_read)
+                      
+        pergola_rules.main(path=file_path, ontol_file_path=args.ontology_file,
+                           sel_tracks=args.tracks, list=args.list, range=args.range,
+                           track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
+                           write_format=args.format, relative_coord=args.relative_coord,
+                           intervals_gen=args.intervals_gen, multiply_f=args.multiply_factor,
+                           fields2read=args.fields_read)
 
-    exit ("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")    
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':
