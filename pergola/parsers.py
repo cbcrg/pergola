@@ -117,7 +117,8 @@ def check_assay_pointer (pointer, download_path):
         
     :param pointer: :py:func:`str` path to a file or URL
     :param download_path: :py:func:`str` path to download files if they are specified as an URL  
-           
+    
+    :returns: path of file to be processed        
     """
     try:
         url_file = urlopen(pointer)
@@ -132,14 +133,17 @@ def check_assay_pointer (pointer, download_path):
         if not path.exists(path_file):
             local_file = open(path_file, "w")
             local_file.write(url_file.read())
-            print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)   
+            print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)
+            return (path_file) 
         else:
-            print "\nFile has already been downloaded before\n"
-            
+            print "\nFile has already been downloaded before"
+            return (path_file)
+        
     except ValueError, HTTPError:
         try:
             f = open(pointer)
             print "\nFile %s is already in system"%pointer
+            return (pointer)
         except IOError:
             raise IOError("Pointer inside isatab assays table is either a file in your system or a valid URL")
 

@@ -52,9 +52,9 @@ def main():
     
     # First try with files in local then with url
     for key in dict_files:
-        file_path = dict_files[key]
+        pointer_file = dict_files[key]
         print "key %s -----value %s"% (key, dict_files[key])
-        parsers.check_assay_pointer(file_path, download_path=path_pergola) 
+        file_path = parsers.check_assay_pointer(pointer_file, download_path=path_pergola) 
         print "File name is::::::::::::::::::::::::::%s   \n" % file_path
         
         # Here I would implement the download or checking if the file is in local
