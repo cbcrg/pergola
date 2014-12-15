@@ -121,8 +121,7 @@ def write_chr(self, mode="w", path_w=None):
 
     genomeFile = open(join(pwd, chrom + _genome_file_ext), mode)        
     genomeFile.write(">" + chrom + "\n")
-    print "-----------min max",self.max - self.min #del
     genomeFile.write (_generic_nt * (self.max - self.min))
     genomeFile.close()
-    print >>stderr, 'Genome fasta file created: %s' % (pwd + chrom + _genome_file_ext)
+    print >>stderr, 'Genome fasta file created: %s' % (pwd + "/" + chrom + _genome_file_ext)
       
