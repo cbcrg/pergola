@@ -23,7 +23,8 @@ from sys import stderr
 # from itertools import groupby 
 from tracks import Track 
 from operator import itemgetter
-from re import split
+from re import split, search
+from math import pow
 
 class IntData: 
     """
@@ -331,28 +332,39 @@ class IntData:
         
         # Setting the factor to multiply if it is not set by the user
         # different to 1 and the timepoints are decimal numbers
-        n = 0
-#         test_decimal = list(self.reader)
-        file_int = open(self.path, "rb")
-        test_decimal = reader(file_int, delimiter=self.delimiter)
-        
-        for r in test_decimal:            
-            n = n + 1
+        if multiply_t == 1:
             
-            print n
-            if n == 200 :
-#                 self.reader.seek(0)
-                break               
-            for i in sorted(self.fieldsG_dict.values()):
-#                 
-#                 
-#                 print "idx of fields to intervals are",idx_fields2int
-#                 
-                if i in idx_fields2int:
-# #                     print interv[i].split(".")
-                    print "..............................................",(split('\.|\,', r[i]), r[i])
-# #                     print re.split('\.|\,', '0,00092')
+            n = 0
+    #         test_decimal = list(self.reader)
+            file_int = open(self.path, "rb")
+            test_decimal = reader(file_int, delimiter=self.delimiter)
+            test_decimal.next()        
+            max_dec_len = 0
+            pattern_dec_p = '\.|\,'
+            
+            for r in test_decimal:            
+                n = n + 1
                 
+                print n
+                if n == 200 :
+    #                 self.reader.seek(0)
+                    break               
+                for i in sorted(self.fieldsG_dict.values()):
+    #                 
+    #                 
+    #                 print "idx of fields to intervals are",idx_fields2int
+                      
+                    if i in idx_fields2int and search(pattern_dec_p, r[i]):
+                        dec_len = len(split(pattern_dec_p, r[i])[1])
+                        if max_dec_len < dec_len: max_dec_len = dec_len 
+                        print "..............................................",max_dec_len
+    # #                     print re.split('\.|\,', '0,00092')
+            multiply_t = pow(10, max_dec_len)
+        print "multiply_t............",multiply_t        
+        exit("|||||||||||||||||||1")
+        
+        
+        
         
         j = 0 
                           
