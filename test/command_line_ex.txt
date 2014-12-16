@@ -14,3 +14,5 @@ pergola_isatab.py -i "/home/kadomu/git/pergola/data/isatab_ex/" -o "/home/kadomu
 
 #Pergola electrophisiology
 pergola_rules.py -i "/home/kadomu/Dropbox/pergola/electroTest_2f.txt" -o "/home/kadomu/Dropbox/pergola/ontolElectro_2fields.txt" -n
+
+pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n
