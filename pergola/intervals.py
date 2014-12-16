@@ -23,6 +23,7 @@ from sys import stderr
 # from itertools import groupby 
 from tracks import Track 
 from operator import itemgetter
+from re import split
 
 class IntData: 
     """
@@ -326,11 +327,41 @@ class IntData:
         first = True
         p_temp = []
         
-        print "range in dicitioanry is", range(len(self.fieldsG_dict))
-                            
-        for interv in self.reader:            
-            temp = []            
+        print "range in dicitionary is", range(len(self.fieldsG_dict))
+        
+        # Setting the factor to multiply if it is not set by the user
+        # different to 1 and the timepoints are decimal numbers
+        n = 0
+#         test_decimal = list(self.reader)
+        file_int = open(self.path, "rb")
+        test_decimal = reader(file_int, delimiter=self.delimiter)
+        
+        for r in test_decimal:            
+            n = n + 1
             
+            print n
+            if n == 200 :
+#                 self.reader.seek(0)
+                break               
+            for i in sorted(self.fieldsG_dict.values()):
+#                 
+#                 
+#                 print "idx of fields to intervals are",idx_fields2int
+#                 
+                if i in idx_fields2int:
+# #                     print interv[i].split(".")
+                    print "..............................................",(split('\.|\,', r[i]), r[i])
+# #                     print re.split('\.|\,', '0,00092')
+                
+        
+        j = 0 
+                          
+        for interv in self.reader: 
+            temp = []
+            j = j + 1 
+                        
+            
+            if j == 10 : exit("cullllllll")
             for i in sorted(self.fieldsG_dict.values()):
 #                 print "index are:", i#del
 #             for i in range(len(self.fieldsG_dict)):#del 
@@ -358,30 +389,59 @@ class IntData:
                 # Field assign to data value should be an integer or float        
 #                 print ".........",idx_dataValue
                 if i in idx_dataValue:                    
-                    try:
+                    try:                        
                         float(interv[i])
                     except ValueError:
                         raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
                                           interv[i]) 
-                
-                if i in idx_fields2mult and i in idx_fields2int:                                                             
+#                 print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
+                if i in idx_fields2mult and i in idx_fields2int:        
+                    print "idx_fields2mult --- idx_fields2int", (idx_fields2mult, idx_fields2int)
+                    a = round (float(interv[i]) * multiply_t, 10)
+                    
+                    b = int(a)
+                    print "value without int() applied and .....", (float(interv[i]) * multiply_t, b)
+                    print "original value file", interv[i]
+                    print "a............", (a)
+                    print "b--------------",(b)
+                    print "a-b",(a-b)
+                    # AQUI
+                    if a-b != 0:
+                        raise ValueError ("Intervals values can not be decimal")                                                
                     v = int(float(interv[i]) * multiply_t)
+                    print "coordinate is...............", (interv[i],v)
                     temp.append(v)
                     p_v = v - 1
                     
                     if intervals: last_start = v
                     
                 elif i in i_new_field and i in idx_fields2mult:
+                    print "caaaaa",(idx_fields2int, idx_fields2mult)#del
                     if first:                                                
                         pass
                     else:
+                        print "coordinate is+++++++++++++++", p_v
                         p_temp.append(p_v)  
                                               
                 elif i in idx_fields2mult and i not in idx_fields2int:
+                    print "ciiiii",(idx_fields2int, idx_fields2mult, i)#del
+                    print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
+                    
+                    
+                    
+                    
+                    a = round (float(interv[i]) * multiply_t, 10)
+                    b = int(a)
+                    if a-b != 0:
+                        raise ValueError ("Intervals values can not be decimal")         
+                    
                     v = int(float(interv[i]) * multiply_t)
+                    
+                    #### AQUI
                     temp.append(v)
                 
                 else:
+                    print "cuuuu",(idx_fields2int, idx_fields2mult)
                     v = interv[i]              
                     temp.append(v)
                 
@@ -430,7 +490,7 @@ class IntData:
         for field_gen in sorted_index_f:
             data_fields.append(field_gen[0])
         self.fieldsG = data_fields
-        print "..........", sorted_index_f
+        print "..........", sorted_index_f #del
         
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
