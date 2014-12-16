@@ -48,8 +48,8 @@ foo@bar$ pergola_rules.py
                         relative to this timepoint
   -n, --intervals_gen   Set startChrom and endChrom from just a timepoint in
                         the fileusing field set as startChrom
-  -m N, --multiply_factor N
-                        Multiplies value in dataValue by the given value
+  -m N, --multiply_dataValue N
+                        Multiplies value in dataValue by the given factor
   -s FIELDS2READ [FIELDS2READ ...], --fields_read FIELDS2READ [FIELDS2READ ...]
                         List of fields to read from input file
 {% endhighlight bash %}
@@ -163,6 +163,12 @@ Sets the format of the output file (bed, bedGraph)
 Sets first timepoint to 0 and make all the others relative to this timepoint
 
 ```
+-m, --multiply_dataValue N  
+```
+
+Genome browsers only allow you to use you integers value to map, for this reason if time points for example are expressed as decimals (0.001 *s*) you can transform them to ms using *-m 1000*
+
+```
 -n, --intervals_gen  
 ```
 
@@ -172,15 +178,16 @@ An example where you should use this option will be this file:
 
 {% highlight bash %}
 "Time"	"1 extraLFP"
-0	-30.98
-1	-5.19
-2	23.96
-3	-2.75
-4	12.82
-5	-8.24
-6	-20.60
-7	21.36
-8	-5.19
+0.00	-30.98
+0.01	-5.19
+0.02	23.96
+0.03	-2.75
+0.04	12.82
+0.05	-8.24
+0.06	-20.60
+0.07	21.36
+0.08	-5.19
+
 {% endhighlight bash %}
 
 The only two mandatory fields in your file should be always, chromStart and dataValue, thus your ontology file should be like:
@@ -193,11 +200,6 @@ behavioural_file:31 Keyboard > genome_file:dataTypes
 behavioural_file:1 extraLFP > genome_file:dataValue
 {% endhighlight bash %}
 
-```
--m, --multiply_factor n  
-```
-
-Genome browsers only allow you to use you integers value to map, for this reason if time points for example are expressed as decimals (0.001 *s*) you can transform them to ms using *-m 1000*
 
 An example of a complete command line with all the options (not mutually exclusive) set is:
 
