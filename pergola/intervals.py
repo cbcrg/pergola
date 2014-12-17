@@ -354,7 +354,9 @@ class IntData:
     #                 
     #                 print "idx of fields to intervals are",idx_fields2int
                       
-                    if i in idx_fields2int and search(pattern_dec_p, r[i]):
+                    if i in idx_fields2int or i in idx_fields2mult and search(pattern_dec_p, r[i]):
+#                     if i in idx_fields2int and search(pattern_dec_p, r[i]):
+#                         exit ("||||||||||||||1")
                         dec_len = len(split(pattern_dec_p, r[i])[1])
                         if max_dec_len < dec_len: max_dec_len = dec_len 
 #                         print "..............................................",max_dec_len #del
@@ -445,6 +447,7 @@ class IntData:
                     a = round (float(interv[i]) * multiply_t, 6)
                     b = int(a)
                     if a-b != 0:
+                        print "a-b", (a,b)#del
                         raise ValueError ("Intervals values can not be decimal")         
                     
                     v = int(float(interv[i]) * multiply_t)
