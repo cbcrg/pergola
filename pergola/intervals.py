@@ -345,7 +345,7 @@ class IntData:
             for r in test_decimal:            
                 n = n + 1
                 
-                print n
+#                 print n#del
                 if n == 200 :
     #                 self.reader.seek(0)
                     break               
@@ -357,23 +357,23 @@ class IntData:
                     if i in idx_fields2int and search(pattern_dec_p, r[i]):
                         dec_len = len(split(pattern_dec_p, r[i])[1])
                         if max_dec_len < dec_len: max_dec_len = dec_len 
-                        print "..............................................",max_dec_len
+#                         print "..............................................",max_dec_len #del
     # #                     print re.split('\.|\,', '0,00092')
             multiply_t = pow(10, max_dec_len)
         print "multiply_t............",multiply_t        
-        exit("|||||||||||||||||||1")
+#         exit("|||||||||||||||||||1")#del
         
         
         
         
-        j = 0 
+#         j = 0 #del 
                           
         for interv in self.reader: 
             temp = []
-            j = j + 1 
+#             j = j + 1 #del 
                         
             
-            if j == 10 : exit("cullllllll")
+#             if j == 10 : exit("cullllllll")
             for i in sorted(self.fieldsG_dict.values()):
 #                 print "index are:", i#del
 #             for i in range(len(self.fieldsG_dict)):#del 
@@ -408,41 +408,41 @@ class IntData:
                                           interv[i]) 
 #                 print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
                 if i in idx_fields2mult and i in idx_fields2int:        
-                    print "idx_fields2mult --- idx_fields2int", (idx_fields2mult, idx_fields2int)
-                    a = round (float(interv[i]) * multiply_t, 10)
+#                     print "idx_fields2mult --- idx_fields2int", (idx_fields2mult, idx_fields2int)
+                    a = round (float(interv[i]) * multiply_t, 6)
                     
                     b = int(a)
-                    print "value without int() applied and .....", (float(interv[i]) * multiply_t, b)
-                    print "original value file", interv[i]
-                    print "a............", (a)
-                    print "b--------------",(b)
-                    print "a-b",(a-b)
+#                     print "value without int() applied and .....", (float(interv[i]) * multiply_t, b)
+#                     print "original value file", interv[i]
+#                     print "a............", (a)
+#                     print "b--------------",(b)
+#                     print "a-b",(a-b)
                     # AQUI
                     if a-b != 0:
                         raise ValueError ("Intervals values can not be decimal")                                                
                     v = int(float(interv[i]) * multiply_t)
-                    print "coordinate is...............", (interv[i],v)
+#                     print "coordinate is...............", (interv[i],v) #del
                     temp.append(v)
                     p_v = v - 1
                     
                     if intervals: last_start = v
                     
                 elif i in i_new_field and i in idx_fields2mult:
-                    print "caaaaa",(idx_fields2int, idx_fields2mult)#del
+#                     print "caaaaa",(idx_fields2int, idx_fields2mult)#del
                     if first:                                                
                         pass
                     else:
-                        print "coordinate is+++++++++++++++", p_v
+#                         print "coordinate is+++++++++++++++", p_v
                         p_temp.append(p_v)  
                                               
                 elif i in idx_fields2mult and i not in idx_fields2int:
-                    print "ciiiii",(idx_fields2int, idx_fields2mult, i)#del
-                    print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
+#                     print "ciiiii",(idx_fields2int, idx_fields2mult, i)#del
+#                     print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
                     
                     
                     
                     
-                    a = round (float(interv[i]) * multiply_t, 10)
+                    a = round (float(interv[i]) * multiply_t, 6)
                     b = int(a)
                     if a-b != 0:
                         raise ValueError ("Intervals values can not be decimal")         
@@ -453,7 +453,7 @@ class IntData:
                     temp.append(v)
                 
                 else:
-                    print "cuuuu",(idx_fields2int, idx_fields2mult)
+#                     print "cuuuu",(idx_fields2int, idx_fields2mult)#del
                     v = interv[i]              
                     temp.append(v)
                 
