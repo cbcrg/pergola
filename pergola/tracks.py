@@ -422,12 +422,15 @@ class Track(GenomicContainer):
             temp_list.append("+")
             temp_list.append(row[i_chr_start])
             temp_list.append(row[i_chr_end])
+            
             for v in _intervals:
                 if float(row[i_data_value]) <= v:
                     j = _intervals.index(v)
                     d_type = row [self.fields.index("dataTypes")]
-                    color = _dict_col_grad[d_type][j]
+                    global color
+                    color = _dict_col_grad[d_type][j]                                    
                     break
+                
             temp_list.append(color)          
             
             yield(tuple(temp_list))
