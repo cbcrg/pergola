@@ -335,7 +335,6 @@ class IntData:
         if multiply_t == 1:
             
             n = 0
-    #         test_decimal = list(self.reader)
             file_int = open(self.path, "rb")
             test_decimal = reader(file_int, delimiter=self.delimiter)
             test_decimal.next()        
@@ -354,7 +353,8 @@ class IntData:
 
             multiply_t = pow(10, max_dec_len)
         
-        print "Factor to transform time value has been set to %s as you want to c"%multiply_t
+            print "Factor to transform time values has been set to %s as values set as chromStart are decimals"%multiply_t
+            print  "If you want to set your own factor please use -m,--multiply_intervals n"
                 
         for interv in self.reader: 
             temp = []
@@ -374,7 +374,8 @@ class IntData:
                     b = int(a)
 
                     if a-b != 0:
-                        raise ValueError ("Intervals values can not be decimal")                                                
+                        raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease set a bigger factor " \
+                                          "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)                                                
                     v = int(float(interv[i]) * multiply_t)
 
                     temp.append(v)
@@ -392,7 +393,8 @@ class IntData:
                     a = round (float(interv[i]) * multiply_t, 6)
                     b = int(a)
                     if a-b != 0:
-                        raise ValueError ("Intervals values can not be decimal")         
+                        raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease use a bigger factor " \
+                                          "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)          
                     
                     v = int(float(interv[i]) * multiply_t)
 
