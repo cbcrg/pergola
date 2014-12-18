@@ -12,6 +12,7 @@ pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/i
 # WORK
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt" -f bedGraph -e
+
 # Ubuntu
 pergola_isatab.py -i "/home/kadomu/git/pergola/data/isatab_ex/" -o "/home/kadomu/git/pergola/test/int2gene.txt" -f bedGraph -e
 
@@ -19,3 +20,14 @@ pergola_isatab.py -i "/home/kadomu/git/pergola/data/isatab_ex/" -o "/home/kadomu
 pergola_rules.py -i "/home/kadomu/Dropbox/pergola/electroTest_2f.txt" -o "/home/kadomu/Dropbox/pergola/ontolElectro_2fields.txt" -n
 
 pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n
+
+
+# Test for no headers 
+
+#pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -o "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -m 1000 -f bed -s "Time" "15 1Amg" -nh
+
+# Test for multiplying intervals/ -m 
+pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -m 1000 -w 1
+pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -o "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -m 1000 -f bed -s "Time" "14 1CA1"
+pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
+pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt" -m 10000
