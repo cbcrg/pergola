@@ -344,127 +344,61 @@ class IntData:
             
             for r in test_decimal:            
                 n = n + 1
-                
-#                 print n#del
                 if n == 200 :
-    #                 self.reader.seek(0)
                     break               
                 for i in sorted(self.fieldsG_dict.values()):
-    #                 
-    #                 
-    #                 print "idx of fields to intervals are",idx_fields2int
-                    print "index and value",(i)
-#                     if i in idx_fields2int or i in idx_fields2mult and i not in i_new_field and search(pattern_dec_p, r[i]) != None:
                     if  i in idx_fields2int or i in idx_fields2mult and i not in i_new_field:
-                        if search(r'\.|\,', r[i]):
-#                     if search(r'\.|\,', r[i]):
-#                     if i in idx_fields2int and search(pattern_dec_p, r[i]):
-#                         exit ("||||||||||||||1")
-                            print "value inside is", split(pattern_dec_p, r[i])
-                            print "search pattern",search(pattern_dec_p, r[i])
-                            print "search pattern", i not in i_new_field
-                            print i
-                            print i_new_field
+                        if search(pattern_dec_p, r[i]):
                             dec_len = len(split(pattern_dec_p, r[i])[1])
                             if max_dec_len < dec_len: max_dec_len = dec_len 
-#                         print "..............................................",max_dec_len #del
-    # #                     print re.split('\.|\,', '0,00092')
+
             multiply_t = pow(10, max_dec_len)
-        print "multiply_t............",multiply_t        
-#         exit("|||||||||||||||||||1")#del
         
-        
-        
-        
-#         j = 0 #del 
-                          
+        print "Factor to transform time value has been set to %s as you want to c"%multiply_t
+                
         for interv in self.reader: 
             temp = []
-#             j = j + 1 #del 
-                        
-            
-#             if j == 10 : exit("cullllllll")
+
             for i in sorted(self.fieldsG_dict.values()):
-#                 print "index are:", i#del
-#             for i in range(len(self.fieldsG_dict)):#del 
-            #TODO                                   
-                # Values in idx_fields2int have to be integers
-#                 if i in idx_fields2int:
-#                     print interv[i]
-#                 
-#                     a = float(interv[i]) * multiply_t
-#                     print "---------", a
-#                     if a.is_integer():
-#                         pass
-#                     else:
-#                         raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
-#                                           "TIP: If you have to transform value from lets say " \
-#                                           "seconds to miliseconds try using multiply_t.")
-# #                     a = int(float(interv[i]) * multiply_t)
-#                     b = float(interv[i]) * multiply_t
-#                     print "-----", interv[i], a,b, int(float(interv[i]) * multiply_t), float(interv[i]) * multiply_t
-#                     if a-b != 0:
-#                         raise ValueError ("Values in chromStart and chromEnd should be integers.\n" \
-#                                         "TIP: If you have to transform value from lets say " \
-#                                         "seconds to miliseconds try using multiply_t.")
 
                 # Field assign to data value should be an integer or float        
-#                 print ".........",idx_dataValue
                 if i in idx_dataValue:                    
                     try:                        
                         float(interv[i])
                     except ValueError:
                         raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
                                           interv[i]) 
-#                 print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
                 if i in idx_fields2mult and i in idx_fields2int:        
-#                     print "idx_fields2mult --- idx_fields2int", (idx_fields2mult, idx_fields2int)
                     a = round (float(interv[i]) * multiply_t, 6)
                     
                     b = int(a)
-#                     print "value without int() applied and .....", (float(interv[i]) * multiply_t, b)
-#                     print "original value file", interv[i]
-#                     print "a............", (a)
-#                     print "b--------------",(b)
-#                     print "a-b",(a-b)
-                    # AQUI
+
                     if a-b != 0:
                         raise ValueError ("Intervals values can not be decimal")                                                
                     v = int(float(interv[i]) * multiply_t)
-#                     print "coordinate is...............", (interv[i],v) #del
+
                     temp.append(v)
                     p_v = v - 1
                     
                     if intervals: last_start = v
                     
                 elif i in i_new_field and i in idx_fields2mult:
-#                     print "caaaaa",(idx_fields2int, idx_fields2mult)#del
                     if first:                                                
                         pass
-                    else:
-#                         print "coordinate is+++++++++++++++", p_v
+                    else:                   
                         p_temp.append(p_v)  
                                               
                 elif i in idx_fields2mult and i not in idx_fields2int:
-#                     print "ciiiii",(idx_fields2int, idx_fields2mult, i)#del
-#                     print "Are they always the same interval column and fields to multiply:.....", (idx_fields2int, idx_fields2mult)
-                    
-                    
-                    
-                    
                     a = round (float(interv[i]) * multiply_t, 6)
                     b = int(a)
                     if a-b != 0:
-                        print "a-b", (a,b)#del
                         raise ValueError ("Intervals values can not be decimal")         
                     
                     v = int(float(interv[i]) * multiply_t)
-                    
-                    #### AQUI
+
                     temp.append(v)
                 
                 else:
-#                     print "cuuuu",(idx_fields2int, idx_fields2mult)#del
                     v = interv[i]              
                     temp.append(v)
                 
