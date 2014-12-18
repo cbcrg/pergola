@@ -172,7 +172,7 @@ parser.add_argument('-e', '--relative_coord', required=False, action='store_true
 parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
                     default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
                                         'using field set as startChrom')
-parser.add_argument('-m', '--multiply_dataValue', metavar='N', type=int, required=False,
+parser.add_argument('-m', '--multiply_intervals', metavar='N', type=int, required=False,
                     help='Multiplies value in dataValue by the given factor')
 parser.add_argument('-nh', '--no_header', required=False, action='store_true', 
                     default=False, help='Data file contains no header')

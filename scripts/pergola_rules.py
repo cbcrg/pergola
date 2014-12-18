@@ -74,9 +74,9 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     # Handling intervals_gen
     print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to: %s" % intervals_gen
     
-    # Handling multiply_factor
+    # Handling multiply_intervals
     if multiply_f:
-        print >>stderr, "@@@Pergola_rules.py: Multiply factor parameter set to: %s" % multiply_f                        
+        print >>stderr, "@@@Pergola_rules.py: Multiply intervals parameter set to: %s" % multiply_f                        
     else:
         multiply_f = 1
     
@@ -196,5 +196,5 @@ if __name__ == '__main__':
               list=args.list, range=args.range, track_actions=args.track_actions, 
               dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
               relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
-              multiply_f=args.multiply_dataValue, no_header=args.no_header, 
+              multiply_f=args.multiply_intervals, no_header=args.no_header, 
               fields2read=args.fields_read, window_size=args.window_size))
