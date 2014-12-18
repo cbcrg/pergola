@@ -350,7 +350,8 @@ class IntData:
                         if search(pattern_dec_p, r[i]):
                             dec_len = len(split(pattern_dec_p, r[i])[1])
                             if max_dec_len < dec_len: max_dec_len = dec_len 
-
+            
+            file_int.close()                
             multiply_t = pow(10, max_dec_len)
         
             print "Factor to transform time values has been set to %s as values set as chromStart are decimals"%multiply_t
