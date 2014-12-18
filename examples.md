@@ -48,8 +48,8 @@ foo@bar$ pergola_rules.py
                         relative to this timepoint
   -n, --intervals_gen   Set startChrom and endChrom from just a timepoint in
                         the fileusing field set as startChrom
-  -m N, --multiply_dataValue N
-                        Multiplies value in dataValue by the given factor
+  -m N, --multiply_intervals N
+                        Multiplies value in fields set as chromStart and chromEnd by the given factor
   -s FIELDS2READ [FIELDS2READ ...], --fields_read FIELDS2READ [FIELDS2READ ...]
                         List of fields to read from input file
 {% endhighlight bash %}
