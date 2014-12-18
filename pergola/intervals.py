@@ -167,8 +167,8 @@ class IntData:
                 for f in ori_fieldsB:
                     if f in fields: fieldsB.append(f)
                     else: fieldsB.append("")      
-                print "fields B all fields of header", fieldsB#del
-                fieldsB = fields
+#                 print "fields B all fields of header", fieldsB#del
+#                 fieldsB = fields
                      
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
@@ -182,14 +182,14 @@ class IntData:
                 fieldsB = fields
                 
                 print ("WARNING: As header=False you col names set by fields will be consider to have the order "
-                        "you provided: %s" 
+                        "you provided: \"%s\"" 
                         %"\",\"".join(fields))                 
             else:                                
                 raise ValueError ('File should have a header, otherwise you should set ' 
                                   'an ordered list of columns names using fields')     
                 
         self.inFile.close()
-#         print "..............fieldsB",fieldsB #del
+        print "..............fieldsB",fieldsB #del
         return fieldsB
     
     def _set_fields_g (self, ontology_dict):
@@ -212,8 +212,7 @@ class IntData:
                     raise KeyError ("Field %s is not map in your ontology mapping. " \
                                     "TIP: Fields that are not use from the input data have to be set to dummy" \
                                     "in the ontology mapping. Example: behavioural_file:%s > genome_file:dummy"                               
-                                    % (field_B, field_B))                                                                                                        
-
+                                    % (field_B, field_B))                                                                                                                        
                 dict_fields_g[ontology_dict [field_B]] = i_field_b
             i_field_b = i_field_b + 1                    
         
@@ -234,6 +233,7 @@ class IntData:
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
         
+        print dict_fields_g#del
         return dict_fields_g
     
     def _read(self, multiply_t=1, intervals=False):
