@@ -353,12 +353,20 @@ class IntData:
     #                 
     #                 
     #                 print "idx of fields to intervals are",idx_fields2int
-                      
-                    if i in idx_fields2int or i in idx_fields2mult and search(pattern_dec_p, r[i]):
+                    print "index and value",(i)
+#                     if i in idx_fields2int or i in idx_fields2mult and i not in i_new_field and search(pattern_dec_p, r[i]) != None:
+                    if  i in idx_fields2int or i in idx_fields2mult and i not in i_new_field:
+                        if search(r'\.|\,', r[i]):
+#                     if search(r'\.|\,', r[i]):
 #                     if i in idx_fields2int and search(pattern_dec_p, r[i]):
 #                         exit ("||||||||||||||1")
-                        dec_len = len(split(pattern_dec_p, r[i])[1])
-                        if max_dec_len < dec_len: max_dec_len = dec_len 
+                            print "value inside is", split(pattern_dec_p, r[i])
+                            print "search pattern",search(pattern_dec_p, r[i])
+                            print "search pattern", i not in i_new_field
+                            print i
+                            print i_new_field
+                            dec_len = len(split(pattern_dec_p, r[i])[1])
+                            if max_dec_len < dec_len: max_dec_len = dec_len 
 #                         print "..............................................",max_dec_len #del
     # #                     print re.split('\.|\,', '0,00092')
             multiply_t = pow(10, max_dec_len)
