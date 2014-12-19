@@ -116,17 +116,6 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     
     print "tracks before call are------------------------",intData.tracks
     
-#     print "..............",intData.range_values #del
-#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, relative_coord=True) #This one does not make any difference relative_coord
-    
-    # intData.data although relative_coord is set does not work
-#     print "intData.data"#del
-#     print intData.data
-#     print "intData.read()"#del
-#     print intData.read(relative_coord=relative_coord)
-#     print "----min value",intData.min #del
-#     print "----max value",intData.max #del
-    
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
     
     print "tracks 2 merge .....................",tracks2merge
