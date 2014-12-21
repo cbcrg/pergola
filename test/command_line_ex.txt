@@ -15,7 +15,9 @@ pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/i
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -o "/Users/jespinosa/git/pergola/test/int2gene.txt"
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -o "/Users/jespinosa/git/pergola/test/int2gene.txt" -f bedGraph -e
 #pergola_rules
-pergola_rules.py -i "/users/jespinosa/git/pergola/data/shortDev.int" -o "/Users/jespinosa/git/pergola/test/b2g.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -o "/Users/jespinosa/git/pergola/test/b2g.txt"
+#electrophysiology
+pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -m 1000 -w 1
 
 # WORK
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
