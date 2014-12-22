@@ -107,7 +107,7 @@ class GenomicContainer(object):
         """
         return self.data.next()
     
-    def save_track(self, mode="w", path=None):
+    def save_track(self, mode="w", path=None, track_line=True):
         """
         Save the data in a file of format set by *self.format* 
         
@@ -115,6 +115,11 @@ class GenomicContainer(object):
         
         :param None path: Path to create file, py:func:`str`. If None (default) the 
             file is dumped in the current working directory and prints a warning.  
+        
+        :param None track: Path to create file, py:func:`str`. If None (default) the 
+            file is dumped in the current working directory and prints a warning.
+            
+        :param True track_line: If it is set to True includes the track_line 
         
         :returns: Void
         
@@ -145,9 +150,9 @@ class GenomicContainer(object):
         #Annotation track to set the genome browser interface
         annotation_track = ''
         
-        if self.format == 'bed':
+        if self.format == 'bed' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20" 
-        elif self.format == 'bedGraph':
+        elif self.format == 'bedGraph' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
 
         track_file.write (annotation_track + "\n")

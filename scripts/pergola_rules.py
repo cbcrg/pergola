@@ -21,7 +21,7 @@ from pergola import parsers
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_f=None, no_header=False, fields2read=None, window_size=None):
+         multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False):
     
 #     parser = ArgumentParser(parents=[parsers.parser]) #del
 #     
@@ -101,6 +101,14 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
         print >>stderr, "@@@Pergola_rules.py: Window size set to default: %d" % window_size
 #         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
 #                         'as it has not been set using path_w' % (pwd)
+    print "no_track_line set to........................................................: %s" % no_track_line
+    if no_track_line:
+        track_line=False
+    else:
+        track_line=True
+        
+    print >>stderr, "@@@Pergola_rules.py: track_line set to........................................................: %s" % track_line
+        
     ################
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
@@ -160,7 +168,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
         print "key.......: ",key
         bedSingle = bed_str[key]
 #         print "::::::::::::::",bedSingle.dataTypes
-        bedSingle.save_track()
+        bedSingle.save_track(track_line=track_line)
 #         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
         
 #         for i in bedSingle:
@@ -186,4 +194,5 @@ if __name__ == '__main__':
               dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
               relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
               multiply_f=args.multiply_intervals, no_header=args.no_header, 
-              fields2read=args.fields_read, window_size=args.window_size))
+              fields2read=args.fields_read, window_size=args.window_size, 
+              no_track_line=args.no_track_line))

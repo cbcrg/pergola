@@ -180,3 +180,5 @@ parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, narg
                     help='List of fields to read from input file')
 parser.add_argument('-w', '--window_size', required=False, metavar="WINDOW_SIZE", type=int, 
                     help='Window size for bedGraph intervals')
+parser.add_argument('-nt', '--no_track_line', required=False, action='store_true',
+                    default=False, help='Track line no included in the bed file')
