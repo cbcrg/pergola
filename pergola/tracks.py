@@ -511,12 +511,16 @@ class Track(GenomicContainer):
                     end_new = chr_end
                     
                     for start_w in range (ini_window, chr_end, delta_window):
-                        weighted_value = 0
+                        weighted_value = 0.0
                         
                         if (end_w == start_w):
-                            weighted_value = (end_w - start_new + 1) / (end_new - start_new)
-                        else:     
-                            weighted_value = (end_w - start_new) / (end_new - start_new)
+                            weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
+                        else:                                                           
+                            weighted_value = float(end_w - start_new) / float(end_new - start_new)
+                            print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new)
+#                             weighted_value= 9/2
+                            print "weighted value",weighted_value  
+#                             print "value2weight..............", (chr_end, end_window, value2weight, weighted_value)
                             
                         weighted_value *= value2weight
                         cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)                      
@@ -546,9 +550,9 @@ class Track(GenomicContainer):
                         weighted_value = 0
                         
                         if (end_w == start_w):
-                            weighted_value = (end_w - start_new + 1) / (end_new - start_new)
+                            weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
                         else:    
-                            weighted_value = (end_w - start_new) / (end_new - start_new)
+                            weighted_value = float(end_w - start_new) / float(end_new - start_new)
                             
                         weighted_value *= value2weight
                         cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)
