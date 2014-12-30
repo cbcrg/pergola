@@ -127,20 +127,13 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
     
     print "tracks 2 merge .....................",tracks2merge
-#     print "____________",intData.tracks
-#     print "::::::::", intData.data
-
     
     mapping.write_chr (intData)#mantain
     
-#     intData = intData.read(relative_coord=True)
-    data_read = intData.read(relative_coord=True)
-    
-#     intData.read(self, fields=None, relative_coord=False, intervals_gen=False, fields2rel=None, multiply_t=1,**kwargs):
-#     print "haber que hay aqui", data_read.list_tracks#del
-#     print "************type of data_read.data ",type (data_read.data) #list of tuples#del
+    data_read = intData.read(relative_coord=True)    
+
     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
-#     print ":::::::::::::::::::::", type (data_read)#del
+
     # Save the data in a text file similar to the original read file
     data_read.save_track()
     
@@ -148,10 +141,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #         print i
         pass
     
-    
-#     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-#                                  dataTypes_actions=dataTypes_act)
-    
+        
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  dataTypes_actions=dataTypes_act, window=window_size)
     
@@ -160,10 +150,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
 #     ## funcion comun para procesar esto en las dos opciones
 #     ## however tracks_merge are the trakcs to be join
-#     bed_str =  intData.convert(relative_coord=relative_coord, mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act)
-#     bed_str =  intData.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, dataTypes_actions=dataTypes_act) 
-       
-#     print bed_str#del
+
     for key in bed_str:
         print "key.......: ",key
         bedSingle = bed_str[key]
