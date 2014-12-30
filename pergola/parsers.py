@@ -147,38 +147,38 @@ def check_assay_pointer (pointer, download_path):
         except IOError:
             raise IOError("Pointer inside isatab assays table is either a file in your system or a valid URL")
 
-parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
-parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
-parser.add_argument('-o', '--ontology_file', required=True, metavar="ONTOLOGY_FILE",
+parent_parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
+parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
+parent_parser.add_argument('-o', '--ontology_file', required=True, metavar="ONTOLOGY_FILE",
                     help='File with the ontology between fields in behavioral file' + \
                     'and genome browser grammar')
-parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
+parent_parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                     help='List of selected tracks')
-parser.add_argument('-l','--list', required=False, metavar="LIST_OF_TRACKS", type=str, nargs='+',
+parent_parser.add_argument('-l','--list', required=False, metavar="LIST_OF_TRACKS", type=str, nargs='+',
                     help='Numeric list of tracks to be joined in a single genomic like file')### string allowed as some tracks could be named as: track_1, track2....
-parser.add_argument('-r', '--range', required=False, type=parse_num_range,
+parent_parser.add_argument('-r', '--range', required=False, type=parse_num_range,
                     help='Numeric range of tracks to be joined in a single genomic like file')
-parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
+parent_parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
                     help='Option of action with tracks selected, split_all, join_all,' + \
                          ' join_odd, join_even, join_range or join_list')
-parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
+parent_parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
                     help='Unique values of dataTypes field should be dumped on' + \
                          ' different data structures or not')
-parser.add_argument('-f', '--format', required=False, type=str, 
+parent_parser.add_argument('-f', '--format', required=False, type=str, 
                     help='Write file output format (bed or bedGraph)')
-parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
+parent_parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
                     default=False, help='Sets first timepoint' \
                     ' to 0 and make all the others relative to this timepoint')
-parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
+parent_parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
                     default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
                                         'using field set as startChrom')
-parser.add_argument('-m', '--multiply_intervals', metavar='N', type=int, required=False,
+parent_parser.add_argument('-m', '--multiply_intervals', metavar='N', type=int, required=False,
                     help='Multiplies value in dataValue by the given factor')
-parser.add_argument('-nh', '--no_header', required=False, action='store_true', 
+parent_parser.add_argument('-nh', '--no_header', required=False, action='store_true', 
                     default=False, help='Data file contains no header')
-parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
+parent_parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
                     help='List of fields to read from input file')
-parser.add_argument('-w', '--window_size', required=False, metavar="WINDOW_SIZE", type=int, 
+parent_parser.add_argument('-w', '--window_size', required=False, metavar="WINDOW_SIZE", type=int, 
                     help='Window size for bedGraph intervals')
-parser.add_argument('-nt', '--no_track_line', required=False, action='store_true',
+parent_parser.add_argument('-nt', '--no_track_line', required=False, action='store_true',
                     default=False, help='Track line no included in the bed file')
