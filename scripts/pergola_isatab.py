@@ -33,9 +33,11 @@ url = "https://raw.githubusercontent.com/cbcrg/pergola/master/data/feeding_beh_f
       
 
 def main():
-    parser = ArgumentParser(parents=[parsers.parser])
-    
-    args = parser.parse_args()
+
+    parser_isatab = ArgumentParser(parents=[parsers.parent_parser])        
+    parser_isatab.add_argument('-ft', '--file_tab', required=False, metavar="FILE_TAG", help='Tag for file field in isatab')
+
+    args = parser_isatab.parse_args()
     
     print >> stderr, "@@@Pergola_isatab.py: Input file: %s" % args.input 
     print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.ontology_file
