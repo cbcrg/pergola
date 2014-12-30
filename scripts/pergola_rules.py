@@ -186,8 +186,12 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 
 if __name__ == '__main__':
         
-    parser = ArgumentParser(parents=[parsers.parser])
-    args = parser.parse_args()
+    parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser])        
+    
+    # Eventually adding arguments only for pergola_rules
+#     parser_pergola_rules.add_argument('-fo', '--foo', required=False, metavar="FOO", help='Foo is foo')
+
+    args = parser_pergola_rules.parse_args()
     
     exit(main(path=args.input, ontol_file_path=args.ontology_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
