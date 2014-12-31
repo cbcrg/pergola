@@ -56,16 +56,22 @@ def main():
     for key in dict_files:
         pointer_file = dict_files[key]
         print "key %s -----value %s"% (key, dict_files[key])
-        file_path = parsers.check_assay_pointer(pointer_file, download_path=path_pergola) 
-        print "File name is::::::::::::::::::::::::::%s   \n" % file_path
+        print ">>>>>>>>>>>>>>>>>>>>>pointer to file is:", pointer_file
+        
+        # Tengo que relacionar de alguna manera cual es el assay de donde tiene que sacar los archivos
+        #Probar varios isatab files 
+        
+#         file_path = parsers.check_assay_pointer(pointer_file, download_path=path_pergola) 
+#         print "File name is::::::::::::::::::::::::::%s   \n" % file_path
                       
-        pergola_rules.main(path=file_path, ontol_file_path=args.ontology_file,
-                           sel_tracks=args.tracks, list=args.list, range=args.range,
-                           track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
-                           write_format=args.format, relative_coord=args.relative_coord,
-                           intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals,
-                           fields2read=args.fields_read, window_size=args.window_size)
+#         pergola_rules.main(path=file_path, ontol_file_path=args.ontology_file,
+#                            sel_tracks=args.tracks, list=args.list, range=args.range,
+#                            track_actions=args.track_actions, dataTypes_actions=args.dataTypes_actions,
+#                            write_format=args.format, relative_coord=args.relative_coord,
+#                            intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals,
+#                            fields2read=args.fields_read, window_size=args.window_size)
 
+        exit ("GOing out to see what do I have here")
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':
