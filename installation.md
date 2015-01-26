@@ -19,9 +19,9 @@ weight: 2
 Download Pergola tarball from [github](http://github.com/cbcrg/pergola/ "Github"), unpack and install it:
  
 {% highlight bash %}
-wget http://github.com/cbcrg/pergola/tarball/master -O master.tar.gz
-tar xzvf master.tar.gz
-cd cbcrg-pergola-master
+curl -L  http://github.com/cbcrg/pergola/archive/master.zip -o "pergola.zip"
+unzip pergola.zip
+cd pergola-master
 sudo python setup.py install
 {% endhighlight bash %}
 
