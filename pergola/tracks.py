@@ -260,21 +260,15 @@ class Track(GenomicContainer):
         track_dict = {}                        
    
         
-        ### Generating track dict (output)
-        #validacion del diccionario para imprimir o lo que sea
-        #mirar si es un diccionario de diccionarios la primera validacion hay que desarrolarla 
-        for k, v in d_track_merge.items():
-            if isinstance(v,dict):
-                print "Is a dictionary"#del
-                                   
+        ### Generating track dict (output)                         
         window = kwargs.get("window", 300)
         
         ### Assigning data to output dictionary    
         for k, d in d_dataTypes_merge.items():
+            if not isinstance(d,dict):
+                raise ValueError ("The structure that holds the tracks should be a dictionary of dictionaries")
+            
             for k_2, d_2 in d.items():
-#                 print _dict_col_grad[k_2], k_2#del
-#                 color_grad = _dict_col_grad[k_2]
-#                 print color#del
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
                        
         return (track_dict)
