@@ -674,10 +674,10 @@ def assign_color (set_dataTypes, color_restrictions=None):
         #If there are restricted colors they should be on the default colors list
         if not all(colors in _dict_colors for colors in rest_colors):
             raise ValueError("Not all restricted colors are available") 
-        
+             
         #If there are fields link to related colors they also must be in the data type list 
-        if not all(key in set_dataTypes for key in color_restrictions):                      
-            raise ValueError("Some values of data types provided as color restriction are not present in the file")
+        if not all(key in set_dataTypes for key in color_restrictions):                                  
+            raise ValueError("Some values of data types provided as color restriction are not present in the file", (set_dataTypes, color_restrictions))
             
         for dataType in color_restrictions:
             d_dataType_color[dataType] = _dict_colors[color_restrictions[dataType]] 

@@ -209,7 +209,7 @@ class IntData:
                 try:
                     ontology_dict [field_B]
                 except KeyError:
-                    raise KeyError ("Field %s is not map in your ontology mapping. " \
+                    raise KeyError ("Field %s is not mapped in your ontology mapping. " \
                                     "TIP: Fields that are not use from the input data have to be set to dummy" \
                                     "in the ontology mapping. Example: behavioural_file:%s > genome_file:dummy"                               
                                     % (field_B, field_B))                                                                                                                        
