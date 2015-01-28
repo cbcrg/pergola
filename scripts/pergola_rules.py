@@ -136,7 +136,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     
     data_read = intData.read(relative_coord=True)    
 
-    print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
+#     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes #del
 
     # Save the data in a text file similar to the original read file
     data_read.save_track()
