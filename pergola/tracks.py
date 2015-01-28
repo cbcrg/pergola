@@ -275,10 +275,15 @@ class Track(GenomicContainer):
             d_dataTypes_merge = d_track_merge
         elif kwargs.get('dataTypes_actions') == 'all':
             d_dataTypes_merge = self.join_by_dataType(d_track_merge, mode)
-    
+            print "color after being outside the function is .........................: ", _dict_col_grad #del
+        print "color after being outside the function is .........................: ", _dict_col_grad #del
+        
+        if mode == 'bedGraph':       
+            _dict_col_grad = assign_color (self.dataTypes)
+        
+            
         track_dict = {}                        
    
-        
         ### Generating track dict (output)                         
         window = kwargs.get("window", 300)
         
@@ -288,6 +293,10 @@ class Track(GenomicContainer):
                 raise ValueError ("The structure that holds the tracks should be a dictionary of dictionaries")
             
             for k_2, d_2 in d.items():
+                
+                if not k_2 in _dict_col_grad and mode == "bed":
+                    _dict_col_grad[k_2] = ""
+                
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
                        
         return (track_dict)
@@ -305,7 +314,7 @@ class Track(GenomicContainer):
         :returns: dict_t dictionary, that contains the remaining tracks
         
         #TODO I can make this function more general as remove from dictionary it can be use outside
-        
+        # in fact I am using now it to remove data_types and not only tracks
         """
         for key in tracks2remove:
             key = str(key)
@@ -314,7 +323,10 @@ class Track(GenomicContainer):
     
             if key in self.list_tracks:
                 self.list_tracks.remove(key)
-                
+            
+#             if key in self.list_data_types:
+#                 self.list_data_types.remove(key)
+                    
         return (dict_t)
     
     def join_by_track(self, dict_t, tracks2join):  
@@ -365,7 +377,8 @@ class Track(GenomicContainer):
         :param mode: :py:func:`str` class of the object that is going to be 
             generated
              
-        :returns: d_dataTypes_merge dictionary that contains the joined tracks
+        :returns: d_dataTypes_merge dictionary that contains the joined tracks and
+                  the new dictionary with colors assign by data type
          
         """
         d_dataTypes_merge = {}
@@ -384,13 +397,17 @@ class Track(GenomicContainer):
                 else:                    
                     d_dataTypes_merge[key]['_'.join(nest_dict.keys())] = d_dataTypes_merge[key]['_'.join(nest_dict.keys())] + data
                     new_dataTypes.add('_'.join(nest_dict.keys()))          
-        
+         
         #New dataTypes only set if objects is bedGraph. Bed objects needs to 
         #know all original dataTypes to display them with different colors
         if mode == 'bedGraph':
             self.dataTypes = new_dataTypes
-            _dict_col_grad = assign_color (self.dataTypes)
-
+# #             print "??????????????????????????????????????????????????????????????I was here" , new_dataTypes #del
+# #             
+#             _dict_col_grad = assign_color (self.dataTypes)
+#             print ".................................",_dict_col_grad #del
+        
+#         print "Inside the function..................", _dict_col_grad #del
         return (d_dataTypes_merge)
     
     def track_convert2bed(self, track, in_call=False, restricted_colors=None, **kwargs):
@@ -531,9 +548,9 @@ class Track(GenomicContainer):
                             weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
                         else:                                                           
                             weighted_value = float(end_w - start_new) / float(end_new - start_new)
-                            print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new) #del
+                            #print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new) #del
 #                             weighted_value= 9/2
-                            print "weighted value",weighted_value  
+                            #print "weighted value",weighted_value #del  
 #                             print "value2weight..............", (chr_end, end_window, value2weight, weighted_value)
                             
                         weighted_value *= value2weight
