@@ -275,13 +275,10 @@ class Track(GenomicContainer):
             d_dataTypes_merge = d_track_merge
         elif kwargs.get('dataTypes_actions') == 'all':
             d_dataTypes_merge = self.join_by_dataType(d_track_merge, mode)
-            print "color after being outside the function is .........................: ", _dict_col_grad #del
-        print "color after being outside the function is .........................: ", _dict_col_grad #del
         
-        if mode == 'bedGraph':       
+        if mode == 'bedGraph':     
             _dict_col_grad = assign_color (self.dataTypes)
-        
-            
+         
         track_dict = {}                        
    
         ### Generating track dict (output)                         
@@ -293,10 +290,9 @@ class Track(GenomicContainer):
                 raise ValueError ("The structure that holds the tracks should be a dictionary of dictionaries")
             
             for k_2, d_2 in d.items():
-                
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-                
+        
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
                        
         return (track_dict)
@@ -382,32 +378,26 @@ class Track(GenomicContainer):
          
         """
         d_dataTypes_merge = {}
+        new_dataTypes = set()
         
         for key, nest_dict in dict_d.items():
             
-            d_dataTypes_merge[key] = {}
-            new_dataTypes = set()
-            
+            d_dataTypes_merge[key] = {}                        
             
             for key_2, data in nest_dict.items(): 
                 
                 if not d_dataTypes_merge[key].has_key('_'.join(nest_dict.keys())):
-                    d_dataTypes_merge[key]['_'.join(nest_dict.keys())] = data
+                    d_dataTypes_merge[key]['_'.join(nest_dict.keys())] = data                    
                     new_dataTypes.add('_'.join(nest_dict.keys())) 
                 else:                    
                     d_dataTypes_merge[key]['_'.join(nest_dict.keys())] = d_dataTypes_merge[key]['_'.join(nest_dict.keys())] + data
                     new_dataTypes.add('_'.join(nest_dict.keys()))          
-         
+        
         #New dataTypes only set if objects is bedGraph. Bed objects needs to 
         #know all original dataTypes to display them with different colors
         if mode == 'bedGraph':
             self.dataTypes = new_dataTypes
-# #             print "??????????????????????????????????????????????????????????????I was here" , new_dataTypes #del
-# #             
-#             _dict_col_grad = assign_color (self.dataTypes)
-#             print ".................................",_dict_col_grad #del
-        
-#         print "Inside the function..................", _dict_col_grad #del
+            
         return (d_dataTypes_merge)
     
     def track_convert2bed(self, track, in_call=False, restricted_colors=None, **kwargs):
