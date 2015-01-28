@@ -219,7 +219,8 @@ class Track(GenomicContainer):
             dict_split [key[0]][key[1]] = tuple(group)
         
         #Generate dictionary of original fields and color gradients
-        _dict_col_grad = assign_color (self.dataTypes)
+        color_restrictions = kwargs.get('color_restrictions', None)
+        _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
         
         ### Tracks not set in tracks option are filtered out
         sel_tracks = []
@@ -230,6 +231,7 @@ class Track(GenomicContainer):
                  
         ### When any tracks are selected we consider that no track should be removed
         if sel_tracks != []:
+            print "list of selected tracks", sel_tracks
             tracks2rm = self.list_tracks.difference(sel_tracks)            
             dict_split = self.remove (dict_split, tracks2rm)
             print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
@@ -277,7 +279,7 @@ class Track(GenomicContainer):
             d_dataTypes_merge = self.join_by_dataType(d_track_merge, mode)
         
         if mode == 'bedGraph':     
-            _dict_col_grad = assign_color (self.dataTypes)
+            _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
          
         track_dict = {}                        
    
@@ -292,8 +294,8 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-        
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
+                print "*************color restrictions......", color_restrictions
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
                        
         return (track_dict)
     
@@ -400,7 +402,7 @@ class Track(GenomicContainer):
             
         return (d_dataTypes_merge)
     
-    def track_convert2bed(self, track, in_call=False, restricted_colors=None, **kwargs):
+    def track_convert2bed(self, track, in_call=False, window=300, **kwargs):
         """
         Converts data belonging to a single track (in the form of a list of tuples) in
         an object of class Bed
@@ -408,11 +410,13 @@ class Track(GenomicContainer):
         :param track: :py:func:`list` of tuples containing data of a single track
         :param False in_call: If False the call to the function is from the user otherwise
             is from inside :py:func: `convert2single_track()`
-        :param None restricted_colors: Set colors not to be used #TODO this is not clear example??
+        :param None color_restrictions: Set colors not to be used #TODO this is not clear example??
                 
         :returns: Bed object
         
         """
+        for key in kwargs:
+            print "another keyword arg: %s: %s" % (key, kwargs[key])
         
         #This fields are mandatory in objects of class Bed
         _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
@@ -433,7 +437,11 @@ class Track(GenomicContainer):
         i_data_types = self.fields.index("dataTypes")
         
         #Generate dictionary of field and color gradients
-        _dict_col_grad = assign_color (self.dataTypes)        
+#         color_restrictions = kwargs.get('color_restrictions', None)#del 
+        color_restrictions = kwargs.get('color_restrictions', None)
+        print "....color restrictions", color_restrictions       
+        _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
+#         print "dict.........", _dic_dict_col_grad       
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
 
         _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
@@ -454,6 +462,7 @@ class Track(GenomicContainer):
                     j = _intervals.index(v)
                     d_type = row [self.fields.index("dataTypes")]
                     global color
+#                     print "-----"_dict_col_grad
                     color = _dict_col_grad[d_type][j]                                    
                     break
                 
@@ -461,7 +470,7 @@ class Track(GenomicContainer):
             
             yield(tuple(temp_list))
 
-    def track_convert2bedGraph(self, track, in_call=False, window=300):
+    def track_convert2bedGraph(self, track, in_call=False, window=300, **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
         an object of class BedGraph. The data is grouped in time windows.
