@@ -294,8 +294,8 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-                print "*************color restrictions......", color_restrictions
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
+                
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
                        
         return (track_dict)
     
@@ -402,7 +402,7 @@ class Track(GenomicContainer):
             
         return (d_dataTypes_merge)
     
-    def track_convert2bed(self, track, in_call=False, window=300, **kwargs):
+    def track_convert2bed(self, track, in_call=False, **kwargs):
         """
         Converts data belonging to a single track (in the form of a list of tuples) in
         an object of class Bed
@@ -415,8 +415,6 @@ class Track(GenomicContainer):
         :returns: Bed object
         
         """
-        for key in kwargs:
-            print "another keyword arg: %s: %s" % (key, kwargs[key])
         
         #This fields are mandatory in objects of class Bed
         _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
@@ -437,11 +435,9 @@ class Track(GenomicContainer):
         i_data_types = self.fields.index("dataTypes")
         
         #Generate dictionary of field and color gradients
-#         color_restrictions = kwargs.get('color_restrictions', None)#del 
         color_restrictions = kwargs.get('color_restrictions', None)
-        print "....color restrictions", color_restrictions       
         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
-#         print "dict.........", _dic_dict_col_grad       
+
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
 
         _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
@@ -462,7 +458,6 @@ class Track(GenomicContainer):
                     j = _intervals.index(v)
                     d_type = row [self.fields.index("dataTypes")]
                     global color
-#                     print "-----"_dict_col_grad
                     color = _dict_col_grad[d_type][j]                                    
                     break
                 
