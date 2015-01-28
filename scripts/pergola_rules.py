@@ -20,7 +20,7 @@ from pergola import parsers
 # _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
-         dataTypes_actions=None, write_format=None, relative_coord=False, intervals_gen=False,
+         dataTypes_actions=None, dataTypes_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False):
     
 #     parser = ArgumentParser(parents=[parsers.parser]) #del
@@ -56,6 +56,9 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     track_act = track_actions
     print >> stderr, "@@@Pergola_rules.py: Track actions are: ", track_act
     
+    data_types_list = dataTypes_list
+    print >> stderr, "@@@Pergola_rules.py: dataTypes list is: ", data_types_list
+      
     # Handling argument dataTypes actions
     dataTypes_act = dataTypes_actions
     print >> stderr, "@@@Pergola_rules.py: dataTypes actions are: ", dataTypes_act
@@ -101,6 +104,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
         print >>stderr, "@@@Pergola_rules.py: Window size set to default: %d" % window_size
 #         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
 #                         'as it has not been set using path_w' % (pwd)
+    #Track line--> some genome browsers such as savant do not display correctly the file when the track line is in the file
     print "no_track_line set to........................................................: %s" % no_track_line
     if no_track_line:
         track_line=False
@@ -137,13 +141,14 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     # Save the data in a text file similar to the original read file
     data_read.save_track()
     
-    for i in data_read.data:
-#         print i
-        pass
+#     for i in data_read.data:
+# #         print i
+#         pass
     
         
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-                                 dataTypes_actions=dataTypes_act, window=window_size)
+                                 data_types=data_types_list, dataTypes_actions=dataTypes_act, 
+                                 window=window_size)
     
      
 #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
@@ -182,8 +187,8 @@ if __name__ == '__main__':
     
     exit(main(path=args.input, ontol_file_path=args.ontology_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
-              dataTypes_actions=args.dataTypes_actions, write_format=args.format, 
-              relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
+              dataTypes_actions=args.dataTypes_actions, dataTypes_list=args.dataTypes_list,
+              write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
               multiply_f=args.multiply_intervals, no_header=args.no_header, 
               fields2read=args.fields_read, window_size=args.window_size, 
               no_track_line=args.no_track_line))

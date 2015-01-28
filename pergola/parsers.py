@@ -13,9 +13,9 @@ This module provides the way to read scripts options provided by pergola library
 from sys      import stderr
 from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
-from bcbio import isatab
-from os import path, makedirs
-from urllib2 import urlopen, HTTPError
+from bcbio    import isatab
+from os       import path, makedirs
+from urllib2  import urlopen, HTTPError
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
@@ -161,6 +161,8 @@ parent_parser.add_argument('-r', '--range', required=False, type=parse_num_range
 parent_parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
                     help='Option of action with tracks selected, split_all, join_all,' + \
                          ' join_odd, join_even, join_range or join_list')
+parent_parser.add_argument('-dl', '--dataTypes_list', required=False, metavar="LIST_OF_DATA_TYPES", type=str, nargs='+',
+                    help='List of dataTypes to be joined')
 parent_parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
                     help='Unique values of dataTypes field should be dumped on' + \
                          ' different data structures or not')

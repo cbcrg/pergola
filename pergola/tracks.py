@@ -169,7 +169,8 @@ class Track(GenomicContainer):
     inherits from :py:class:`GenomicContainer`
     """
     def __init__(self, data, fields=None, dataTypes=None, list_tracks=None, **kwargs):
-        self.list_tracks=list_tracks 
+        self.list_tracks=list_tracks
+        self.list_data_types=dataTypes
         GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 
     def convert(self, mode='bed', **kwargs):
@@ -226,14 +227,38 @@ class Track(GenomicContainer):
             pass
         else:
             sel_tracks = map(str, kwargs.get("tracks",[]))
-                
+                 
         ### When any tracks are selected we consider that no track should be removed
         if sel_tracks != []:
-            print "-------",self.list_tracks #del
+#             print "-------",self.list_tracks #del
             tracks2rm = self.list_tracks.difference(sel_tracks)            
             dict_split = self.remove (dict_split, tracks2rm)
             print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
         
+        sel_data_types = []
+        if not kwargs.get('data_types'):
+            "==================="#del
+            pass
+        else:            
+            sel_data_types = map(str, kwargs.get("data_types",[]))
+            print "++++++++++++++++",sel_data_types#del
+        
+        new_dict_split = {}    
+        ### When any data_types are selected we consider that no data_types should be removed
+        if sel_data_types  != []:
+#             print "-------",self.list_tracks #del
+            data_types2rm = self.list_data_types.difference(sel_data_types)
+            print "difference data types ++++++++++++++++", data_types2rm#del
+            for track, track_dict in dict_split.items():
+#             for track in dict_split:
+#                 print "**********************track in data_types", (track_dict)    
+                dict_data_type = self.remove (track_dict, data_types2rm)
+                print "?????????????", dict_data_type            
+                new_dict_split [track] = dict_data_type
+            print >> stderr, "Removed data types are:", ' '.join(data_types2rm)
+        
+        dict_split = new_dict_split
+             
         d_track_merge = {} 
         
         ### If tracks_merge is set we combine tracks selected                 
@@ -355,6 +380,7 @@ class Track(GenomicContainer):
             
             d_dataTypes_merge[key] = {}
             new_dataTypes = set()
+            
             
             for key_2, data in nest_dict.items(): 
                 
@@ -511,7 +537,7 @@ class Track(GenomicContainer):
                             weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
                         else:                                                           
                             weighted_value = float(end_w - start_new) / float(end_new - start_new)
-                            print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new)
+                            print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new) #del
 #                             weighted_value= 9/2
                             print "weighted value",weighted_value  
 #                             print "value2weight..............", (chr_end, end_window, value2weight, weighted_value)
