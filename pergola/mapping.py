@@ -130,7 +130,7 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 
-def write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
+def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light", path_w=None):
     """
      
     Creates 
@@ -142,6 +142,16 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
     end_t = 0
     path = ""
     name_cytob = "cytoband_file"
+    phase = ""
+    color = ""
+    light_ph = "light" 
+    light_stain = "gneg"
+    dark_ph = "dark"
+    dark_stain = "gpos25"
+    dict_stain = {light_ph: "gneg", dark_ph:"gpos25"}
+    
+#     if ($lastPhase eq "dark") {$lastPhase="light"; $colour = "gneg";}
+#                else {$lastPhase = "dark"; $colour = "gpos25";}  
      
     if not path_w: 
         path = getcwd()
@@ -151,21 +161,32 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
         path = path_w
              
     cytobandFile = open(join(path, name_cytob + _cytoband_file_ext), mode)  
-
+    
+    phase = start_phase
+    
+    if phase not in dict_stain:
+        raise ValueError("Phase allowed values are dark or light, current value is:  %s." % (phase)) 
+         
     if start != 0:
-        line =  "{}\t{}\n".format(t, start) 
+        line =  "chr1\t{}\t{}\t{}\t{}\n".format(t, start, phase, dict_stain[phase]) 
         t = t + start + 1
         end_t = t + delta
+        
+        if phase == light_ph: phase=dark_ph
+        elif phase == dark_ph: phase=light_ph 
         
         cytobandFile.write(line)
     
     while t < end - delta:
-        line =  "{}\t{}\n".format(t, end_t) 
+        line =  "chr1\t{}\t{}\t{}\t{}\n".format(t, end_t, phase, dict_stain[phase])  
         cytobandFile.write(line)
         t = end_t + 1
         end_t += delta
-    
-    line =  "{}\t{}\n".format(t, end) 
+        
+        if phase == light_ph: phase=dark_ph
+        elif phase == dark_ph: phase=light_ph 
+        
+    line =  "chr1\t{}\t{}\t{}\t{}\n".format(t, end, phase, dict_stain[phase])  
     cytobandFile.write(line)
          
     cytobandFile.close()
