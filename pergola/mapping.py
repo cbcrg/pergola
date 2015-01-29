@@ -113,15 +113,47 @@ def write_chr(self, mode="w", path_w=None):
     
     """
     chrom = 'chr1'
+    path = ""
     
     if not path_w: 
-        pwd = getcwd()
+        path = getcwd()
         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
-                        'as it has not been set using path_w' % (pwd)
-
-    genomeFile = open(join(pwd, chrom + _genome_file_ext), mode)        
+                       'as it has not been set using path_w' % (path)
+    else:
+        path = path_w
+                            
+    genomeFile = open(join(path, chrom + _genome_file_ext), mode)        
     genomeFile.write(">" + chrom + "\n")
     genomeFile.write (_generic_nt * (self.max - self.min) + "\n")
     genomeFile.close()
-    print >>stderr, 'Genome fasta file created: %s' % (pwd + "/" + chrom + _genome_file_ext)
-      
+    print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
+
+# def write_cytoband(self, start=0, end, delta=43200, path_w=None):
+#     """
+#     
+#     Creates 
+#     
+#     :param mode: :py:func:`str` mode to use by default write 
+#     
+#     """
+#     t = 0
+#     t = t + start
+#     
+#     path = ""
+#     
+#     if not path_w: 
+#         path = getcwd()
+#         print >>stderr, 'Cytoband like file will be dump into \"%s\" ' \
+#                         'as it has not been set using path_w' % (pwd)
+#     
+#     else:
+#         path = path_w
+#             
+#     cytobandFile = open(join(path, chrom + _genome_file_ext), mode)  
+# #     if not end:
+# #        raise ValueError("write_cytoband needs a value for end parameter: \"%s\".") 
+#     while t < end:
+#         yield 
+#         
+     
+    
