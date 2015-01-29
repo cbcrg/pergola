@@ -20,6 +20,7 @@ from os.path import join
 
 _genome_file_ext = ".fa"
 _generic_nt = "N"
+_cytoband_file_ext = ".txt"
 
 class OntologyInfo(): #cambiar ontologyInfo y quiza la libreria mapping
     """
@@ -125,35 +126,48 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile = open(join(path, chrom + _genome_file_ext), mode)        
     genomeFile.write(">" + chrom + "\n")
     genomeFile.write (_generic_nt * (self.max - self.min) + "\n")
+    print "-----------------------", self.max - self.min
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 
-# def write_cytoband(self, start=0, end, delta=43200, path_w=None):
-#     """
-#     
-#     Creates 
-#     
-#     :param mode: :py:func:`str` mode to use by default write 
-#     
-#     """
-#     t = 0
-#     t = t + start
-#     
-#     path = ""
-#     
-#     if not path_w: 
-#         path = getcwd()
-#         print >>stderr, 'Cytoband like file will be dump into \"%s\" ' \
-#                         'as it has not been set using path_w' % (pwd)
-#     
-#     else:
-#         path = path_w
-#             
-#     cytobandFile = open(join(path, chrom + _genome_file_ext), mode)  
-# #     if not end:
-# #        raise ValueError("write_cytoband needs a value for end parameter: \"%s\".") 
-#     while t < end:
-#         yield 
-#         
+def write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
+    """
      
+    Creates 
+     
+    :param mode: :py:func:`str` mode to use by default write 
+     
+    """
+    t = 0
+    end_t = 0
+    path = ""
+    name_cytob = "cytoband_file"
+     
+    if not path_w: 
+        path = getcwd()
+        print >>stderr, 'Cytoband like file will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (path)    
+    else:
+        path = path_w
+             
+    cytobandFile = open(join(path, name_cytob + _cytoband_file_ext), mode)  
+
+    if start != 0:
+        line =  "{}\t{}\n".format(t, start) 
+        t = t + start + 1
+        end_t = t + delta
+        
+        cytobandFile.write(line)
     
+    while t < end - delta:
+        line =  "{}\t{}\n".format(t, end_t) 
+        cytobandFile.write(line)
+        t = end_t + 1
+        end_t += delta
+    
+    line =  "{}\t{}\n".format(t, end) 
+    cytobandFile.write(line)
+         
+    cytobandFile.close()
+      
+     
