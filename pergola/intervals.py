@@ -78,7 +78,7 @@ class IntData:
         Set of tracks in the file. Read from "tracks" field.
         If tracks field not in file, all intervals are set as belonging to track "1" 
         
-    :return: IntData object
+    :returns: IntData object
     
      
     """
@@ -102,7 +102,7 @@ class IntData:
         :param path: :py:func:`str` name of path to a behavioral file in the form of a csv file
         :param delimiter: :py:func:`str` delimiter used in the file ("tab", ";", "space") 
         
-        :return: delimiter
+        :returns: delimiter
         
         """
                         
@@ -135,7 +135,7 @@ class IntData:
         
         :param None fields: :py:func:`list` with the behavioral fields corresponding each column in the file
         
-        :return: list with the behavioral fields
+        :returns: list with the behavioral fields
             
         """ 
         self.inFile  = open(self.path, "rb")
@@ -198,7 +198,7 @@ class IntData:
         
         :param ontology_dict: relationship between genomic and behavioral data (:py:class:`dict`)
         
-        :return: list with the corresponding genomics names of the fields inside behavioral (input) data
+        :returns: list with the corresponding genomics names of the fields inside behavioral (input) data
          
         """
         dict_fields_g = {}
@@ -245,7 +245,7 @@ class IntData:
         :param False intervals: if True pergola creates intervals from the field set
             as chromStart, 
         
-        :return: list with intervals contained in file, minimum and maximum values inside the file 
+        :returns: list with intervals contained in file, minimum and maximum values inside the file 
         
         TODO add example of input file structure and the output of the function
         
@@ -475,7 +475,7 @@ class IntData:
         :param None default: if field is not present in data is created and set to 
             default
             
-        :return: set with unique values inside field
+        :returns: set with unique values inside field
         
         """
 
@@ -520,8 +520,7 @@ class IntData:
         :param 1 multiply: :py:func:`int` multiplies the values of the field set as chromStart and 
             chromEnd
         
-        :return: self.data
-        
+        :returns: Track object
         """
                 
         # If fields is not set then I all the data columns are processed
@@ -572,7 +571,7 @@ class IntData:
         
         :param i_fields: :py:func:`list` with data columns to calculate relative values
         
-        :return: list of tuples (like self.data)
+        :returns: list of tuples (like self.data)
         
         TODO check whether field for min and max is the same as the one selected by i_fields otherwise
         give either exception of warning
