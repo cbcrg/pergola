@@ -131,12 +131,19 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 
-def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light", path_w=None):
+def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w", path_w=None):
     """
      
-    Creates 
-     
-    :param mode: :py:func:`str` mode to use by default write 
+    Creates a cytoband-like and a bed file with phases of the experiment 
+    
+    :param end: :py:func:`int` last timepoint in the series
+    :param start: :py:func:`int` first timepoint in the series, by default 0
+    :param delta: :py:func:`int` delta between intervals, by default 43200 seconds, 12 hours
+    :param light start_phase: :py:func:`str` first phase "light" or "dark", by default light
+    :param w mode: :py:func:`str` mode to use for file, by default write  
+    :param None path_w: :py:func:`str` path to dump the files, by default None 
+    
+    TODO: extend light and dark to other possible values using variables
      
     """
     t = 0
@@ -158,7 +165,9 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light
     if not path_w: 
         path = getcwd()
         print >>stderr, 'Cytoband like file will be dump into \"%s\" ' \
-                        'as it has not been set using path_w' % (path)    
+                        'as it has not been set using path_w' % (path) 
+        print >>stderr, 'Bed file with phases will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (path)     
     else:
         path = path_w
              
