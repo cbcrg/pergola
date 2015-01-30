@@ -437,10 +437,13 @@ class Track(GenomicContainer):
         #Generate dictionary of field and color gradients
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
-
+                
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
-
-        _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
+        
+        if step == 0: 
+            _intervals = [0] 
+        else:   
+            _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
                 
         for row in track:
             temp_list = []
