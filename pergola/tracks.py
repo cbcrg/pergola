@@ -220,7 +220,7 @@ class Track(GenomicContainer):
         
         #Generate dictionary of original fields and color gradients
         color_restrictions = kwargs.get('color_restrictions', None)
-#         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
+        _dict_col_grad = dict()
         
         ### Tracks not set in tracks option are filtered out
         sel_tracks = []
