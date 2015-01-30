@@ -21,6 +21,7 @@ from os.path import join
 _genome_file_ext = ".fa"
 _generic_nt = "N"
 _cytoband_file_ext = ".txt"
+_bed_file_ext = ".bed"
 
 class OntologyInfo(): #cambiar ontologyInfo y quiza la libreria mapping
     """
@@ -141,6 +142,7 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light
     t = 0
     end_t = 0
     path = ""
+    chr = "chr1"
     name_cytob = "cytoband_file"
     phase = ""
     color = ""
@@ -150,8 +152,8 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light
     dark_stain = "gpos25"
     dict_stain = {light_ph: "gneg", dark_ph:"gpos25"}
     
-#     if ($lastPhase eq "dark") {$lastPhase="light"; $colour = "gneg";}
-#                else {$lastPhase = "dark"; $colour = "gpos25";}  
+    name_bed = "phases"  
+    dict_bed_values = {light_ph: "0", dark_ph:"1000"}
      
     if not path_w: 
         path = getcwd()
@@ -160,7 +162,10 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light
     else:
         path = path_w
              
-    cytobandFile = open(join(path, name_cytob + _cytoband_file_ext), mode)  
+    cytoband_file = open(join(path, name_cytob + _cytoband_file_ext), mode)  
+    phases_bed_file = open(join(path, name_bed + _bed_file_ext), mode)  
+    
+    phases_bed_file.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
     
     phase = start_phase
     
@@ -168,27 +173,33 @@ def write_cytoband(self, end, mode="w", start=0, delta=43200, start_phase="light
         raise ValueError("Phase allowed values are dark or light, current value is:  %s." % (phase)) 
          
     if start != 0:
-        line =  "chr1\t{}\t{}\t{}\t{}\n".format(t, start, phase, dict_stain[phase]) 
+        line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, start, phase, dict_stain[phase])
+        line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, start, phase, dict_bed_values[phase])
         t = t + start + 1
         end_t = t + delta
         
         if phase == light_ph: phase=dark_ph
         elif phase == dark_ph: phase=light_ph 
         
-        cytobandFile.write(line)
+        cytoband_file.write(line)
+        phases_bed_file.write(line_bed)
     
     while t < end - delta:
-        line =  "chr1\t{}\t{}\t{}\t{}\n".format(t, end_t, phase, dict_stain[phase])  
-        cytobandFile.write(line)
+        line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_stain[phase])
+        line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_bed_values[phase])  
+        cytoband_file.write(line)
+        phases_bed_file.write(line_bed)
         t = end_t + 1
         end_t += delta
         
         if phase == light_ph: phase=dark_ph
         elif phase == dark_ph: phase=light_ph 
         
-    line =  "chr1\t{}\t{}\t{}\t{}\n".format(t, end, phase, dict_stain[phase])  
-    cytobandFile.write(line)
-         
-    cytobandFile.close()
-      
+    line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end, phase, dict_stain[phase]) 
+    line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end, phase, dict_bed_values[phase])   
+    
+    cytoband_file.write(line)
+    phases_bed_file.write(line_bed)
+    cytoband_file.close()
+    phases_bed_file.close()
      
