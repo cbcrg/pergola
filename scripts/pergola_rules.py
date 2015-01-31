@@ -38,7 +38,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     # Handling list or range of tracks to join if set
     if list and range:
         raise ValueError("Argument -l/--list and -r/--range are not compatible. " \
-                         "As both arguments set a tracks to join.")    
+                         "As both arguments set tracks to be joined.")    
     elif (list):
         tracks2merge = list
     elif (range):
@@ -133,10 +133,25 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     print "tracks 2 merge .....................",tracks2merge
     
     mapping.write_chr (intData)#mantain
-    
+        
+#    write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
     data_read = intData.read(relative_coord=True)    
-
-#     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes #del
+    
+    start = intData.min
+    end = intData.max
+    
+    print "min>>>>>>>>>>>>>>>>>>>", start
+    print "max>>>>>>>>>>>>>>>>>>>", end
+    
+    if relative_coord:
+       start = 0
+       end = intData.max - intData.min
+     
+    print "min>>>>>>>>>>>>>>>>>>>", start
+    print "max>>>>>>>>>>>>>>>>>>>", end
+    
+    mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
+#     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
 
     # Save the data in a text file similar to the original read file
     data_read.save_track()
@@ -157,7 +172,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #     ## however tracks_merge are the trakcs to be join
 
     for key in bed_str:
-        print "key.......: ",key
+#         print "key.......: ",key#del
         bedSingle = bed_str[key]
 #         print "::::::::::::::",bedSingle.dataTypes
         bedSingle.save_track(track_line=track_line)
