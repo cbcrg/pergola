@@ -441,7 +441,7 @@ class Track(GenomicContainer):
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
         
         if step == 0: 
-            _intervals = [0] 
+            _intervals = [0, self.range_values[1]] 
         else:   
             _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
                 
