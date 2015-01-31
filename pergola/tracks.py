@@ -107,7 +107,7 @@ class GenomicContainer(object):
         """
         return self.data.next()
     
-    def save_track(self, mode="w", path=None, track_line=True):
+    def save_track(self, mode="w", path=None, name_file=None, track_line=True):
         """
         Save the data in a file of format set by *self.format* 
         
@@ -120,6 +120,8 @@ class GenomicContainer(object):
             file is dumped in the current working directory and prints a warning.
             
         :param True track_line: If it is set to True includes the track_line 
+        
+        :param None name_file: :py:func: `str` to set name of output file
         
         :returns: Void
         
@@ -138,11 +140,15 @@ class GenomicContainer(object):
         except KeyError:
             raise ValueError("File types not supported \'%s\'"%(self.format))
         
-        conc_dataTypes = self.dataTypes
-        if isinstance(conc_dataTypes, set):
-            conc_dataTypes="_".join(self.dataTypes)        
+        if name_file is None:
+            conc_dataTypes = self.dataTypes
+            if isinstance(conc_dataTypes, set):
+                conc_dataTypes="_".join(self.dataTypes)        
                         
-        name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
+            name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
+        else:
+            name_file = name_file + file_ext
+            
         print >> stderr, "File %s generated" % name_file       
 
         track_file = open(join(pwd, name_file), mode)
