@@ -1,0 +1,43 @@
+from pergola import mapping
+from pergola import intervals
+
+mapping_data = mapping.OntologyInfo("test/b2g.txt")
+int_data = intervals.IntData("data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
+mapping.write_chr (int_data)
+
+# Generate a cytoband file and a bed file with phases
+mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200)
+
+data_read = int_data.read(relative_coord=True)
+
+data_type_col = {'food_sc': 'green', 'food_fat':'red'}
+
+bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
+                            color_restrictions=data_type_col)
+                            
+for key in bed_str:
+	bedSingle = bed_str[key]
+    bedSingle.save_track()
+    
+data_type_col_bedGraph = {'food_sc':'green', 'food_fat_food_sc':'red'}
+
+bedGraph_str = data_read.convert(mode="bedGraph", window=1800, data_types=["food_sc", "food_fat"], 
+								 dataTypes_actions="all", color_restrictions=data_type_col_bedGraph)
+								 
+for key in bedGraph_str:
+	bedGraph_single = bedGraph_str[key]
+    bedGraph_single.save_track()
+    
+## Bed file with separation by file
+# reading correspondence file
+mapping_file_data = mapping.OntologyInfo("test/f2g.txt")
+
+# Reading file info
+files_data = intervals.IntData("data/sample_data/files.csv", ontology_dict=mapping_file_data.correspondence)
+data_file_read = files_data.read(relative_coord=True)
+
+bed_file = data_file_read.convert(mode="bed", dataTypes_actions="all", tracks_merge=files_data.tracks)
+
+for key in bed_file:
+    bed_file_single = bed_file[key]
+    bed_file_single.save_track(name_file = "files_data")
