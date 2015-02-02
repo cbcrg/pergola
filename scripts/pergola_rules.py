@@ -150,7 +150,10 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     print "min>>>>>>>>>>>>>>>>>>>", start
     print "max>>>>>>>>>>>>>>>>>>>", end
     
-    mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
+#     mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
+    # I don't need anymore the start to be shift because files are trimmed
+    mapping.write_cytoband(intData, end=end)
+    
 #     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
 
     # Save the data in a text file similar to the original read file
