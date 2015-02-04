@@ -192,10 +192,13 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
         
         cytoband_file.write(line)
         phases_bed_file.write(line_bed)
-    
+    else:
+        t = end_t + 1
+        end_t += delta
+                
     while t < end - delta:
         line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_stain[phase])
-        line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_bed_values[phase])  
+        line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_bed_values[phase])
         cytoband_file.write(line)
         phases_bed_file.write(line_bed)
         t = end_t + 1
