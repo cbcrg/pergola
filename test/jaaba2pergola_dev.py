@@ -5,17 +5,19 @@
 
 Script to transform Jaaba files in matlab format into pergola files
 """
-_csv_ext = ".csv"
+_csv_file_ext = ".csv"
 
-from scipy import io
-from scipy import nditer
-from numpy import hstack
-from numpy import mean
+from scipy   import io
+from scipy   import nditer
+from numpy   import hstack
+from numpy   import mean
 from os      import getcwd
 from sys     import stderr
 from os.path import join, exists
 
 jaaba_data = io.loadmat('/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat')
+
+
 
 start_times = jaaba_data['allScores']['t0s']
 end_times = jaaba_data['allScores']['t1s']
@@ -36,7 +38,7 @@ for idx_animal, start_times_animal in enumerate (start_times_flat):
     for idx_time, start_time in enumerate (start_times_animal):
         end_time = end_times_animal[idx_time]
         mean_score = mean(scores_animal[start_time:end_time])
-        print "animal......start_time.....end_time....mean_score", idx_animal+1, start_time, end_time, mean_score  
+#         print "animal......start_time.....end_time....mean_score", idx_animal+1, start_time, end_time, mean_score  
 
 
 
@@ -84,9 +86,9 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
     allow object and not always files 
     
     """
-    chrom = 'chr1'
-    path = ""
     
+    path = ""
+    header = ["animal", "startTime", "endTime", "value"]
     if not path_w: 
         path = getcwd()
         print >>stderr, 'CSV file will be dump into \"%s\" ' \
@@ -96,14 +98,47 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
             path = path_w
         else:
             raise IOError('Provided path does not exists: %s' % path_w)
-     
-#                        
-#     genomeFile = open(join(path, chrom + _genome_file_ext), mode)        
+    
+    jaaba_data = io.loadmat(input_file)
+    
+    # Checking JAABA version
+    version_jaaba = hstack(hstack(hstack(jaaba_data['version'])))[0][0]
+    
+    if version_jaaba != '0.5.1':
+        print >>stderr, 'JAABA version is not 0.5.1 but %s, this might cause' \
+                        'problems is the file structure changed' \
+                        % (path + "/" + chrom + _genome_file_ext)
+    
+    start_times = jaaba_data['allScores']['t0s']
+    end_times = jaaba_data['allScores']['t1s']
+    scores = jaaba_data['allScores']['scores']
+    
+    start_times_flat = hstack(hstack(hstack(start_times)))
+    end_times_flat = hstack(hstack(hstack(end_times)))
+    scores_flat = hstack(hstack(hstack(scores)))
+    
+    scoreFile = open(join(path, name_file + _csv_file_ext), mode)
+    scoreFile.write("\t".join(header) + "\n")
+    
+    for idx_animal, start_times_animal in enumerate (start_times_flat):
+        start_times_animal= hstack(start_times_animal)
+        end_times_animal = hstack(end_times_flat [idx_animal])
+        scores_animal = hstack(scores_flat [idx_animal]) 
+    
+        for idx_time, start_time in enumerate (start_times_animal):
+            end_time = end_times_animal[idx_time]
+            mean_score = mean(scores_animal[start_time:end_time])            
+#             "{}\t{}\t{}\t{}\t{}\n".format(chr, t, start, phase, dict_stain[phase])
+#             '{}'.format(num)
+#             ",".join("'{0}'".format(t) for t in tracks2merge)
+            scoreFile.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time, mean_score]) + "\n") 
+#             print idx_animal+1, start_time, end_time, mean_score  
 #     genomeFile.write(">" + chrom + "\n")
 #     genomeFile.write (_generic_nt * (self.max - self.min) + "\n")
 #     print "-----------------------", self.max - self.min
 #     genomeFile.close()
 #     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
-
-jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w="/kkk/ldldl/d")
+    scoreFile.close()
+    
+jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w='/Users/jespinosa/git/pergola/test')
 exit ("You correctly transform your JAABA scores into a csv file (pergola readable)")
