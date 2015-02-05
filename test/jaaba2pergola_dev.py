@@ -109,6 +109,9 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
                         'problems is the file structure changed' \
                         % (path + "/" + chrom + _genome_file_ext)
     
+    # Structure of the file can be find here:
+    # http://jaaba.sourceforge.net/ApplyingAClassifier.html#ScoresFile
+    
     start_times = jaaba_data['allScores']['t0s']
     end_times = jaaba_data['allScores']['t1s']
     scores = jaaba_data['allScores']['scores']
@@ -128,10 +131,15 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
         for idx_time, start_time in enumerate (start_times_animal):
             end_time = end_times_animal[idx_time]
             mean_score = mean(scores_animal[start_time:end_time])            
-#             "{}\t{}\t{}\t{}\t{}\n".format(chr, t, start, phase, dict_stain[phase])
-#             '{}'.format(num)
-#             ",".join("'{0}'".format(t) for t in tracks2merge)
-            scoreFile.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time, mean_score]) + "\n") 
+
+            # Because we use the convention that the animal is performing the behavior 
+            # from frame t to t+1 if it is labeled/classified as performing the behavior 
+            # at frame t, allScores.postprocessed{i}(allScores.t1s{i}(j)) will be 0 and 
+            # allScores.postprocessed{i}(allScores.t0s{i}(j)) will be 1.
+            # that is why I substract one to the end_time
+            # In fact in the graphical interface it starts at start_time - 0.5 and ends in 
+            # end_time - 0.5
+            scoreFile.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score]) + "\n") 
 #             print idx_animal+1, start_time, end_time, mean_score  
 #     genomeFile.write(">" + chrom + "\n")
 #     genomeFile.write (_generic_nt * (self.max - self.min) + "\n")
