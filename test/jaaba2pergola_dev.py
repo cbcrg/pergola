@@ -18,27 +18,24 @@ mat = io.loadmat('/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Pl
 #                  , squeeze_me=False)
 
 
-ini_times = mat['allScores']['t0s']
+start_times = mat['allScores']['t0s']
 end_times = mat['allScores']['t1s']
 scores = mat['allScores']['scores']
 
-ini_times_flat = hstack(hstack(hstack(ini_times)))
+start_times_flat = hstack(hstack(hstack(start_times)))
 end_times_flat = hstack(hstack(hstack(end_times)))
 scores_flat = hstack(hstack(hstack(scores)))
 
 # I can calculate the mean score
-for idx_animal, ini_times_ary in enumerate (ini_times_flat):
-    
-#     print "idx......animal:", (idx_animal, ini_times_ary)
-    
-    ini_times_ary= hstack(ini_times_ary)
+for idx_animal, start_times_animal in enumerate (start_times_flat):
+    start_times_animal= hstack(start_times_animal)
     end_times_animal = hstack(end_times_flat [idx_animal])
     scores_animal = hstack(scores_flat [idx_animal]) 
     
-    for idx_time, ini_times_v in enumerate (ini_times_ary):
-        end_times_v = end_times_animal[idx_time]
-        mean_score = mean(scores_animal[ini_times_v:end_times_v])
-        print "idx time.....value....scores", idx_time, ini_times_v, scores_animal[ini_times_v], mean_score  
-    
+    for idx_time, start_time in enumerate (start_times_animal):
+        end_time = end_times_animal[idx_time]
+        mean_score = mean(scores_animal[start_time:end_time])
+        print "animal......start_time.....end_time....mean_score", idx_animal+1, start_time, end_time, mean_score  
+        
 # # ...     print x,
 exit ("You are out")
