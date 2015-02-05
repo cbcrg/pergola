@@ -111,7 +111,8 @@ def write_chr(self, mode="w", path_w=None):
     Creates a fasta file of the length of the range of value inside the IntData object
     that will be use for the mapping the data into it
     
-    :param mode: :py:func:`str` mode to use by default write 
+    :param mode: :py:func:`str` mode to use by default write
+    :param None path_w: :py:func:`str` path to dump the files, by default None 
     
     """
     chrom = 'chr1'
