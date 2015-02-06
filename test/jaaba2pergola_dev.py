@@ -17,7 +17,7 @@ from os.path import join, exists
 
 jaaba_data = io.loadmat('/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat')
 
-def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None):
+def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False):
     """   
     Creates a csv file from a scores file produced using JAABA and in matlab
     format
@@ -26,7 +26,8 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
     :param "\t" delimiter: :py:func:`str` Character use to separate values of 
         the same record in file (default "\t").
     :param None path_w: :py:func:`str` path to dump the files, by default None
-
+    :param False norm: set whether data should be normalize (-1,1) using normalization
+        factor contained in the file
     TODO make a dump mode to save the data directly in pergola format
     I will need then the correspondence file, or that input functions or pergola
     allow object and not always files 
@@ -61,14 +62,19 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
     start_times = jaaba_data['allScores']['t0s']
     end_times = jaaba_data['allScores']['t1s']
     scores = jaaba_data['allScores']['scores']
+    score_norm = jaaba_data['allScores']['scoreNorm']
     
     start_times_flat = hstack(hstack(hstack(start_times)))
     end_times_flat = hstack(hstack(hstack(end_times)))
     scores_flat = hstack(hstack(hstack(scores)))
-    
+    score_norm = hstack(hstack(score_norm))[0][0]
+   
     scoreFile = open(join(path, name_file + _csv_file_ext), mode)
     scoreFile.write("\t".join(header) + "\n")
     
+    if norm:
+        scores_flat = scores_flat /score_norm
+         
     for idx_animal, start_times_animal in enumerate (start_times_flat):
         start_times_animal= hstack(start_times_animal)
         end_times_animal = hstack(end_times_flat [idx_animal])
@@ -77,7 +83,6 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
         for idx_time, start_time in enumerate (start_times_animal):
             end_time = end_times_animal[idx_time]
             mean_score = mean(scores_animal[start_time:end_time])            
-
             # Because we use the convention that the animal is performing the behavior 
             # from frame t to t+1 if it is labeled/classified as performing the behavior 
             # at frame t, allScores.postprocessed{i}(allScores.t1s{i}(j)) will be 0 and 
@@ -89,5 +94,6 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
 
     scoreFile.close()
     
-jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w='/Users/jespinosa/git/pergola/test')
+# jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w='/Users/jespinosa/git/pergola/test')
+jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w='/Users/jespinosa/git/pergola/test', norm=True)
 exit ("You correctly transform your JAABA scores into a csv file (pergola readable)")
