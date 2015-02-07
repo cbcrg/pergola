@@ -47,3 +47,7 @@ pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o 
 pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -o "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -m 1000 -f bed -s "Time" "14 1CA1"
 pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
 pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt" -m 10000
+
+
+# Count nucleotides in a fasta file
+grep -v ">" chr1.fa | wc | awk '{print $3-$1}'
