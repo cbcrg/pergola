@@ -275,7 +275,7 @@ class IntData:
             try:
                 idx_fields2int = [self.fieldsG_dict[f] for f in _time_points]     
             except ValueError:
-                raise ValueError("Parameter intervals=True needs that field '%s' is in file is not missing %s." 
+                raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
                                  % (f, self.path))
             
             i_new_field = len(self.fieldsB)
@@ -387,8 +387,7 @@ class IntData:
                     v = int(float(interv[i]) * multiply_t)
 
                     temp.append(v)
-                    p_v = v - 1
-                    
+                    p_v = v - 1 
                     if intervals: last_start = v
                     
                 elif i in i_new_field and i in idx_fields2mult:
