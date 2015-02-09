@@ -51,3 +51,9 @@ pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals
 
 # Count nucleotides in a fasta file
 grep -v ">" chr1.fa | wc | awk '{print $3-$1}'
+
+## BEDTOOLS
+bedtools flank -i files_data.bed -g mm9.chromsizes -l 2000 -r 0 -s
+
+mm9.chromsizes (length of the chromosomes of a genome)
+chr1	1609221
