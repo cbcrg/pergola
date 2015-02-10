@@ -6,7 +6,7 @@ int_data = intervals.IntData("data/sample_data/feedingBehavior_HF_mice.csv", ont
 mapping.write_chr (int_data)
 
 # Generate a cytoband file and a bed file with phases
-mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200)
+mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark")
 
 data_read = int_data.read(relative_coord=True)
 
