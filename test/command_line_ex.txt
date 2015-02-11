@@ -53,6 +53,11 @@ pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals
 grep -v ">" chr1.fa | wc | awk '{print $3-$1}'
 
 ## BEDTOOLS
+# We can extract the flanking regions for example of a type of bout in a track
+# and then for example intersect this information with another type of behavior
+# to see whether this behavior is enriched
+# For example 120 seconds before a high fat bout what is happening it is enrich
+# for drink 
 bedtools flank -i files_data.bed -g mm9.chromsizes -l 2000 -r 0 -s
 
 mm9.chromsizes (length of the chromosomes of a genome)
