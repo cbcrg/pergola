@@ -302,8 +302,7 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-                print ">>>>>>>>>>>",self.track
-                print ">>>>>>>>>>>",self.dataTypes
+                
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2], bed_label=bed_label)
                        
         return (track_dict)
@@ -611,7 +610,8 @@ class Track(GenomicContainer):
                         end_w = end_w + delta_window    
             else:            
                 print >> stderr,("FATAL ERROR: Something went wrong")
-        
+        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",self.track #del
+        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",self.dataTypes #del
         #Last value just printed out
         temp_list.append("chr1")
         temp_list.append(ini_window)
@@ -661,6 +661,27 @@ class BedGraph(GenomicContainer):
         kwargs['fields'] = ['chr','start','end','score']        
         self.color_gradient = kwargs.get('color',_blue_gradient)
         GenomicContainer.__init__(self,data,**kwargs)
+    
+    def win_mean (self):
+        print "........................................"
+        print self.data
+        n_tracks = len (self.track.split("_"))
+        print "number of tracks is", n_tracks#dels
+        self.data = self._win_mean(self.data, n_tracks)
+        return (self)
+    
+    def _win_mean (self, data, n_tracks):     
+        for row in data:
+           temp_list = []
+           for i, v in enumerate(row):            
+                
+                if i == 3:
+                     temp_list.append (v/n_tracks)
+                else:
+                    
+                    temp_list.append (v)
+                
+           yield (tuple(temp_list))
                 
 def assign_color (set_dataTypes, color_restrictions=None):
     """
