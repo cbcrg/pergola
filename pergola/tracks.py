@@ -164,7 +164,6 @@ class GenomicContainer(object):
             track_file.write (annotation_track + "\n")        
            
         for row in self.data: 
-            print('\t'.join(str(i) for i in row)) 
             track_file.write('\t'.join(str(i) for i in row))
             track_file.write("\n")      
         track_file.close()
@@ -303,7 +302,8 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-                
+                print ">>>>>>>>>>>",self.track
+                print ">>>>>>>>>>>",self.dataTypes
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2], bed_label=bed_label)
                        
         return (track_dict)
