@@ -10,7 +10,7 @@ echo "goto chr1:100"
 sleep 2
 echo "snapshot"
 sleep 2
-echo "goto chr1:200-300"
+echo "goto chr1:604,802-691,200"
 sleep 2
 echo "snapshot"
 sleep 2
