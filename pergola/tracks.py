@@ -610,8 +610,7 @@ class Track(GenomicContainer):
                         end_w = end_w + delta_window    
             else:            
                 print >> stderr,("FATAL ERROR: Something went wrong")
-        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",self.track #del
-        print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",self.dataTypes #del
+
         #Last value just printed out
         temp_list.append("chr1")
         temp_list.append(ini_window)
@@ -666,7 +665,8 @@ class BedGraph(GenomicContainer):
         print "........................................"
         print self.data
         n_tracks = len (self.track.split("_"))
-        print "number of tracks is", n_tracks#dels
+
+        # TODO if number of trakcs is 1 exit returning self
         self.data = self._win_mean(self.data, n_tracks)
         return (self)
     
