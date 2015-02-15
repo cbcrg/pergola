@@ -20,7 +20,8 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -o "/Users/
 pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -m 1000 -w 1
 
 # Files of the tutorial
-pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HFmice.csv" -o  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
+pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -o  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
+					 
 # Files of the tutorial - file separation
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -o  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e
 
