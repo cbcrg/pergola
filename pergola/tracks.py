@@ -369,7 +369,7 @@ class Track(GenomicContainer):
                 else:  
                     d_track_merge['_'.join(tracks2join)] [key_2] = d_track_merge['_'.join(tracks2join)] [key_2] + data
 
-        self.list_tracks = new_tracks
+#         self.list_tracks = new_tracks
                    
         return (d_track_merge)
     
