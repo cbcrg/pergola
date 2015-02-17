@@ -130,6 +130,9 @@ class GenomicContainer(object):
         
         if not path: 
             pwd = getcwd()
+        else:
+            pwd = path
+            
         print >> stderr, "No path selected, files dump into path: ", pwd 
                              
         if not(isinstance(self, GenomicContainer)):
