@@ -145,7 +145,7 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
     :param None path_w: :py:func:`str` path to dump the files, by default None 
     
     TODO: extend light and dark to other possible values using variables
-     
+          Eventually separate into two different functions write_cytoband and write_bed 
     """
     t = 0
     end_t = 0
