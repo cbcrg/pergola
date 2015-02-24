@@ -2,10 +2,13 @@
 /build/*
 *.pyc
 *.idea
+*.bedGraph
+*.bed
 /doc/_build/*
 /doc/_static/*
 /doc/_templates/*
+/pergola_tutorial_files/*.bed
+/pergola_tutorial_files/*.bedGraph
+/pergola_tutorial_files/*.fa
 .pydevproject
 .project
-*.bed
-*.bedGraph
