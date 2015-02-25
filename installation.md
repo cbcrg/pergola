@@ -12,7 +12,7 @@ weight: 2
 
 **Required:**
 
-	numpy, argparse, csv
+	numpy, biopy-isatab, argparse, csv
  
 #### Download and installation
 
