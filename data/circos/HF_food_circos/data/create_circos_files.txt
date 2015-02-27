@@ -1,0 +1,67 @@
+PWD=/Users/jespinosa/phecomp/20140807_pergola/circos/HF_food_circos
+
+# generate chromosome from genome file of bedtools
+cat /Users/jespinosa/phecomp/20140807_pergola/pergola_tutorial_files/all_mice.chromsizes | sed 's/chr//g' |awk '{print "chr - HF"$1" "$1" 0 "$2" chr"$1}' > karyotype/length_chrom.txt
+
+# generate cytoband files (karyotype) for circos
+# circos file:
+# band ld1 no_orf no_orf 0 3662 gneg
+# my cytoband file
+# chr1	1	43200	dark	gpos25
+cat /Users/jespinosa/phecomp/20140807_pergola/pergola_tutorial_files/cytoband_file.txt | sed 's/chr//g' | awk '{print "band HF"$1" "$4" "$4" "$2" "$3" "$5}' >  karyotype//phase_bands.txt
+
+# Joinning the files
+cat karyotype/length_chrom.txt > karyotype/karyotype.HF.txt
+cat karyotype/phase_bands.txt >> karyotype/karyotype.HF.txt
+
+# File for showing files separation
+cat /Users/jespinosa/phecomp/20140807_pergola/bedtools_ex/starting_regions_file/files_data_sorted.bed | grep -v "track" | sed 's/chr//g' | awk '{print "HF"$1" "$2" "$3}' > tracks/files.txt
+
+# First I have to cat tr_n_dt_food_x.bedGraph | grep -v "track" > tr_n_dt_food_x.bedGraph
+
+cat tr_1_dt_food_sc.txt | sed 's/chr/HF/g' > tr_1_dt_food_sc.tmp
+cat tr_1_dt_food_sc.tmp > tr_1_dt_food_sc.txt
+
+cat tr_3_dt_food_sc.txt | sed 's/chr/HF/g' > tr_3_dt_food_sc.tmp
+cat tr_3_dt_food_sc.tmp > tr_3_dt_food_sc.txt
+
+cat tr_5_dt_food_sc.txt | sed 's/chr/HF/g' > tr_5_dt_food_sc.tmp
+cat tr_5_dt_food_sc.tmp > tr_5_dt_food_sc.txt
+
+cat tr_7_dt_food_sc.txt | sed 's/chr/HF/g' > tr_7_dt_food_sc.tmp
+cat tr_7_dt_food_sc.tmp > tr_7_dt_food_sc.txt
+
+cat tr_9_dt_food_sc.txt | sed 's/chr/HF/g' > tr_9_dt_food_sc.tmp
+cat tr_9_dt_food_sc.tmp > tr_9_dt_food_sc.txt
+
+cat tr_11_dt_food_sc.txt | sed 's/chr/HF/g' > tr_11_dt_food_sc.tmp
+cat tr_11_dt_food_sc.tmp > tr_11_dt_food_sc.txt
+
+cat tr_13_dt_food_sc.txt | sed 's/chr/HF/g' > tr_13_dt_food_sc.tmp
+cat tr_13_dt_food_sc.tmp > tr_13_dt_food_sc.txt
+
+cat tr_15_dt_food_sc.txt | sed 's/chr/HF/g' > tr_15_dt_food_sc.tmp
+cat tr_15_dt_food_sc.tmp > tr_15_dt_food_sc.txt
+
+cat tr_17_dt_food_sc.txt | sed 's/chr/HF/g' > tr_17_dt_food_sc.tmp
+cat tr_17_dt_food_sc.tmp > tr_17_dt_food_sc.txt
+
+cat tr_2_dt_food_fat_food_sc.txt | sed 's/chr/HF/g' > tr_2_dt_food_fat_food_sc.tmp
+cat tr_2_dt_food_fat_food_sc.tmp > tr_2_dt_food_fat_food_sc.txt
+
+cat tr_4_dt_food_fat_food_sc.txt | sed 's/chr/HF/g' > tr_4_dt_food_fat_food_sc.tmp
+cat tr_4_dt_food_fat_food_sc.tmp > tr_4_dt_food_fat_food_sc.txt
+
+cat tr_6_dt_food_fat_food_sc.txt | sed 's/chr/HF/g' > tr_6_dt_food_fat_food_sc.tmp
+cat tr_6_dt_food_fat_food_sc.tmp > tr_6_dt_food_fat_food_sc.txt
+
+cat tr_8_dt_food_fat_food_sc.txt | sed 's/chr/HF/g' > tr_8_dt_food_fat_food_sc.tmp
+cat tr_8_dt_food_fat_food_sc.tmp > tr_8_dt_food_fat_food_sc.txt
+
+
+# Line numbers
+mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=3600, start_phase="dark")
+cat cytoband_file.txt | sed 's/chr/HF/g' | awk '$4=$5="";$6=FNR' > hour_labels.txt
+
+#phases_txt
+cat ~/phecomp/20140807_pergola/pergola_tutorial_files/phases.bed | grep -v "track" | grep -v "light" | sed 's/chr/HF/g' | awk '$4=$5="";$0' > phases.txt
