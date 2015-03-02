@@ -6,11 +6,11 @@ mkdir -p $HOME/tmp/igv
 sleep 2
 echo "snapshotDirectory $HOME/tmp/igv"
 sleep 2
-echo "goto chr1:100"
+echo "goto chr1:1-1,780,869"
 sleep 2
 echo "snapshot"
 sleep 2
-echo "goto chr1:604,802-691,200"
+echo "goto chr1:919,000-982,000"
 sleep 2
 echo "snapshot"
 sleep 2
