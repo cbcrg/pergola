@@ -1,8 +1,14 @@
 from pergola import mapping
 from pergola import intervals
 
-mapping_data = mapping.OntologyInfo("test/b2g.txt")
-int_data = intervals.IntData("data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
+#mapping_data = mapping.OntologyInfo("test/b2g.txt")
+mapping_data = mapping.OntologyInfo("/Users/jespinosa/git/pergola/test/b2g.txt")
+
+#int_data = intervals.IntData("data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
+#int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
+
+int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence, range_values=[0,0.4])
+
 mapping.write_chr (int_data)
 
 # Generate a cytoband file and a bed file with phases
@@ -17,7 +23,8 @@ bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], data
                             
 for key in bed_str:
 	bedSingle = bed_str[key]
-    bedSingle.save_track()
+    #bedSingle.save_track()
+    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/")
     
 data_type_col_bedGraph = {'food_sc':'green', 'food_fat_food_sc':'red'}
 
