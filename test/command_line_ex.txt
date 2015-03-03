@@ -16,6 +16,9 @@ pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -o "/Users/j
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -o "/Users/jespinosa/git/pergola/test/int2gene.txt" -f bedGraph -e
 #pergola_rules
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -o "/Users/jespinosa/git/pergola/test/b2g.txt"
+#pergola_rules with several phases (habituation, development,...)
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -o "/Users/jespinosa/git/pergola/test/b2g.txt"
+
 #electrophysiology
 pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -m 1000 -w 1
 
