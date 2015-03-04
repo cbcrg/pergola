@@ -107,7 +107,7 @@ class GenomicContainer(object):
         """
         return self.data.next()
     
-    def save_track(self, mode="w", path=None, name_file=None, track_line=True):
+    def save_track(self, mode="w", path=None, name_file=None, track_line=True, bed_label=False):
         """
         Save the data in a file of format set by *self.format* 
         
@@ -122,6 +122,9 @@ class GenomicContainer(object):
         :param True track_line: If it is set to True includes the track_line 
         
         :param None name_file: :py:func: `str` to set name of output file
+        
+        :param False bed_label: Whether to include or not the labels of each interval, 
+            default False in bed files
         
         :returns: Void
         
@@ -165,10 +168,17 @@ class GenomicContainer(object):
         elif self.format == 'bedGraph' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
-           
+          
         for row in self.data: 
-            track_file.write('\t'.join(str(i) for i in row))
-            track_file.write("\n")      
+            
+            if self.format == 'bed' and not bed_label:
+                index_name = self.fields.index ('name') 
+                empty_label = '""'
+                row = [empty_label if (i == index_name) else (v) for (i, v) in enumerate(row)]
+                
+            track_file.write('\t'.join(str(v) for v in row))           
+            track_file.write("\n")
+                  
         track_file.close()
     
 class Track(GenomicContainer):
@@ -303,9 +313,7 @@ class Track(GenomicContainer):
    
         ### Generating track dict (output)                         
         window = kwargs.get("window", 300)
-        
-        bed_label = kwargs.get('bed_label', False)
-        
+                
         ### Assigning data to output dictionary    
         for k, d in d_dataTypes_merge.items():
             if not isinstance(d,dict):
@@ -314,9 +322,9 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
- 
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2], bed_label=bed_label)
-                       
+                
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2])
+                            
         return (track_dict)
     
     
@@ -430,14 +438,12 @@ class Track(GenomicContainer):
         :param track: :py:func:`list` of tuples containing data of a single track
         :param False in_call: If False the call to the function is from the user otherwise
             is from inside :py:func: `convert2single_track()`
-        :param None color_restrictions: Set colors not to be used #TODO this is not clear example??
-        :param False bed_label: Whether to include or not the labels of each interval, default False
+        :param None color_restrictions: Set colors not to be used #TODO this is not clear example??        
                 
         :returns: Bed object
         
         """        
-        bed_label = kwargs.get('bed_label', False)
-        
+
         #This fields are mandatory in objects of class Bed
         _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
         
@@ -472,11 +478,7 @@ class Track(GenomicContainer):
             temp_list.append("chr1")
             temp_list.append(row[i_chr_start])
             temp_list.append(row[i_chr_end])
-            
-            #Labels are shown in the genome browser, dirty display
-            if (bed_label): temp_list.append(row[i_data_types]) 
-            else: temp_list.append('""')
-             
+            temp_list.append(row[i_data_types])  
             temp_list.append(row[i_data_value])   
             temp_list.append("+")
             temp_list.append(row[i_chr_start])
