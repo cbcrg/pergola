@@ -182,7 +182,7 @@ class Track(GenomicContainer):
         self.list_data_types=dataTypes
         GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 
-    def convert(self, mode='bed', **kwargs):
+    def convert(self, mode='bed', range_plot=None, **kwargs):
         """
         Calls function to convert data (as a list of tuples) into a dictionary of 
         the one or several object of class set by mode
@@ -198,6 +198,10 @@ class Track(GenomicContainer):
         if mode not in _dict_file: 
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
         
+        # User set values for bed file colors
+        if range_plot:
+            self.range_values = range_plot
+
 #         dict_tracks = (self._convert2single_track(self._read(**kwargs), mode, **kwargs)) #TODO
         dict_tracks = (self._convert2single_track(self.data, mode, **kwargs)) 
 #         dict_tracks = (self._convert2single_track(self.data, mode, **kwargs)) #TODO
@@ -305,7 +309,7 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-                
+ 
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=self.range_values, color=_dict_col_grad[k_2], bed_label=bed_label)
                        
         return (track_dict)
@@ -427,6 +431,9 @@ class Track(GenomicContainer):
         :returns: Bed object
         
         """
+        print "lllllllllllllllllllllllll"
+        print "lllllllllllllllllllllllll"
+        print "lllllllllllllllllllllllll"
         
         bed_label = kwargs.get('bed_label', False)
         
@@ -453,12 +460,12 @@ class Track(GenomicContainer):
         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
                 
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
-        
+
         if step == 0: 
             _intervals = [0, self.range_values[1]] 
-        else:   
+        else: 
             _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
-                
+        
         for row in track:
             temp_list = []
             temp_list.append("chr1")
@@ -474,14 +481,15 @@ class Track(GenomicContainer):
             temp_list.append(row[i_chr_start])
             temp_list.append(row[i_chr_end])
             
-            for v in _intervals:
-                if float(row[i_data_value]) <= v:
-                    j = _intervals.index(v)
-                    d_type = row [self.fields.index("dataTypes")]
-                    global color
-                    color = _dict_col_grad[d_type][j]                                    
+            for i,v in enumerate(_intervals):    
+                d_type = row [self.fields.index("dataTypes")]
+                global color
+                color = _dict_col_grad[d_type][len(_intervals)-1]
+
+                if float(row[i_data_value]) <= v:                    
+                    color = _dict_col_grad[d_type][i-1]                                 
                     break
-                
+
             temp_list.append(color)          
             
             yield(tuple(temp_list))

@@ -22,12 +22,14 @@ data_type_col = {'food_sc': 'green', 'food_fat':'red'}
 
 list_ctrl = [item for item in int_data.tracks if int(item) % 2]
 list_HF = [item for item in int_data.tracks if not int(item) % 2]
-
+list_ctrl = [1]
 bed_str_ctrl = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
-                                 color_restrictions=data_type_col, tracks_merge=list_ctrl, range_plot=[0,0.2])#probar esto
+                                 color_restrictions=data_type_col, tracks=list_ctrl, range_plot=[0,0.1])#probar esto
+#bed_str_ctrl = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
+#                                 color_restrictions=data_type_col, tracks=list_ctrl)
 
 bed_str_HF = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
-                               color_restrictions=data_type_col, tracks_merge=list_HF)
+                               color_restrictions=data_type_col, tracks=list_HF)
                                                                 
 #bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
 #                            color_restrictions=data_type_col, tracks)
@@ -39,11 +41,11 @@ bed_str_HF = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], d
 
 for key in bed_str_ctrl:
     bedSingle = bed_str_ctrl[key]
-    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/", name_file="tr_ctrl_dt_food_sc")
+    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/")
 
 for key in bed_str_HF:
     bedSingle = bed_str_HF[key]
-    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/", name_file="tr_HF_dt_food_fat_food_sc")
+    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/")
         
 data_type_col_bedGraph = {'food_sc':'green', 'food_fat_food_sc':'red'}
 
