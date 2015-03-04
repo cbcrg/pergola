@@ -215,6 +215,10 @@ class Track(GenomicContainer):
         
         # User set values for bed file colors
         if range_color:
+            if (len(range_color) != 2 or all(isinstance(n, int) for n in range_color)):
+                raise ValueError ("Range color must be a list with two numeric values" \
+                                  % (range_color))
+        
             self.range_values = range_color
 
 #         dict_tracks = (self._convert2single_track(self._read(**kwargs), mode, **kwargs)) #TODO
