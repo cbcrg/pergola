@@ -7,25 +7,44 @@ mapping_data = mapping.OntologyInfo("/Users/jespinosa/git/pergola/test/b2g.txt")
 #int_data = intervals.IntData("data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 #int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 
-int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence, range_values=[0,0.4])
+#int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence, range_values=[0,0.2])
+int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 
-mapping.write_chr (int_data)
+
+###mapping.write_chr (int_data)
 
 # Generate a cytoband file and a bed file with phases
-mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark")
+### mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark")
 
 data_read = int_data.read(relative_coord=True)
 
 data_type_col = {'food_sc': 'green', 'food_fat':'red'}
 
-bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
-                            color_restrictions=data_type_col)
+list_ctrl = [item for item in int_data.tracks if int(item) % 2]
+list_HF = [item for item in int_data.tracks if not int(item) % 2]
+
+bed_str_ctrl = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
+                                 color_restrictions=data_type_col, tracks_merge=list_ctrl, range_plot=[0,0.2])#probar esto
+
+bed_str_HF = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
+                               color_restrictions=data_type_col, tracks_merge=list_HF)
+                                                                
+#bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
+#                            color_restrictions=data_type_col, tracks)
                             
-for key in bed_str:
-	bedSingle = bed_str[key]
-    #bedSingle.save_track()
-    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/")
-    
+#for key in bed_str:
+#	bedSingle = bed_str[key]
+#    #bedSingle.save_track()
+#    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/")
+
+for key in bed_str_ctrl:
+    bedSingle = bed_str_ctrl[key]
+    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/", name_file="tr_ctrl_dt_food_sc")
+
+for key in bed_str_HF:
+    bedSingle = bed_str_HF[key]
+    bedSingle.save_track(path="/Users/jespinosa/Desktop/track_bed/", name_file="tr_HF_dt_food_fat_food_sc")
+        
 data_type_col_bedGraph = {'food_sc':'green', 'food_fat_food_sc':'red'}
 
 bedGraph_str = data_read.convert(mode="bedGraph", window=1800, data_types=["food_sc", "food_fat"], 
