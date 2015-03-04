@@ -182,14 +182,19 @@ class Track(GenomicContainer):
         self.list_data_types=dataTypes
         GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 
-    def convert(self, mode='bed', range_plot=None, **kwargs):
+    def convert(self, mode='bed', range_color=None, **kwargs):
         """
         Calls function to convert data (as a list of tuples) into a dictionary of 
         the one or several object of class set by mode
         
         :param bed mode: class of the output objects returned set to `bed` by
             default
-                
+            
+        :param range_color: :py:func:`list` with range of values to set colors 
+            of bed file. If set modifies self.range_values
+            
+        :param tracks2remove: :py:func:`list` of tracks to remove from the dict_t
+        
         :returns: dictionary containing object/s of the class set by mode 
         
         """
@@ -199,8 +204,8 @@ class Track(GenomicContainer):
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
         
         # User set values for bed file colors
-        if range_plot:
-            self.range_values = range_plot
+        if range_color:
+            self.range_values = range_color
 
 #         dict_tracks = (self._convert2single_track(self._read(**kwargs), mode, **kwargs)) #TODO
         dict_tracks = (self._convert2single_track(self.data, mode, **kwargs)) 

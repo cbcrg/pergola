@@ -7,7 +7,7 @@ mapping_data = mapping.OntologyInfo("/Users/jespinosa/git/pergola/test/b2g.txt")
 #int_data = intervals.IntData("data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 #int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 
-#int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence, range_values=[0,0.2])
+#int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 int_data = intervals.IntData("/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv", ontology_dict=mapping_data.correspondence)
 
 
@@ -24,7 +24,7 @@ list_ctrl = [item for item in int_data.tracks if int(item) % 2]
 list_HF = [item for item in int_data.tracks if not int(item) % 2]
 list_ctrl = [1]
 bed_str_ctrl = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
-                                 color_restrictions=data_type_col, tracks=list_ctrl, range_plot=[0,0.1])#probar esto
+                                 color_restrictions=data_type_col, tracks=list_ctrl, range_color=[0,0.1])#probar esto
 #bed_str_ctrl = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
 #                                 color_restrictions=data_type_col, tracks=list_ctrl)
 
