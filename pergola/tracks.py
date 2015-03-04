@@ -435,11 +435,7 @@ class Track(GenomicContainer):
                 
         :returns: Bed object
         
-        """
-        print "lllllllllllllllllllllllll"
-        print "lllllllllllllllllllllllll"
-        print "lllllllllllllllllllllllll"
-        
+        """        
         bed_label = kwargs.get('bed_label', False)
         
         #This fields are mandatory in objects of class Bed
