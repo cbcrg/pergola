@@ -23,9 +23,6 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
          dataTypes_actions=None, dataTypes_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False):
     
-#     parser = ArgumentParser(parents=[parsers.parser]) #del
-#     
-#     args = parser.parse_args()
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % ontol_file_path
     
@@ -178,6 +175,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #         print "key.......: ",key#del
         bedSingle = bed_str[key]
         print "::::::::::::::",bedSingle.dataTypes
+        # TODO add an if checking whether it is a bedgraph or not to get the mean 
 #         bedGraph_mean = bedSingle.win_mean()
 #         print bedGraph_mean
         bedSingle.save_track(track_line=track_line)
