@@ -177,8 +177,12 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     for key in bed_str:
 #         print "key.......: ",key#del
         bedSingle = bed_str[key]
-#         print "::::::::::::::",bedSingle.dataTypes
+        print "::::::::::::::",bedSingle.dataTypes
+#         bedGraph_mean = bedSingle.win_mean()
+#         print bedGraph_mean
         bedSingle.save_track(track_line=track_line)
+#         print "Tracks in the file", bedSingle.track
+        
 #         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
         
 #         for i in bedSingle:
