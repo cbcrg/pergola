@@ -188,9 +188,8 @@ class Track(GenomicContainer):
     inherits from :py:class:`GenomicContainer`
     """
     def __init__(self, data, fields=None, dataTypes=None, list_tracks=None, **kwargs):
-        print "init de la clase track.................",list_tracks #del
         self.list_tracks = list_tracks
-        self.test = self.list_tracks
+        self.list_tracks_filt = []
         self.list_data_types=dataTypes
         GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 
@@ -210,7 +209,6 @@ class Track(GenomicContainer):
         :returns: dictionary containing object/s of the class set by mode 
         
         """
-        print "en convert list of tracks is>>>>>>>>>>>>>>>", self.list_tracks#del
         kwargs['relative_coord'] = kwargs.get("relative_coord",False)     
         
         if mode not in _dict_file: 
@@ -263,24 +261,16 @@ class Track(GenomicContainer):
             pass
         else:
             sel_tracks = map(str, kwargs.get("tracks",[]))
-        
-        print "tracks contain....................", self.list_tracks #del
-        # code to check that I correctly delete the tracks
-        for key in dict_split:
-            print "k is ................................................", key #del
                    
         ### When any tracks are selected we consider that no track should be removed
-        print "fffffffffffffffff>>>>>>>>>>>>>>>>>>>>>>>", self.list_tracks#del
         if sel_tracks != []:
-            print "list of selected tracks", sel_tracks
-            tracks2rm = self.list_tracks.difference(sel_tracks)
-            print "fffffffffffffffff>>>>>>>>>>>>>>>>>>>>>>>", self.list_tracks#del            
+            tracks2rm = self.list_tracks.difference(sel_tracks)           
             dict_split = self.remove (dict_split, tracks2rm)
-            print "fffffffffffffffff>>>>>>>>>>>>>>>>>>>>>>>", self.list_tracks#del
             print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
          
-        # Eliminating tracks of not selected tracks
-        # self.data = [y for y in data_tuples if y[0] in self.list_tracks]#del
+        # Eventually I can eliminate tracks of not selected tracks
+#         self.data = [y for y in data_tuples if y[0] in self.list_tracks]
+        
         sel_data_types = []
         if not kwargs.get('data_types'):
             pass
@@ -307,12 +297,12 @@ class Track(GenomicContainer):
             d_track_merge = dict_split
         else:
 #             tracks_merge = kwargs.get('tracks_merge',self.list_tracks)
-            tracks_merge = kwargs.get('tracks_merge',self.test)
+            tracks_merge = kwargs.get('tracks_merge',self.list_tracks_filt)
 #             if not all(tracks in self.list_tracks for tracks in tracks_merge):
-            if not all(tracks in self.test for tracks in tracks_merge):
+            if not all(tracks in self.list_tracks_filt for tracks in tracks_merge):
                 raise ValueError ("Tracks to merge: %s, are not in the track list: " % 
                                   ",".join("'{0}'".format(n) for n in tracks_merge), 
-                                  ",".join("'{0}'".format(n) for n in self.test))
+                                  ",".join("'{0}'".format(n) for n in self.list_tracks_filt))
             print >> stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
             
             d_track_merge = self.join_by_track(dict_split, tracks_merge)       
@@ -369,8 +359,8 @@ class Track(GenomicContainer):
 #             if key in self.list_tracks:        #OJO
 #                 self.list_tracks.remove(key)
             
-            if key in self.test:        
-                self.test.remove(key)
+            if key in self.list_tracks_filt:        
+                self.list_tracks_filt.remove(key)
             
 #             if key in self.list_data_types:
 #                 self.list_data_types.remove(key)
@@ -476,7 +466,7 @@ class Track(GenomicContainer):
             raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
 
 #         if (not in_call and len(self.list_tracks) != 1):
-        if (not in_call and len(self.test) != 1):
+        if (not in_call and len(self.list_tracks_filt) != 1):
             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
         
         i_track = self.fields.index("track")
@@ -543,7 +533,7 @@ class Track(GenomicContainer):
             raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
         
 #         if (not in_call and len(self.list_tracks)  != 1):            
-        if (not in_call and len(self.test)  != 1):
+        if (not in_call and len(self.list_tracks_filt)  != 1):
             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bedGraph" % (self.path))
         
         i_track = self.fields.index("track")
