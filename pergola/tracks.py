@@ -255,6 +255,8 @@ class Track(GenomicContainer):
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = dict()
         
+        self.list_tracks_filt = self.list_tracks
+        
         ### Tracks not set in tracks option are filtered out
         sel_tracks = []
         if not kwargs.get('tracks'):
