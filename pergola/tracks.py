@@ -168,8 +168,11 @@ class GenomicContainer(object):
         elif self.format == 'bedGraph' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
-          
-        for row in self.data: 
+        
+        data_out = sorted(self.data, key=itemgetter(self.fields.index('start')))
+        
+        # for row in self.data:
+        for row in data_out:  
             
             if self.format == 'bed' and not bed_label:
                 index_name = self.fields.index ('name') 
