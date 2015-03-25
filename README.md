@@ -1,4 +1,5 @@
 pergola
 =======
 
-A library to visualize behavioral data in a genome browser
+A python library for the conversion of behavioral data into genome browser 
+compatible formats.
