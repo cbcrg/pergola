@@ -55,7 +55,7 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
     
     if version_jaaba != '0.5.1':
         print >>stderr, 'JAABA version is not 0.5.1 but %s, this might cause' \
-                        'problems is the file structure changed' \
+                        'problems if file structure changed' \
                         % (path + "/" + chrom + _genome_file_ext)
     
     # Structure of the file can be find here:
