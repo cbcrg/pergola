@@ -1,0 +1,1 @@
+[ ] Clean all annotations of the code
