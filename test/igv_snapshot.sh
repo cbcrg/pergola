@@ -22,3 +22,8 @@ echo "goto chr1:820,802-950,400"
 sleep 2
 echo "snapshot region_four.svg"
 sleep 2
+# First two light phases of development
+echo "goto chr1:563,712-691,200"
+sleep 2
+echo "snapshot dev_ini.svg"
+sleep 2
