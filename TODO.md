@@ -1,1 +1,2 @@
-[ ] Clean all annotations of the code
+[ ] Clean all code annotations
+[ ] Eliminate files not used
