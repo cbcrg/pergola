@@ -28,8 +28,8 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavi
 # Files of the tutorial - file separation
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -o  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
 
-# JAABA example chase
-pergola_rules.py -i "JAABA_scores.csv" -o jaaba2pergola.txt
+# JAABA jaaba example chase
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -o "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
 
 # WORK
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
