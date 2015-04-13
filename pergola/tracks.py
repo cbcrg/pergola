@@ -168,9 +168,10 @@ class GenomicContainer(object):
         elif self.format == 'bedGraph' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
-        
-        data_out = sorted(self.data, key=itemgetter(self.fields.index('start')))
-        
+
+        print "fields are: ......................... " , self.fields #del        
+        data_out = sorted(self.data, key=itemgetter(self.fields.index('chromStart')))
+
         # for row in self.data:
         for row in data_out:  
             
@@ -667,7 +668,7 @@ class Bed(GenomicContainer):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
-        kwargs['fields'] = ['chr','start','end','name','score','strand',
+        kwargs['fields'] = ['chr','chromStart','end','name','score','strand',
                             'thick_start','thick_end','item_rgb']
         
         GenomicContainer.__init__(self,data,**kwargs)
@@ -690,7 +691,7 @@ class BedGraph(GenomicContainer):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bedGraph'
-        kwargs['fields'] = ['chr','start','end','score']        
+        kwargs['fields'] = ['chr','startChrom','end','score']        
         self.color_gradient = kwargs.get('color',_blue_gradient)
         GenomicContainer.__init__(self,data,**kwargs)
     
