@@ -27,3 +27,8 @@ echo "goto chr1:563,700-691,200"
 sleep 2
 echo "snapshot dev_ini.svg"
 sleep 2
+# Development phase
+echo "goto chr1:563,646-1,780,869"
+sleep 2
+echo "snapshot dev.svg"
+sleep 2
