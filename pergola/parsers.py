@@ -184,3 +184,5 @@ parent_parser.add_argument('-w', '--window_size', required=False, metavar="WINDO
                     help='Window size for bedGraph intervals')
 parent_parser.add_argument('-nt', '--no_track_line', required=False, action='store_true',
                     default=False, help='Track line no included in the bed file')
+parent_parser.add_argument('-fs', '--field_separator', required=False, type=str,
+                    default=False, help='Input file field separator')
