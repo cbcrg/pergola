@@ -120,7 +120,7 @@ class IntData:
                 self.delimiter = "\t"
                 break
             if row.count(";") >= 1:
-                self.delimiter = "\t" #delmodify
+                self.delimiter = ";"
                 break      
         
         if delimiter is None: 
@@ -254,7 +254,7 @@ class IntData:
         
         list_data = list()
         self.inFile  = open(self.path, "rb")
-        self.reader = reader(self.inFile, delimiter='\t')
+        self.reader = reader(self.inFile, delimiter=self.delimiter)
         
         if self.header: self.reader.next()
         
