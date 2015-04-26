@@ -120,12 +120,13 @@ class IntData:
                 self.delimiter = "\t"
                 break
             if row.count(";") >= 1:
-                self.delimiter = "\t"
+                self.delimiter = "\t" #delmodify
                 break      
         
         if delimiter is None: 
             raise ValueError("Delimiter must be set \'%s\'"%(delimiter))
-            
+        
+        print "--------------Delimiter in IntData is: ", delimiter #del    
         return delimiter
     
     def _set_fields_b(self, fields=None):
@@ -233,7 +234,7 @@ class IntData:
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
         
-        print dict_fields_g#del
+        print "dictionary of correspondece", dict_fields_g#del
         return dict_fields_g
     
     def _read(self, multiply_t=1, intervals=False):
@@ -304,6 +305,7 @@ class IntData:
             raise ValueError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
             
         _end_f = ["chromEnd"]
+        
         try:
             i_max = [self.fieldsG_dict[f] for f in _end_f]              
         except ValueError:
@@ -328,6 +330,7 @@ class IntData:
         first = True
         p_temp = []
         
+        print "range in dicitionary is", self.fieldsG_dict#del
         print "range in dicitionary is", range(len(self.fieldsG_dict))
         
         # Setting the factor to multiply if it is not set by the user
@@ -370,6 +373,7 @@ class IntData:
                         raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
                                           interv[i])
                 if i in idx_fields2int:
+                    print "...........", interv#del
                     try:
                         float(interv[i])
                     except ValueError:

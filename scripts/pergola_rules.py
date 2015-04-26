@@ -21,7 +21,7 @@ from pergola import parsers
 
 def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, dataTypes_list=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False):
+         multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % ontol_file_path
@@ -109,7 +109,15 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
         track_line=True
         
     print >>stderr, "@@@Pergola_rules.py: track_line set to........................................................: %s" % track_line
+    
+    # Handling input file field delimiter    
+    if not separator:
+        separator = "\t"
+        print >> stderr, "@@@Pergola_rules.py input file field separator set to \"\\t\" by default."
+    else:        
+        print >>stderr, "@@@Pergola_rules.py input file field separator set to \"%s\"" % separator
         
+         
     ################
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
@@ -120,11 +128,11 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
 #                                 multiply_t=multiply_f)
     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
-                                multiply_t=multiply_f, header=header_sw)
+                                multiply_t=multiply_f, header=header_sw, delimiter=separator)
     
-    
+     
     print "tracks before call are------------------------",intData.tracks
-    
+#     sys.exit("Error message")#del
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
     
     print "tracks 2 merge .....................",tracks2merge
@@ -211,4 +219,4 @@ if __name__ == '__main__':
               write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
               multiply_f=args.multiply_intervals, no_header=args.no_header, 
               fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line))
+              no_track_line=args.no_track_line, separator=args.field_separator))
