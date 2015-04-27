@@ -691,7 +691,7 @@ class BedGraph(GenomicContainer):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bedGraph'
-        kwargs['fields'] = ['chr','startChrom','end','score']        
+        kwargs['fields'] = ['chr','chromStart','end','score']        
         self.color_gradient = kwargs.get('color',_blue_gradient)
         GenomicContainer.__init__(self,data,**kwargs)
     
