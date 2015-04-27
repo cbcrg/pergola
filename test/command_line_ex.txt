@@ -32,7 +32,7 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -o
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -o "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
 
 # ActiTrack position files example
-pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -o "/Users/jespinosa/git/pergola/test/position2pergola.txt"
+pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -o "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n
 
 # WORK
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
