@@ -125,8 +125,7 @@ class IntData:
         
         if delimiter is None: 
             raise ValueError("Delimiter must be set \'%s\'"%(delimiter))
-        
-        print "--------------Delimiter in IntData is: ", delimiter #del    
+           
         return delimiter
     
     def _set_fields_b(self, fields=None):
@@ -168,9 +167,8 @@ class IntData:
                 for f in ori_fieldsB:
                     if f in fields: fieldsB.append(f)
                     else: fieldsB.append("")      
-#                 print "fields B all fields of header", fieldsB#del
-#                 fieldsB = fields
-                     
+#                 print "============= fields B all fields of header", fieldsB#del
+#                 fieldsB = fields                     
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
         else:
@@ -190,7 +188,7 @@ class IntData:
                                   'an ordered list of columns names using fields')     
                 
         self.inFile.close()
-        print "..............fieldsB",fieldsB #del
+
         return fieldsB
     
     def _set_fields_g (self, ontology_dict):
@@ -233,8 +231,7 @@ class IntData:
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
-        
-        print "dictionary of correspondece", dict_fields_g#del
+
         return dict_fields_g
     
     def _read(self, multiply_t=1, intervals=False):
@@ -284,7 +281,7 @@ class IntData:
             print "new field index is:", i_new_field
             self.fieldsG_dict[f_int_end] = i_new_field
             
-            i_new_field = [i_new_field]#del
+            i_new_field = [i_new_field]
         
         try:            
             f=""
@@ -330,8 +327,7 @@ class IntData:
         first = True
         p_temp = []
         
-        print "range in dicitionary is", self.fieldsG_dict#del
-        print "range in dicitionary is", range(len(self.fieldsG_dict))
+        print "range in dicitionary is", range(len(self.fieldsG_dict)) #del
         
         # Setting the factor to multiply if it is not set by the user
         # different to 1 and the timepoints are decimal numbers
@@ -373,7 +369,6 @@ class IntData:
                         raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
                                           interv[i])
                 if i in idx_fields2int:
-                    print "...........", interv#del
                     try:
                         float(interv[i])
                     except ValueError:
@@ -460,7 +455,6 @@ class IntData:
         for field_gen in sorted_index_f:
             data_fields.append(field_gen[0])
         self.fieldsG = data_fields
-        print "..........", sorted_index_f #del
         
 #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
 #         return (list_data, p_min, p_max)
