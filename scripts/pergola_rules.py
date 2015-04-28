@@ -11,6 +11,7 @@ from pergola  import mapping
 # from pergola  import tracks
 from argparse import ArgumentParser
 from sys      import stderr
+from sys      import exit 
 # from re       import match
 import os
 from pergola import parsers
@@ -117,7 +118,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     else:        
         print >>stderr, "@@@Pergola_rules.py input file field separator set to \"%s\"" % separator
         
-         
+        
     ################
     # Reading data
 #     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
@@ -140,8 +141,11 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     mapping.write_chr (intData)#mantain
         
 #    write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
-    data_read = intData.read(relative_coord=True)    
     
+    # Taking the relative_coord from the command options
+#     data_read = intData.read(relative_coord=True)
+    data_read = intData.read(relative_coord=relative_coord)
+        
     start = intData.min
     end = intData.max
     
