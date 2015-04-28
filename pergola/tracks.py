@@ -546,19 +546,23 @@ class Track(GenomicContainer):
         i_chr_start = self.fields.index("chromStart")
         i_chr_end = self.fields.index("chromEnd")
         i_data_value = self.fields.index("dataValue")
-#         ini_window = 0 #ojo
-        ini_window = 1
-        delta_window = window      
-        end_window = delta_window
-        partial_value = 0 
-        cross_interv_dict = {}
         
         #When the tracks have been join it is necessary to order by chr_start
         track = sorted(track, key=itemgetter(*[i_chr_start]))
-                              
+        
+        # Ini_window has to be set to the initial value otherwise files with
+        # no relative coordinates contained tones of empty data
+#         ini_window = 0 #ojo
+#         ini_window = 1       
+        ini_window = track[0][i_chr_start]
+        delta_window = window      
+        end_window = ini_window + delta_window
+        partial_value = 0 
+        cross_interv_dict = {}
+                                           
         for row in track:
             temp_list = []
-            chr_start = row[i_chr_start]
+            chr_start = row[i_chr_start]        
             chr_end = row[i_chr_end]
             data_value = float(row[i_data_value])
             self.fields.index(f) 
@@ -566,7 +570,7 @@ class Track(GenomicContainer):
             #Intervals happening after the current window
             #if there is a value accumulated it has to be dumped otherwise 0
             if chr_start > end_window:
-                while (end_window < chr_start):                                      
+                while (end_window < chr_start):                                 
                     partial_value = partial_value + cross_interv_dict.get(ini_window,0)
                     temp_list.append("chr1")
                     temp_list.append(ini_window)
@@ -644,9 +648,9 @@ class Track(GenomicContainer):
                         end_w = end_w + delta_window    
             else:            
                 print >> stderr,("FATAL ERROR: Something went wrong")
-
+                
         #Last value just printed out
-        temp_list.append("chr1")
+        temp_list.append("chr1")        
         temp_list.append(ini_window)
         temp_list.append(end_window)
         temp_list.append(data_value)
