@@ -13,7 +13,7 @@ This module provides the way to read scripts options provided by pergola library
 from sys      import stderr
 from argparse import ArgumentParser, ArgumentTypeError
 from re       import match
-from bcbio    import isatab #la puedo poner en otra libreria para que no me joda pergola_rules
+from bcbio    import isatab #la puedo poner en otra libreria para que no me joda pergola_rules #modify
 from os       import path, makedirs
 from urllib2  import urlopen, HTTPError
 
