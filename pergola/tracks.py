@@ -559,7 +559,24 @@ class Track(GenomicContainer):
         end_window = ini_window + delta_window
         partial_value = 0 
         cross_interv_dict = {}
-                                           
+        
+        last_point =  track[-1][i_chr_end]
+        r = last_point % delta_window
+        fake_end = last_point + delta_window - r
+        last_fake_line = list(track[-1])
+        last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
+        last_fake_line[i_chr_end] = fake_end
+        last_fake_line[i_data_value] = 0
+        track.append(tuple(last_fake_line)) 
+
+        if not r == 1 or r == 0:
+            fake_end = last_point + delta_window - r
+            sec_fake_line = last_fake_line
+            sec_fake_line[i_chr_start] = fake_end + delta_window + 1
+            sec_fake_line[i_chr_end] = fake_end + 2 * delta_window
+            sec_fake_line[i_data_value] = 0
+            track.append(tuple(sec_fake_line)) 
+            
         for row in track:
             temp_list = []
             chr_start = row[i_chr_start]        
@@ -569,7 +586,7 @@ class Track(GenomicContainer):
             
             #Intervals happening after the current window
             #if there is a value accumulated it has to be dumped otherwise 0
-            if chr_start > end_window:
+            if chr_start > end_window:               
                 while (end_window < chr_start):                                 
                     partial_value = partial_value + cross_interv_dict.get(ini_window,0)
                     temp_list.append("chr1")
@@ -580,12 +597,13 @@ class Track(GenomicContainer):
 #                     ini_window += delta_window + 1 #ojo
                     ini_window += delta_window
 #                     end_window += delta_window + 1 #ojo
-                    end_window += delta_window                                 
+                    end_window += delta_window
+                                                     
                     yield(tuple(temp_list))
                     temp_list = []
-    
+                     
                 #Value must to be weighted between intervals
-                if chr_end > end_window:                
+                if chr_end > end_window:                                   
                     value2weight = data_value
                     end_w = end_window
                     start_new = chr_start
@@ -618,6 +636,7 @@ class Track(GenomicContainer):
                     partial_value = partial_value + data_value
                             
             elif (chr_start <= end_window and chr_start >= ini_window):
+                 
                 if chr_end <= end_window:
                     partial_value = partial_value + data_value                 
                 
@@ -650,12 +669,12 @@ class Track(GenomicContainer):
                 print >> stderr,("FATAL ERROR: Something went wrong")
                 
         #Last value just printed out
-        temp_list.append("chr1")        
-        temp_list.append(ini_window)
-        temp_list.append(end_window)
-        temp_list.append(data_value)
-        yield(tuple(temp_list))
-                      
+#         temp_list.append("chr1")        
+#         temp_list.append(ini_window)
+#         temp_list.append(end_window)
+#         temp_list.append(data_value)
+#         yield(tuple(temp_list))
+                       
 class Bed(GenomicContainer):
     """
     A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
