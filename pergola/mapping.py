@@ -189,8 +189,8 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
         raise ValueError("Phase allowed values are dark or light, current value is:  %s." % (phase)) 
          
     if start != 0:
-        line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, start, phase, dict_stain[phase])
-        line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, start, phase, dict_bed_values[phase])
+        line =  "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, start, phase, dict_stain[phase])
+        line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, start, phase, dict_bed_values[phase])
         t = t + start + 1
         end_t = t + delta
         
@@ -208,8 +208,8 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
         end_t += delta
                 
     while t < end - delta:
-        line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_stain[phase])
-        line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end_t, phase, dict_bed_values[phase])
+        line =  "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, end_t, phase, dict_stain[phase])
+        line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, end_t, phase, dict_bed_values[phase])
         cytoband_file.write(line)
         phases_bed_file.write(line_bed)
         t = end_t + 1
@@ -222,8 +222,8 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
             phase=light_ph 
             phases_bed_dark_f.write(line_bed) 
             
-    line =  "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end, phase, dict_stain[phase]) 
-    line_bed = "{}\t{}\t{}\t{}\t{}\n".format(chr, t, end, phase, dict_bed_values[phase])   
+    line =  "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, end, phase, dict_stain[phase]) 
+    line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, end, phase, dict_bed_values[phase])   
     
     cytoband_file.write(line)
     phases_bed_file.write(line_bed)
