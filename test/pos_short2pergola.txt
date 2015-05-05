@@ -1,0 +1,6 @@
+! Mapping of behavioural fields into genome browser fields
+!
+behavioural_file:Cage > genome_file:track
+behavioural_file:Time > genome_file:chromStart
+behavioural_file:EucDistance > genome_file:dataValue
+behavioural_file:TimeEnd > genome_file:chromEnd
