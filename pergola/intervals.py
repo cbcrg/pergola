@@ -355,12 +355,34 @@ class IntData:
         
             print "Factor to transform time values has been set to %s as values set as chromStart are decimals"%multiply_t
             print  "If you want to set your own factor please use -m,--multiply_intervals n"
-                
+        
+        # If track exists data is order by track, this way I can avoid having problems 
+        # at the last interval
+        _track_f = "track"
+        tr_change = False
+#         p_tr = 0
+        if _track_f in self.fieldsG_dict:
+            i_track = self.fieldsG_dict[_track_f]
+            print "i_track &&&&&&&&&&&&&&&&", i_track
+            self.reader = sorted(self.reader, key=itemgetter(*[i_track])) #del        
+            
         for interv in self.reader: 
             temp = []
 
             for i in sorted(self.fieldsG_dict.values()):
-
+                if i ==  i_track:
+                    if first:
+                        p_tr = interv[i] 
+                        pass
+                    tr = interv[i]
+#                     print "tr ----- p_tr@@@@@@@@@@@@@@@@", tr, p_tr
+#                     if tr != p_tr:
+#                         print "tr ----- p_tr@@@@@@@@@@@@@@@@", tr, p_tr#del
+#                         tr_change = True
+#                     else:
+#                         tr_change = False
+#                     p_tr = interv[i]
+                    
                 # Field assign to data value should be an integer or float        
                 if i in idx_dataValue:                    
                     try:                        
@@ -384,16 +406,32 @@ class IntData:
                         raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease set a bigger factor " \
                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)                                                
                     v = int(float(interv[i]) * multiply_t)
-
+                    
+                    print "I append here in temp******************", v #del
                     temp.append(v)
                     p_v = v - 1 
+                    print "===========", intervals, p_v, v #del
+                    # detectar cuando cambia de track, if last no append
+                    # hacer un bed de 4 lineas para trabajar
+                    
                     if intervals: last_start = v
                     
                 elif i in i_new_field and i in idx_fields2mult:
-                    if first:                                                
+                    if first:
+#                         p_tr = interv[i]                                                 
                         pass
-                    else:                   
-                        p_temp.append(p_v)  
+                    else:
+                        if tr != p_tr:
+                            print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", tr, p_tr, p_v, v
+                            print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp[1]
+                            p_temp.append(p_temp[1] + 1)  
+                            p_tr = tr
+                        else:    
+                            print "tr_change is set to ", tr_change
+                            print "appending p_v here", p_v #del #Creo que esta aqui OJO
+                            print "If I put v it would be", v#del                   
+                            p_temp.append(p_v)  
+#                         p_temp.append(0)  
                                               
                 elif i in idx_fields2mult and i not in idx_fields2int:
                     a = round (float(interv[i]) * multiply_t, 6)
@@ -403,8 +441,16 @@ class IntData:
                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)          
                     
                     v = int(float(interv[i]) * multiply_t)
-
-                    temp.append(v)
+                    print "appending v here", v #del 
+                    
+                    if tr != p_tr:
+                        print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp
+                        print "p_v is:::::::::::", v
+                        temp.append(v)
+                        p_tr = tr
+                    else:
+                        p_tr = tr    
+                        temp.append(v)
                 
                 else:
                     v = interv[i]              
@@ -438,7 +484,10 @@ class IntData:
                 p_temp = temp
             
         # last line of the file when intervals are generated
-        if intervals: temp.append(last_start + 1)
+#         print "intervals is set to **********", intervals #del
+        if intervals:
+            print "este hace lo mismo para el ultimo intervalo************************$$$$$$$$", last_start #del
+            temp.append(last_start + 1)
 
         list_data.append((tuple(temp)))             
 
