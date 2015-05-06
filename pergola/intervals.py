@@ -363,7 +363,7 @@ class IntData:
 #         p_tr = 0
         if _track_f in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_track_f]
-            print "i_track &&&&&&&&&&&&&&&&", i_track
+#             print "i_track &&&&&&&&&&&&&&&&", i_track#del
             self.reader = sorted(self.reader, key=itemgetter(*[i_track])) #del        
             
         for interv in self.reader: 
@@ -422,14 +422,14 @@ class IntData:
                         pass
                     else:
                         if tr != p_tr:
-                            print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", tr, p_tr, p_v, v
-                            print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp[1]
+                            #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", tr, p_tr, p_v, v #del
+#                             print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp[1] #del
                             p_temp.append(p_temp[1] + 1)  
                             p_tr = tr
                         else:    
-                            print "tr_change is set to ", tr_change
-                            print "appending p_v here", p_v #del #Creo que esta aqui OJO
-                            print "If I put v it would be", v#del                   
+#                             print "tr_change is set to ", tr_change
+#                             print "appending p_v here", p_v #del #Creo que esta aqui OJO
+#                             print "If I put v it would be", v#del                   
                             p_temp.append(p_v)  
 #                         p_temp.append(0)  
                                               
@@ -441,11 +441,11 @@ class IntData:
                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)          
                     
                     v = int(float(interv[i]) * multiply_t)
-                    print "appending v here", v #del 
+                    # print "appending v here", v #del 
                     
                     if tr != p_tr:
-                        print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp
-                        print "p_v is:::::::::::", v
+                        #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp #del
+                        #print "p_v is:::::::::::", v #del
                         temp.append(v)
                         p_tr = tr
                     else:
@@ -486,7 +486,7 @@ class IntData:
         # last line of the file when intervals are generated
 #         print "intervals is set to **********", intervals #del
         if intervals:
-            print "este hace lo mismo para el ultimo intervalo************************$$$$$$$$", last_start #del
+            #print "este hace lo mismo para el ultimo intervalo************************$$$$$$$$", last_start #del
             temp.append(last_start + 1)
 
         list_data.append((tuple(temp)))             
