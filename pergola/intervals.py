@@ -360,6 +360,8 @@ class IntData:
         # at the last interval
         _track_f = "track"
         tr_change = False
+        tr = ""
+        p_tr = ""
 #         p_tr = 0
         if _track_f in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_track_f]
@@ -372,6 +374,7 @@ class IntData:
             for i in sorted(self.fieldsG_dict.values()):
                 if i ==  i_track:
                     if first:
+                        tr = interv[i]
                         p_tr = interv[i] 
                         pass
                     tr = interv[i]
@@ -418,7 +421,7 @@ class IntData:
                     
                 elif i in i_new_field and i in idx_fields2mult:
                     if first:
-#                         p_tr = interv[i]                                                 
+                        p_tr = interv[i]                                                 
                         pass
                     else:
                         if tr != p_tr:
@@ -442,7 +445,7 @@ class IntData:
                     
                     v = int(float(interv[i]) * multiply_t)
                     # print "appending v here", v #del 
-                    
+                   
                     if tr != p_tr:
                         #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp #del
                         #print "p_v is:::::::::::", v #del
