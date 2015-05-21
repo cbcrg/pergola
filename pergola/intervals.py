@@ -420,8 +420,7 @@ class IntData:
                     if intervals: last_start = v
                     
                 elif i in i_new_field and i in idx_fields2mult:
-                    if first:
-                        p_tr = interv[i]                                                 
+                    if first:                                                 
                         pass
                     else:
                         if tr != p_tr:
