@@ -35,9 +35,13 @@ class TestTutorial(unittest.TestCase):
         
         # Min value from tutorial file
         min = 1335985200
+        max = 1337766069
         msg_int_data_min= "Min value does not correspond to tutorial files."
+        msg_int_data_max= "Max value does not correspond to tutorial files."
+        
         int_data_tutorial = intervals.IntData(PATH + "/feeding/tutorial/feedingBehavior_HF_mice.csv", ontology_dict=correspondence_tutorial.correspondence)
         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
+        self.assertEqual(int_data_tutorial.max, max, msg_int_data_max) 
         
 if __name__ == '__main__':
     unittest.main()
