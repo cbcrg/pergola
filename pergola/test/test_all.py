@@ -21,11 +21,17 @@ class TestTutorial(unittest.TestCase):
         """
         Testing that ontology file is correctly read
         """
-        global exp1, exp2, exp3, exp4
-        exp_1 = mapping.OntologyInfo(PATH + "/feeding/tutorial/b2g.txt")
+        global correspondence_tutorial, exp2, exp3, exp4
+        correspondence_tutorial = mapping.OntologyInfo(PATH + "/feeding/tutorial/b2g.txt")
         
-        self.assertEqual(exp_1.correspondence['EndT'], 'chromEnd')
+        self.assertEqual(correspondence_tutorial.correspondence['EndT'], 'chromEnd')
 
-    
+    def test_read_int_data(self):
+        """
+        Testing the creation of intData object using tutorial data
+        """ 
+        global int_data_tutorial
+        int_data_tutorial = intervals.IntData(PATH + "/feeding/tutorial/feedingBehavior_HF_mice.csv", ontology_dict=correspondence_tutorial.correspondence)
+        
 if __name__ == '__main__':
     unittest.main()
