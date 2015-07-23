@@ -608,8 +608,6 @@ class IntData:
                 
         idx_fields2int = [10000000000000]
         
-        #TODO now fields is not doing anything!!!
-        
 #         return self.data
         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
 
@@ -623,6 +621,10 @@ class IntData:
         
         TODO check whether field for min and max is the same as the one selected by i_fields otherwise
         give either exception of warning
+        I have two problems with this, first that if i have intervals min will be only in one of the two
+        fields set for convert into relative.
+        The second problem is that the min is read far before here is where I have to check this
+        In principal this should be always in chromStart that is why I have the terms in the ontology!!!!!
         
         """
         data_rel = list()
