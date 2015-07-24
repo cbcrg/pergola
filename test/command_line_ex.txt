@@ -24,7 +24,8 @@ pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/U
 
 # Files of the tutorial
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -o  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
-					 
+pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -o  "/Users/jespinosa/git/pergola/data/sample_data/b2g.txt" -e
+
 # Files of the tutorial - file separation
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -o  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
 
