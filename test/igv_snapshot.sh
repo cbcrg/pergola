@@ -6,7 +6,8 @@ mkdir -p $HOME/tmp/igv
 sleep 2
 echo "snapshotDirectory $HOME/tmp/igv"
 sleep 2
-echo "goto chr1:1-1,780,869"
+#echo "goto chr1:1-1,780,869"
+echo "goto chr1"
 sleep 2
 echo "snapshot region.svg"
 sleep 2
