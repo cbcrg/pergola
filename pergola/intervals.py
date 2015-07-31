@@ -42,7 +42,7 @@ class IntData:
     
        Indicates the presence of a header.
        * `False` if there is no header. Fields should the be provided using fields param
-       * `True` if the file have a header line with names. This names should match names in ontology_dict (default).
+       * `True` if the file have a header line with names. This names should match names in map_dict (default).
     
     .. attribute:: fieldsB
     
@@ -82,12 +82,12 @@ class IntData:
     
      
     """
-    def __init__(self, path, ontology_dict, **kwargs):
+    def __init__(self, path, map_dict, **kwargs):
         self.path = check_path(path)
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = kwargs.get('header',True)
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
-        self.fieldsG_dict = self._set_fields_g(ontology_dict)
+        self.fieldsG_dict = self._set_fields_g(map_dict)
         self.fieldsG = []
         self.min = self.max = 0
         self.range_values = 0
@@ -191,11 +191,11 @@ class IntData:
 
         return fieldsB
     
-    def _set_fields_g (self, ontology_dict):
+    def _set_fields_g (self, map_dict):
         """
         Extracts the correspondence of fields in genomic grammar of the behavioral file.
         
-        :param ontology_dict: relationship between genomic and behavioral data (:py:class:`dict`)
+        :param map_dict: relationship between behavioral data fields and pergola ontology (:py:class:`dict`)
         
         :returns: list with the corresponding genomics names of the fields inside behavioral (input) data
          
@@ -206,21 +206,21 @@ class IntData:
         for field_B in self.fieldsB:
             if field_B:
                 try:
-                    ontology_dict [field_B]
+                    map_dict [field_B]
                 except KeyError:
                     raise KeyError ("Field %s is not mapped in your ontology mapping. " \
                                     "TIP: Fields that are not use from the input data have to be set to dummy" \
                                     "in the ontology mapping. Example: behavioural_file:%s > genome_file:dummy"                               
                                     % (field_B, field_B))                                                                                                                        
-                dict_fields_g[ontology_dict [field_B]] = i_field_b
+                dict_fields_g[map_dict [field_B]] = i_field_b
             i_field_b = i_field_b + 1                    
         
-        name_fields_g = [ontology_dict[k] for k in self.fieldsB if k]   
-#         if all(field_b in ontology_dict for field_b in self.fieldsB):
-#             name_fields_g = [ontology_dict [k] for k in self.fieldsB]
+        name_fields_g = [map_dict[k] for k in self.fieldsB if k]   
+#         if all(field_b in map_dict for field_b in self.fieldsB):
+#             name_fields_g = [map_dict [k] for k in self.fieldsB]
 #         else:    
 #             raise ValueError("Fields param \"%s\" contains a field not present in config_file \"%s\"" 
-#                              % ("\",\"".join(self.fieldsB), "\",\"".join(ontology_dict.keys()))) #del 
+#                              % ("\",\"".join(self.fieldsB), "\",\"".join(map_dict.keys()))) #del 
 #          YA ESTA HECVHO ARRIBA
         
         #Input file at least should have two fields that correspond to:

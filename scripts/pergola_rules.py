@@ -121,13 +121,13 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         
     ################
     # Reading data
-#     intData = structures.IntData(path, ontology_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
-#     intData = structures.IntData(path, ontology_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntData(path, ontology_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntData(path, ontology_dict=map_file_dict.correspondence, 
+#     intData = structures.IntData(path, map_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
+#     intData = structures.IntData(path, map_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntDamap_dict, map_dict=map_file_dict.correspondence, 
 #                                 fields_names=fields2read, intervals=intervals_gen, 
 #                                 multiply_t=multiply_f)
-    intData = intervals.IntData(path, ontology_dict=map_file_dict.correspondence, 
+    intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
                                 multiply_t=multiply_f, header=header_sw, delimiter=separator)
     
