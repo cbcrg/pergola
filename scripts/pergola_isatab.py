@@ -40,7 +40,7 @@ def main():
     args = parser_isatab.parse_args()
     
     print >> stderr, "@@@Pergola_isatab.py: Input file: %s" % args.input 
-    print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.ontology_file
+    print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.mapping_file
     print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: ", args.tracks
     
     # I have to check whether when a isatab folder is given if it is actually a folder or a file
@@ -65,7 +65,7 @@ def main():
         print "File name is::::::::::::::::::::::::::%s   \n" % file_path
         
 #         dataTypes_list=args.dataTypes_list #del
-        pergola_rules.main(path=file_path, ontol_file_path=args.ontology_file,
+        pergola_rules.main(path=file_path, map_file_path=args.mapping_file,
                            sel_tracks=args.tracks, list=args.list, range=args.range,
                            track_actions=args.track_actions, dataTypes_list=args.dataTypes_list,
                            dataTypes_actions=args.dataTypes_actions, write_format=args.format,

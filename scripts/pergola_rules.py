@@ -20,18 +20,18 @@ from pergola import parsers
 # _dt_act_options = ['all', 'one_per_channel']
 # _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
-def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
+def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          dataTypes_actions=None, dataTypes_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
-    print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % ontol_file_path
+    print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
     
     #Tracks selected by user
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
     #Configuration file
-    map_file_dict = mapping.OntologyInfo(ontol_file_path)
+    map_file_dict = mapping.OntologyInfo(map_file_path)
     
     # Handling list or range of tracks to join if set
     if list and range:
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
     args = parser_pergola_rules.parse_args()
     
-    exit(main(path=args.input, ontol_file_path=args.mapping_file, sel_tracks=args.tracks, 
+    exit(main(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
               dataTypes_actions=args.dataTypes_actions, dataTypes_list=args.dataTypes_list,
               write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
