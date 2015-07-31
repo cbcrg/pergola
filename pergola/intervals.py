@@ -354,7 +354,7 @@ class IntData:
             multiply_t = pow(10, max_dec_len)
         
             print "Factor to transform time values has been set to %s as values set as chromStart are decimals"%multiply_t
-            print  "If you want to set your own factor please use -m,--multiply_intervals n"
+            print  "If you want to set your own factor please use -mi,--multiply_intervals n"
         
         # If track exists data is order by track, this way I can avoid having problems 
         # at the last interval
