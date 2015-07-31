@@ -149,8 +149,8 @@ def check_assay_pointer (pointer, download_path):
 
 parent_parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
-parent_parser.add_argument('-o', '--ontology_file', required=True, metavar="ONTOLOGY_FILE",
-                    help='File with the ontology between fields in behavioral file' + \
+parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
+                    help='File to set the reciprocity between fields in behavioral file and terms used by Pergola' + \
                     'and genome browser grammar')
 parent_parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                     help='List of selected tracks')
@@ -174,7 +174,7 @@ parent_parser.add_argument('-e', '--relative_coord', required=False, action='sto
 parent_parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
                     default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
                                         'using field set as startChrom')
-parent_parser.add_argument('-m', '--multiply_intervals', metavar='N', type=int, required=False,
+parent_parser.add_argument('-mi', '--multiply_intervals', metavar='N', type=int, required=False,
                     help='Multiplies value in dataValue by the given factor')
 parent_parser.add_argument('-nh', '--no_header', required=False, action='store_true', 
                     default=False, help='Data file contains no header')
