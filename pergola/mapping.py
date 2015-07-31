@@ -6,10 +6,10 @@ Module: pergola.mapping
 .. module:: mapping
 
 This module  provides the class and functions to map the fields of input files 
-into genomic fields.
+into pergola ontology genomic-like fields.
 
-It provides a class :class:`~pergola.mapping.OntologyInfo` that reads the information
-from a ontology file.
+It provides a class :class:`~pergola.mapping.MappingInfo` that reads the information
+from a mapping file.
  
 """
 
@@ -23,10 +23,13 @@ _generic_nt = "N"
 _cytoband_file_ext = ".txt"
 _bed_file_ext = ".bed"
 
-class OntologyInfo(): #cambiar ontologyInfo y quiza la libreria mapping
+class MappingInfo():
     """
-    Class holds a dictionary with the ontology between the genomic fields and the phenomics fields
-    Ontology can be read both from a tabulated file or a ontology format file 
+    Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields
+    Mapping can be read both from a tabulated file or the _external_mapping_file_format from the 
+    Gene Ontology Consortium 
+    
+    .. _external_mapping_file_format: http://geneontology.org/page/external-mapping-file-format 
     
     .. attribute:: path
        Name of/path to a configuration file

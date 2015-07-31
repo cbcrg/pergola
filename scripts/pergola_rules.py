@@ -31,7 +31,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
     #Configuration file
-    map_file_dict = mapping.OntologyInfo(map_file_path)
+    map_file_dict = mapping.MappingInfo(map_file_path)
     
     # Handling list or range of tracks to join if set
     if list and range:
