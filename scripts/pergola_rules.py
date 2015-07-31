@@ -31,7 +31,7 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
     #Configuration file
-    ontol_file_dict = mapping.OntologyInfo(ontol_file_path)
+    map_file_dict = mapping.OntologyInfo(ontol_file_path)
     
     # Handling list or range of tracks to join if set
     if list and range:
@@ -121,13 +121,13 @@ def main(path, ontol_file_path, sel_tracks=None, list=None, range=None, track_ac
         
     ################
     # Reading data
-#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
-#     intData = structures.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
+#     intData = structures.IntData(path, ontology_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
+#     intData = structures.IntData(path, ontology_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntData(path, ontology_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
+#     intData = intervals.IntData(path, ontology_dict=map_file_dict.correspondence, 
 #                                 fields_names=fields2read, intervals=intervals_gen, 
 #                                 multiply_t=multiply_f)
-    intData = intervals.IntData(path, ontology_dict=ontol_file_dict.correspondence, 
+    intData = intervals.IntData(path, ontology_dict=map_file_dict.correspondence, 
                                 fields_names=fields2read, intervals=intervals_gen, 
                                 multiply_t=multiply_f, header=header_sw, delimiter=separator)
     
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
     args = parser_pergola_rules.parse_args()
     
-    exit(main(path=args.input, ontol_file_path=args.ontology_file, sel_tracks=args.tracks, 
+    exit(main(path=args.input, ontol_file_path=args.mapping_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
               dataTypes_actions=args.dataTypes_actions, dataTypes_list=args.dataTypes_list,
               write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
