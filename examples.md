@@ -84,7 +84,7 @@ behavioural_file:Phase > genome_file:chrom
 You can call *pergola_rules.py* as follow:
 
 {% highlight bash %}
-pergola_rules.py -i "/path2file/input.int" -o  "/path2file/ontology.txt"
+pergola_rules.py -i "/path2file/input.int" -m  "/path2file/ontology.txt"
 {% endhighlight bash %}
 
 This call will generate a bed file, with the format described on the UCSC Genome Bioinformatics web site: [http://genome.ucsc.edu/FAQ/FAQformat](http://genome.ucsc.edu/FAQ/FAQformat "Bed format").
@@ -164,10 +164,11 @@ Sets the format of the output file (bed, bedGraph)
 Sets first timepoint to 0 and make all the others relative to this timepoint
 
 ```
--m, --multiply_dataValue N  
+-mi, --multiply_intervals N
+
 ```
 
-Genome browsers only allow you to use you integers value to map, for this reason if time points for example are expressed as decimals (0.001 *s*) you can transform them to ms using *-m 1000*
+Genome browsers only allow you to use you integers value to map, for this reason if time points for example are expressed as decimals (0.001 *s*) you can transform them to ms using *-mi 1000*
 
 ```
 -n, --intervals_gen  
@@ -205,7 +206,7 @@ behavioural_file:1 extraLFP > genome_file:dataValue
 An example of a complete command line with all the options (not mutually exclusive) set is:
 
 {% highlight bash %}
-pergola_rules.py -i "/path2file/input.int" -o "/path2file/ontology.txt" -t track_1 track_2 track_3 -a join_all -f bedGraph -e -n -m 1000 
+pergola_rules.py -i "/path2file/input.int" -m "/path2file/ontology.txt" -t track_1 track_2 track_3 -a join_all -f bedGraph -e -n -mi 1000 
 {% endhighlight bash %}
 
 ## pergola module
