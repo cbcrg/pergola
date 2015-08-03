@@ -25,9 +25,10 @@ foo@bar$ pergola_rules.py
   -h, --help            show this help message and exit
   -i PATH, --input PATH
                         Input file path
-  -o ONTOLOGY_FILE, --ontology_file ONTOLOGY_FILE
-                        File with the ontology between fields in behavioral
-                        fileand genome browser grammar
+  -m MAPPING_FILE, --mapping_file MAPPING_FILE
+                        File to set the reciprocity between fields in
+                        behavioral file and terms used by Pergola and genome
+                        browser grammar
   -t TRACKS [TRACKS ...], --tracks TRACKS [TRACKS ...]
                         List of selected tracks
   -l LIST_OF_TRACKS [LIST_OF_TRACKS ...], --list LIST_OF_TRACKS [LIST_OF_TRACKS ...]
@@ -48,7 +49,7 @@ foo@bar$ pergola_rules.py
                         relative to this timepoint
   -n, --intervals_gen   Set startChrom and endChrom from just a timepoint in
                         the fileusing field set as startChrom
-  -m N, --multiply_intervals N
+  -mi N, --multiply_intervals N
                         Multiplies value in fields set as chromStart and chromEnd by the given factor
   -s FIELDS2READ [FIELDS2READ ...], --fields_read FIELDS2READ [FIELDS2READ ...]
                         List of fields to read from input file
