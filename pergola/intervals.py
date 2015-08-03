@@ -353,9 +353,15 @@ class IntData:
             
             file_int.close()                
             multiply_t = pow(10, max_dec_len)
-        
-            print "Factor to transform time values has been set to %s as values set as chromStart are decimals"%multiply_t
-            print  "If you want to set your own factor please use -mi,--multiply_intervals n"
+            
+            # If the value of multiply has been changed then I report it to the usert to
+            # give the info of how to set the value
+            if multiply_t != 1:
+                print ("Factor to transform time values has been set to %s. "%multiply_t)
+                print ("pergola set this parameter because values in chromStart are decimals.\n"  
+                       "You can set your own factor using option -mi,--multiply_intervals n")        
+#             else:
+#                 print  "If you want to set your own factor please use -mi,--multiply_intervals n"
         
         # If track exists data is order by track, this way I can avoid having problems 
         # at the last interval
@@ -363,17 +369,18 @@ class IntData:
         tr_change = False
         tr = ""
         p_tr = ""
+        i_track = None
 #         p_tr = 0
         if _track_f in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_track_f]
-#             print "i_track &&&&&&&&&&&&&&&&", i_track#del
+            print "i_track &&&&&&&&&&&&&&&&", i_track#del
             self.reader = sorted(self.reader, key=itemgetter(*[i_track])) #del        
             
         for interv in self.reader: 
             temp = []
 
             for i in sorted(self.fieldsG_dict.values()):
-                if i ==  i_track:
+                if i_track and i ==  i_track:
                     if first:
                         tr = interv[i]
                         p_tr = interv[i] 
