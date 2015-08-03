@@ -21,11 +21,11 @@ class TestTutorial(unittest.TestCase):
         """
         Testing that ontology file is correctly read
         """
-        global correspondence_tutorial, exp2, exp3, exp4
-        correspondence_tutorial = mapping.OntologyInfo(PATH + "/feeding/tutorial/b2g.txt")
+        global mappings_tutorial, exp2, exp3, exp4
+        mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/tutorial/b2g.txt")
         
-        msg_correspondence = "Corresponding tutorial file equivalences are not correct."
-        self.assertEqual(correspondence_tutorial.correspondence['EndT'], 'chromEnd', msg_correspondence)
+        msg_mappings = "Equivalences set in tutorial mapping file are not correct."
+        self.assertEqual(mappings_tutorial.correspondence['EndT'], 'chromEnd', msg_mappings)
 
     def test_read_int_data(self):
         """
@@ -39,7 +39,7 @@ class TestTutorial(unittest.TestCase):
         msg_int_data_min= "Min value does not correspond to tutorial files."
         msg_int_data_max= "Max value does not correspond to tutorial files."
         
-        int_data_tutorial = intervals.IntData(PATH + "/feeding/tutorial/feedingBehavior_HF_mice.csv", ontology_dict=correspondence_tutorial.correspondence)
+        int_data_tutorial = intervals.IntData(PATH + "/feeding/tutorial/feedingBehavior_HF_mice.csv", map_dict=mappings_tutorial.correspondence)
         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
         self.assertEqual(int_data_tutorial.max, max, msg_int_data_max) 
         
