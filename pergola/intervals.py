@@ -48,9 +48,10 @@ class IntData:
     
         List with the behavioral fields corresponding each column in the file
     
-    .. attribute:: fieldsG
+    .. attribute:: fieldsG_dict
     
-        List with the genomic fields corresponding each column in the file    
+        A dictionary with the equivalence to map fields in the input file and the pergola
+        ontology to describe behavioral data    
     
     .. attribute:: min
     
