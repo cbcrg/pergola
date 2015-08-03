@@ -103,6 +103,9 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
 
 # import os
 from tempfile import TemporaryFile 
+from pergola  import mapping
+from pergola import parsers
+from pergola import intervals
 
 def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False, data_type="a"):
     """   
@@ -191,12 +194,17 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
             # that is why I substract one to the end_time
             # In fact in the graphical interface it starts at start_time - 0.5 and ends in 
             # end_time - 0.5
-#             temp.write('')
-#             score_file.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n") 
+
             temp.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n")
-#     score_file.close()
+
+    # rewinds the file handle
     temp.seek(0)
-    print temp.read()
+#     print temp.read()
+    # Here I can invoke the class intData, provided that I have a mapping file
+#     pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
+    map = mapping.MappingInfo("/Users/jespinosa/git/pergola/test/jaaba2pergola.txt")
+    int_data = intervals.IntData(temp, ontology_dict = map) 
+    
     temp.close()
     
 # jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w='/Users/jespinosa/git/pergola/test')
