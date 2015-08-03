@@ -4,6 +4,11 @@
 5 feb 2015
 
 Script to transform Jaaba files in matlab format into pergola files
+
+Example of how to run this file:
+
+python jaaba2pergola_dev.py
+./jaaba2pergola_dev.py 
 """
 _csv_file_ext = ".csv"
 
