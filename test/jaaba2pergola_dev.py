@@ -103,6 +103,7 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
 
 # import os
 from tempfile import TemporaryFile 
+from tempfile import NamedTemporaryFile
 from pergola  import mapping
 from pergola import parsers
 from pergola import intervals
@@ -162,8 +163,8 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     scores_flat = hstack(hstack(hstack(scores)))
     score_norm = hstack(hstack(score_norm))[0][0]
     
-    temp = TemporaryFile()
-    
+#     temp = TemporaryFile()
+    temp = NamedTemporaryFile()
 #     try:
 #         temp.write('Some data')
 #         temp.seek(0)
@@ -203,8 +204,8 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     # Here I can invoke the class intData, provided that I have a mapping file
 #     pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
     map = mapping.MappingInfo("/Users/jespinosa/git/pergola/test/jaaba2pergola.txt")
-    int_data = intervals.IntData(temp, ontology_dict = map) 
     
+    int_data = intervals.IntData(temp.name, map_dict = map.correspondence)     
     temp.close()
     
 # jaaba_scores_to_csv (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', path_w='/Users/jespinosa/git/pergola/test')
