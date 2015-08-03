@@ -1,14 +1,14 @@
-pergola_rules.py -i "/home/kadomu/git/pergola/test/shortDev.int" -o /home/kadomu/git/pergola/test/b2g.txt 
+pergola_rules.py -i "/home/kadomu/git/pergola/test/shortDev.int" -m /home/kadomu/git/pergola/test/b2g.txt 
 
 # Work machine
-pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDev.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
+pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDev.int" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
 
-pergola_rules.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -o -t 1
+pergola_rules.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -m foo_lackin_file -t 1
 
 
 #Pergola isatab
-pergola_isatab.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -o "/home/kadomu/git/pergola/test/b2g.txt"
-pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -o "/home/kadomu/git/pergola/test/b2g.txt"
+pergola_isatab.py -i "/home/kadomu/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -m "/home/kadomu/git/pergola/test/b2g.txt"
+pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/isatab files/test2_int2GB/" -m "/home/kadomu/git/pergola/test/b2g.txt"
 
 ##Mac
 #isatab
@@ -20,56 +20,56 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "/Users/jespinosa/git/pergola/test/b2g.txt"
 
 #electrophysiology
-pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -m 1000 -w 1
+pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
 
 # Files of the tutorial
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/data/sample_data/b2g.txt" -e
 
 # Files of the tutorial - file separation
-pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -o  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
+pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
 
 # JAABA jaaba example chase
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -o "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
 
 # ActiTrack position files example bed file
-pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -o "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n
+pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n
 
-pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -o "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n -f bedGraph
+pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n -f bedGraph
 
 # without track_line
-pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -o "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n -f bedGraph -nt
+pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n -f bedGraph -nt
 
 
 # ActiTrack position files already transform to bedgraph and now transformed to relative coordinates
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortPos.bedGraph" -o "/Users/jespinosa/git/pergola/test/bedGraph2pergola.txt" -f bedGraph -nh -s 'chrm' 'start' 'end' 'value' -e
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortPos.bedGraph" -m "/Users/jespinosa/git/pergola/test/bedGraph2pergola.txt" -f bedGraph -nh -s 'chrm' 'start' 'end' 'value' -e
 
 
 # WORK
-pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
-pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt" -f bedGraph -e
+pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
+pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt" -f bedGraph -e
 
 # Ubuntu
-pergola_isatab.py -i "/home/kadomu/git/pergola/data/isatab_ex/" -o "/home/kadomu/git/pergola/test/int2gene.txt" -f bedGraph -e
+pergola_isatab.py -i "/home/kadomu/git/pergola/data/isatab_ex/" -m "/home/kadomu/git/pergola/test/int2gene.txt" -f bedGraph -e
 
 # Mac
-pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -o "/Users/jespinosa/git/pergola/test/int2gene.txt"
+pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -m "/Users/jespinosa/git/pergola/test/int2gene.txt"
 
 #Pergola electrophisiology
-pergola_rules.py -i "/home/kadomu/Dropbox/pergola/electroTest_2f.txt" -o "/home/kadomu/Dropbox/pergola/ontolElectro_2fields.txt" -n
+pergola_rules.py -i "/home/kadomu/Dropbox/pergola/electroTest_2f.txt" -m "/home/kadomu/Dropbox/pergola/ontolElectro_2fields.txt" -n
 
-pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n
+pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n
 
 
 # Test for no headers 
 
-#pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -o "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -m 1000 -f bed -s "Time" "15 1Amg" -nh
+#pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -m "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -mi 1000 -f bed -s "Time" "15 1Amg" -nh
 
 # Test for multiplying intervals/ -m 
-pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -o "/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -m 1000 -w 1
-pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -o "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -m 1000 -f bed -s "Time" "14 1CA1"
-pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
-pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -o "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt" -m 10000
+pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m"/users/cn/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
+pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -m "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -mi 1000 -f bed -s "Time" "14 1CA1"
+pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
+pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt" -mi 10000
 
 
 # Count nucleotides in a fasta file
