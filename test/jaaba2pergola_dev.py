@@ -54,9 +54,9 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
     version_jaaba = hstack(hstack(hstack(jaaba_data['version'])))[0][0]
     
     if version_jaaba != '0.5.1':
-        print >>stderr, 'JAABA version is not 0.5.1 but %s, this might cause' \
-                        'problems if file structure changed' \
-                        % (path + "/" + chrom + _genome_file_ext)
+        print >>stderr, 'WARNING: JAABA version is not 0.5.1 but %s, this might cause ' \
+                        'problems if the structure of JAABA files has changed.' \
+                        % (version_jaaba)
     
     # Structure of the file can be find here:
     # http://jaaba.sourceforge.net/ApplyingAClassifier.html#ScoresFile
