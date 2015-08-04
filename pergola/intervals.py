@@ -360,8 +360,6 @@ class IntData:
                 print ("Factor to transform time values has been set to %s. "%multiply_t)
                 print ("pergola set this parameter because values in chromStart are decimals.\n"  
                        "You can set your own factor using option -mi,--multiply_intervals n")        
-#             else:
-#                 print  "If you want to set your own factor please use -mi,--multiply_intervals n"
         
         # If track exists data is order by track, this way I can avoid having problems 
         # at the last interval
@@ -370,11 +368,10 @@ class IntData:
         tr = ""
         p_tr = ""
         i_track = None
-#         p_tr = 0
+
         if _track_f in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_track_f]
-            print "i_track &&&&&&&&&&&&&&&&", i_track#del
-            self.reader = sorted(self.reader, key=itemgetter(*[i_track])) #del        
+            self.reader = sorted(self.reader, key=itemgetter(*[i_track]))        
             
         for interv in self.reader: 
             temp = []
