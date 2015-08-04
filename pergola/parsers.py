@@ -240,25 +240,19 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     scoreFile.close()
  
 # def jaaba_scores_to_intData
-def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False, data_type="a"):
+from mapping import check_path
+def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", delimiter="\t", norm=False, data_type="a"):
     """   
     Creates a csv file from a scores file produced using JAABA and in matlab format
-        
-    :param mode: :py:func:`str` mode to use by default write
+    :param input_file: path to the JAABA file in matlab format
+    :param map_jaaba: path to the mapping files between JAABA data and pergola ontology 
     :param "\t" delimiter: :py:func:`str` Character use to separate values of 
         the same record in file (default "\t").
-    :param None path_w: :py:func:`str` path to dump the files, by default None
     :param False norm: set whether data should be normalize (-1,1) using normalization
         factor contained in the file
     :param data_type: :py:func:`str` data type in the file "behavior" e.g. chase
     
     :returns: IntData object
-    
-    TODO make a dump mode to save the data directly in pergola format
-    I will need then the correspondence file, or that input functions or pergola
-    allow object and not always files 
-    
-    TODO add mappings file as an option to the function
     """
     
     path = ""
@@ -276,7 +270,6 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     
     # Structure of the file can be find here:
     # http://jaaba.sourceforge.net/ApplyingAClassifier.html#ScoresFile
-    
     start_times = jaaba_data['allScores']['t0s']
     end_times = jaaba_data['allScores']['t1s']
     scores = jaaba_data['allScores']['scores']
@@ -287,7 +280,6 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     scores_flat = hstack(hstack(hstack(scores)))
     score_norm = hstack(hstack(score_norm))[0][0]
     
-#     temp = TemporaryFile()
     temp = NamedTemporaryFile()
     temp.write(delimiter.join(header) + "\n")
     
@@ -315,9 +307,8 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     # rewinds the file handle
     temp.seek(0)
 
-    # Here I can invoke the class intData, provided that I have a mapping file
-#     pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
-    map = MappingInfo("/Users/jespinosa/git/pergola/test/jaaba2pergola.txt")
+
+    map = MappingInfo(map_jaaba)
     
     int_data_jaaba = IntData(temp.name, map_dict = map.correspondence)     
     temp.close()

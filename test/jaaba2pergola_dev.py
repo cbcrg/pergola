@@ -28,14 +28,15 @@ from tempfile import NamedTemporaryFile#parsers
 # jaaba_data = io.loadmat('/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat')
 
 
-parsers.jaaba_scores_to_csv(input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
-                           path_w='/Users/jespinosa/git/pergola/test', norm=True, data_type="chase")
+# parsers.jaaba_scores_to_csv(input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
+#                            path_w='/Users/jespinosa/git/pergola/test', norm=True, data_type="chase")
 
-exit ("You correctly transform your JAABA scores into a csv file")
+# exit ("You correctly transform your JAABA scores into a csv file")
 
-# int_data_jaaba = parsers.jaaba_scores_to_intData (input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
-#                                                   path_w='/Users/jespinosa/git/pergola/test', norm=True, data_type="chase")
-# print int_data_jaaba.min
-# print int_data_jaaba.max
-# print int_data_jaaba.tracks
-# exit ("You correctly transform your JAABA scores into IntData")
+map_file_jaaba = "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
+int_data_jaaba = parsers.jaaba_scores_to_intData(input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
+                                                 map_jaaba = map_file_jaaba, norm=True, data_type="chase")
+print int_data_jaaba.min
+print int_data_jaaba.max
+print int_data_jaaba.tracks
+exit ("You correctly transform your JAABA scores into IntData")
