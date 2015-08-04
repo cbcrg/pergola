@@ -20,7 +20,7 @@ from os.path   import join, exists, isdir
 from urllib2   import urlopen, HTTPError
 # from scipy     import io
 from scipy.io     import loadmat
-from numpy     import hstack, mean
+from numpy     import hstack, mean, divide
 from tempfile  import NamedTemporaryFile
 from mapping   import MappingInfo, check_path
 from intervals import IntData
@@ -220,7 +220,7 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     scoreFile.write(delimiter.join(header) + "\n")
     
     if norm:
-        scores_flat = scores_flat/score_norm
+        scores_flat_test = divide(scores_flat, score_norm)
          
     for idx_animal, start_times_animal in enumerate (start_times_flat):
         start_times_animal= hstack(start_times_animal)
@@ -241,8 +241,6 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
 
     scoreFile.close()
  
-# def jaaba_scores_to_intData
-
 def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", delimiter="\t", norm=False, data_type="a"):
     """   
     Creates a csv file from a scores file produced using JAABA and in matlab format
@@ -288,7 +286,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     temp.write(delimiter.join(header) + "\n")
     
     if norm:
-        scores_flat = scores_flat /score_norm
+        scores_flat_test = divide(scores_flat, score_norm)
          
     for idx_animal, start_times_animal in enumerate (start_times_flat):
         start_times_animal= hstack(start_times_animal)
