@@ -18,12 +18,12 @@ from bcbio     import isatab #la puedo poner en otra libreria para que no me jod
 from os        import makedirs
 from os.path   import join, exists, isdir
 from urllib2   import urlopen, HTTPError
-from scipy     import io
+# from scipy     import io
+from scipy.io     import loadmat
 from numpy     import hstack, mean
 from tempfile  import NamedTemporaryFile
-from mapping   import MappingInfo
+from mapping   import MappingInfo, check_path
 from intervals import IntData
-
 
 _csv_file_ext = ".csv"
 
@@ -191,7 +191,9 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
         else:
             raise IOError('Provided path does not exists: %s' % path_w)
     
-    jaaba_data = io.loadmat(input_file)
+    input_file = check_path(input_file)
+#     jaaba_data = io.loadmat(input_file)
+    jaaba_data = loadmat(input_file)
     
     # Checking JAABA version
     version_jaaba = hstack(hstack(hstack(jaaba_data['version'])))[0][0]
@@ -240,10 +242,11 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     scoreFile.close()
  
 # def jaaba_scores_to_intData
-from mapping import check_path
+
 def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", delimiter="\t", norm=False, data_type="a"):
     """   
     Creates a csv file from a scores file produced using JAABA and in matlab format
+    
     :param input_file: path to the JAABA file in matlab format
     :param map_jaaba: path to the mapping files between JAABA data and pergola ontology 
     :param "\t" delimiter: :py:func:`str` Character use to separate values of 
@@ -257,9 +260,10 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     
     path = ""
     header = ["animal", "startTime", "endTime", "value", "dataType"]
-    
-    jaaba_data = io.loadmat(input_file)
-    
+    input_file = check_path(input_file)
+#     jaaba_data = io.loadmat(input_file)
+    jaaba_data = loadmat(input_file)
+        
     # Checking JAABA version
     version_jaaba = hstack(hstack(hstack(jaaba_data['version'])))[0][0]
     
@@ -307,7 +311,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     # rewinds the file handle
     temp.seek(0)
 
-
+    map_jaaba = check_path(map_jaaba)
     map = MappingInfo(map_jaaba)
     
     int_data_jaaba = IntData(temp.name, map_dict = map.correspondence)     
