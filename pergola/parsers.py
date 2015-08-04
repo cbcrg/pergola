@@ -77,7 +77,7 @@ def read_track_actions (tracks, track_action = "split_all"):
 
 ###############
 ### ISA=Tab Stuff
-def parse_isatab_assays (isatab_dir):
+def parse_isatab_assays(isatab_dir):
     """ 
     Read all files contained in isatab format to be processed by pergola
     
@@ -112,7 +112,7 @@ def parse_isatab_assays (isatab_dir):
 #                 print "file to process is ------------------",file
     return dict_files
 
-def check_assay_pointer (pointer, download_path):
+def check_assay_pointer(pointer, download_path):
     """
     Checks whether the argument pointer is the path to a local file or it is a URL
     If it is a URL it downloads the file to $HOME/.pergola if it has not been previously downloaded 
@@ -151,7 +151,17 @@ def check_assay_pointer (pointer, download_path):
 
 ###############
 ### JAABA stuff
-def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False, data_type="a"):
+from scipy     import io
+from numpy     import hstack
+from tempfile  import NamedTemporaryFile
+from numpy     import mean
+from mapping   import MappingInfo
+from intervals import IntData
+from os.path  import join, exists
+
+_csv_file_ext = ".csv"
+
+def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False, data_type="a"):
     """   
     Creates a csv file from a scores file produced using JAABA and in matlab
     format
@@ -164,9 +174,7 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
         factor contained in the file
     :param data_type: :py:func:`str` data type in the file "behavior" e.g. chase
     
-    TODO make a dump mode to save the data directly in pergola format
-    I will need then the correspondence file, or that input functions or pergola
-    allow object and not always files 
+    
     
     """
     
@@ -229,19 +237,11 @@ def jaaba_scores_to_csv (input_file, name_file="JAABA_scores", mode="w", delimit
             scoreFile.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n") 
 
     scoreFile.close()
-
-from scipy     import io
-from numpy     import hstack
-from tempfile  import NamedTemporaryFile
-from numpy     import mean
-from mapping   import MappingInfo
-from intervals import IntData
  
 # def jaaba_scores_to_intData
 def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False, data_type="a"):
     """   
-    Creates a csv file from a scores file produced using JAABA and in matlab
-    format
+    Creates a csv file from a scores file produced using JAABA and in matlab format
         
     :param mode: :py:func:`str` mode to use by default write
     :param "\t" delimiter: :py:func:`str` Character use to separate values of 
