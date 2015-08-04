@@ -214,7 +214,7 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     score_norm = hstack(hstack(score_norm))[0][0]
    
     scoreFile = open(join(path, name_file + _csv_file_ext), mode)
-    scoreFile.write("\t".join(header) + "\n")
+    scoreFile.write(delimiter.join(header) + "\n")
     
     if norm:
         scores_flat = scores_flat /score_norm
@@ -234,7 +234,7 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
             # that is why I substract one to the end_time
             # In fact in the graphical interface it starts at start_time - 0.5 and ends in 
             # end_time - 0.5
-            scoreFile.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n") 
+            scoreFile.write(delimiter.join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n") 
 
     scoreFile.close()
  
@@ -288,7 +288,7 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     
 #     temp = TemporaryFile()
     temp = NamedTemporaryFile()
-    temp.write("\t".join(header) + "\n")
+    temp.write(delimiter.join(header) + "\n")
     
     if norm:
         scores_flat = scores_flat /score_norm
@@ -309,7 +309,7 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
             # In fact in the graphical interface it starts at start_time - 0.5 and ends in 
             # end_time - 0.5
 
-            temp.write("\t".join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n")
+            temp.write(delimiter.join('{}'.format(v) for v in [idx_animal+1, start_time, end_time -1, mean_score, data_type]) + "\n")
 
     # rewinds the file handle
     temp.seek(0)
