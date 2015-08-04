@@ -10,12 +10,22 @@ This module provides the way to read scripts options provided by pergola library
 
 """
 
-from sys      import stderr
-from argparse import ArgumentParser, ArgumentTypeError
-from re       import match
-from bcbio    import isatab #la puedo poner en otra libreria para que no me joda pergola_rules #modify
-from os       import path, makedirs
-from urllib2  import urlopen, HTTPError
+from sys       import stderr
+from argparse  import ArgumentParser, ArgumentTypeError
+from re        import match
+from bcbio     import isatab #la puedo poner en otra libreria para que no me joda pergola_rules #modify 
+                            #creo que quiero decir que asi pergola_rules tiene esta dependencia quiza mejor no tenerla porque es una libreria rara
+from os        import makedirs
+from os.path   import join, exists, isdir
+from urllib2   import urlopen, HTTPError
+from scipy     import io
+from numpy     import hstack, mean
+from tempfile  import NamedTemporaryFile
+from mapping   import MappingInfo
+from intervals import IntData
+
+
+_csv_file_ext = ".csv"
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
@@ -89,7 +99,8 @@ def parse_isatab_assays(isatab_dir):
     """
     dict_files = dict()
     
-    if not path.isdir(isatab_dir):
+#     if not path.isdir(isatab_dir):
+    if not isdir(isatab_dir):
         raise ValueError ("Argument input must be a folder containning data in isatab format")
     
     rec = isatab.parse(isatab_dir) 
@@ -125,14 +136,16 @@ def check_assay_pointer(pointer, download_path):
     try:
         url_file = urlopen(pointer)
          
-        if not path.exists(download_path):
+#         if not path.exists(download_path):
+        if not exists(download_path):
             makedirs(download_path)
          
         file_name = pointer.split('/')[-1]
-        path_file = path.join(download_path, file_name)
-         
+#         path_file = path.join(download_path, file_name)
+        path_file = join(download_path, file_name)
+        
         #Check whether file is already created
-        if not path.exists(path_file):
+        if not exists(path_file):
             local_file = open(path_file, "w")
             local_file.write(url_file.read())
             print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)
@@ -151,20 +164,10 @@ def check_assay_pointer(pointer, download_path):
 
 ###############
 ### JAABA stuff
-from scipy     import io
-from numpy     import hstack
-from tempfile  import NamedTemporaryFile
-from numpy     import mean
-from mapping   import MappingInfo
-from intervals import IntData
-from os.path  import join, exists
-
-_csv_file_ext = ".csv"
 
 def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimiter="\t", path_w=None, norm=False, data_type="a"):
     """   
-    Creates a csv file from a scores file produced using JAABA and in matlab
-    format
+    Creates a csv file from a scores file produced using JAABA and in matlab format
         
     :param mode: :py:func:`str` mode to use by default write
     :param "\t" delimiter: :py:func:`str` Character use to separate values of 
@@ -173,8 +176,6 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     :param False norm: set whether data should be normalize (-1,1) using normalization
         factor contained in the file
     :param data_type: :py:func:`str` data type in the file "behavior" e.g. chase
-    
-    
     
     """
     
@@ -217,7 +218,7 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     scoreFile.write(delimiter.join(header) + "\n")
     
     if norm:
-        scores_flat = scores_flat /score_norm
+        scores_flat = scores_flat/score_norm
          
     for idx_animal, start_times_animal in enumerate (start_times_flat):
         start_times_animal= hstack(start_times_animal)
@@ -323,6 +324,8 @@ def jaaba_scores_to_intData(input_file, name_file="JAABA_scores", mode="w", deli
     
     return (int_data_jaaba)
 
+###############
+### Argument parsing
     
 parent_parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
