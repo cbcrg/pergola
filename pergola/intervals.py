@@ -72,7 +72,7 @@ class IntData:
     .. attribute:: dataTypes
     
         All different dataTypes that appear in the data read from "dataTypes" field.
-        If dataTypes field not in file, all intervals are set as belonging to dataTypes "a"
+        If dataTypes field is not in file, all intervals are set as belonging to dataTypes "a"
 
     .. attribute:: tracks
     
@@ -327,9 +327,7 @@ class IntData:
         p_v = 0
         first = True
         p_temp = []
-        
-        print "range in dicitionary is", range(len(self.fieldsG_dict)) #del
-        
+                
         # Setting the factor to multiply if it is not set by the user
         # different to 1 and the timepoints are decimal numbers
         if multiply_t == 1:
