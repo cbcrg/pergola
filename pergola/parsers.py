@@ -220,8 +220,8 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     scoreFile.write(delimiter.join(header) + "\n")
     
     if norm:
-        scores_flat_test = divide(scores_flat, score_norm)
-         
+        scores_flat = divide(scores_flat, score_norm)
+    
     for idx_animal, start_times_animal in enumerate (start_times_flat):
         start_times_animal= hstack(start_times_animal)
         end_times_animal = hstack(end_times_flat [idx_animal])
@@ -286,7 +286,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     temp.write(delimiter.join(header) + "\n")
     
     if norm:
-        scores_flat_test = divide(scores_flat, score_norm)
+        scores_flat = divide(scores_flat, score_norm)
          
     for idx_animal, start_times_animal in enumerate (start_times_flat):
         start_times_animal= hstack(start_times_animal)
