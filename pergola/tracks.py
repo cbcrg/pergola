@@ -133,10 +133,11 @@ class GenomicContainer(object):
         
         if not path: 
             pwd = getcwd()
+            print >> stderr, "No path selected, files dump into path: ", pwd 
         else:
             pwd = path
-            
-        print >> stderr, "No path selected, files dump into path: ", pwd 
+            print >> stderr, "Files dump into path: ", pwd
+         
                              
         if not(isinstance(self, GenomicContainer)):
             raise Exception("Not writable object, type not supported '%s'."%(type(self)))    
