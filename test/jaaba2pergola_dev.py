@@ -39,5 +39,6 @@ int_data_jaaba = parsers.jaaba_scores_to_intData(input_file = input_jaaba_file, 
 print int_data_jaaba.min
 print int_data_jaaba.max
 print int_data_jaaba.tracks
+print int_data_jaaba.data
 
 exit ("You correctly transform your JAABA scores into IntData")
