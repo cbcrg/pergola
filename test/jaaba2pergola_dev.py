@@ -10,19 +10,18 @@ Example of how to run this file:
 python jaaba2pergola_dev.py
 ./jaaba2pergola_dev.py 
 """
-_csv_file_ext = ".csv"
 
-from os       import getcwd
-from sys      import stderr
-from os.path  import join, exists
-from scipy    import io #parsers
-from scipy    import nditer
+# from os       import getcwd
+# from sys      import stderr
+# from os.path  import join, exists
+# from scipy    import io #parsers
+# from scipy    import nditer
 from numpy    import hstack#parsers
 from numpy    import mean#parsers
-from pergola  import mapping#parsers
-from pergola  import intervals#parsers
+# from pergola  import mapping#parsers
+# from pergola  import intervals#parsers
 from pergola  import parsers
-from tempfile import NamedTemporaryFile#parsers
+# from tempfile import NamedTemporaryFile#parsers
 
 # This part has been included in the function
 # jaaba_data = io.loadmat('/Users/jespinosa/JAABA_MAC_0.5.1/sampledata/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat')
