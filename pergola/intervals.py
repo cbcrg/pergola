@@ -72,7 +72,7 @@ class IntData:
     .. attribute:: dataTypes
     
         All different dataTypes that appear in the data read from "dataTypes" field.
-        If dataTypes field is not in file, all intervals are set as belonging to dataTypes "a"
+        If dataTypes field not in file, all intervals are set as belonging to dataTypes "a"
 
     .. attribute:: tracks
     
@@ -369,7 +369,20 @@ class IntData:
 
         if _track_f in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_track_f]
-            self.reader = sorted(self.reader, key=itemgetter(*[i_track]))        
+            
+            #             self.reader = sorted(self.reader, key=itemgetter(*[i_track]))
+
+            # Checking whether first track is numeric, if it is code assumes all tracks
+            # are numeric and sort consequently  
+            file_int = open(self.path, "rb")
+            test_numeric = reader(file_int, delimiter=self.delimiter)
+            test_numeric.next()
+            first_row = test_numeric.next()
+            if first_row[i_track].isdigit():
+                # Force numerical sorting
+                self.reader = sorted(self.reader, key=lambda x: int(x[i_track]))
+            else:
+                self.reader = sorted(self.reader, key=itemgetter(*[i_track]))  
             
         for interv in self.reader: 
             temp = []
