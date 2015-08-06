@@ -1,4 +1,4 @@
-! Mapping of behavioural fields into genome browser fields
+! Mapping of behavioural fields into pergola ontology fields
 !
 behavioural_file:CAGE > genome_file:track
 behavioural_file:StartT > genome_file:chromStart
