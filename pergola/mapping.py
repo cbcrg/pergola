@@ -13,9 +13,9 @@ from a mapping file.
  
 """
 
-from re      import match
+from re      import compile, match
 from os      import getcwd
-from sys     import stderr
+from sys     import stderr, exit
 from os.path import join
 
 _genome_file_ext = ".fa"
@@ -73,9 +73,16 @@ class MappingInfo():
     #TODO documentation
     def _mapping_config(self, file_map):
         dict_correspondence ={}
-       
+        p_mapping =compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
+#         compile(r'\w:\w\s>/s\w:\w')
+        
         for row in file_map:
-            l=row.split(">")
+            if p_mapping.match(row):
+                exit ("eureka-----------------------")
+#             if row.startswith("behavioural_file"):
+#                 l=row.split(">")          
+#                 dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')        
+            l=row.split(">")          
             dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')        
 
         return (dict_correspondence)   
