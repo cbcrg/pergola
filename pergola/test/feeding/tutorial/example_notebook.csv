@@ -1,0 +1,7 @@
+Animal	StartT	EndT	Behavior	Value
+1	37	56	eat	0.06
+1	68	92	eat	0.02
+1	150	181	eat	0.02
+1	211	233	drink	0.08
+1	357	382	drink	0.02
+1	569	601	drink	0.02
