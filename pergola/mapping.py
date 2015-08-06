@@ -59,11 +59,11 @@ class MappingInfo():
                 del config_file_list[:2]
                 return(self._mapping_config(config_file_list))
             else:
-                raise TypeError("Configuration file format is not recognized: \"%s\"." % (path))
+                raise TypeError("Mapping file format is not recognized: \"%s\"." % (path))
                 
     #TODO documentation            
     def _tab_config(self, file_tab):
-        dict_correspondence ={}
+        dict_correspondence = {}
         
         for row in file_tab:            
             row_split = row.rstrip('\n').split('\t')
@@ -72,19 +72,20 @@ class MappingInfo():
     
     #TODO documentation
     def _mapping_config(self, file_map):
-        dict_correspondence ={}
-        p_mapping =compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
-#         compile(r'\w:\w\s>/s\w:\w')
+        dict_correspondence = {}
+        mapping_l_ex = "tag_file:field_input_file > pergola:pergola_ontology_term"
+        p_mapping = compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
+
         
         for row in file_map:
             if p_mapping.match(row):
-                exit ("eureka-----------------------")
-#             if row.startswith("behavioural_file"):
-#                 l=row.split(">")          
-#                 dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')        
-            l=row.split(">")          
-            dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')        
-
+                l=row.split(">")          
+                dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')               
+            else:
+                raise TypeError("Mapping file format not recognized:\n \"%s\"\n"  \
+                                "You can see a correct example below:\n\"%s\"."  \
+                                % (row.rstrip('\n'), mapping_l_ex))
+                
         return (dict_correspondence)   
     
     def write(self, indent=0):
