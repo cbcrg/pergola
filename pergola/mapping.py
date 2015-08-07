@@ -64,8 +64,12 @@ class MappingInfo():
     #TODO documentation            
     def _tab_config(self, file_tab):
         dict_correspondence = {}
+        comment_tag_t = "#"
         
-        for row in file_tab:            
+        for row in file_tab:
+            if(row.startswith(comment_tag_t)):                
+                continue
+                                    
             row_split = row.rstrip('\n').split('\t')
             dict_correspondence[row_split[0]] = row_split[1]
         return (dict_correspondence)    
@@ -74,13 +78,16 @@ class MappingInfo():
     def _mapping_config(self, file_map):
         dict_correspondence = {}
         mapping_l_ex = "tag_file:field_input_file > pergola:pergola_ontology_term"
+        #comment_tag = ("#", "!")
+        comment_tag_m = "!"
         p_mapping = compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
 
-        
         for row in file_map:
             if p_mapping.match(row):
                 l=row.split(">")          
-                dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')               
+                dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')
+            elif(row.startswith(comment_tag_m)):           
+                continue            
             else:
                 raise TypeError("Mapping file format not recognized:\n \"%s\"\n"  \
                                 "You can see a correct example below:\n\"%s\"."  \
