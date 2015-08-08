@@ -56,7 +56,7 @@ class MappingInfo():
                 return(self._tab_config(config_file_list))
 
             elif config_file_list[0][0] == '!':
-                del config_file_list[:2]
+                del config_file_list[:1]
                 return(self._mapping_config(config_file_list))
             else:
                 raise TypeError("Mapping file format is not recognized: \"%s\"." % (path))
@@ -67,7 +67,7 @@ class MappingInfo():
         comment_tag_t = "#"
         
         for row in file_tab:
-            if(row.startswith(comment_tag_t)):                
+            if(row.startswith(comment_tag_t)):               
                 continue
                                     
             row_split = row.rstrip('\n').split('\t')
@@ -86,7 +86,7 @@ class MappingInfo():
             if p_mapping.match(row):
                 l=row.split(">")          
                 dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')
-            elif(row.startswith(comment_tag_m)):           
+            elif(row.startswith(comment_tag_m)):   
                 continue            
             else:
                 raise TypeError("Mapping file format not recognized:\n \"%s\"\n"  \
