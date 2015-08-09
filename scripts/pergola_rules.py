@@ -89,7 +89,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         header_sw = False
         print >> stderr, "@@@Pergola_rules.py: Data file has header set to: ", header_sw
 
-    # Handling multiply_factor
+    # Handling fields to read
     if fields2read:
         print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % fields2read                        
     else:
@@ -149,15 +149,15 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     start = intData.min
     end = intData.max
     
-    print "min>>>>>>>>>>>>>>>>>>>", start
-    print "max>>>>>>>>>>>>>>>>>>>", end
+#     print "min>>>>>>>>>>>>>>>>>>>", start
+#     print "max>>>>>>>>>>>>>>>>>>>", end
     
     if relative_coord:
        start = 0
        end = intData.max - intData.min
      
-    print "min>>>>>>>>>>>>>>>>>>>", start
-    print "max>>>>>>>>>>>>>>>>>>>", end
+#     print "min>>>>>>>>>>>>>>>>>>>", start
+#     print "max>>>>>>>>>>>>>>>>>>>", end
     
 #     mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
     # I don't need anymore the start to be shift because files are trimmed
