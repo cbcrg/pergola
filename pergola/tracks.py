@@ -347,23 +347,15 @@ class Track(GenomicContainer):
 
         return (track_dict)
     
-    def _get_range (self, list_data):
+    def _get_range (self, data_tr):
         """
-        Converts data belonging to a single track (in the form of a list of tuples) in
-        an object of class Bed
+        Calculates the range of values in dataValue field 
         
-        :param track: :py:func:`list` of tuples containing data of a single track
-        :param False in_call: If False the call to the function is from the user otherwise
-            is from inside :py:func: `convert2single_track()`
-        :param None color_restrictions: Set colors not to be used #TODO this is not clear example??        
+        :param data_tr: :py:func:`tuple` of tuples containing data of a single track    
                 
-        :returns: Bed object
-        
+        :returns: range_list list with minimum and maximum value in data
+
         """        
-        print ("dddddddddddd")
-        print (">>>>>>>>>>>>>>>>>>>", type (self.fields.index))
-        print (">>>>>>>>>>>>>>>>>>>", self.fields.index("dataValue"))
-        
         try:
             i_data_value = self.fields.index("dataValue")
         except KeyError:
@@ -372,7 +364,7 @@ class Track(GenomicContainer):
         min = -10000000
         max = -10000000
         
-        for r in list_data:
+        for r in data_tr:
             v = r[i_data_value]
             
             if min == -10000000: min = v
@@ -381,66 +373,9 @@ class Track(GenomicContainer):
             if max == -10000000: max = v
             if max < v: max = v
             
-        print ("min max----------------------------", min, max)
-        return [min, max]    
-                    
-#             temp_list = []
-#             temp_list.append("chr1")
-#             temp_list.append(row[i_chr_
-        
-        #This fields are mandatory in objects of class Bed
-#         _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
-# 
-#         #Check whether these fields are in the original otherwise raise exception
-#         try:
-#             [self.fields.index(f) for f in _bed_fields]
-#         except ValueError:
-#             raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
-# 
-# #         if (not in_call and len(self.list_tracks) != 1):
-#         if (not in_call and len(self.list_tracks_filt) != 1):
-#             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
-#         
-#         i_track = self.fields.index("track")
-#         i_chr_start = self.fields.index("chromStart")
-#         i_chr_end = self.fields.index("chromEnd")
-#         i_data_value = self.fields.index("dataValue")
-#         i_data_types = self.fields.index("dataTypes")
-        
-        #Generate dictionary of field and color gradients
-#         color_restrictions = kwargs.get('color_restrictions', None)
-#         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
-#                 
-#         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
-# 
-#         if step == 0: 
-#             _intervals = [0, self.range_values[1]] 
-#         else: 
-#             _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
-#         
-#         for row in track:
-#             temp_list = []
-#             temp_list.append("chr1")
-#             temp_list.append(row[i_chr_start])
-#             temp_list.append(row[i_chr_end])
-#             temp_list.append(row[i_data_types])  
-#             temp_list.append(row[i_data_value])   
-#             temp_list.append("+")
-#             temp_list.append(row[i_chr_start])
-#             temp_list.append(row[i_chr_end])
-#             
-#             for i,v in enumerate(_intervals):    
-#                 d_type = row [self.fields.index("dataTypes")]
-#                 global color
-#                 color = _dict_col_grad[d_type][len(_intervals)-1]
-# 
-#                 if float(row[i_data_value]) <= v:                    
-#                     color = _dict_col_grad[d_type][i-1]                                 
-#                     break
-# 
-#             temp_list.append(color)          
-#             
-#             yield(tuple(temp_list))
+        range_list = [min, max]
+           
+        return range_list
     
     def remove (self, dict_t, tracks2remove):
         """
