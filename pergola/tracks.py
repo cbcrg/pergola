@@ -382,7 +382,7 @@ class Track(GenomicContainer):
             if max < v: max = v
             
         print ("min max----------------------------", min, max)
-        return (min, max)    
+        return [min, max]    
                     
 #             temp_list = []
 #             temp_list.append("chr1")
