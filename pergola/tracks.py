@@ -338,12 +338,9 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed":
                     _dict_col_grad[k_2] = ""
-                
-                print ("k and k_2", k,k_2)  #del
+
                 range_val = self._get_range(d_2)
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=range_val, color=_dict_col_grad[k_2])
-#                 print ("k and k_2", k,k_2)  #del
-#                 print (d_2)           #del
 
         return (track_dict)
     
