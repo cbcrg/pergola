@@ -10,7 +10,7 @@ DOCUMENTATION
 .. automodule:: pergola.mapping
    :members: write_chr, check_path
    :private-members:
-.. autoclass:: pergola.mapping.OntologyInfo
+.. autoclass:: pergola.mapping.MappingInfo
 	:members:
 .. automodule:: pergola.tracks
    :members: assign_color

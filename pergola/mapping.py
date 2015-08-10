@@ -37,7 +37,7 @@ class MappingInfo():
     .. attribute::  correspondence 
        Dictionary with keys fields in behavioral file and values correspondence in genomic grammar
     
-    :returns: ConfigInfo object
+    :returns: MappingInfo object
     
     """
     
