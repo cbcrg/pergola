@@ -17,12 +17,17 @@ So why not take advantage of it? pergola aims is to be a simple tool for behavio
 in order to visualize data in popular genome browsers.
 
 Contents:
+---------
 
-.. toctree::
-   :maxdepth: 2
+.. epigraph::
+
+  .. toctree::
+     :maxdepth: 3
+  
+     installation
+  
+     reference/index
    
-   installation
-   code
 
 
 	ESto quiza lo podria incluir como otro contenido table.rs y ver que pasa
