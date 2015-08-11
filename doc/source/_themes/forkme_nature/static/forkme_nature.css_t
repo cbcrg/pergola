@@ -301,7 +301,8 @@ div.sidebar {
 .body p img {
         margin: 0;
     }
-        
+    
+/*   
 pre {
     padding: 10px;
     background-color: White;
@@ -313,7 +314,23 @@ pre {
     -webkit-box-shadow: 1px 1px 1px #d8d8d8;
     -moz-box-shadow: 1px 1px 1px #d8d8d8;
 }
- 
+*/
+
+pre, #_fontwidthtest {
+    font-family: 'Consolas', 'Deja Vu Sans Mono',
+                 'Bitstream Vera Sans Mono', monospace;
+    margin: 1em 2em;
+    font-size: 0.95em;
+    letter-spacing: 0.015em;
+    line-height: 120%;
+    padding: 0.5em;
+    border: 1px solid {{ theme_lighter_gray }};
+    background-color: {{ theme_code_background }};
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
 tt {
     background-color: #ecf0f3;
     color: #222;
@@ -330,4 +347,12 @@ div.viewcode-block:target {
     background-color: #f4debf;
     border-top: 1px solid #ac9;
     border-bottom: 1px solid #ac9;
+}
+
+/* OTHER STUFF ============================================================== */
+code {
+    font-family: 'Consolas', 'Deja Vu Sans Mono',
+                 'Bitstream Vera Sans Mono', monospace;
+    font-size: 0.95em;
+    letter-spacing: 0.01em;
 }
