@@ -153,7 +153,7 @@ div.body h6 {
     background-color: #0090ff; /* #FBD2D1; #F89596 */
     font-weight: normal;
     /*color: #212224;*/
-    color: #FFFFFF;
+    color: #FFF;
     margin: 30px 0px 10px 0px;
     padding: 5px 0 5px 10px;
     /*text-shadow: 0px 1px 0 white*/
