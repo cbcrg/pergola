@@ -1,6 +1,7 @@
 
 Installing Pergola
 ==================
+
 .. contents::
 
 .. note::

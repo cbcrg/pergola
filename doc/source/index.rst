@@ -16,8 +16,8 @@ problem is not new in biology and other disciplines, such as genomics, have long
 So why not take advantage of it? pergola aims is to be a simple tool for behavioral data manipulation 
 in order to visualize data in popular genome browsers.
 
-Contents:
----------
+Documentation index:
+~~~~~~~~~~~~~~~~~~~~
 
 .. epigraph::
 
@@ -27,9 +27,10 @@ Contents:
      installation
   
      reference/index
-   
+   	
 
 ESto quiza lo podria incluir como otro contenido table.rs y ver que pasa
+
 Indices and tables
 ==================
 
