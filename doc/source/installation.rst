@@ -1,6 +1,6 @@
 
 Installing Pergola
-=================
+==================
 .. contents::
 
 .. note::
@@ -31,6 +31,7 @@ Python libraries
 .. note:: **You might need to install** first `pip`_  if your python version is not 2.7.9 or later
 
 .. _pip: https://pip.pypa.io/en/latest/installing.html
+
 -----------------------------
 Download and installation
 -----------------------------
