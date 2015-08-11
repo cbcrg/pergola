@@ -152,10 +152,11 @@ div.body h6 {
     font-family: Arial, sans-serif;
     background-color: #0090ff; /* #FBD2D1; #F89596 */
     font-weight: normal;
-    color: #212224;
+    /*color: #212224;*/
+    color: #FFFFFF;
     margin: 30px 0px 10px 0px;
     padding: 5px 0 5px 10px;
-    text-shadow: 0px 1px 0 white
+    /*text-shadow: 0px 1px 0 white*/
 }
  
 div.body h1 { border-top: 20px solid white; margin-top: 0; font-size: 200%; }
@@ -164,7 +165,11 @@ div.body h3 { font-size: 120%; background-color: #C3E2F9 /*#FDE4E3 #FEEAEA*/; }
 div.body h4 { font-size: 110%; background-color: #FDEDED/*#FFFFFF*/; }
 div.body h5 { font-size: 100%; background-color: #FEF6F6/*#FFFFFF*/; }
 div.body h6 { font-size: 100%; background-color: #FFFAFA; }
- 
+
+div.body h1 a, div.body h2 a, div.body h3 a, div.body h4 a, div.body h5 a, div.body h6 a {
+    color: white;
+}
+
 a.headerlink {
     color: #c60f0f;
     font-size: 0.8em;
@@ -180,18 +185,19 @@ a.headerlink:hover {
 div.body p, div.body dd, div.body li {
     line-height: 1.5em;
 }
- 
+
+/*
 div.admonition p.admonition-title + p {
     display: inline;
 }
-
+*/
 div.highlight{
     background-color: white;
 }
 
 div.note {
-    background-color: #eee;
-    border: 1px solid #ccc;
+    background-color: #f9dde9; /*#eee;*/
+    border: 1px solid #f3331f; /*#ccc;*/
 }
  
 div.seealso {
@@ -202,12 +208,14 @@ div.seealso {
 div.topic {
     background-color: #eee;
 }
- 
+
+* ADMONITIONS AND WARNINGS ======================================== */ 
 div.warning {
     background-color: #ffe4e4;
     border: 1px solid #f66;
 }
- 
+
+/* old stuff 
 p.admonition-title {
     display: inline;
 }
@@ -215,7 +223,85 @@ p.admonition-title {
 p.admonition-title:after {
     content: ":";
 }
- 
+*/
+
+/* Shared by admonitions, warnings and sidebars */
+div.admonition,
+div.warning,
+div.sidebar {
+    font-size: 0.9em;
+    margin: 2em;
+    padding: 0;
+    /*
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    */
+}
+div.admonition p,
+div.warning p,
+div.sidebar p {
+    margin: 0.5em 1em 0.5em 1em;
+    padding: 0;
+}
+div.admonition pre,
+div.warning pre,
+div.sidebar pre {
+    margin: 0.4em 1em 0.4em 1em;
+}
+div.admonition p.admonition-title,
+div.warning p.admonition-title,
+div.sidebar p.sidebar-title {
+    margin: 0;
+    padding: 0.1em 0 0.1em 0.5em;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+}
+div.admonition ul, div.admonition ol,
+div.warning ul, div.warning ol,
+div.sidebar ul, div.sidebar ol {
+    margin: 0.1em 0.5em 0.5em 3em;
+    padding: 0;
+}
+
+
+/* Admonitions and sidebars only */
+div.admonition, div.sidebar {
+    border: 1px solid {{ theme_positive_dark }};
+    background-color: {{ theme_positive_light }};
+}
+div.admonition p.admonition-title,
+div.sidebar p.sidebar-title {
+    background-color: {{ theme_positive_medium }};
+    border-bottom: 1px solid {{ theme_positive_dark }};
+}
+
+
+/* Warnings only */
+div.warning {
+    border: 1px solid {{ theme_negative_dark }};
+    background-color: {{ theme_negative_light }};
+}
+div.warning p.admonition-title {
+    background-color: {{ theme_negative_medium }};
+    border-bottom: 1px solid {{ theme_negative_dark }};
+}
+
+
+/* Sidebars only */
+div.sidebar {
+  max-width: 200px;
+}
+
+/*  END admonition*/
+
+
+.body p img {
+        margin: 0;
+    }
+        
 pre {
     padding: 10px;
     background-color: White;
