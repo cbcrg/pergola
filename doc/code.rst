@@ -1,4 +1,4 @@
-DOCUMENTATION
+REFERENCE GUIDE
 ============================
 
 .. automodule:: pergola
