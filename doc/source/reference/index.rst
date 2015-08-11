@@ -7,4 +7,6 @@ Reference Guide
 .. toctree::
    :maxdepth: 3
    
-   ref_intervals
+   ref-intervals
+   
+   ref-index-tables

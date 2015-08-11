@@ -27,14 +27,6 @@ Documentation index:
      installation
   
      reference/index
+     
    	
-
-ESto quiza lo podria incluir como otro contenido table.rs y ver que pasa
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
