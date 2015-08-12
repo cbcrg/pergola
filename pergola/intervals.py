@@ -94,7 +94,8 @@ class IntData:
         self.range_values = 0
 #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
-#         self.tracks = self.get_field_items(field="track", data = self.data, default="1")
+        self.tracks = self.get_field_items(field="track", data = self.data, default="1")#TODO maybe this function will be more general if instead of giving field name
+        #i pass the index 
         
     def _check_delimiter (self, path, delimiter):
         """ 
