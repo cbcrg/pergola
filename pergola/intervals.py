@@ -85,8 +85,7 @@ class IntData:
     """
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
-#         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
-        self.delimiter = kwargs.get('delimiter', "\t")
+        self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
 #         self.header = kwargs.get('header',True)
         self.header = header
         self.data = self._simple_read()
@@ -109,15 +108,16 @@ class IntData:
         
         :returns: delimiter
         
-        """
-                        
+        """                
         self.in_file  = open(path, "rb")
         
         for row in self.in_file:
-                    
-            if row.count(delimiter) >= 1: break
-            else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(self.delimiter))
             
+            #Delimiter set by user        
+            if row.count(delimiter) >= 1: break
+            else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(delimiter))
+            
+            #Delimiter guess by function       
             if row.count(" ") >= 1:
                 self.delimiter = " "
                 break
@@ -130,6 +130,8 @@ class IntData:
         
         if delimiter is None: 
             raise ValueError("Delimiter must be set \'%s\'"%(delimiter))
+        
+        self.in_file.seek(0)
            
         return delimiter
     
