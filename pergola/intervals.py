@@ -83,18 +83,21 @@ class IntData:
     
      
     """
-    def __init__(self, path, map_dict, **kwargs):
+    def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
-        self.header = kwargs.get('header',True)
-        self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
-        self.fieldsG_dict = self._set_fields_g(map_dict)
-        self.fieldsG = []
-        self.min = self.max = 0
-        self.range_values = 0
-        self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
-        self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
-        self.tracks = self.get_field_items(field="track", data = self.data, default="1")
+#         self.header = kwargs.get('header',True)
+        self.header = header
+        self.data = self._simple_read()
+        
+#         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
+#         self.fieldsG_dict = self._set_fields_g(map_dict)
+#         self.fieldsG = []
+#         self.min = self.max = 0
+#         self.range_values = 0
+# #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
+#         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
+#         self.tracks = self.get_field_items(field="track", data = self.data, default="1")
         
     def _check_delimiter (self, path, delimiter):
         """ 
@@ -107,9 +110,9 @@ class IntData:
         
         """
                         
-        self.inFile  = open(path, "rb")
+        self.in_file  = open(path, "rb")
         
-        for row in self.inFile:
+        for row in self.in_file:
                     
             if row.count(delimiter) >= 1: break
             else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(self.delimiter))
@@ -139,8 +142,8 @@ class IntData:
         :returns: list with the behavioral fields
             
         """ 
-        self.inFile  = open(self.path, "rb")
-        self.reader =  reader(self.inFile, delimiter=self.delimiter)       
+        self.in_file  = open(self.path, "rb")
+        self.reader =  reader(self.in_file, delimiter=self.delimiter)       
         
         fieldsB = []
         
@@ -181,14 +184,14 @@ class IntData:
                             
                 fieldsB = fields
                 
-                print ("WARNING: As header=False you col names set by fields will be consider to have the order "
+                print ("WARNING: As header=False you col names set by fields will be considered to have the order "
                         "you provided: \"%s\"" 
                         %"\",\"".join(fields))                 
             else:                                
                 raise ValueError ('File should have a header, otherwise you should set ' 
                                   'an ordered list of columns names using fields')     
                 
-        self.inFile.close()
+        self.in_file.close()
 
         return fieldsB
     
@@ -235,6 +238,28 @@ class IntData:
 
         return dict_fields_g
     
+    def _simple_read(self):
+        """
+        This function just needs to read the raw data set min and maximum, dataTypes and this stuff
+        _read was too much complicated
+        
+        :returns: list with intervals contained in file, minimum and maximum values inside the file 
+        """
+        
+        list_data = list()
+        self.in_file = open(self.path, "rb")
+        self.reader = reader(self.in_file, delimiter=self.delimiter)
+        
+        if self.header: self.reader.next()
+        
+        for row in self.reader:
+            list_data.append(tuple(row)) #TODO what is better tuple or list 
+        
+        # Back to file beginning
+        self.reader.seek(0)
+        
+        return (list_data)
+
     def _read(self, multiply_t=1, intervals=False):
         """
         Reads the information inside the input file and returns minimun and maximun.
@@ -251,8 +276,8 @@ class IntData:
         """
         
         list_data = list()
-        self.inFile  = open(self.path, "rb")
-        self.reader = reader(self.inFile, delimiter=self.delimiter)
+        self.in_file  = open(self.path, "rb")
+        self.reader = reader(self.in_file, delimiter=self.delimiter)
         
         if self.header: self.reader.next()
         
@@ -509,7 +534,7 @@ class IntData:
 
         list_data.append((tuple(temp)))             
 
-        self.inFile.close()
+        self.in_file.close()
         
         self.min = p_min
         self.max = p_max
