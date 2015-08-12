@@ -299,15 +299,15 @@ class IntData:
         try:
 #             i_min = [self.fieldsG_dict.index(f) for f in _start_f]
             i_min = [self.fieldsG_dict[f] for f in _start_f]              
-        except ValueError:
-            raise ValueError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
+        except KeyError:
+            raise KeyError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
             
         _end_f = ["chromEnd"]
         
         try:
             i_max = [self.fieldsG_dict[f] for f in _end_f]              
-        except ValueError:
-            raise ValueError("Field '%s' for max interval calculation time not in file %s \n" \
+        except KeyError:
+            raise KeyError("Field '%s' for max interval calculation time not in file %s \n" \
                              "TIP: If your file contains timepoints you can transform them to intervals" \
                              " setting the field containing them to chromStart and setting intervals=True" 
                              % (f, self.path))
