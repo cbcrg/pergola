@@ -85,7 +85,8 @@ class IntData:
     """
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
-        self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
+#         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
+        self.delimiter = kwargs.get('delimiter', "\t")
 #         self.header = kwargs.get('header',True)
         self.header = header
         self.data = self._simple_read()
@@ -256,7 +257,7 @@ class IntData:
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         # Back to file beginning
-        self.reader.seek(0)
+        self.in_file.seek(0)
         
         return (list_data)
 
