@@ -79,18 +79,15 @@ class IntData:
         Set of tracks in the file. Read from "tracks" field.
         If tracks field not in file, all intervals are set as belonging to track "1" 
         
-    :returns: IntData object
-    
-     
+    :returns: IntData object 
     """
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
 #         self.header = kwargs.get('header',True)
         self.header = header
-        self.data = self._simple_read()
-        
-#         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
+        self.data = self._simple_read()        
+        self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
 #         self.fieldsG_dict = self._set_fields_g(map_dict)
 #         self.fieldsG = []
 #         self.min = self.max = 0
@@ -145,8 +142,8 @@ class IntData:
         :returns: list with the behavioral fields
             
         """ 
-        self.in_file  = open(self.path, "rb")
-        self.reader =  reader(self.in_file, delimiter=self.delimiter)       
+#         self.in_file  = open(self.path, "rb")
+#         self.reader =  reader(self.in_file, delimiter=self.delimiter)       
         
         fieldsB = []
         
@@ -194,8 +191,9 @@ class IntData:
                 raise ValueError ('File should have a header, otherwise you should set ' 
                                   'an ordered list of columns names using fields')     
                 
-        self.in_file.close()
-
+#         self.in_file.close()
+        self.in_file.seek(0)
+        
         return fieldsB
     
     def _set_fields_g (self, map_dict):
