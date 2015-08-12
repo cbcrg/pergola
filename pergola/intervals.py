@@ -380,9 +380,9 @@ class IntData:
             first_row = test_numeric.next()
             if first_row[i_track].isdigit():
                 # Force numerical sorting
-                self.reader = sorted(self.reader, key=lambda x: int(x[i_track]))
+                self.reader = sorted(self.reader, key=lambda x: (int(x[i_track]), int(x[i_min[0]])))
             else:
-                self.reader = sorted(self.reader, key=itemgetter(*[i_track]))  
+                self.reader = sorted(self.reader, key=itemgetter(i_track, i_min[0]))  
             
         for interv in self.reader: 
             temp = []
