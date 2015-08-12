@@ -89,11 +89,11 @@ class IntData:
         self.data = self._simple_read()        
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
-        self.fieldsG = []
+        self.fieldsG = self.fieldsG_dict.keys() #here before I added the new fields
         self.min = self.max = 0
         self.range_values = 0
-# #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
-#         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
+#         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
+        self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
 #         self.tracks = self.get_field_items(field="track", data = self.data, default="1")
         
     def _check_delimiter (self, path, delimiter):
@@ -575,6 +575,7 @@ class IntData:
             i =  self.fieldsG.index(field)
             
             idx_field = self.fieldsG.index(field)
+#             print("================", idx_field)#del
             field = [field]    
             
             for row in self.data:
