@@ -48,6 +48,8 @@ _dict_colors = {
 
 # _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000] #del
 
+_max_file_name_len = 100
+
 class GenomicContainer(object):
     """
     This class provides the general attributes and methods shared by all the other
@@ -151,8 +153,12 @@ class GenomicContainer(object):
             conc_dataTypes = self.dataTypes
             if isinstance(conc_dataTypes, set):
                 conc_dataTypes="_".join(self.dataTypes)        
-                        
-            name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
+            
+            if len ("tr_" + self.track + "_dt_" + conc_dataTypes + file_ext) < _max_file_name_len: 
+                name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
+            else:
+                name_file = "tr_" + self.track + "all_data_types" +  file_ext 
+                
         else:
             name_file = name_file + file_ext
             
