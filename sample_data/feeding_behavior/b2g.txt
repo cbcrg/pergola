@@ -1,5 +1,7 @@
 ! Mapping of behavioural fields into pergola ontology terms
 !
+! Comments here
+
 behavioural_file:CAGE > pergola:track
 behavioural_file:StartT > pergola:chromStart
 behavioural_file:EndT > pergola:chromEnd

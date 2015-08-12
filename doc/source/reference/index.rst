@@ -9,4 +9,6 @@ Reference Guide
    
    ref-intervals
    
+   ref-mapping
+   
    ref-index-tables
