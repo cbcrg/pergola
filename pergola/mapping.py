@@ -80,11 +80,13 @@ class MappingInfo():
         mapping_l_ex = "tag_file:field_input_file > pergola:pergola_ontology_term"
         #comment_tag = ("#", "!")
         comment_tag_m = "!"
-        p_mapping = compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
-
+#         p_mapping = compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
+        p_mapping = compile(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ") 
+        
         for row in file_map:
             if p_mapping.match(row):
-                l=row.split(">")          
+                row = row.replace('\"','')
+                l=row.split(">")
                 dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')
             elif(row.startswith(comment_tag_m)):   
                 continue            
@@ -97,7 +99,7 @@ class MappingInfo():
     
     def write(self, indent=0):
         """ 
-        Writes correspondence between the genomic and the behavioral data 
+        Writes correspondence between the pergola ontology terms and the behavioral data 
          
         :param 0 indent: :py:func:`int` set indent to be used when writing 
         
