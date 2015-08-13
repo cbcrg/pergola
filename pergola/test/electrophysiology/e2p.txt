@@ -1,7 +1,7 @@
 ! Mapping of electrophysiology fields into pergola ontology fields
 !
 ! Comments here
-behavioural_file:1 extraLFP > pergola:dataValue
-behavioural_file:Time > pergola:chromStart
-behavioural_file:31 Keyboard > pergola:dataTypes
-behavioural_file:2 Stim > pergola:track
+behavioural_file:"1 extraLFP" > pergola:dataValue
+behavioural_file:"Time" > pergola:chromStart
+behavioural_file:"31 Keyboard" > pergola:dataTypes
+behavioural_file:"2 Stim" > pergola:track
