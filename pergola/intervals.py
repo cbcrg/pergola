@@ -598,7 +598,6 @@ class IntData:
         
         return set_fields
     
-    
     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
         """        
         Reads the data and converts it depending on selected options
@@ -613,47 +612,79 @@ class IntData:
             chromEnd
         
         :returns: Track object
+        
+        TODO: By the moment I make this function as a method of the closs eventually I would make this as
+        separated function
         """
-                
-        # If fields is not set then I all the data columns are processed
+        
+        #If fields is not set then I all the data columns are processed
         if fields is None:
             fields = self.fieldsG
             indexL = range(len(self.fieldsG))
         else:
             try:
                 indexL = [self.fieldsG.index(f) for f in fields] 
-                
+                 
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
-           
-        idx_fields2rel = [10000000000000]
-        print >>stderr, "Relative coordinates set to:", relative_coord 
-           
-        if relative_coord:             
-                
-            if fields2rel is None and intervals: 
-                _f2rel = ["chromStart","chromEnd"] 
-            elif fields2rel is None and not intervals:
-                if "chromEnd" in self.fieldsG:
-                    _f2rel = ["chromStart","chromEnd"] 
-                else:
-                    _f2rel = ["chromStart"]
-                    
-            else:
-                if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
-                _f2rel = [f for f in fields2rel if f in self.fieldsG]
-                
-            try:
-                idx_fields2rel = [self.fieldsG.index(f) for f in _f2rel]                
-            except ValueError:
-                raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
-            
-            self.data = self._time2rel_time(idx_fields2rel)
-                
-        idx_fields2int = [10000000000000]
         
-#         return self.data
-        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
+           
+    
+#     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
+#         """        
+#         Reads the data and converts it depending on selected options
+#         
+#         :param fields: :py:func:`list` with data columns to read
+#         :param False relative_coord: If true all coordinates in chromStart and chromEnd are
+#             make relative to the minimal value
+#         :param False intervals: if set to true intervals will be inferred from timepoints in
+#             chromStart 
+#         :param fields2rel: :py:func:`list` with data columns to make relative
+#         :param 1 multiply: :py:func:`int` multiplies the values of the field set as chromStart and 
+#             chromEnd
+#         
+#         :returns: Track object
+#         """
+#                 
+#         # If fields is not set then I all the data columns are processed
+#         if fields is None:
+#             fields = self.fieldsG
+#             indexL = range(len(self.fieldsG))
+#         else:
+#             try:
+#                 indexL = [self.fieldsG.index(f) for f in fields] 
+#                 
+#             except ValueError:
+#                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
+#            
+#         idx_fields2rel = [10000000000000]
+#         print >>stderr, "Relative coordinates set to:", relative_coord 
+#            
+#         if relative_coord:             
+#                 
+#             if fields2rel is None and intervals: 
+#                 _f2rel = ["chromStart","chromEnd"] 
+#             elif fields2rel is None and not intervals:
+#                 if "chromEnd" in self.fieldsG:
+#                     _f2rel = ["chromStart","chromEnd"] 
+#                 else:
+#                     _f2rel = ["chromStart"]
+#                     
+#             else:
+#                 if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
+#                 _f2rel = [f for f in fields2rel if f in self.fieldsG]
+#                 
+#             try:
+#                 idx_fields2rel = [self.fieldsG.index(f) for f in _f2rel]                
+#             except ValueError:
+#                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
+#             
+#             self.data = self._time2rel_time(idx_fields2rel)
+#                 
+#         idx_fields2int = [10000000000000]
+#         
+# #         return self.data
+#         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
 
     def _time2rel_time(self, i_fields):
         """
