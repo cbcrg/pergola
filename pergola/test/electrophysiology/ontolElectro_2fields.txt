@@ -1,6 +1,0 @@
-! Mapping of behavioural fields into genome browser fields
-!
-behavioural_file:1 extraLFP > genome_file:dataValue
-behavioural_file:Time > genome_file:chromStart
-behavioural_file:31 Keyboard > genome_file:dataTypes
-behavioural_file:2 Stim > genome_file:track
