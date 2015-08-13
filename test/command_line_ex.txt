@@ -15,9 +15,13 @@ pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/i
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -m "/Users/jespinosa/git/pergola/test/int2gene.txt"
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -m "/Users/jespinosa/git/pergola/test/int2gene.txt" -f bedGraph -e
 #pergola_rules
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/sample_data/b2g.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/b2g.txt"
+
+# tabulated mapping file
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/test/b2g_TAB.txt"
+
 #pergola_rules with several phases (habituation, development,...)
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "/Users/jespinosa/git/pergola/sample_data/b2g.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/b2g.txt"
 
 #electrophysiology
 pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
@@ -25,6 +29,7 @@ pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/U
 # Files of the tutorial
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/sample_data/b2g.txt" -e
+
 
 # Files of the tutorial - file separation
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
