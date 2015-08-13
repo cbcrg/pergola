@@ -262,297 +262,297 @@ class IntData:
         
         return (list_data)
 
-    def _read(self, multiply_t=1, intervals=False):
-        """
-        Reads the information inside the input file and returns minimun and maximun.
-        
-        :param 1 multiply: multiplies the values of the field set as chromStart and 
-            chromEnd
-        :param False intervals: if True pergola creates intervals from the field set
-            as chromStart, 
-        
-        :returns: list with intervals contained in file, minimum and maximum values inside the file 
-        
-        TODO add example of input file structure and the output of the function
-        
-        """
-        
-        list_data = list()
-        self.in_file  = open(self.path, "rb")
-        self.reader = reader(self.in_file, delimiter=self.delimiter)
-        
-        if self.header: self.reader.next()
-        
-        # Field assign to data value should be an integer or float
-        idx_dataValue = [self.fieldsG_dict["dataValue"]]
-        
-        _int_points = ["chromStart", "chromEnd"]
-        idx_fields2int = [10000000000000]
-        i_new_field = [10000000000000]                                    
-        
-        if intervals:             
-            print >>stderr, "Intervals will be inferred from timepoints"
-            _time_points = ["chromStart"]
-            f_int_end = "chromEnd"
-        
-            if f_int_end in self.fieldsG_dict:
-                raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
-                
-            try:
-                idx_fields2int = [self.fieldsG_dict[f] for f in _time_points]     
-            except ValueError:
-                raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
-                                 % (f, self.path))
-            
-            i_new_field = len(self.fieldsB)
-            
-            print "new field index is:", i_new_field
-            self.fieldsG_dict[f_int_end] = i_new_field
-            
-            i_new_field = [i_new_field]
-        
-        try:            
-            f=""
-            name_fields2mult = [f for f in _int_points if f in self.fieldsG_dict] 
-            idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
-        except ValueError:
-            raise ValueError("Field '%s' not in file %s." % (f, self.path))
-        
-        p_min = None
-        p_max = None
-        
-        _start_f = ["chromStart"]
-        
-        try:
-#             i_min = [self.fieldsG_dict.index(f) for f in _start_f]
-            i_min = [self.fieldsG_dict[f] for f in _start_f]              
-        except KeyError:
-            raise KeyError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
-            
-        _end_f = ["chromEnd"]
-        
-        try:
-            i_max = [self.fieldsG_dict[f] for f in _end_f]              
-        except KeyError:
-            raise KeyError("Field '%s' for max interval calculation time not in file %s \n" \
-                             "TIP: If your file contains timepoints you can transform them to intervals" \
-                             " setting the field containing them to chromStart and setting intervals=True" 
-                             % (f, self.path))
-        
-        # Range of dataValue field
-        p_min_data_v = None
-        p_max_data_v = None
-        
-        _start_f = ["dataValue"]
-        
-        try:
-            i_data_value = [self.fieldsG_dict[f] for f in _start_f]
-        except ValueError:
-            raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
-        
-        v = 0
-        p_v = 0
-        first = True
-        p_temp = []
-                
-        # Setting the factor to multiply if it is not set by the user
-        # different to 1 and the timepoints are decimal numbers
-        if multiply_t == 1:
-            
-            n = 0
-            file_int = open(self.path, "rb")
-            test_decimal = reader(file_int, delimiter=self.delimiter)
-            test_decimal.next()        
-            max_dec_len = 0
-            pattern_dec_p = '\.|\,'
-            
-            for r in test_decimal:            
-                n = n + 1
-                if n == 200 :
-                    break               
-                for i in sorted(self.fieldsG_dict.values()):
-                    if  i in idx_fields2int or i in idx_fields2mult and i not in i_new_field:
-                        if search(pattern_dec_p, r[i]):
-                            dec_len = len(split(pattern_dec_p, r[i])[1])
-                            if max_dec_len < dec_len: max_dec_len = dec_len 
-            
-            file_int.close()                
-            multiply_t = pow(10, max_dec_len)
-            
-            # If the value of multiply has been changed then I report it to the usert to
-            # give the info of how to set the value
-            if multiply_t != 1:
-                print ("Factor to transform time values has been set to %s. "%multiply_t)
-                print ("pergola set this parameter because values in chromStart are decimals.\n"  
-                       "You can set your own factor using option -mi,--multiply_intervals n")        
-        
-        # If track exists data is order by track, this way I can avoid having problems 
-        # at the last interval
-        _track_f = "track"
-        tr_change = False
-        tr = ""
-        p_tr = ""
-        i_track = None
-
-        if _track_f in self.fieldsG_dict:
-            i_track = self.fieldsG_dict[_track_f]
-            
-            #             self.reader = sorted(self.reader, key=itemgetter(*[i_track]))
-
-            # Checking whether first track is numeric, if it is code assumes all tracks
-            # are numeric and sort consequently  
-            file_int = open(self.path, "rb")
-            test_numeric = reader(file_int, delimiter=self.delimiter)
-            test_numeric.next()
-            first_row = test_numeric.next()
-            if first_row[i_track].isdigit():
-                # Force numerical sorting
-                self.reader = sorted(self.reader, key=lambda x: (int(x[i_track]), int(x[i_min[0]])))
-            else:
-                self.reader = sorted(self.reader, key=itemgetter(i_track, i_min[0]))  
-            
-        for interv in self.reader: 
-            temp = []
-
-            for i in sorted(self.fieldsG_dict.values()):
-                if i_track and i ==  i_track:
-                    if first:
-                        tr = interv[i]
-                        p_tr = interv[i] 
-                        pass
-                    tr = interv[i]
-#                     print "tr ----- p_tr@@@@@@@@@@@@@@@@", tr, p_tr
-#                     if tr != p_tr:
-#                         print "tr ----- p_tr@@@@@@@@@@@@@@@@", tr, p_tr#del
-#                         tr_change = True
+#     def _read(self, multiply_t=1, intervals=False):
+#         """
+#         Reads the information inside the input file and returns minimun and maximun.
+#         
+#         :param 1 multiply: multiplies the values of the field set as chromStart and 
+#             chromEnd
+#         :param False intervals: if True pergola creates intervals from the field set
+#             as chromStart, 
+#         
+#         :returns: list with intervals contained in file, minimum and maximum values inside the file 
+#         
+#         TODO add example of input file structure and the output of the function
+#         
+#         """
+#         
+#         list_data = list()
+#         self.in_file  = open(self.path, "rb")
+#         self.reader = reader(self.in_file, delimiter=self.delimiter)
+#         
+#         if self.header: self.reader.next()
+#         
+#         # Field assign to data value should be an integer or float
+#         idx_dataValue = [self.fieldsG_dict["dataValue"]]
+#         
+#         _int_points = ["chromStart", "chromEnd"]
+#         idx_fields2int = [10000000000000]
+#         i_new_field = [10000000000000]                                    
+#         
+#         if intervals:             
+#             print >>stderr, "Intervals will be inferred from timepoints"
+#             _time_points = ["chromStart"]
+#             f_int_end = "chromEnd"
+#         
+#             if f_int_end in self.fieldsG_dict:
+#                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
+#                 
+#             try:
+#                 idx_fields2int = [self.fieldsG_dict[f] for f in _time_points]     
+#             except ValueError:
+#                 raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
+#                                  % (f, self.path))
+#             
+#             i_new_field = len(self.fieldsB)
+#             
+#             print "new field index is:", i_new_field
+#             self.fieldsG_dict[f_int_end] = i_new_field
+#             
+#             i_new_field = [i_new_field]
+#         
+#         try:            
+#             f=""
+#             name_fields2mult = [f for f in _int_points if f in self.fieldsG_dict] 
+#             idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
+#         except ValueError:
+#             raise ValueError("Field '%s' not in file %s." % (f, self.path))
+#         
+#         p_min = None
+#         p_max = None
+#         
+#         _start_f = ["chromStart"]
+#         
+#         try:
+# #             i_min = [self.fieldsG_dict.index(f) for f in _start_f]
+#             i_min = [self.fieldsG_dict[f] for f in _start_f]              
+#         except KeyError:
+#             raise KeyError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
+#             
+#         _end_f = ["chromEnd"]
+#         
+#         try:
+#             i_max = [self.fieldsG_dict[f] for f in _end_f]              
+#         except KeyError:
+#             raise KeyError("Field '%s' for max interval calculation time not in file %s \n" \
+#                              "TIP: If your file contains timepoints you can transform them to intervals" \
+#                              " setting the field containing them to chromStart and setting intervals=True" 
+#                              % (f, self.path))
+#         
+#         # Range of dataValue field
+#         p_min_data_v = None
+#         p_max_data_v = None
+#         
+#         _start_f = ["dataValue"]
+#         
+#         try:
+#             i_data_value = [self.fieldsG_dict[f] for f in _start_f]
+#         except ValueError:
+#             raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
+#         
+#         v = 0
+#         p_v = 0
+#         first = True
+#         p_temp = []
+#                 
+#         # Setting the factor to multiply if it is not set by the user
+#         # different to 1 and the timepoints are decimal numbers
+#         if multiply_t == 1:
+#             
+#             n = 0
+#             file_int = open(self.path, "rb")
+#             test_decimal = reader(file_int, delimiter=self.delimiter)
+#             test_decimal.next()        
+#             max_dec_len = 0
+#             pattern_dec_p = '\.|\,'
+#             
+#             for r in test_decimal:            
+#                 n = n + 1
+#                 if n == 200 :
+#                     break               
+#                 for i in sorted(self.fieldsG_dict.values()):
+#                     if  i in idx_fields2int or i in idx_fields2mult and i not in i_new_field:
+#                         if search(pattern_dec_p, r[i]):
+#                             dec_len = len(split(pattern_dec_p, r[i])[1])
+#                             if max_dec_len < dec_len: max_dec_len = dec_len 
+#             
+#             file_int.close()                
+#             multiply_t = pow(10, max_dec_len)
+#             
+#             # If the value of multiply has been changed then I report it to the usert to
+#             # give the info of how to set the value
+#             if multiply_t != 1:
+#                 print ("Factor to transform time values has been set to %s. "%multiply_t)
+#                 print ("pergola set this parameter because values in chromStart are decimals.\n"  
+#                        "You can set your own factor using option -mi,--multiply_intervals n")        
+#         
+#         # If track exists data is order by track, this way I can avoid having problems 
+#         # at the last interval
+#         _track_f = "track"
+#         tr_change = False
+#         tr = ""
+#         p_tr = ""
+#         i_track = None
+# 
+#         if _track_f in self.fieldsG_dict:
+#             i_track = self.fieldsG_dict[_track_f]
+#             
+#             #             self.reader = sorted(self.reader, key=itemgetter(*[i_track]))
+# 
+#             # Checking whether first track is numeric, if it is code assumes all tracks
+#             # are numeric and sort consequently  
+#             file_int = open(self.path, "rb")
+#             test_numeric = reader(file_int, delimiter=self.delimiter)
+#             test_numeric.next()
+#             first_row = test_numeric.next()
+#             if first_row[i_track].isdigit():
+#                 # Force numerical sorting
+#                 self.reader = sorted(self.reader, key=lambda x: (int(x[i_track]), int(x[i_min[0]])))
+#             else:
+#                 self.reader = sorted(self.reader, key=itemgetter(i_track, i_min[0]))  
+#             
+#         for interv in self.reader: 
+#             temp = []
+# 
+#             for i in sorted(self.fieldsG_dict.values()):
+#                 if i_track and i ==  i_track:
+#                     if first:
+#                         tr = interv[i]
+#                         p_tr = interv[i] 
+#                         pass
+#                     tr = interv[i]
+# #                     print "tr ----- p_tr@@@@@@@@@@@@@@@@", tr, p_tr
+# #                     if tr != p_tr:
+# #                         print "tr ----- p_tr@@@@@@@@@@@@@@@@", tr, p_tr#del
+# #                         tr_change = True
+# #                     else:
+# #                         tr_change = False
+# #                     p_tr = interv[i]
+#                     
+#                 # Field assign to data value should be an integer or float        
+#                 if i in idx_dataValue:                    
+#                     try:                        
+#                         float(interv[i])
+#                     except ValueError:
+#                         raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
+#                                           interv[i])
+#                 if i in idx_fields2int:
+#                     try:
+#                         float(interv[i])
+#                     except ValueError:
+#                         raise ValueError("Values set as chromStart and chromEnd should be numerical not others: \"%s\".\n" %
+#                                           interv[i])
+#                         
+#                 if i in idx_fields2mult and i in idx_fields2int:        
+#                     a = round (float(interv[i]) * multiply_t, 6)
+#                     
+#                     b = int(a)
+# 
+#                     if a-b != 0:
+#                         raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease set a bigger factor " \
+#                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)                                                
+#                     v = int(float(interv[i]) * multiply_t)
+#                     
+#                     print "I append here in temp******************", v #del
+#                     temp.append(v)
+#                     p_v = v - 1 
+#                     print "===========", intervals, p_v, v #del
+#                     # detectar cuando cambia de track, if last no append
+#                     # hacer un bed de 4 lineas para trabajar
+#                     
+#                     if intervals: last_start = v
+#                     
+#                 elif i in i_new_field and i in idx_fields2mult:
+#                     if first:                                                 
+#                         pass
 #                     else:
-#                         tr_change = False
-#                     p_tr = interv[i]
-                    
-                # Field assign to data value should be an integer or float        
-                if i in idx_dataValue:                    
-                    try:                        
-                        float(interv[i])
-                    except ValueError:
-                        raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
-                                          interv[i])
-                if i in idx_fields2int:
-                    try:
-                        float(interv[i])
-                    except ValueError:
-                        raise ValueError("Values set as chromStart and chromEnd should be numerical not others: \"%s\".\n" %
-                                          interv[i])
-                        
-                if i in idx_fields2mult and i in idx_fields2int:        
-                    a = round (float(interv[i]) * multiply_t, 6)
-                    
-                    b = int(a)
-
-                    if a-b != 0:
-                        raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease set a bigger factor " \
-                                          "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)                                                
-                    v = int(float(interv[i]) * multiply_t)
-                    
-                    print "I append here in temp******************", v #del
-                    temp.append(v)
-                    p_v = v - 1 
-                    print "===========", intervals, p_v, v #del
-                    # detectar cuando cambia de track, if last no append
-                    # hacer un bed de 4 lineas para trabajar
-                    
-                    if intervals: last_start = v
-                    
-                elif i in i_new_field and i in idx_fields2mult:
-                    if first:                                                 
-                        pass
-                    else:
-                        if tr != p_tr:
-                            #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", tr, p_tr, p_v, v #del
-#                             print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp[1] #del
-                            p_temp.append(p_temp[1] + 1)  
-                            p_tr = tr
-                        else:    
-#                             print "tr_change is set to ", tr_change
-#                             print "appending p_v here", p_v #del #Creo que esta aqui OJO
-#                             print "If I put v it would be", v#del                   
-                            p_temp.append(p_v)  
-#                         p_temp.append(0)  
-                                              
-                elif i in idx_fields2mult and i not in idx_fields2int:
-                    a = round (float(interv[i]) * multiply_t, 6)
-                    b = int(a)
-                    if a-b != 0:
-                        raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease use a bigger factor " \
-                                          "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)          
-                    
-                    v = int(float(interv[i]) * multiply_t)
-                    # print "appending v here", v #del 
-                   
-                    if tr != p_tr:
-                        #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp #del
-                        #print "p_v is:::::::::::", v #del
-                        temp.append(v)
-                        p_tr = tr
-                    else:
-                        p_tr = tr    
-                        temp.append(v)
-                
-                else:
-                    v = interv[i]              
-                    temp.append(v)
-                
-                if i in i_min:
-                    if p_min is None: p_min = v
-                    if p_min > v: p_min = v                    
-                
-                if i in i_max:
-                    if i_max == i_new_field:
-                        if first: pass
-                        if p_max is None: p_max = p_v
-                        if p_max < p_v: p_max = p_v
-                    else:
-                        if p_max is None: p_max = v
-                        if p_max < v: p_max = v
-                
-                if i in i_data_value:
-                    v = float(v)                    
-                    if p_min_data_v is None: p_min_data_v = v
-                    if p_min_data_v > v: p_min_data_v = v
-                    if p_max_data_v is None: p_max_data_v = v
-                    if p_max_data_v < v: p_max_data_v = v
-                
-            if first:
-                first = False 
-                p_temp = temp
-            else:               
-                list_data.append((tuple(p_temp))) 
-                p_temp = temp
-            
-        # last line of the file when intervals are generated
-#         print "intervals is set to **********", intervals #del
-        if intervals:
-            #print "este hace lo mismo para el ultimo intervalo************************$$$$$$$$", last_start #del
-            temp.append(last_start + 1)
-
-        list_data.append((tuple(temp)))             
-
-        self.in_file.close()
-        
-        self.min = p_min
-        self.max = p_max
-        self.range_values = [p_min_data_v, p_max_data_v]
-        
-        #Setting the data fields that output data have in the order they are
-        data_fields = []
-        
-        sorted_index_f = sorted(self.fieldsG_dict.items(), key=itemgetter(1))
-        for field_gen in sorted_index_f:
-            data_fields.append(field_gen[0])
-        self.fieldsG = data_fields
-        
-#         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
-#         return (list_data, p_min, p_max)
-        return (list_data)
+#                         if tr != p_tr:
+#                             #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", tr, p_tr, p_v, v #del
+# #                             print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp[1] #del
+#                             p_temp.append(p_temp[1] + 1)  
+#                             p_tr = tr
+#                         else:    
+# #                             print "tr_change is set to ", tr_change
+# #                             print "appending p_v here", p_v #del #Creo que esta aqui OJO
+# #                             print "If I put v it would be", v#del                   
+#                             p_temp.append(p_v)  
+# #                         p_temp.append(0)  
+#                                               
+#                 elif i in idx_fields2mult and i not in idx_fields2int:
+#                     a = round (float(interv[i]) * multiply_t, 6)
+#                     b = int(a)
+#                     if a-b != 0:
+#                         raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease use a bigger factor " \
+#                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)          
+#                     
+#                     v = int(float(interv[i]) * multiply_t)
+#                     # print "appending v here", v #del 
+#                    
+#                     if tr != p_tr:
+#                         #print "Track change>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>!!!!!", p_temp #del
+#                         #print "p_v is:::::::::::", v #del
+#                         temp.append(v)
+#                         p_tr = tr
+#                     else:
+#                         p_tr = tr    
+#                         temp.append(v)
+#                 
+#                 else:
+#                     v = interv[i]              
+#                     temp.append(v)
+#                 
+#                 if i in i_min:
+#                     if p_min is None: p_min = v
+#                     if p_min > v: p_min = v                    
+#                 
+#                 if i in i_max:
+#                     if i_max == i_new_field:
+#                         if first: pass
+#                         if p_max is None: p_max = p_v
+#                         if p_max < p_v: p_max = p_v
+#                     else:
+#                         if p_max is None: p_max = v
+#                         if p_max < v: p_max = v
+#                 
+#                 if i in i_data_value:
+#                     v = float(v)                    
+#                     if p_min_data_v is None: p_min_data_v = v
+#                     if p_min_data_v > v: p_min_data_v = v
+#                     if p_max_data_v is None: p_max_data_v = v
+#                     if p_max_data_v < v: p_max_data_v = v
+#                 
+#             if first:
+#                 first = False 
+#                 p_temp = temp
+#             else:               
+#                 list_data.append((tuple(p_temp))) 
+#                 p_temp = temp
+#             
+#         # last line of the file when intervals are generated
+# #         print "intervals is set to **********", intervals #del
+#         if intervals:
+#             #print "este hace lo mismo para el ultimo intervalo************************$$$$$$$$", last_start #del
+#             temp.append(last_start + 1)
+# 
+#         list_data.append((tuple(temp)))             
+# 
+#         self.in_file.close()
+#         
+#         self.min = p_min
+#         self.max = p_max
+#         self.range_values = [p_min_data_v, p_max_data_v]
+#         
+#         #Setting the data fields that output data have in the order they are
+#         data_fields = []
+#         
+#         sorted_index_f = sorted(self.fieldsG_dict.items(), key=itemgetter(1))
+#         for field_gen in sorted_index_f:
+#             data_fields.append(field_gen[0])
+#         self.fieldsG = data_fields
+#         
+# #         DataIter(self._read(indexL, idx_fields2rel, idx_fields2int, l_startChrom, l_endChrom, multiply_t), self.fieldsG)
+# #         return (list_data, p_min, p_max)
+#         return (list_data)
     
     def get_field_items(self, data, field="dataTypes", default=None): 
         """
