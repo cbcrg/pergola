@@ -215,8 +215,8 @@ class IntData:
                     map_dict [field_B]
                 except KeyError:
                     raise KeyError ("Field %s is not mapped in your ontology mapping. " \
-                                    "TIP: Fields that are not use from the input data have to be set to dummy" \
-                                    "in the ontology mapping. Example: behavioural_file:%s > genome_file:dummy"                               
+                                    "TIP: Fields that are not use from the input data have to be set to dummy " \
+                                    "in the ontology mapping. Example: behavioural_file:%s > pergola:dummy"                               
                                     % (field_B, field_B))                                                                                                                        
                 dict_fields_g[map_dict [field_B]] = i_field_b
             i_field_b = i_field_b + 1                    
@@ -616,8 +616,11 @@ class IntData:
         TODO: By the moment I make this function as a method of the closs eventually I would make this as
         separated function
         """
+        _f_rel_mand = ["chromStart"]
+        _f2rel = ["chromStart","chromEnd"]
+        i_time_f = [10000000000000]
         
-        #If fields is not set then I all the data columns are processed
+        #If fields is not set then all the data columns are read
         if fields is None:
             fields = self.fieldsG
             indexL = range(len(self.fieldsG))
@@ -628,8 +631,60 @@ class IntData:
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
         
-           
-    
+        # Coordinates transformed into relative to the minimun time point
+        print >>stderr, "Relative coordinates set to:", relative_coord
+        
+#         f2rel = list(set(_f2rel) & set(self.fieldsG))
+        
+        #### Si existe chrom start in chrom_end los dos tienen que estar como relative
+        ### Chrom start siempre esta, así que puedo mirar si esta elelgido o no
+        
+        if relative_coord:
+            if fields2rel is None:
+                # Do I have intervals or single points
+                f2rel = list(set(_f2rel) & set(self.fieldsG))
+                if f2rel is None: 
+                    raise ValueError("You need at least a field containing time points when relative_coord=T. %s" % (self.fieldsG))
+                
+            else:
+                # Are the provided fields present in data and are numeric #TODO en realidad si no es numerico ya petara
+                if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
+                f2rel = [f for f in fields2rel if f in self.fieldsG]
+            
+            # Getting indexes of fields to relativize
+            try:
+                idx_fields2rel = [self.fieldsG.index(f) for f in f2rel]                
+            except ValueError:
+                raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
+
+            print "_f2rel is:", _f2rel #del
+
+#             self.data = self._time2rel_time(idx_fields2rel)
+
+
+
+                
+                
+#         _f2rel = ["chromStart","chromEnd"]        
+        
+#         _f2rel = [f for f in fields2rel if f in self.fieldsG]
+#         
+#         print "dddddd",_f2rel 
+                 
+#                 _f2rel = ["chromStart","chromEnd"] 
+#             elif fields2rel is None and not intervals:
+#                 if "chromEnd" in self.fieldsG:
+#                     _f2rel = ["chromStart","chromEnd"] 
+#                 else:
+#                     _f2rel = ["chromStart"]
+
+            
+                 
+        
+       
+       
+       
+       
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
 #         """        
 #         Reads the data and converts it depending on selected options
