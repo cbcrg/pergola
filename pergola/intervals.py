@@ -380,7 +380,7 @@ class IntData:
 #             multiply_t = pow(10, max_dec_len)
 #             
 #             # If the value of multiply has been changed then I report it to the usert to
-#             # give the info of how to set the value
+#             # give the info of how to set the value #COPIAR
 #             if multiply_t != 1:
 #                 print ("Factor to transform time values has been set to %s. "%multiply_t)
 #                 print ("pergola set this parameter because values in chromStart are decimals.\n"  
@@ -598,7 +598,7 @@ class IntData:
         
         return set_fields
     
-    def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
+    def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None,**kwargs):
         """        
         Reads the data and converts it depending on selected options
         
@@ -608,7 +608,7 @@ class IntData:
         :param False intervals: if set to true intervals will be inferred from timepoints in
             chromStart 
         :param fields2rel: :py:func:`list` with data columns to make relative
-        :param 1 multiply: :py:func:`int` multiplies the values of the field set as chromStart and 
+        :param multiply_t: :py:func:`int` multiplies the values of the field set as chromStart and 
             chromEnd
         
         :returns: Track object
@@ -618,6 +618,7 @@ class IntData:
         """
         _f_rel_mand = ["chromStart"]
         _f2rel = ["chromStart","chromEnd"]
+        _f2mult = ["chromStart","chromEnd"]
         i_time_f = [10000000000000]
         
         #If fields is not set then all the data columns are read
@@ -630,15 +631,25 @@ class IntData:
                  
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
+       
+        # Coordinates transformed into relative to the minimun time point
+        if multiply_t:
+            print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t 
+            try:            
+                f=""
+                name_fields2mult = [f for f in _f2mult if f in self.fieldsG_dict] 
+                print "=======================l;k;lk';l;", name_fields2mult#del
+                idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
+            except ValueError:
+                raise ValueError("Field '%s' not in file %s." % (f, self.path))
+            
+            self.data = self._multiply_values(i_fields=idx_fields2mult, factor=multiply_t)
         
         # Coordinates transformed into relative to the minimun time point
         print >>stderr, "Relative coordinates set to:", relative_coord
         
 #         f2rel = list(set(_f2rel) & set(self.fieldsG))
-        
-        #### Si existe chrom start in chrom_end los dos tienen que estar como relative
-        ### Chrom start siempre esta, así que puedo mirar si esta elelgido o no
-        
+                
         if relative_coord:
             if fields2rel is None:
                 # Do I have intervals or single points
@@ -653,14 +664,14 @@ class IntData:
             
             # Getting indexes of fields to relativize
             try:
-                idx_fields2rel = [self.fieldsG_dict[f] for f in f2rel]                
+                i_time_f = [self.fieldsG_dict[f] for f in f2rel]                
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
             
             print "f2rel is:>>>>>>>>>>>>>>>>>>", self.fieldsG_dict#del
-            print "f2rel is:", f2rel, idx_fields2rel  #del
+            print "f2rel is:", f2rel, i_time_f  #del
 
-            self.data = self._time2rel_time(idx_fields2rel)
+            self.data = self._time2rel_time(i_time_f)
 
 
 
@@ -769,11 +780,85 @@ class IntData:
                     
                     if isinstance(row[i], (int, long)) or row[i].isdigit():
                         temp.append(int(row[i])- self.min + 1)
-                    else: raise ValueError("Value can not be relativize because is not an integer \'%s\'"%(row[i]))     
+                    else: raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
+                                           "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir    
                 else:
                     temp.append(row[i])
     
             data_rel.append((tuple(temp)))   
             
         return (data_rel)
+
+    def _multiply_values(self, i_fields, factor=1):
+        """
+        Multiplicate values of selected data columns by the given factor
+        
+        :param i_fields: :py:func:`list` with data columns to calculate relative values
+        
+        :param factor: :py:func:`int` factor to multiply data columns selected
+        
+        :returns: list of tuples (like self.data)
+        
+        TODO change min and max of the data to new values
+        The simpler way is multiply this values as well
+        I don't need to generate a temporal list do I?
+        For this think maybe is better to have a list of list than a list of tupple
+        """
+        data_mult = list()
+        
+#         print "number of rows", len(self.data)
+#         
+#         for i in range(len(self.data)):
+#             for j in range(len(self.data[0])):
+#                 
+#                 print self.data[i][j] #del
+#                 
+#                 if j in i_fields:
+#                      if isinstance(self.data[i][j], (int, long)) or self.data[i][j].isdigit():
+# #                     print "row[i]********", row[i]#del
+#                         self.data[i][j] = self.data[i][j] * factor
+#         
+#         data_mult = list()
+        print "factor========================================", factor
+        print "factor========================================", i_fields
+        
+        for row in self.data:
+            temp = []
+            for i in range(len(row)):
+                
+                if i in i_fields:
+                    print "row[i]********", row[i],i#del
+                    value = row[i].replace(" ", "")
+                    if isinstance(value, (int, long, float)) or value.isdigit():
+                        temp.append(int(value)*factor)
+                        print "********************",type (value) #del
+                        print "********************",isinstance(value, (int, long, float)) or value.isdigit() #del
+                        
+                        print "int(row[i])*factor***************", int(row[i])*factor #del
+                    else: #raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
+                           #                 %(row[i]))  #corregir
+                           print "********************",isinstance(value, (int, long, float)) or value.isdigit() 
+                           print "culo"#del    
+                else:
+                    temp.append(row[i])
     
+            data_mult.append((tuple(temp)))           
+#         for row in self.data:
+#             temp = []
+#             
+#             
+#             for i in range(len(row)):
+#                 
+#                 if i in i_fields:
+# #                     print "row[i]********", row[i]#del
+#                     
+#                     if isinstance(row[i], (int, long)) or row[i].isdigit():
+#                         temp.append(int(row[i]) * factor)
+#                     else: raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
+#                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir    
+#                 else:
+#                     temp.append(row[i])
+#     
+#             data_rel.append((tuple(temp)))   
+#             
+        return data_mult #Corregir
