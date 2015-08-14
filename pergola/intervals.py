@@ -653,13 +653,14 @@ class IntData:
             
             # Getting indexes of fields to relativize
             try:
-                idx_fields2rel = [self.fieldsG.index(f) for f in f2rel]                
+                idx_fields2rel = [self.fieldsG_dict[f] for f in f2rel]                
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
+            
+            print "f2rel is:>>>>>>>>>>>>>>>>>>", self.fieldsG_dict#del
+            print "f2rel is:", f2rel, idx_fields2rel  #del
 
-            print "_f2rel is:", _f2rel #del
-
-#             self.data = self._time2rel_time(idx_fields2rel)
+            self.data = self._time2rel_time(idx_fields2rel)
 
 
 
@@ -764,7 +765,11 @@ class IntData:
             for i in range(len(row)):
                 
                 if i in i_fields:
-                    temp.append(row[i]- self.min + 1)
+                    print "row[i]********", row[i]#del
+                    
+                    if isinstance(row[i], (int, long)) or row[i].isdigit():
+                        temp.append(int(row[i])- self.min + 1)
+                    else: raise ValueError("Value can not be relativize because is not an integer \'%s\'"%(row[i]))     
                 else:
                     temp.append(row[i])
     
