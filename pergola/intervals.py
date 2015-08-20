@@ -616,6 +616,7 @@ class IntData:
         separated function
         """
         _f_rel_mand = ["chromStart"]
+        _f_int_end = "chromEnd"
         _f2rel = ["chromStart","chromEnd"]
         _f2mult = ["chromStart","chromEnd"]
         i_time_f = [10000000000000]
@@ -666,12 +667,71 @@ class IntData:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
 
             self.data = self._time2rel_time(i_time_f)
+        
+        # From only start value for each time point we generate intervals
+        if intervals:
+            print >>stderr, "Intervals will be inferred from timepoints"
+            
+            # If chromend is present ERROR
+            
+            
+            _time_points = ["chromStart"]
+#         _f_rel_mand#del
+            if _f_int_end in self.fieldsG_dict:
+                raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
+            
+            # If chromStart not present out     
+            try:
+                idx_fields2int = [self.fieldsG_dict[f] for f in _f_rel_mand]     
+            except ValueError:
+                raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
+                                 % (f, self.path))
 
-            #Next point to develop:
-            #intervals=TRUE
+            self.data = self._create_int(idx_fields2int)
             
             
-                                
+            
+
+            
+    def _create_int(self, start_int):
+        """
+        TODO document function
+        """
+        data_int = list()
+        _f_int_end = "chromEnd"
+                 
+        #Field is add as supplementary column in the original file
+        end_int = len(self.fieldsB)      
+                 
+        print "new field index is:", 
+        self.fieldsG_dict[_f_int_end] = end_int
+        
+        p_time=0
+    #     p_temp.append(p_temp[1] + 1) 
+       
+        for row in self.data:
+#             data_int.append(temp) 
+            
+            temp = [None] * (end_int + 1)
+            print "====================", temp, end_int
+            for i in range(len(row)):
+                print "length of row is =====", len(row) # I have alrady created track and datatypes but not updated the list of fields!!!
+                if i in start_int:                
+    #                 temp[end_int](p_temp[1] + 1)
+                    print "temp[i]= row[i]", row[i], i, temp[i]
+                    temp[i]= row[i]
+                    temp[end_int] = p_time - 1 
+                    p_time = row[i]
+                    print "jjjjjjjjjjjjjj", p_time
+                else:
+                    print "temp[i]=============", i
+                    temp[i]= row[i]
+            
+            data_int.append((tuple(temp)))   
+            
+        return (data_int)   
+        
+    
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
 #         """        
