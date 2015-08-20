@@ -635,6 +635,7 @@ class IntData:
         # Coordinates multiplied by a given factor set by the user
         if multiply_t:
             print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t 
+            
             try:            
                 f=""
                 name_fields2mult = [f for f in _f2mult if f in self.fieldsG_dict] 
@@ -808,67 +809,26 @@ class IntData:
         For this think maybe is better to have a list of list than a list of tupple
         """
         data_mult = list()
-        
-#         print "number of rows", len(self.data)
-#         
-#         for i in range(len(self.data)):
-#             for j in range(len(self.data[0])):
-#                 
-#                 print self.data[i][j] #del
-#                 
-#                 if j in i_fields:
-#                      if isinstance(self.data[i][j], (int, long)) or self.data[i][j].isdigit():
-# #                     print "row[i]********", row[i]#del
-#                         self.data[i][j] = self.data[i][j] * factor
-#         
-#         data_mult = list()
-        print "factor========================================", factor
-        print "factor========================================", i_fields
-        
+                
         for row in self.data:
             temp = []
             for i in range(len(row)):
                 
                 if i in i_fields:
-                    print "row[i]********", row[i],i#del
                     value = row[i].replace(" ", "")
                     
                     if is_number(value):
                         temp.append(float(value)*factor)
-                        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",float(value)*factor)#del
-#                     if isinstance(value, (int, long, float)) or value.isdigit():
-#                         temp.append(int(value)*factor)
-#                         print "********************",type (value) #del
-#                         print "********************",isinstance(value, (int, long, float)) or value.isdigit() #del
-                        
-#                         print "int(row[i])*factor***************", int(row[i])*factor #del
-                    else: #
-                        raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
-                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir   
-#                         print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t   
+  
+                    else: 
+                        raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
+                                            "\nCheck mapping of fields in your input file n"%(row[i]))  #corregir    
                 else:
                     temp.append(row[i])
     
-            data_mult.append((tuple(temp)))           
-#         for row in self.data:
-#             temp = []
-#             
-#             
-#             for i in range(len(row)):
-#                 
-#                 if i in i_fields:
-# #                     print "row[i]********", row[i]#del
-#                     
-#                     if isinstance(row[i], (int, long)) or row[i].isdigit():
-#                         temp.append(int(row[i]) * factor)
-#                     else: raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
-#                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir    
-#                 else:
-#                     temp.append(row[i])
-#     
-#             data_rel.append((tuple(temp)))   
-#             
-        return data_mult #Corregir
+            data_mult.append((tuple(temp)))             
+        
+        return (data_mult) #Correct eventually self.data in a list of list directly modificable
     
 def is_number(str):
     """
