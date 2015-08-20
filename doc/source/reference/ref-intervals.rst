@@ -10,6 +10,10 @@ Load csv file
 
 .. automethod:: pergola.intervals.IntData.read
      
+Checks that a variable contains a number
+-------------
+
+.. automethod:: pergola.intervals.is_number
 
 .. |br| raw:: html
 

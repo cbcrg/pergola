@@ -784,9 +784,6 @@ class IntData:
                         if n % 1 == 0:                        
                             temp.append(int(row[i])- self.min + 1)
                         else: 
-                            
-                            print "stupid error", type(row[i])#del
-                            print "stupid error", n % 1 #del
                             raise ValueError("Value can not be relativize because is not an integer \'%.16f\'" \
                                             "\nUse option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
                 else:
@@ -838,12 +835,16 @@ class IntData:
         
         return (data_mult) #Correct eventually self.data in a list of list directly modificable
     
-def is_number(str):
+def is_number(var):
     """
-    TODO document function
+    Checks whether an string is a number, if is already an integer or float it also returns True
+    
+    :param factor: :py:func:`str` :py:func:`int` :py:func:`float` variable to check
+    
+    :returns: :py:func:`boolean` True when input variable is a number otherwise False
     """
     try:
-        float(str)
+        float(var)
         return True
     except ValueError:
         return False
