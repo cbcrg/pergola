@@ -700,31 +700,35 @@ class IntData:
         data_int = list()
         _f_int_end = "chromEnd"
                  
-        #Field is add as supplementary column in the original file
-        end_int = len(self.fieldsB)      
+        #Field is add as supplementary column
+        end_int = len(self.fieldsG)      
                  
-        print "new field index is:", 
+        print "new field index is:::::::::::::::::::", _f_int_end, end_int
         self.fieldsG_dict[_f_int_end] = end_int
         
-        p_time=0
+        p_time=self.data[0][start_int[0]]
+        print "=======================",self.data[0][start_int[0]]#del
+        print "=======================",start_int
     #     p_temp.append(p_temp[1] + 1) 
        
         for row in self.data:
 #             data_int.append(temp) 
             
             temp = [None] * (end_int + 1)
-            print "====================", temp, end_int
+#             print "====================", temp, end_int#del
             for i in range(len(row)):
-                print "length of row is =====", len(row) # I have alrady created track and datatypes but not updated the list of fields!!!
+#                 print "length of row is =====", len(row)#del # I have alrady created track and datatypes but not updated the list of fields!!!
+                #Evaluar si es mejor hacer un update de los fieldsB o si simplemente cojo la row y miro la longitud
+                # Esto tambien tiene un impacto en que indice debo anyadir los nuevos endChrom
                 if i in start_int:                
     #                 temp[end_int](p_temp[1] + 1)
-                    print "temp[i]= row[i]", row[i], i, temp[i]
+                    print "temp[i]= row[i]", temp[i], row[i], i#del
                     temp[i]= row[i]
-                    temp[end_int] = p_time - 1 
+                    temp[end_int] = p_time - 1 #seria next time -1 !!!
                     p_time = row[i]
-                    print "jjjjjjjjjjjjjj", p_time
+#                     print "jjjjjjjjjjjjjj", p_time#del
                 else:
-                    print "temp[i]=============", i
+#                     print "temp[i]=============", i#del
                     temp[i]= row[i]
             
             data_int.append((tuple(temp)))   
@@ -850,7 +854,8 @@ class IntData:
             for i in range(len(row)):
                 
                 if i in i_fields:
-                    value = row[i].replace(" ", "")
+                    value = row[i]
+#                     value = row[i].replace(" ", "")
                                         
                     if is_number(value):
                         v_m = round (float(row[i]) * factor, 6)
