@@ -776,29 +776,15 @@ class IntData:
             for i in range(len(row)):
                 
                 if i in i_fields:
-                    print "row[i]********", row[i]#del
                     
-#                     if isinstance(row[i], (int, long)) or row[i].isdigit():
-#                     Si es string entonces mirar si es digit
-#                     sino lo es entoinces isinteger porque puede que sea decimal
-#                     Errores distintos
-
-                    if isinstance(row[i], (str)):
-                        if row[i].isdigit():
-                            next
-                        else:
-                            print "Eres un capullo"
-                    elif isinstance(row[i], (int, long, float)):
-                        if row[i].is_integer():
-                            next
-                        else:
-                            print "Eres un capullo"
-#                     if row[i].is_integer():
-#                         print row[i]#del
-#                     if isinstance(row[i], (int, long)) or row[i].is_integer():                      
-#                         temp.append(int(row[i])- self.min + 1)
-#                     else: raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
-#                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir    
+                    if is_number(row[i]):
+                        n = float(row[i])
+                        
+                        if n.is_integer():
+                            temp.append(int(row[i])- self.min + 1)
+                        else: 
+                            raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
+                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
                 else:
                     temp.append(row[i])
     
@@ -856,11 +842,10 @@ class IntData:
 #                         print "********************",isinstance(value, (int, long, float)) or value.isdigit() #del
                         
 #                         print "int(row[i])*factor***************", int(row[i])*factor #del
-                    else: #raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
-                           #                 %(row[i]))  #corregir
-#                            print "********************",isinstance(value, (int, long, float)) or value.isdigit() 
-#                            print "********************",type (value)
-                           print "culo la has cagao xaval"#del    
+                    else: #
+                        raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
+                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir   
+#                         print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t   
                 else:
                     temp.append(row[i])
     
