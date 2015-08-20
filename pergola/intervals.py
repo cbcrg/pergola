@@ -613,7 +613,7 @@ class IntData:
         
         :returns: Track object
         
-        TODO: By the moment I make this function as a method of the closs eventually I would make this as
+        TODO: By the moment I make this function as a method of the closs eventually I would make this a
         separated function
         """
         _f_rel_mand = ["chromStart"]
@@ -781,10 +781,13 @@ class IntData:
                     if is_number(row[i]):
                         n = float(row[i])
                         
-                        if n.is_integer():
+                        if n % 1 == 0:                        
                             temp.append(int(row[i])- self.min + 1)
                         else: 
-                            raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
+                            
+                            print "stupid error", type(row[i])#del
+                            print "stupid error", n % 1 #del
+                            raise ValueError("Value can not be relativize because is not an integer \'%.16f\'" \
                                             "\nUse option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
                 else:
                     temp.append(row[i])
@@ -816,10 +819,15 @@ class IntData:
                 
                 if i in i_fields:
                     value = row[i].replace(" ", "")
-                    
+                                        
                     if is_number(value):
-                        temp.append(float(value)*factor)
-  
+                        v_m = round (float(row[i]) * factor, 6)
+                        v_i = int(v_m)
+                        if v_m-v_i != 0:
+                            raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease use a bigger factor " \
+                                              "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)
+                        temp.append(v_m)
+                        
                     else: 
                         raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
                                             "\nCheck mapping of fields in your input file n"%(row[i]))  #corregir    
