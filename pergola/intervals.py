@@ -632,7 +632,7 @@ class IntData:
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
        
-        # Coordinates transformed into relative to the minimun time point
+        # Coordinates multiplied by a given factor set by the user
         if multiply_t:
             print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t 
             try:            
@@ -648,7 +648,7 @@ class IntData:
         # Coordinates transformed into relative to the minimun time point
         print >>stderr, "Relative coordinates set to:", relative_coord
         
-#         f2rel = list(set(_f2rel) & set(self.fieldsG))
+#         f2rel = list(set(_f2rel) & set(self.fieldsG))#del
                 
         if relative_coord:
             if fields2rel is None:
@@ -778,10 +778,27 @@ class IntData:
                 if i in i_fields:
                     print "row[i]********", row[i]#del
                     
-                    if isinstance(row[i], (int, long)) or row[i].isdigit():
-                        temp.append(int(row[i])- self.min + 1)
-                    else: raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
-                                           "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir    
+#                     if isinstance(row[i], (int, long)) or row[i].isdigit():
+#                     Si es string entonces mirar si es digit
+#                     sino lo es entoinces isinteger porque puede que sea decimal
+#                     Errores distintos
+
+                    if isinstance(row[i], (str)):
+                        if row[i].isdigit():
+                            next
+                        else:
+                            print "Eres un capullo"
+                    elif isinstance(row[i], (int, long, float)):
+                        if row[i].is_integer():
+                            next
+                        else:
+                            print "Eres un capullo"
+#                     if row[i].is_integer():
+#                         print row[i]#del
+#                     if isinstance(row[i], (int, long)) or row[i].is_integer():                      
+#                         temp.append(int(row[i])- self.min + 1)
+#                     else: raise ValueError("Value can not be relativize because is not an integer \'%s\'" \
+#                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #corregir    
                 else:
                     temp.append(row[i])
     
@@ -829,16 +846,21 @@ class IntData:
                 if i in i_fields:
                     print "row[i]********", row[i],i#del
                     value = row[i].replace(" ", "")
-                    if isinstance(value, (int, long, float)) or value.isdigit():
-                        temp.append(int(value)*factor)
-                        print "********************",type (value) #del
-                        print "********************",isinstance(value, (int, long, float)) or value.isdigit() #del
+                    
+                    if is_number(value):
+                        temp.append(float(value)*factor)
+                        print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",float(value)*factor)#del
+#                     if isinstance(value, (int, long, float)) or value.isdigit():
+#                         temp.append(int(value)*factor)
+#                         print "********************",type (value) #del
+#                         print "********************",isinstance(value, (int, long, float)) or value.isdigit() #del
                         
-                        print "int(row[i])*factor***************", int(row[i])*factor #del
+#                         print "int(row[i])*factor***************", int(row[i])*factor #del
                     else: #raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
                            #                 %(row[i]))  #corregir
-                           print "********************",isinstance(value, (int, long, float)) or value.isdigit() 
-                           print "culo"#del    
+#                            print "********************",isinstance(value, (int, long, float)) or value.isdigit() 
+#                            print "********************",type (value)
+                           print "culo la has cagao xaval"#del    
                 else:
                     temp.append(row[i])
     
@@ -862,3 +884,13 @@ class IntData:
 #             data_rel.append((tuple(temp)))   
 #             
         return data_mult #Corregir
+    
+def is_number(str):
+    """
+    TODO document function
+    """
+    try:
+        float(str)
+        return True
+    except ValueError:
+        return False
