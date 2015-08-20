@@ -576,7 +576,6 @@ class IntData:
             i =  self.fieldsG.index(field)
             
             idx_field = self.fieldsG.index(field)
-#             print("================", idx_field)#del
             field = [field]    
             
             for row in self.data:
@@ -639,7 +638,6 @@ class IntData:
             try:            
                 f=""
                 name_fields2mult = [f for f in _f2mult if f in self.fieldsG_dict] 
-                print "=======================l;k;lk';l;", name_fields2mult#del
                 idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
@@ -648,8 +646,6 @@ class IntData:
         
         # Coordinates transformed into relative to the minimun time point
         print >>stderr, "Relative coordinates set to:", relative_coord
-        
-#         f2rel = list(set(_f2rel) & set(self.fieldsG))#del
                 
         if relative_coord:
             if fields2rel is None:
@@ -668,35 +664,14 @@ class IntData:
                 i_time_f = [self.fieldsG_dict[f] for f in f2rel]                
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
-            
-            print "f2rel is:>>>>>>>>>>>>>>>>>>", self.fieldsG_dict#del
-            print "f2rel is:", f2rel, i_time_f  #del
 
             self.data = self._time2rel_time(i_time_f)
 
-
-
-                
-                
-#         _f2rel = ["chromStart","chromEnd"]        
-        
-#         _f2rel = [f for f in fields2rel if f in self.fieldsG]
-#         
-#         print "dddddd",_f2rel 
-                 
-#                 _f2rel = ["chromStart","chromEnd"] 
-#             elif fields2rel is None and not intervals:
-#                 if "chromEnd" in self.fieldsG:
-#                     _f2rel = ["chromStart","chromEnd"] 
-#                 else:
-#                     _f2rel = ["chromStart"]
-
+            #Next point to develop:
+            #intervals=TRUE
             
-                 
-        
-       
-       
-       
+            
+                                
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
 #         """        
