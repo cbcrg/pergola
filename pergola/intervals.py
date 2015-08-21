@@ -615,7 +615,7 @@ class IntData:
         TODO: By the moment I make this function as a method of the closs eventually I would make this a
         separated function
         """
-        _f_rel_mand = ["chromStart"]
+        _f_rel_mand = "chromStart"
         _f_int_end = "chromEnd"
         _f2rel = ["chromStart","chromEnd"]
         _f2mult = ["chromStart","chromEnd"]
@@ -682,7 +682,8 @@ class IntData:
             
             # If chromStart not present out     
             try:
-                idx_fields2int = [self.fieldsG_dict[f] for f in _f_rel_mand]     
+#                 idx_fields2int = [self.fieldsG_dict[f] for f in _f_rel_mand] 
+                idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
             except ValueError:
                 raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
                                  % (f, self.path))
@@ -702,36 +703,22 @@ class IntData:
                  
         #Field is add as supplementary column
         end_int = len(self.fieldsG)      
-                 
-        print "new field index is:::::::::::::::::::", _f_int_end, end_int
         self.fieldsG_dict[_f_int_end] = end_int
         
-        p_time=self.data[0][start_int[0]]
-        print "=======================",self.data[0][start_int[0]]#del
-        print "=======================",start_int
-    #     p_temp.append(p_temp[1] + 1) 
-       
-        for row in self.data:
-#             data_int.append(temp) 
-            
-            temp = [None] * (end_int + 1)
-#             print "====================", temp, end_int#del
-            for i in range(len(row)):
-#                 print "length of row is =====", len(row)#del # I have alrady created track and datatypes but not updated the list of fields!!!
-                #Evaluar si es mejor hacer un update de los fieldsB o si simplemente cojo la row y miro la longitud
-                # Esto tambien tiene un impacto en que indice debo anyadir los nuevos endChrom
-                if i in start_int:                
-    #                 temp[end_int](p_temp[1] + 1)
-                    print "temp[i]= row[i]", temp[i], row[i], i#del
-                    temp[i]= row[i]
-                    temp[end_int] = p_time - 1 #seria next time -1 !!!
-                    p_time = row[i]
-#                     print "jjjjjjjjjjjjjj", p_time#del
-                else:
-#                     print "temp[i]=============", i#del
-                    temp[i]= row[i]
+        #All items except last
+        for i in range(len(self.data[:-1])):
+            row = self.data[i]
+            value_end = (self.data[i+1][start_int]-1,)
+            temp = row + value_end 
             
             data_int.append((tuple(temp)))   
+        
+        #Last itme
+        last_row = self.data[-1]
+        value_end = (last_row[start_int] + 1,)
+        temp = last_row + value_end
+        
+        data_int.append((tuple(temp)))
             
         return (data_int)   
         
