@@ -83,9 +83,12 @@ class IntData:
     """
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
+        self._in_file = open(self.path, "rb")
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
 #         self.header = kwargs.get('header',True)
         self.header = header
+        
+        self._reader =  reader(self._in_file, delimiter=self.delimiter)
         self.data = self._simple_read()        
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
@@ -107,9 +110,9 @@ class IntData:
         :returns: delimiter
         
         """                
-        self.in_file  = open(path, "rb")
+#         self.in_file  = open(path, "rb") #del eliminate path as an argument
         
-        for row in self.in_file:
+        for row in self._in_file:
             
             #Delimiter set by user        
             if row.count(delimiter) >= 1: break
@@ -129,7 +132,7 @@ class IntData:
         if delimiter is None: 
             raise ValueError("Delimiter must be set \'%s\'"%(delimiter))
         
-        self.in_file.seek(0)
+        self._in_file.seek(0)
            
         return delimiter
     
@@ -149,8 +152,8 @@ class IntData:
         fieldsB = []
         
         if self.header:            
-            header = self.reader.next()
-            first_r = self.reader.next()
+            header = self._reader.next()
+            first_r = self._reader.next()
             
             if len(header) != len(first_r):
                 raise ValueError("Number of fields in header '%d' does not match number of fields in first row '%d'" 
@@ -177,7 +180,7 @@ class IntData:
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
         else:
-            first_r = self.reader.next()
+            first_r = self._reader.next()
             
             if fields:
                 if len(fields) > len(first_r):
@@ -193,7 +196,7 @@ class IntData:
                                   'an ordered list of columns names using fields')     
                 
 #         self.in_file.close()
-        self.in_file.seek(0)
+        self._in_file.seek(0)
         
         return fieldsB
     
@@ -249,16 +252,16 @@ class IntData:
         """
         
         list_data = list()
-        self.in_file = open(self.path, "rb")
-        self.reader = reader(self.in_file, delimiter=self.delimiter)
+#         self.in_file = open(self.path, "rb")
+#         self.reader = reader(self.in_file, delimiter=self.delimiter)
         
-        if self.header: self.reader.next()
+        if self.header: self._reader.next()
         
-        for row in self.reader:
+        for row in self._reader:
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         # Back to file beginning
-        self.in_file.seek(0)
+        self._in_file.seek(0)
         
         return (list_data)
 
