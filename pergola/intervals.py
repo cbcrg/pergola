@@ -790,7 +790,7 @@ class IntData:
                             temp.append(int(row[i])- self.min)
                         else: 
                             raise ValueError("Value can not be relativize because is not an integer \'%.16f\'" \
-                                            "\nUse option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
+                                            ". Use option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
                 else:
                     temp.append(row[i])
     
@@ -828,7 +828,7 @@ class IntData:
                         v_i = int(v_m)
                         if v_m-v_i != 0:
                             raise ValueError ("Intervals values (chromStart and chromEnd) can not be decimal\nPlease use a bigger factor " \
-                                              "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)
+                                              "with -m,--multiply_intervals flag to multiply your values, current value is %s"%factor)
                         temp.append(v_m)
                         
                     else: 
@@ -855,7 +855,8 @@ class IntData:
         #Field is add as supplementary column
         end_int = len(self.fieldsG)      
         self.fieldsG_dict[_f_int_end] = end_int
-        
+        self.fieldsG.append(_f_int_end)
+
         #All items except last
         for i in range(len(self.data[:-1])):
             row = self.data[i]
@@ -864,7 +865,7 @@ class IntData:
             
             data_int.append((tuple(temp)))   
         
-        #Last itme
+        #Last item
         last_row = self.data[-1]
         value_end = (last_row[start_int] + 1,)
         temp = last_row + value_end
