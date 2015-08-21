@@ -693,35 +693,7 @@ class IntData:
             
             
 
-            
-    def _create_int(self, start_int):
-        """
-        TODO document function
-        """
-        data_int = list()
-        _f_int_end = "chromEnd"
                  
-        #Field is add as supplementary column
-        end_int = len(self.fieldsG)      
-        self.fieldsG_dict[_f_int_end] = end_int
-        
-        #All items except last
-        for i in range(len(self.data[:-1])):
-            row = self.data[i]
-            value_end = (self.data[i+1][start_int]-1,)
-            temp = row + value_end 
-            
-            data_int.append((tuple(temp)))   
-        
-        #Last itme
-        last_row = self.data[-1]
-        value_end = (last_row[start_int] + 1,)
-        temp = last_row + value_end
-        
-        data_int.append((tuple(temp)))
-            
-        return (data_int)   
-        
     
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
@@ -786,7 +758,7 @@ class IntData:
         
         :param i_fields: :py:func:`list` with data columns to calculate relative values
         
-        :returns: list of tuples (like self.data)
+        :returns: list of tuples (self.data-like)
         
         TODO check whether field for min and max is the same as the one selected by i_fields otherwise
         give either exception of warning
@@ -827,7 +799,7 @@ class IntData:
         
         :param factor: :py:func:`int` factor to multiply data columns selected
         
-        :returns: list of tuples (like self.data)
+        :returns: list of tuples (self.data-like)
         
         TODO change min and max of the data to new values
         The simpler way is multiply this values as well
@@ -861,7 +833,39 @@ class IntData:
             data_mult.append((tuple(temp)))             
         
         return (data_mult) #Correct eventually self.data in a list of list directly modificable
-    
+
+    def _create_int(self, start_int):
+        """
+        From single time points generates intervals of time
+        
+        :param start_int: :py:func:`int` with index containing time points 
+        
+        :returns: list of tuples (self.data-like)
+        """
+        data_int = list()
+        _f_int_end = "chromEnd"
+                 
+        #Field is add as supplementary column
+        end_int = len(self.fieldsG)      
+        self.fieldsG_dict[_f_int_end] = end_int
+        
+        #All items except last
+        for i in range(len(self.data[:-1])):
+            row = self.data[i]
+            value_end = (self.data[i+1][start_int]-1,)
+            temp = row + value_end 
+            
+            data_int.append((tuple(temp)))   
+        
+        #Last itme
+        last_row = self.data[-1]
+        value_end = (last_row[start_int] + 1,)
+        temp = last_row + value_end
+        
+        data_int.append((tuple(temp)))
+            
+        return (data_int)  
+       
 def is_number(var):
     """
     Checks whether an string is a number, if is already an integer or float it also returns True
