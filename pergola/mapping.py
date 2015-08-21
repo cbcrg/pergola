@@ -12,11 +12,11 @@ It provides a class :class:`~pergola.mapping.MappingInfo` that reads the informa
 from a mapping file.
  
 """
-
 from re      import compile, match
 from os      import getcwd
 from sys     import stderr, exit
 from os.path import join
+from tracks import Track
 
 _genome_file_ext = ".fa"
 _generic_nt = "N"
@@ -135,6 +135,8 @@ def write_chr(self, mode="w", path_w=None):
     :param None path_w: :py:func:`str` path to dump the files, by default None 
     
     """
+    assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
+    
     chrom = 'chr1'
     path = ""
     

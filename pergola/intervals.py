@@ -259,18 +259,8 @@ class IntData(object):
         for row in self._reader:
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
-        # Min and maximun time points
-        i_time = self.fieldsG_dict["chromStart"]
-        
-        self.min = float(min(list_data, key=itemgetter(i_time))[i_time])
-        
-        if "chromEnd" in self.fieldsG_dict.keys():
-            i_time = self.fieldsG_dict["chromEnd"]
-        
-        self.max = float(max(list_data, key=itemgetter(i_time))[i_time])
-        
-        #Range of values updated
-        self.range_values = [self.min, self.max]
+        #Initialize min, max
+        self._min_max(list_data)
         
         # Back to file beginning
         self._in_file.seek(0)
@@ -606,7 +596,9 @@ class IntData(object):
                 new_data.append(row)    
             
             self.data = new_data
+            pos = len(self.fieldsG)
             self.fieldsG.append(str(field))
+            self.fieldsG_dict[field]=pos
         else:
             raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
         
@@ -713,7 +705,7 @@ class IntData(object):
                            "TIP: You can transform timepoints to intervals setting intervals=True"                         
                            % (_f_int_end, self.path))
         
-        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) 
+        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
 #         """        
@@ -770,7 +762,34 @@ class IntData(object):
 #         
 # #         return self.data
 #         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
-
+    
+    def _min_max(self, list_data, t_start="chromStart", t_end="chromEnd"):
+        """
+        TODO Documentation
+        """
+         # Min and maximun time points
+        t_min = None
+        t_max = None
+        
+        i_time = self.fieldsG_dict[t_start]
+        
+        t_min = float(min(list_data, key=itemgetter(i_time))[i_time])
+        
+        if t_end in self.fieldsG_dict.keys():
+            i_time = self.fieldsG_dict[t_end]
+        
+        t_max = float(max(list_data, key=itemgetter(i_time))[i_time])
+        
+        if t_min.is_integer(): 
+            self.min = int(t_min)
+        else:
+            self.min = t_min
+        
+        if t_max.is_integer(): 
+            self.max = int(t_max)
+        else:
+            self.max = t_max
+        
     def _time2rel_time(self, i_fields):
         """
         Calculates relative values of selected data columns 
@@ -808,7 +827,9 @@ class IntData(object):
                     temp.append(row[i])
     
             data_rel.append((tuple(temp)))   
-            
+        
+        self._min_max(data_rel)    
+        
         return (data_rel)
 
     def _multiply_values(self, i_fields, factor=1):
@@ -851,6 +872,8 @@ class IntData(object):
                     temp.append(row[i])
     
             data_mult.append((tuple(temp)))             
+        
+        self._min_max(data_mult)
         
         return (data_mult) #Correct eventually self.data in a list of list directly modificable
 
