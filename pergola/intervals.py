@@ -89,12 +89,13 @@ class IntData:
         self.header = header
         
         self._reader =  reader(self._in_file, delimiter=self.delimiter)
-        self.data = self._simple_read()        
+        
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
         self.fieldsG = self.fieldsG_dict.keys() #here before I added the new fields
         self.min = self.max = 0
         self.range_values = 0
+        self.data = self._simple_read()        
 #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
         self.tracks = self.get_field_items(field="track", data = self.data, default="1")#TODO maybe this function will be more general if instead of giving field name
@@ -252,13 +253,21 @@ class IntData:
         """
         
         list_data = list()
-#         self.in_file = open(self.path, "rb")
-#         self.reader = reader(self.in_file, delimiter=self.delimiter)
         
         if self.header: self._reader.next()
         
         for row in self._reader:
             list_data.append(tuple(row)) #TODO what is better tuple or list 
+        
+        # Min and maximun time points
+        i_time = self.fieldsG_dict["chromStart"]
+        
+        self.min = float(min(list_data, key=itemgetter(i_time))[i_time])
+        
+        if "chromEnd" in self.fieldsG_dict.keys():
+            i_time = self.fieldsG_dict["chromEnd"]
+        
+        self.max = float(max(list_data, key=itemgetter(i_time))[i_time])
         
         # Back to file beginning
         self._in_file.seek(0)
