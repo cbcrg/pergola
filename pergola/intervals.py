@@ -780,7 +780,8 @@ class IntData:
                         n = float(row[i])
                         
                         if n % 1 == 0:                        
-                            temp.append(int(row[i])- self.min + 1)
+#                             temp.append(int(row[i])- self.min + 1)
+                            temp.append(int(row[i])- self.min)
                         else: 
                             raise ValueError("Value can not be relativize because is not an integer \'%.16f\'" \
                                             "\nUse option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules

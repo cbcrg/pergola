@@ -35,6 +35,8 @@ print (int_data_e.fieldsG_dict)
 print (int_data_e.dataTypes)
 print (int_data_e.tracks)
 int_data_e.read(multiply_t=1000, relative_coord=True)
+# int_data_e.read(multiply_t=1000, intervals=True)
+print (int_data_e.data)
 
 
 
