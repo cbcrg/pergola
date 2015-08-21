@@ -269,6 +269,9 @@ class IntData:
         
         self.max = float(max(list_data, key=itemgetter(i_time))[i_time])
         
+        #Range of values updated
+        self.range_values = [self.min, self.max]
+        
         # Back to file beginning
         self._in_file.seek(0)
         
