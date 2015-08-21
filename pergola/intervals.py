@@ -689,10 +689,16 @@ class IntData:
                                  % (f, self.path))
 
             self.data = self._create_int(idx_fields2int)
+        
+        # To continue intervals are mandatory
+        try:
+            i_max = self.fieldsG_dict[_f_int_end]              
+        except KeyError:
+            raise KeyError("Field '%s' for max interval calculation time not in file %s. " \
+                           "TIP: You can transform timepoints to intervals setting intervals=True"                         
+                           % (f, self.path))
             
-            
-            
-
+        
                  
     
        
@@ -821,7 +827,7 @@ class IntData:
                         v_m = round (float(row[i]) * factor, 6)
                         v_i = int(v_m)
                         if v_m-v_i != 0:
-                            raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease use a bigger factor " \
+                            raise ValueError ("Intervals values (chromStart and chromEnd) can not be decimal\nPlease use a bigger factor " \
                                               "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)
                         temp.append(v_m)
                         
