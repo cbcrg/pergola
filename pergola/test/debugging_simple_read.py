@@ -35,9 +35,9 @@ print ("debugging_simple_read",int_data_e.fieldsG_dict)
 print ("debugging_simple_read",int_data_e.dataTypes)
 print ("debugging_simple_read",int_data_e.tracks)
 # int_data_e.read(multiply_t=1000, relative_coord=True)# este tiene que petar no endChrom
-tracks = int_data_e_int.read(multiply_t=1000, intervals=True)
 print ("debugging_simple_read",int_data_e_int.data)
-print "debugging_simple_read", tracks
+tracks_data_e = int_data_e_int.read(multiply_t=1000, intervals=True)
+print "debugging_simple_read", tracks_data_e
 
 
 

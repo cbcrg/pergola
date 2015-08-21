@@ -25,6 +25,7 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "
 
 #electrophysiology
 pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "
 
 # Files of the tutorial
 pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e

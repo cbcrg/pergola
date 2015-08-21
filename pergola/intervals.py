@@ -614,6 +614,8 @@ class IntData:
         
         TODO: By the moment I make this function as a method of the closs eventually I would make this a
         separated function
+        Eventually do not change self.data but a list inside read and return the Track object with the modifications
+        this way data is always the original one.
         """
         _f_rel_mand = "chromStart"
         _f_int_end = "chromEnd"
@@ -686,7 +688,7 @@ class IntData:
                 idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
             except ValueError:
                 raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
-                                 % (f, self.path))
+                                 % (_f_rel_mand, self.path))
 
             self.data = self._create_int(idx_fields2int)
         
@@ -696,7 +698,7 @@ class IntData:
         except KeyError:
             raise KeyError("Field '%s' for max interval calculation time not in file %s. " \
                            "TIP: You can transform timepoints to intervals setting intervals=True"                         
-                           % (f, self.path))
+                           % (_f_int_end, self.path))
         
         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) 
        
