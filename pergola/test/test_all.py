@@ -42,6 +42,17 @@ class TestTutorial(unittest.TestCase):
         int_data_tutorial = intervals.IntData(PATH + "/feeding/tutorial/feedingBehavior_HF_mice.csv", map_dict=mappings_tutorial.correspondence)
         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
         self.assertEqual(int_data_tutorial.max, max, msg_int_data_max) 
+     
+    def test_only_one_time_point(self):
+        """
+        Testing if files with just one coordinate for time are read correctly
+        """ 
+        global mappings_electro 
+        mappings_electro = mapping.MappingInfo(PATH + "/electrophysiology/e2p.txt")
+        int_data_electro = intervals.IntData(PATH + "/electrophysiology/electroTest_2f.txt", map_dict=mappings_electro.correspondence)
+#         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
         
+        
+            
 if __name__ == '__main__':
     unittest.main()

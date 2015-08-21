@@ -573,11 +573,13 @@ class Track(GenomicContainer):
         try:
             idx_f = [self.fields.index(f) for f in _bed_fields]                          
         except ValueError:
-            raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
+#             raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
+              raise ValueError("Mandatory field for bed creation '%s' is missing." % (f))
         
 #         if (not in_call and len(self.list_tracks)  != 1):            
         if (not in_call and len(self.list_tracks_filt)  != 1):
-            raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bedGraph" % (self.path))
+#             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bedGraph" % (self.path))
+            raise ValueError("Your data has more than one track, only single tracks can be converted to bedGraph.")
         
         i_track = self.fields.index("track")
         i_chr_start = self.fields.index("chromStart")
