@@ -127,11 +127,19 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #     intData = intervals.IntDamap_dict, map_dict=map_file_dict.correspondence, 
 #                                 fields_names=fields2read, intervals=intervals_gen, 
 #                                 multiply_t=multiply_f)
+    # Old version of IntData which was generating intervals and multiplying value, all this features now in read()
+#     intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, 
+#                                 fields_names=fields2read, intervals=intervals_gen, 
+#                                 multiply_t=multiply_f, header=header_sw, delimiter=separator)
     intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, 
-                                fields_names=fields2read, intervals=intervals_gen, 
-                                multiply_t=multiply_f, header=header_sw, delimiter=separator)
+                                fields_names=fields2read,  
+                                header=header_sw, delimiter=separator)
     
-     
+    
+    # ADD TO READ:
+    # intervals=intervals_gen
+    # multiply_t=multiply_f
+    
     print "tracks before call are------------------------",intData.tracks
 #     sys.exit("Error message")#del
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
@@ -144,7 +152,10 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
     # Taking the relative_coord from the command options
 #     data_read = intData.read(relative_coord=True)
-    data_read = intData.read(relative_coord=relative_coord)
+    
+    ## Now read has the the options like multiply_t and intervals 
+#     data_read = intData.read(relative_coord=relative_coord)
+    data_read = intData.read(relative_coord=relative_coord, intervals=intervals_gen, multiply_t=multiply_f)
         
     start = intData.min
     end = intData.max
@@ -166,7 +177,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
 
     # Save the data in a text file similar to the original read file
-    data_read.save_track()
+    data_read.save_track(name_file="all_intervals")
     
 #     for i in data_read.data:
 # #         print i
