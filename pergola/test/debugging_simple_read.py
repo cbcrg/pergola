@@ -28,15 +28,16 @@ int_data_e = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electr
 int_data_e_int = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
  
  
-print (int_data_e.data[:12])
-print (int_data_e.fieldsB)
-print (int_data_e.fieldsG_dict)
+print ("debugging_simple_read", int_data_e.data[:12])
+print ("debugging_simple_read",int_data_e.fieldsB)
+print ("debugging_simple_read",int_data_e.fieldsG_dict)
 # print (int_data.fieldsG_dict.keys())
-print (int_data_e.dataTypes)
-print (int_data_e.tracks)
+print ("debugging_simple_read",int_data_e.dataTypes)
+print ("debugging_simple_read",int_data_e.tracks)
 # int_data_e.read(multiply_t=1000, relative_coord=True)# este tiene que petar no endChrom
-# int_data_e_int.read(multiply_t=1000, intervals=True)
-print (int_data_e.data)
+tracks = int_data_e_int.read(multiply_t=1000, intervals=True)
+print ("debugging_simple_read",int_data_e_int.data)
+print "debugging_simple_read", tracks
 
 
 
