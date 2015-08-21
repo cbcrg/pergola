@@ -136,6 +136,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
                                 header=header_sw, delimiter=separator)
     
     
+    print "type of intData is ::::::::::::::::::", type (intData) #del
     # ADD TO READ:
     # intervals=intervals_gen
     # multiply_t=multiply_f
@@ -146,7 +147,8 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
     print "tracks 2 merge .....................",tracks2merge
     
-    mapping.write_chr (intData)#mantain
+    # write_chr now only accepts Track objects
+#     mapping.write_chr (intData)#mantain
         
 #    write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
     
@@ -156,7 +158,9 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     ## Now read has the the options like multiply_t and intervals 
 #     data_read = intData.read(relative_coord=relative_coord)
     data_read = intData.read(relative_coord=relative_coord, intervals=intervals_gen, multiply_t=multiply_f)
-        
+    
+    mapping.write_chr (data_read)#mantain 
+       
     start = intData.min
     end = intData.max
     

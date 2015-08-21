@@ -260,7 +260,10 @@ class IntData(object):
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         #Initialize min, max
-        self._min_max(list_data)
+        self.min, self.max = self._min_max(list_data)
+        
+        #Initialize range_values
+        self.range_values = [self._min_max(list_data,t_start="dataValue", t_end="dataValue")]
         
         # Back to file beginning
         self._in_file.seek(0)
@@ -781,15 +784,17 @@ class IntData(object):
         t_max = float(max(list_data, key=itemgetter(i_time))[i_time])
         
         if t_min.is_integer(): 
-            self.min = int(t_min)
+            t_min = int(t_min)
         else:
-            self.min = t_min
+            t_min = t_min
         
         if t_max.is_integer(): 
-            self.max = int(t_max)
+            t_max = int(t_max)
         else:
-            self.max = t_max
+            t_max = t_max
         
+        return (t_min, t_max)
+    
     def _time2rel_time(self, i_fields):
         """
         Calculates relative values of selected data columns 
@@ -828,7 +833,7 @@ class IntData(object):
     
             data_rel.append((tuple(temp)))   
         
-        self._min_max(data_rel)    
+        self.min, self.max = self._min_max(data_rel)    
         
         return (data_rel)
 
@@ -873,7 +878,7 @@ class IntData(object):
     
             data_mult.append((tuple(temp)))             
         
-        self._min_max(data_mult)
+        self.min, self.max = self._min_max(data_mult)
         
         return (data_mult) #Correct eventually self.data in a list of list directly modificable
 
