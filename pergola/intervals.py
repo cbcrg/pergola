@@ -697,10 +697,8 @@ class IntData:
             raise KeyError("Field '%s' for max interval calculation time not in file %s. " \
                            "TIP: You can transform timepoints to intervals setting intervals=True"                         
                            % (f, self.path))
-            
         
-                 
-    
+        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) 
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
 #         """        
