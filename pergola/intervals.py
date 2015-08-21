@@ -26,7 +26,7 @@ from operator import itemgetter
 from re import split, search
 from math import pow
 
-class IntData: 
+class IntData(object): 
     """
     Generic class for input data
     
@@ -690,9 +690,7 @@ class IntData:
             print >>stderr, "Intervals will be inferred from timepoints"
             
             # If chromend is present ERROR
-            
-            
-            _time_points = ["chromStart"]
+#             _time_points = ["chromStart"]#del
 #         _f_rel_mand#del
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
