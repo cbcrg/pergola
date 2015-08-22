@@ -198,10 +198,12 @@ class Track(GenomicContainer):
     
     inherits from :py:class:`GenomicContainer`
     """
-    def __init__(self, data, fields=None, dataTypes=None, list_tracks=None, **kwargs):
+    def __init__(self, data, fields=None, dataTypes=None, list_tracks=None, min=0, max=0, **kwargs):
         self.list_tracks = list_tracks
         self.list_tracks_filt = []
         self.list_data_types=dataTypes
+        self.min=min
+        self.max=max
         GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
 
     def convert(self, mode='bed', range_color=None, **kwargs):
@@ -521,7 +523,7 @@ class Track(GenomicContainer):
         #Generate dictionary of field and color gradients
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
-                
+        print ":::::::::::::::::::::::::::::", self.range_values#del
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
 
         if step == 0: 
