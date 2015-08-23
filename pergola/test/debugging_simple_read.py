@@ -17,6 +17,8 @@ print (int_data.fieldsG_dict)
 # print (int_data.fieldsG_dict.keys())
 print (int_data.dataTypes)
 print (int_data.tracks)
+print "debugging_simple_read---- min value in int_data_feeding ------------------------", int_data.min
+print "debugging_simple_read---- max value in int_data_feeding ------------------------", int_data.max
 int_data.read(relative_coord=True)
 
 #electro for single time point validation
