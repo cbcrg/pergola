@@ -263,7 +263,7 @@ class IntData(object):
         self.min, self.max = self._min_max(list_data)
         
         #Initialize range_values
-        self.range_values = [self._min_max(list_data,t_start="dataValue", t_end="dataValue")]
+        self.range_values = list(self._min_max(list_data,t_start="dataValue", t_end="dataValue"))
         
         # Back to file beginning
         self._in_file.seek(0)
@@ -656,7 +656,7 @@ class IntData(object):
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
             
             self.data = self._multiply_values(i_fields=idx_fields2mult, factor=multiply_t)
-        
+            
         # Coordinates transformed into relative to the minimun time point
         print >>stderr, "Relative coordinates set to:", relative_coord
                 
