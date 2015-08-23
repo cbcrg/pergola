@@ -7,7 +7,7 @@ PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
 setup(name='pergola',
       version='0.0.1',
-      description='A library to visualize behavioral data in a genome browser',
+      description='A library to analyze and visualize behavioral data by unlocking genomic tools ',
       long_description= open('README.md').read(),
       url='http://github.com/cbcrg/pergola',
       author='Jose Espinosa-Carrasco',
