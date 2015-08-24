@@ -1,8 +1,0 @@
-! Mapping of behavioural fields into genome browser fields
-!
-behavioural_file:animal > genome_file:track
-behavioural_file:startTime > genome_file:chromStart
-behavioural_file:endTime > genome_file:chromEnd
-behavioural_file:value > genome_file:dataValue
-behavioural_file: > genome_file:data
-behavioural_file:dataType > genome_file:dataTypes
