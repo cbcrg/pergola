@@ -20,13 +20,13 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/
 # tabulated mapping file
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/test/b2g_TAB.txt"
 
-#pergola_rules with several phases (habituation, development,...)
+# pergola_rules with several phases (habituation, development,...)
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/b2g.txt"
 
-#electrophysiology
+# electrophysiology
 #pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
-pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" #este tiene que petar
-pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bedGraph  -mi 1000 -w 1 -e
+#pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" #este tiene que petar
+#pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bedGraph  -mi 1000 -w 1 -e
 pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bed  -mi 1000 -w 1 -e
 
 
