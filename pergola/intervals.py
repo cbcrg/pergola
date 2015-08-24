@@ -643,7 +643,29 @@ class IntData(object):
                  
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
-       
+        
+        # If chromStart not present out     
+        try:
+ 
+            idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
+        except ValueError:
+            raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
+                             % (_f_rel_mand, self.path))
+                                            
+        ##################################
+        # If there are several tracks we order by track
+        # Control for interval change bw tracks        
+        _f_track = "track"
+        i_track = None
+        
+        if _f_track in self.fieldsG_dict:
+            i_track = self.fieldsG_dict[_f_track]
+            
+            if all(row[i_track].isdigit() for row in self.data):
+                self.data = sorted(self.data, key=lambda x: (int(x[i_track]), int(x[idx_fields2int])))
+            else:
+                self.data = sorted(self.data, key=itemgetter(i_track, idx_fields2int))
+                            
         # Coordinates multiplied by a given factor set by the user
         if multiply_t:
             print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t 
@@ -689,15 +711,7 @@ class IntData(object):
 #         _f_rel_mand#del
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
-            
-            # If chromStart not present out     
-            try:
-#                 idx_fields2int = [self.fieldsG_dict[f] for f in _f_rel_mand] 
-                idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
-            except ValueError:
-                raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
-                                 % (_f_rel_mand, self.path))
-
+                        
             self.data = self._create_int(idx_fields2int)
         
         # To continue intervals are mandatory
@@ -892,7 +906,7 @@ class IntData(object):
         """
         data_int = list()
         _f_int_end = "chromEnd"
-                 
+ 
         #Field is add as supplementary column
         end_int = len(self.fieldsG)      
         self.fieldsG_dict[_f_int_end] = end_int
