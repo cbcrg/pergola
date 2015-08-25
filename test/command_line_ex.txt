@@ -27,8 +27,10 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "
 #pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
 #pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" #este tiene que petar
 #pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bedGraph  -mi 1000 -w 1 -e
-pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bed  -mi 1000 -w 1 -e
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_3f_tracks.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bed  -mi 1000 -w 1 -e
 
+# electrophisiology with tracks
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt" -m "/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt" -n -f bed  -mi 1000 -w 1 -e
 
 # Files of the tutorial
 #pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
