@@ -199,6 +199,8 @@ class IntData(object):
 #         self.in_file.close()
         self._in_file.seek(0)
         
+        print "intervals.py $$$$$$$$$$$$$$$$$$", fieldsB#del
+        
         return fieldsB
     
     def _set_fields_g (self, map_dict):
@@ -242,6 +244,7 @@ class IntData(object):
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
 
+        print "intervals.py 888888888888888888888888888", dict_fields_g#del
         return dict_fields_g
     
     def _simple_read(self):
@@ -581,10 +584,13 @@ class IntData(object):
         set_fields = set()
         
         if field in self.fieldsG:
-            i =  self.fieldsG.index(field)
+#             i =  self.fieldsG.index(field)
+#             i = self.fieldsG_dict[field]
+#             print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field, i#del
             
-            idx_field = self.fieldsG.index(field)
+            idx_field = self.fieldsG_dict[field]
             field = [field]    
+            print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field, idx_field#del
             
             for row in self.data:
                 set_fields.add(row[idx_field])    
@@ -605,6 +611,7 @@ class IntData(object):
         else:
             raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
         
+        print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field,set_fields#del 
         return set_fields
     
     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None,**kwargs):
@@ -721,6 +728,18 @@ class IntData(object):
             raise KeyError("Field '%s' for max interval calculation time not in file %s. " \
                            "TIP: You can transform timepoints to intervals setting intervals=True"                         
                            % (_f_int_end, self.path))
+        print "intervals.py ********************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", self.tracks#del
+        
+        # Updated and order list of the fields        
+#         [None]*1000
+        list_fields = [None] * len(self.fieldsG_dict)
+        
+        for field, i in self.fieldsG_dict.iteritems():
+            print ".......................................................................................", i, field
+            list_fields[i] = field
+            
+        print "intervals.py ********************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", list_fields
+        self.fieldsG = list_fields
         
         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
        

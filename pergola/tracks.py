@@ -154,6 +154,8 @@ class GenomicContainer(object):
             if isinstance(conc_dataTypes, set):
                 conc_dataTypes="_".join(self.dataTypes)        
             
+            print "track.py==================****************************************tracks", self.track #del
+            
             if len ("tr_" + self.track + "_dt_" + conc_dataTypes + file_ext) < _max_file_name_len: 
                 name_file = "tr_" + self.track + "_dt_" + conc_dataTypes + file_ext
             else:
@@ -348,6 +350,7 @@ class Track(GenomicContainer):
                     _dict_col_grad[k_2] = ""
 
                 range_val = self._get_range(d_2)
+                print "tracks.py this should be track......................", k#del
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, dataTypes=k_2, range_values=range_val, color=_dict_col_grad[k_2])
 
         return (track_dict)
