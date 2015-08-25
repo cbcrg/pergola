@@ -661,8 +661,8 @@ class IntData(object):
         if _f_track in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_f_track]
             
-            if all(row[i_track].isdigit() for row in self.data):
-                self.data = sorted(self.data, key=lambda x: (int(x[i_track]), int(x[idx_fields2int])))
+            if all(row[i_track].isdigit() for row in self.data):                
+                self.data = sorted(self.data, key=lambda x: (int(x[i_track]), x[idx_fields2int]))
             else:
                 self.data = sorted(self.data, key=itemgetter(i_track, idx_fields2int))
                             
@@ -906,20 +906,44 @@ class IntData(object):
         """
         data_int = list()
         _f_int_end = "chromEnd"
- 
+        
         #Field is add as supplementary column
         end_int = len(self.fieldsG)      
         self.fieldsG_dict[_f_int_end] = end_int
         self.fieldsG.append(_f_int_end)
-
+        
+        #I have to check whther track field exist
+        #if exist then bw tracks I have a last row 
+        _f_track = "track"
+        i_track = None
+        track_sw = False
+        
+        if _f_track in self.fieldsG_dict:
+            i_track = self.fieldsG_dict[_f_track]
+#             p_track = self.data[0][i_track]
+            track_sw = True
+        
+#         if tr != p_tr:
+#             lfl
+            
         #All items except last
         for i in range(len(self.data[:-1])):
-            row = self.data[i]
-            value_end = (self.data[i+1][start_int]-1,)
-            temp = row + value_end 
+#             if p_track and p_track == self.data[i][i_track]:
             
-            data_int.append((tuple(temp)))   
-        
+            row = self.data[i]
+            
+            if track_sw:
+                if row[i_track] == self.data[i+1][i_track]:
+                    value_end = (self.data[i+1][start_int]-1,)                    
+                else:
+                    value_end = (row[start_int] + 1,)
+                                    
+            else:
+                value_end = (self.data[i+1][start_int]-1,)
+            
+            temp = row + value_end 
+            data_int.append((tuple(temp)))
+                
         #Last item
         last_row = self.data[-1]
         value_end = (last_row[start_int] + 1,)
