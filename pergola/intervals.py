@@ -197,9 +197,7 @@ class IntData(object):
                                   'an ordered list of columns names using fields')     
                 
 #         self.in_file.close()
-        self._in_file.seek(0)
-        
-        print "intervals.py $$$$$$$$$$$$$$$$$$", fieldsB#del
+        self._in_file.seek(0)        
         
         return fieldsB
     
@@ -244,7 +242,6 @@ class IntData(object):
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
 
-        print "intervals.py 888888888888888888888888888", dict_fields_g#del
         return dict_fields_g
     
     def _simple_read(self):
@@ -728,17 +725,13 @@ class IntData(object):
             raise KeyError("Field '%s' for max interval calculation time not in file %s. " \
                            "TIP: You can transform timepoints to intervals setting intervals=True"                         
                            % (_f_int_end, self.path))
-        print "intervals.py ********************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", self.tracks#del
-        
+ 
         # Updated and order list of the fields        
-#         [None]*1000
         list_fields = [None] * len(self.fieldsG_dict)
         
         for field, i in self.fieldsG_dict.iteritems():
-            print ".......................................................................................", i, field
             list_fields[i] = field
-            
-        print "intervals.py ********************>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", list_fields
+        
         self.fieldsG = list_fields
         
         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
