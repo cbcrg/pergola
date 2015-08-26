@@ -187,7 +187,8 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 # #         print i
 #         pass
     
-        
+    print ".....................", sel_tracks#del
+    
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, dataTypes_actions=dataTypes_act, 
                                  window=window_size)
@@ -202,6 +203,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #         print "key.......: ",key#del
         bedSingle = bed_str[key]
         print "::::::::::::::",bedSingle.dataTypes
+        print "::::::::::::::",bedSingle.track        
         # TODO add an if checking whether it is a bedgraph or not to get the mean 
 #         bedGraph_mean = bedSingle.win_mean()
 #         print bedGraph_mean
