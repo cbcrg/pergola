@@ -23,6 +23,8 @@ _generic_nt = "N"
 _cytoband_file_ext = ".txt"
 _bed_file_ext = ".bed"
 
+_p_ontology_terms = ["chromStart", "dataValue", "chromEnd", "dataTypes", "track", "chrom", "dummy"]
+                    
 class MappingInfo():
     """
     Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields
@@ -71,6 +73,11 @@ class MappingInfo():
                 continue
                                     
             row_split = row.rstrip('\n').split('\t')
+            
+            #Validation of the ontology term
+            if row_split[1] not in _p_ontology_terms:
+                raise ValueError("Term %s is not a valid pergola term." % (row_split[1]))
+    
             dict_correspondence[row_split[0]] = row_split[1]
         return (dict_correspondence)    
     
@@ -87,7 +94,13 @@ class MappingInfo():
             if p_mapping.match(row):
                 row = row.replace('\"','')
                 l=row.split(">")
+                
+                #Validation of the ontology term
+                if l[1].split(":")[1].rstrip('\t\n') not in _p_ontology_terms:
+                    raise ValueError("Term %s is not a valid pergola term." % (l[1].split(":")[1].rstrip('\t\n')))
+                
                 dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')
+            
             elif(row.startswith(comment_tag_m)):   
                 continue            
             else:
