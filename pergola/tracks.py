@@ -93,6 +93,7 @@ class GenomicContainer(object):
         
         self.data = data
         self.fields = fields
+#         print "initiation of GenomicContainer*********************", self.fields#del
         self.dataTypes = dataTypes     
         self.format = kwargs.get("format",'txt')
         self.track = kwargs.get('track', "1")
@@ -168,17 +169,19 @@ class GenomicContainer(object):
                 
         #Annotation track to set the genome browser interface
         annotation_track = ''
+        data_out = []
         
         if self.format == 'bed' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + " " + self.dataTypes + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
-            track_file.write (annotation_track + "\n") 
+            track_file.write (annotation_track + "\n")
+            
         elif self.format == 'bedGraph' and track_line:
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
-
-        print "fields are: ......................... " , self.fields #del        
+            
+#         print "fields are: ......................... " , self.fields #del        
         data_out = sorted(self.data, key=itemgetter(self.fields.index('chromStart')))
-
+                
         # for row in self.data:
         for row in data_out:  
             
@@ -204,8 +207,9 @@ class Track(GenomicContainer):
         self.list_data_types=dataTypes
         self.min=min
         self.max=max
+#         print "initiation of track*********************", fields#del
         GenomicContainer.__init__(self, data, fields, dataTypes, **kwargs)
-
+        
     def convert(self, mode='bed', range_color=None, **kwargs):
         """
         Calls function to convert data (as a list of tuples) into a dictionary of 

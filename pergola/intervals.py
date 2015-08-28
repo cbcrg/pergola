@@ -728,10 +728,15 @@ class IntData(object):
  
         # Updated and order list of the fields        
         list_fields = [None] * len(self.fieldsG_dict)
+        print len(self.fieldsG_dict)
+        
+        print "======================", self.fieldsG
+        print "======================", self.fieldsG_dict
         
         for field, i in self.fieldsG_dict.iteritems():
-            list_fields[i] = field
-        
+            list_fields[i] = field #AQUI PARA EL PERGOLA_RULES
+            print "list_fields[i] = field", i, field
+            
         self.fieldsG = list_fields
         
         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
