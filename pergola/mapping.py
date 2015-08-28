@@ -68,17 +68,25 @@ class MappingInfo():
         dict_correspondence = {}
         comment_tag_t = "#"
         
+        dummy_ctr=0
+        
         for row in file_tab:
             if(row.startswith(comment_tag_t)):               
                 continue
                                     
             row_split = row.rstrip('\n').split('\t')
+            file_term = row_split[0]
+            pergola_term = row_split[1]
             
             #Validation of the ontology term
-            if row_split[1] not in _p_ontology_terms:
-                raise ValueError("Term %s is not a valid pergola term." % (row_split[1]))
-    
-            dict_correspondence[row_split[0]] = row_split[1]
+            if pergola_term not in _p_ontology_terms:
+                raise ValueError("Term %s is not a valid pergola term." % (pergola_term))
+            
+            if pergola_term == "dummy": 
+                    pergola_term = pergola_term + "_" + str(dummy_ctr)
+                    dummy_ctr = dummy_ctr + 1
+            
+            dict_correspondence[file_term] = pergola_term
         return (dict_correspondence)    
     
     #TODO documentation
@@ -90,16 +98,24 @@ class MappingInfo():
 #         p_mapping = compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
         p_mapping = compile(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ") 
         
+        dummy_ctr=0
+        
         for row in file_map:
             if p_mapping.match(row):
                 row = row.replace('\"','')
                 l=row.split(">")
+                file_term = l[0].split(":")[1].rstrip()
+                pergola_term = l[1].split(":")[1].rstrip('\t\n')
                 
                 #Validation of the ontology term
-                if l[1].split(":")[1].rstrip('\t\n') not in _p_ontology_terms:
-                    raise ValueError("Term %s is not a valid pergola term." % (l[1].split(":")[1].rstrip('\t\n')))
+                if pergola_term not in _p_ontology_terms:
+                    raise ValueError("Term %s is not a valid pergola term." % (pergola_term))
                 
-                dict_correspondence[l[0].split(":")[1].rstrip()] = l[1].split(":")[1].rstrip('\t\n')
+                if pergola_term == "dummy": 
+                    pergola_term = pergola_term + "_" + str(dummy_ctr)
+                    dummy_ctr = dummy_ctr + 1
+                     
+                dict_correspondence[file_term] = pergola_term
             
             elif(row.startswith(comment_tag_m)):   
                 continue            
