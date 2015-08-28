@@ -1,7 +1,7 @@
 ! Mapping of behavioural fields into genome browser fields
 !
 behavioural_file:CAGE > genome_file:track
-behavioural_file:Caption > genome_file:dummy
+behavioural_file:Caption > genome_file:culo
 behavioural_file:Channel > genome_file:dummy
 behavioural_file:Duration > genome_file:dummy
 behavioural_file:EndL > genome_file:dummy
