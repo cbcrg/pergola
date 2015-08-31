@@ -47,11 +47,49 @@ class TestTutorial(unittest.TestCase):
         """
         Testing if files with just one coordinate for time are read correctly
         """ 
-        global mappings_electro 
-        mappings_electro = mapping.MappingInfo(PATH + "/electrophysiology/e2p.txt")
-        int_data_electro = intervals.IntData(PATH + "/electrophysiology/electroTest_2f.txt", map_dict=mappings_electro.correspondence)
-#         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
+        global mappings_electro
+        msg_mappings = "Equivalences set in electrophysiology mapping file are not correct."
         
+        mappings_electro = mapping.MappingInfo(PATH + "/electrophysiology/e2p.txt")
+        keys_electro = ['track', 'dataTypes', 'dataValue', 'chromStart']        
+        fields = mappings_electro.correspondence.values()
+        
+        self.assertEqual(keys_electro, fields, msg_mappings)
+        
+        min = 0
+        max = 0.3
+        msg_int_data_min= "Min value in electrophysiology data intData not correctly read."
+        msg_int_data_max= "Max value in electrophysiology data intData not correctly read."
+        
+        int_data_electro = intervals.IntData(PATH + "/electrophysiology/electroTest_2f.txt", map_dict=mappings_electro.correspondence)
+        self.assertEqual(int_data_electro.min, min, msg_int_data_min) 
+        self.assertEqual(int_data_electro.max, max, msg_int_data_max) 
+
+               
+#         self.assertEqual(, )
+#         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
+
+
+# mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
+# mapping_info_e.write()
+#  
+# int_data_e = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
+# int_data_e_int = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
+#   
+#   
+# print ("debugging_simple_read", int_data_e.data[:12])
+# print ("debugging_simple_read",int_data_e.fieldsB)
+# print ("debugging_simple_read",int_data_e.fieldsG_dict)
+# # print (int_data.fieldsG_dict.keys())
+# print ("debugging_simple_read",int_data_e.dataTypes)
+# print ("debugging_simple_read",int_data_e.tracks)
+# # int_data_e.read(multiply_t=1000, relative_coord=True)# este tiene que petar no endChrom
+# print ("debugging_simple_read",int_data_e_int.data)
+# tracks_data_e = int_data_e_int.read(multiply_t=1000, intervals=True)
+# print "debugging_simple_read", tracks_data_e
+
+
+
         
             
 if __name__ == '__main__':
