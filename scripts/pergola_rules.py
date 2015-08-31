@@ -103,7 +103,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
 #                         'as it has not been set using path_w' % (pwd)
     #Track line--> some genome browsers such as savant do not display correctly the file when the track line is in the file
-    print "no_track_line set to........................................................: %s" % no_track_line
+#     print "no_track_line set to........................................................: %s" % no_track_line #del
     if no_track_line:
         track_line=False
     else:
@@ -136,16 +136,16 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
                                 header=header_sw, delimiter=separator)
     
     
-    print "type of intData is ::::::::::::::::::", type (intData) #del
+#     print "type of intData is ::::::::::::::::::", type (intData) #del
     # ADD TO READ:
     # intervals=intervals_gen
     # multiply_t=multiply_f
     
-    print "tracks before call are------------------------",intData.tracks
+#     print "tracks before call are------------------------",intData.tracks#del
 #     sys.exit("Error message")#del
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
     
-    print "tracks 2 merge .....................",tracks2merge
+#     print "tracks 2 merge .....................",tracks2merge
     
     # write_chr now only accepts Track objects
 #     mapping.write_chr (intData)#mantain
@@ -187,7 +187,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 # #         print i
 #         pass
     
-    print ".....................", sel_tracks#del
+#     print "Selected tracks.....................", sel_tracks#del
     
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, dataTypes_actions=dataTypes_act, 
@@ -202,8 +202,8 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     for key in bed_str:
 #         print "key.......: ",key#del
         bedSingle = bed_str[key]
-        print "::::::::::::::",bedSingle.dataTypes
-        print "::::::::::::::",bedSingle.track        
+#         print "::::::::::::::",bedSingle.dataTypes
+#         print "::::::::::::::",bedSingle.track        
         # TODO add an if checking whether it is a bedgraph or not to get the mean 
 #         bedGraph_mean = bedSingle.win_mean()
 #         print bedGraph_mean

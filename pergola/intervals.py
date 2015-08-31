@@ -587,7 +587,7 @@ class IntData(object):
             
             idx_field = self.fieldsG_dict[field]
             field = [field]    
-            print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field, idx_field#del
+#             print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field, idx_field#del
             
             for row in self.data:
                 set_fields.add(row[idx_field])    
@@ -608,7 +608,7 @@ class IntData(object):
         else:
             raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
         
-        print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field,set_fields#del 
+#         print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field,set_fields#del 
         return set_fields
     
     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None,**kwargs):
@@ -728,14 +728,13 @@ class IntData(object):
  
         # Updated and order list of the fields        
         list_fields = [None] * len(self.fieldsG_dict)
-        print len(self.fieldsG_dict)
+#         print "length of the dictionary",len(self.fieldsG_dict)#del
         
-        print "======================", self.fieldsG
-        print "======================", self.fieldsG_dict
+#         print "======================", self.fieldsG#del
+#         print "======================", self.fieldsG_dict#del
         
         for field, i in self.fieldsG_dict.iteritems():
-            list_fields[i] = field #AQUI PARA EL PERGOLA_RULES
-            print "list_fields[i] = field", i, field
+            list_fields[i] = field
             
         self.fieldsG = list_fields
         
