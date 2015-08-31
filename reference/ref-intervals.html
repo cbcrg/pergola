@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>IntData class &mdash; Pergola 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'../',
+        VERSION:'0.1.0',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+    <script type="text/javascript">
+        jQuery(function () {
+            SphinxRtdTheme.StickyNav.enable();
+        });
+    </script>
+  
+
+  
+    <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Reference Guide" href="index.html"/>
+        <link rel="next" title="Mapping class" href="ref-mapping.html"/>
+        <link rel="prev" title="Reference Guide" href="index.html"/> 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> Pergola</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing Pergola</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#download-and-installation">Download and installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#development-versions">Development versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#testing-installation">Testing installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">IntData class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref-mapping.html">Mapping class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref-index-tables.html">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Reference Guide</a> &raquo;</li>
+      
+    <li>IntData class</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/reference/ref-intervals.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="intdata-class">
+<h1>IntData class<a class="headerlink" href="#intdata-class" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pergola.intervals.IntData">
+<em class="property">class </em><code class="descclassname">pergola.intervals.</code><code class="descname">IntData</code><span class="sig-paren">(</span><em>path</em>, <em>map_dict</em>, <em>header=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/intervals.html#IntData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.intervals.IntData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic class for input data</p>
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.path">
+<code class="descname">path</code><a class="headerlink" href="#pergola.intervals.IntData.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of path to a csv/tab input file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.delimiter">
+<code class="descname">delimiter</code><a class="headerlink" href="#pergola.intervals.IntData.delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Character use to separate values of the same record in file (default &#8221;   &#8221;).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.header">
+<code class="descname">header</code><a class="headerlink" href="#pergola.intervals.IntData.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the presence of a header.
+* <cite>False</cite> if there is no header. Fields should the be provided using fields param
+* <cite>True</cite> if the file have a header line with names. This names should match names in map_dict (default).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.fieldsB">
+<code class="descname">fieldsB</code><a class="headerlink" href="#pergola.intervals.IntData.fieldsB" title="Permalink to this definition">¶</a></dt>
+<dd><p>List with the behavioral fields corresponding each column in the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.fieldsG_dict">
+<code class="descname">fieldsG_dict</code><a class="headerlink" href="#pergola.intervals.IntData.fieldsG_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary with the equivalence to map fields in the input file and the pergola
+ontology to describe behavioral data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.min">
+<code class="descname">min</code><a class="headerlink" href="#pergola.intervals.IntData.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>First time value in the file. Read from field set as &#8220;chromStart&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.max">
+<code class="descname">max</code><a class="headerlink" href="#pergola.intervals.IntData.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last timepoint in the file. Read from field set as &#8220;chromEnd&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.range_values">
+<code class="descname">range_values</code><a class="headerlink" href="#pergola.intervals.IntData.range_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range of values inside dataValue field</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.data">
+<code class="descname">data</code><a class="headerlink" href="#pergola.intervals.IntData.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tuples containing the data read from the file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.dataTypes">
+<code class="descname">dataTypes</code><a class="headerlink" href="#pergola.intervals.IntData.dataTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>All different dataTypes that appear in the data read from &#8220;dataTypes&#8221; field.
+If dataTypes field not in file, all intervals are set as belonging to dataTypes &#8220;a&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.intervals.IntData.tracks">
+<code class="descname">tracks</code><a class="headerlink" href="#pergola.intervals.IntData.tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of tracks in the file. Read from &#8220;tracks&#8221; field.
+If tracks field not in file, all intervals are set as belonging to track &#8220;1&#8221;</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">IntData object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="load-csv-file">
+<h2>Load csv file<a class="headerlink" href="#load-csv-file" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="pergola.intervals.IntData.read">
+<code class="descclassname">IntData.</code><code class="descname">read</code><span class="sig-paren">(</span><em>fields=None</em>, <em>relative_coord=False</em>, <em>intervals=False</em>, <em>fields2rel=None</em>, <em>multiply_t=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/intervals.html#IntData.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.intervals.IntData.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the data and converts it depending on selected options</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fields</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
+<li><strong>relative_coord</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in chromStart and chromEnd are
+make relative to the minimal value</li>
+<li><strong>intervals</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
+chromStart</li>
+<li><strong>fields2rel</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
+<li><strong>multiply_t</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as chromStart and 
+chromEnd</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Track object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>TODO: By the moment I make this function as a method of the closs eventually I would make this a
+separated function
+Eventually do not change self.data but a list inside read and return the Track object with the modifications
+this way data is always the original one.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="checks-that-a-variable-contains-a-number">
+<h2>Checks that a variable contains a number<a class="headerlink" href="#checks-that-a-variable-contains-a-number" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="pergola.intervals.is_number">
+<code class="descclassname">intervals.</code><code class="descname">is_number</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#pergola.intervals.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether an string is a number, if is already an integer or float it also returns True</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> <code class="xref py py-func docutils literal"><span class="pre">float()</span></code> variable to check</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-func docutils literal"><span class="pre">boolean()</span></code> True when input variable is a number otherwise False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ref-mapping.html" class="btn btn-neutral float-right" title="Mapping class"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Reference Guide"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Jose Espinosa-Carrasco.
+      Last updated on Aug 31, 2015.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>
