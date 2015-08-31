@@ -26,7 +26,7 @@ class TestTutorial(unittest.TestCase):
         
         msg_mappings = "Equivalences set in tutorial mapping file are not correct."
         self.assertEqual(mappings_tutorial.correspondence['EndT'], 'chromEnd', msg_mappings)
-
+        
     def test_read_int_data(self):
         """
         Testing the creation of intData object using tutorial data
@@ -47,7 +47,7 @@ class TestTutorial(unittest.TestCase):
         """
         Testing if files with just one coordinate for time are read correctly
         """ 
-        global mappings_electro
+        global int_data_electro, mappings_electro 
         msg_mappings = "Equivalences set in electrophysiology mapping file are not correct."
         
         mappings_electro = mapping.MappingInfo(PATH + "/electrophysiology/e2p.txt")
@@ -62,12 +62,22 @@ class TestTutorial(unittest.TestCase):
         msg_int_data_max= "Max value in electrophysiology data intData not correctly read."
         
         int_data_electro = intervals.IntData(PATH + "/electrophysiology/electroTest_2f.txt", map_dict=mappings_electro.correspondence)
+        
         self.assertEqual(int_data_electro.min, min, msg_int_data_min) 
         self.assertEqual(int_data_electro.max, max, msg_int_data_max) 
-
-               
-#         self.assertEqual(, )
-#         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
+        
+    def test_track_electro(self):
+        global tracks_data_electro
+        msg_track_electro = "Track electrophysiology not correctly read"
+        
+        max = 300
+        tracks_data_electro = int_data_electro.read(multiply_t=1000, intervals=True)
+        self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
+         
+        first_item = (0.0, '-30.98', 'a', '1', 9.0) 
+        first_item_read = tracks_data_electro.data[0]
+        self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
+        self.assertEqual(first_item_read, first_item, msg_track_electro) 
 
 
 # mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
