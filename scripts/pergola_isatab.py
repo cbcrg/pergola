@@ -73,7 +73,7 @@ def main():
                            multiply_f=args.multiply_intervals, fields2read=args.fields_read, 
                            window_size=args.window_size)
         
-        exit ("Going out to see what do I have here")
+        exit ("Going out to see what do I have here")#del
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':

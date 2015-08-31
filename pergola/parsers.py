@@ -16,8 +16,8 @@ from re        import match
 from bcbio     import isatab #la puedo poner en otra libreria para que no me joda pergola_rules #modify 
                             #creo que quiero decir que asi pergola_rules tiene esta dependencia quiza mejor no tenerla porque es una libreria rara
 from os        import makedirs
-from os.path   import join, exists, isdir
-from urllib2   import urlopen, HTTPError
+from os.path   import join, exists, isdir, isfile
+from urllib2   import urlopen, HTTPError, URLError
 # from scipy     import io
 from scipy.io     import loadmat
 from numpy     import hstack, mean, divide
@@ -133,34 +133,41 @@ def check_assay_pointer(pointer, download_path):
     
     :returns: path of file to be processed        
     """
-    try:
-        url_file = urlopen(pointer)
-         
-#         if not path.exists(download_path):
-        if not exists(download_path):
-            makedirs(download_path)
-         
-        file_name = pointer.split('/')[-1]
-#         path_file = path.join(download_path, file_name)
-        path_file = join(download_path, file_name)
+    # We check that the files has not been previously downloaded 
+    file_name = pointer.split('/')[-1]
+    path_file = join(download_path, file_name)
+    
+    #Checking if pointer is a file
+    if isfile(pointer):
+       print >>stderr, "\nPointer in isatab assays \"%s\" is a file in the system" % pointer
+       return (pointer)   
+    elif exists(path_file):
+        print >>stderr, "File has already been downloaded before: %s" % path_file
+        return (path_file)
+    else:
+        if not internet_on():  raise URLError("Check your network connection")
         
-        #Check whether file is already created
-        if not exists(path_file):
+        try:
+            url_file = urlopen(pointer)
             local_file = open(path_file, "w")
             local_file.write(url_file.read())
             print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)
-            return (path_file) 
-        else:
-            print "\nFile has already been downloaded before"
             return (path_file)
+        except (HTTPError, ValueError):
+            raise ValueError("Pointer inside isatab assays table is either a file in your system nor a valid URL %s: " %
+                             pointer)
         
-    except ValueError, HTTPError:
-        try:
-            f = open(pointer)
-            print "\nFile %s is already in system"%pointer
-            return (pointer)
-        except IOError:
-            raise IOError("Pointer inside isatab assays table is either a file in your system or a valid URL")
+def internet_on():
+    """
+    Checks whether there is an available internet connection
+    
+    :returns: :py:func:`boolean` True when internet connection is available otherwise False
+    """
+    try:
+        response=urlopen('http://www.google.com', timeout=1)
+        return True
+    except URLError as err: pass
+    return False
 
 ###############
 ### JAABA stuff
