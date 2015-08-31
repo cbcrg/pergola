@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Mapping class &mdash; Pergola 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'../',
+        VERSION:'0.1.0',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+    <script type="text/javascript">
+        jQuery(function () {
+            SphinxRtdTheme.StickyNav.enable();
+        });
+    </script>
+  
+
+  
+    <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Reference Guide" href="index.html"/>
+        <link rel="next" title="Indices and tables" href="ref-index-tables.html"/>
+        <link rel="prev" title="IntData class" href="ref-intervals.html"/> 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> Pergola</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing Pergola</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#download-and-installation">Download and installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#development-versions">Development versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#testing-installation">Testing installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ref-intervals.html">IntData class</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Mapping class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ref-index-tables.html">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Reference Guide</a> &raquo;</li>
+      
+    <li>Mapping class</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="../_sources/reference/ref-mapping.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mapping-class">
+<h1>Mapping class<a class="headerlink" href="#mapping-class" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pergola.mapping.MappingInfo">
+<em class="property">class </em><code class="descclassname">pergola.mapping.</code><code class="descname">MappingInfo</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#MappingInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.MappingInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields
+Mapping can be read both from a tabulated file or the _external_mapping_file_format from the 
+Gene Ontology Consortium</p>
+<dl class="attribute">
+<dt id="pergola.mapping.MappingInfo.path">
+<code class="descname">path</code><a class="headerlink" href="#pergola.mapping.MappingInfo.path" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">Name of/path to a configuration file</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pergola.mapping.MappingInfo.correspondence">
+<code class="descname">correspondence</code><a class="headerlink" href="#pergola.mapping.MappingInfo.correspondence" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">Dictionary with keys fields in behavioral file and values correspondence in genomic grammar</code></dt>
+<dd></dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MappingInfo object</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pergola.mapping.MappingInfo.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#MappingInfo.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.MappingInfo.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes correspondence between the pergola ontology terms and the behavioral data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>0</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> set indent to be used when writing</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="create-a-chromosome-in-fasta-format">
+<h2>Create a chromosome in fasta format<a class="headerlink" href="#create-a-chromosome-in-fasta-format" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pergola.mapping.write_chr">
+<code class="descclassname">pergola.mapping.</code><code class="descname">write_chr</code><span class="sig-paren">(</span><em>self</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#write_chr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.write_chr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a fasta file of the length of the range of value inside the IntData object
+that will be use for the mapping the data into it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mode</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</li>
+<li><strong>path_w</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="create-a-cytoband-like-file">
+<h2>Create a cytoband-like file<a class="headerlink" href="#create-a-cytoband-like-file" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pergola.mapping.write_cytoband">
+<code class="descclassname">pergola.mapping.</code><code class="descname">write_cytoband</code><span class="sig-paren">(</span><em>self</em>, <em>end</em>, <em>start=0</em>, <em>delta=43200</em>, <em>start_phase='light'</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#write_cytoband"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.write_cytoband" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a cytoband-like and a bed file with phases of the experiment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>end</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> last timepoint in the series</li>
+<li><strong>start</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> first timepoint in the series, by default 0</li>
+<li><strong>delta</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> delta between intervals, by default 43200 seconds, 12 hours</li>
+<li><strong>start_phase</strong> (<em>light</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> first phase &#8220;light&#8221; or &#8220;dark&#8221;, by default light</li>
+<li><strong>mode</strong> (<em>w</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use for file, by default write</li>
+<li><strong>path_w</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>TODO: extend light and dark to other possible values using variables</dt>
+<dd>Eventually separate into two different functions write_cytoband and write_bed</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ref-index-tables.html" class="btn btn-neutral float-right" title="Indices and tables"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ref-intervals.html" class="btn btn-neutral" title="IntData class"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Jose Espinosa-Carrasco.
+      Last updated on Aug 31, 2015.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>
