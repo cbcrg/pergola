@@ -1,19 +1,19 @@
-.. currentmodule:: pergola.intervals
+.. currentmodule:: intervals
 
 IntData class
 =============
 
-.. autoclass:: pergola.intervals.IntData
+.. autoclass:: intervals.IntData
 
 Load csv file
 -------------
 
-.. automethod:: pergola.intervals.IntData.read
+.. automethod:: intervals.IntData.read
      
 Checks that a variable contains a number
--------------
+----------------------------------------
 
-.. automethod:: pergola.intervals.is_number
+.. autofunction:: intervals.is_number
 
 .. |br| raw:: html
 

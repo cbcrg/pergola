@@ -135,21 +135,21 @@
   <div class="section" id="mapping-class">
 <h1>Mapping class<a class="headerlink" href="#mapping-class" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="pergola.mapping.MappingInfo">
-<em class="property">class </em><code class="descclassname">pergola.mapping.</code><code class="descname">MappingInfo</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#MappingInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.MappingInfo" title="Permalink to this definition">¶</a></dt>
+<dt id="mapping.MappingInfo">
+<em class="property">class </em><code class="descclassname">mapping.</code><code class="descname">MappingInfo</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#MappingInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.MappingInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields
 Mapping can be read both from a tabulated file or the _external_mapping_file_format from the 
 Gene Ontology Consortium</p>
 <dl class="attribute">
-<dt id="pergola.mapping.MappingInfo.path">
-<code class="descname">path</code><a class="headerlink" href="#pergola.mapping.MappingInfo.path" title="Permalink to this definition">¶</a></dt>
+<dt id="mapping.MappingInfo.path">
+<code class="descname">path</code><a class="headerlink" href="#mapping.MappingInfo.path" title="Permalink to this definition">¶</a></dt>
 <dt>
 <code class="descname">Name of/path to a configuration file</code></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="pergola.mapping.MappingInfo.correspondence">
-<code class="descname">correspondence</code><a class="headerlink" href="#pergola.mapping.MappingInfo.correspondence" title="Permalink to this definition">¶</a></dt>
+<dt id="mapping.MappingInfo.correspondence">
+<code class="descname">correspondence</code><a class="headerlink" href="#mapping.MappingInfo.correspondence" title="Permalink to this definition">¶</a></dt>
 <dt>
 <code class="descname">Dictionary with keys fields in behavioral file and values correspondence in genomic grammar</code></dt>
 <dd></dd></dl>
@@ -163,8 +163,8 @@ Gene Ontology Consortium</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="pergola.mapping.MappingInfo.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#MappingInfo.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.MappingInfo.write" title="Permalink to this definition">¶</a></dt>
+<dt id="mapping.MappingInfo.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#MappingInfo.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.MappingInfo.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes correspondence between the pergola ontology terms and the behavioral data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -181,8 +181,8 @@ Gene Ontology Consortium</p>
 <div class="section" id="create-a-chromosome-in-fasta-format">
 <h2>Create a chromosome in fasta format<a class="headerlink" href="#create-a-chromosome-in-fasta-format" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="pergola.mapping.write_chr">
-<code class="descclassname">pergola.mapping.</code><code class="descname">write_chr</code><span class="sig-paren">(</span><em>self</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#write_chr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.write_chr" title="Permalink to this definition">¶</a></dt>
+<dt id="mapping.write_chr">
+<code class="descclassname">mapping.</code><code class="descname">write_chr</code><span class="sig-paren">(</span><em>self</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#write_chr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.write_chr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a fasta file of the length of the range of value inside the IntData object
 that will be use for the mapping the data into it</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -203,8 +203,8 @@ that will be use for the mapping the data into it</p>
 <div class="section" id="create-a-cytoband-like-file">
 <h2>Create a cytoband-like file<a class="headerlink" href="#create-a-cytoband-like-file" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="pergola.mapping.write_cytoband">
-<code class="descclassname">pergola.mapping.</code><code class="descname">write_cytoband</code><span class="sig-paren">(</span><em>self</em>, <em>end</em>, <em>start=0</em>, <em>delta=43200</em>, <em>start_phase='light'</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pergola/mapping.html#write_cytoband"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pergola.mapping.write_cytoband" title="Permalink to this definition">¶</a></dt>
+<dt id="mapping.write_cytoband">
+<code class="descclassname">mapping.</code><code class="descname">write_cytoband</code><span class="sig-paren">(</span><em>self</em>, <em>end</em>, <em>start=0</em>, <em>delta=43200</em>, <em>start_phase='light'</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#write_cytoband"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.write_cytoband" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a cytoband-like and a bed file with phases of the experiment</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -250,7 +250,7 @@ that will be use for the mapping the data into it</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014, Jose Espinosa-Carrasco.
-      Last updated on Aug 31, 2015.
+      Last updated on Sep 01, 2015.
     </p>
   </div>
 

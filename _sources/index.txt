@@ -27,6 +27,4 @@ Documentation index:
      installation
   
      reference/index
-     
-   	
-
+ 
