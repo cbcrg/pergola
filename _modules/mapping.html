@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mapping &mdash; Pergola 0.1.0 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:'../',
+        VERSION:'0.1.0',
+        COLLAPSE_INDEX:false,
+        FILE_SUFFIX:'.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+    <script type="text/javascript">
+        jQuery(function () {
+            SphinxRtdTheme.StickyNav.enable();
+        });
+    </script>
+  
+
+  
+    <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> Pergola</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing Pergola</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#download-and-installation">Download and installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#development-versions">Development versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#testing-installation">Testing installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/ref-intervals.html">IntData class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/ref-mapping.html">Mapping class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/ref-index-tables.html">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>mapping</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mapping</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">=======================</span>
+<span class="sd">Module: pergola.mapping</span>
+<span class="sd">=======================</span>
+
+<span class="sd">.. module:: mapping</span>
+
+<span class="sd">This module  provides the class and functions to map the fields of input files </span>
+<span class="sd">into pergola ontology genomic-like fields.</span>
+
+<span class="sd">It provides a class :class:`~pergola.mapping.MappingInfo` that reads the information</span>
+<span class="sd">from a mapping file.</span>
+<span class="sd"> </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">re</span>      <span class="kn">import</span> <span class="nb">compile</span><span class="p">,</span> <span class="n">match</span>
+<span class="kn">from</span> <span class="nn">os</span>      <span class="kn">import</span> <span class="n">getcwd</span>
+<span class="kn">from</span> <span class="nn">sys</span>     <span class="kn">import</span> <span class="n">stderr</span><span class="p">,</span> <span class="nb">exit</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">tracks</span> <span class="kn">import</span> <span class="n">Track</span>
+
+<span class="n">_genome_file_ext</span> <span class="o">=</span> <span class="s">&quot;.fa&quot;</span>
+<span class="n">_generic_nt</span> <span class="o">=</span> <span class="s">&quot;N&quot;</span>
+<span class="n">_cytoband_file_ext</span> <span class="o">=</span> <span class="s">&quot;.txt&quot;</span>
+<span class="n">_bed_file_ext</span> <span class="o">=</span> <span class="s">&quot;.bed&quot;</span>
+
+<span class="n">_p_ontology_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;chromStart&quot;</span><span class="p">,</span> <span class="s">&quot;dataValue&quot;</span><span class="p">,</span> <span class="s">&quot;chromEnd&quot;</span><span class="p">,</span> <span class="s">&quot;dataTypes&quot;</span><span class="p">,</span> <span class="s">&quot;track&quot;</span><span class="p">,</span> <span class="s">&quot;chrom&quot;</span><span class="p">,</span> <span class="s">&quot;dummy&quot;</span><span class="p">]</span>
+                    
+<div class="viewcode-block" id="MappingInfo"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.MappingInfo">[docs]</a><span class="k">class</span> <span class="nc">MappingInfo</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields</span>
+<span class="sd">    Mapping can be read both from a tabulated file or the _external_mapping_file_format from the </span>
+<span class="sd">    Gene Ontology Consortium </span>
+<span class="sd">    </span>
+<span class="sd">    .. _external_mapping_file_format: http://geneontology.org/page/external-mapping-file-format </span>
+<span class="sd">    </span>
+<span class="sd">    .. attribute:: path</span>
+<span class="sd">       Name of/path to a configuration file</span>
+<span class="sd">    </span>
+<span class="sd">    .. attribute::  correspondence </span>
+<span class="sd">       Dictionary with keys fields in behavioral file and values correspondence in genomic grammar</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: MappingInfo object</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">check_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correspondence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_correspondence_from_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+    
+    <span class="c">#TODO documentation</span>
+    <span class="k">def</span> <span class="nf">_correspondence_from_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+            <span class="c">#Eliminates possible empty lines at the end</span>
+            <span class="n">config_file_list</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="ow">not</span> <span class="n">match</span><span class="p">(</span><span class="s">r&#39;^\s*$&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">config_file</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">config_file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;#&#39;</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">config_file_list</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tab_config</span><span class="p">(</span><span class="n">config_file_list</span><span class="p">))</span>
+
+            <span class="k">elif</span> <span class="n">config_file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;!&#39;</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">config_file_list</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mapping_config</span><span class="p">(</span><span class="n">config_file_list</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Mapping file format is not recognized: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">))</span>
+                
+    <span class="c">#TODO documentation            </span>
+    <span class="k">def</span> <span class="nf">_tab_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_tab</span><span class="p">):</span>
+        <span class="n">dict_correspondence</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">comment_tag_t</span> <span class="o">=</span> <span class="s">&quot;#&quot;</span>
+        
+        <span class="n">dummy_ctr</span><span class="o">=</span><span class="mi">0</span>
+        
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">file_tab</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comment_tag_t</span><span class="p">)):</span>               
+                <span class="k">continue</span>
+                                    
+            <span class="n">row_split</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">file_term</span> <span class="o">=</span> <span class="n">row_split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">row_split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            
+            <span class="c">#Validation of the ontology term</span>
+            <span class="k">if</span> <span class="n">pergola_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_p_ontology_terms</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Term </span><span class="si">%s</span><span class="s"> is not a valid pergola term.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pergola_term</span><span class="p">))</span>
+            
+            <span class="k">if</span> <span class="n">pergola_term</span> <span class="o">==</span> <span class="s">&quot;dummy&quot;</span><span class="p">:</span> 
+                    <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">pergola_term</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dummy_ctr</span><span class="p">)</span>
+                    <span class="n">dummy_ctr</span> <span class="o">=</span> <span class="n">dummy_ctr</span> <span class="o">+</span> <span class="mi">1</span>
+            
+            <span class="n">dict_correspondence</span><span class="p">[</span><span class="n">file_term</span><span class="p">]</span> <span class="o">=</span> <span class="n">pergola_term</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">dict_correspondence</span><span class="p">)</span>    
+    
+    <span class="c">#TODO documentation</span>
+    <span class="k">def</span> <span class="nf">_mapping_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_map</span><span class="p">):</span>
+        <span class="n">dict_correspondence</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">mapping_l_ex</span> <span class="o">=</span> <span class="s">&quot;tag_file:field_input_file &gt; pergola:pergola_ontology_term&quot;</span>
+        <span class="c">#comment_tag = (&quot;#&quot;, &quot;!&quot;)</span>
+        <span class="n">comment_tag_m</span> <span class="o">=</span> <span class="s">&quot;!&quot;</span>
+<span class="c">#         p_mapping = compile(r&#39;^\w+\:\w+\s\&gt;\s\w+\:\w+&#39;) </span>
+        <span class="n">p_mapping</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="s">r&quot;^\w+\:[</span><span class="se">\&quot;</span><span class="s">\w</span><span class="se">\&quot;</span><span class="s">]|[\w]+\s\&gt;\s\w+\:\w+] &quot;</span><span class="p">)</span> 
+        
+        <span class="n">dummy_ctr</span><span class="o">=</span><span class="mi">0</span>
+        
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">file_map</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">p_mapping</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\&quot;</span><span class="s">&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">l</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;&gt;&quot;</span><span class="p">)</span>
+                <span class="n">file_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+                <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\t\n</span><span class="s">&#39;</span><span class="p">)</span>
+                
+                <span class="c">#Validation of the ontology term</span>
+                <span class="k">if</span> <span class="n">pergola_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_p_ontology_terms</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Term </span><span class="si">%s</span><span class="s"> is not a valid pergola term.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pergola_term</span><span class="p">))</span>
+                
+                <span class="k">if</span> <span class="n">pergola_term</span> <span class="o">==</span> <span class="s">&quot;dummy&quot;</span><span class="p">:</span> 
+                    <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">pergola_term</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dummy_ctr</span><span class="p">)</span>
+                    <span class="n">dummy_ctr</span> <span class="o">=</span> <span class="n">dummy_ctr</span> <span class="o">+</span> <span class="mi">1</span>
+                     
+                <span class="n">dict_correspondence</span><span class="p">[</span><span class="n">file_term</span><span class="p">]</span> <span class="o">=</span> <span class="n">pergola_term</span>
+            
+            <span class="k">elif</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comment_tag_m</span><span class="p">)):</span>   
+                <span class="k">continue</span>            
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Mapping file format not recognized:</span><span class="se">\n</span><span class="s"> </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;\n</span><span class="s">&quot;</span>  \
+                                <span class="s">&quot;You can see a correct example below:</span><span class="se">\n\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s">.&quot;</span>  \
+                                <span class="o">%</span> <span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">),</span> <span class="n">mapping_l_ex</span><span class="p">))</span>
+                
+        <span class="k">return</span> <span class="p">(</span><span class="n">dict_correspondence</span><span class="p">)</span>   
+    
+<div class="viewcode-block" id="MappingInfo.write"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.MappingInfo.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Writes correspondence between the pergola ontology terms and the behavioral data </span>
+<span class="sd">         </span>
+<span class="sd">        :param 0 indent: :py:func:`int` set indent to be used when writing </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">correspondence</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span>
+            
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="check_path"><a class="viewcode-back" href="../reference/pergola.html#mapping.check_path">[docs]</a><span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Check whether the input file exists and is accessible and if OK returns path</span>
+<span class="sd">    :param path: path to the intervals file</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">),</span> <span class="s">&quot;Expected string or unicode, found </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&#39;File does not exist: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>      
+</div>
+<div class="viewcode-block" id="write_chr"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.write_chr">[docs]</a><span class="k">def</span> <span class="nf">write_chr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Creates a fasta file of the length of the range of value inside the IntData object</span>
+<span class="sd">    that will be use for the mapping the data into it</span>
+<span class="sd">    </span>
+<span class="sd">    :param mode: :py:func:`str` mode to use by default write</span>
+<span class="sd">    :param None path_w: :py:func:`str` path to dump the files, by default None </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Track</span><span class="p">),</span> <span class="s">&quot;Expected Track object, found </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    
+    <span class="n">chrom</span> <span class="o">=</span> <span class="s">&#39;chr1&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path_w</span><span class="p">:</span> 
+        <span class="n">path</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">()</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;Chromosome fasta like file will be dump into </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s"> &#39;</span> \
+                       <span class="s">&#39;as it has not been set using path_w&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path_w</span>
+                            
+    <span class="n">genomeFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">chrom</span> <span class="o">+</span> <span class="n">_genome_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>        
+    <span class="n">genomeFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;&gt;&quot;</span> <span class="o">+</span> <span class="n">chrom</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="n">genomeFile</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="n">_generic_nt</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="n">genomeFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;Genome fasta file created: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">chrom</span> <span class="o">+</span> <span class="n">_genome_file_ext</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="write_cytoband"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.write_cytoband">[docs]</a><span class="k">def</span> <span class="nf">write_cytoband</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s">&quot;light&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">     </span>
+<span class="sd">    Creates a cytoband-like and a bed file with phases of the experiment </span>
+<span class="sd">    </span>
+<span class="sd">    :param end: :py:func:`int` last timepoint in the series</span>
+<span class="sd">    :param start: :py:func:`int` first timepoint in the series, by default 0</span>
+<span class="sd">    :param delta: :py:func:`int` delta between intervals, by default 43200 seconds, 12 hours</span>
+<span class="sd">    :param light start_phase: :py:func:`str` first phase &quot;light&quot; or &quot;dark&quot;, by default light</span>
+<span class="sd">    :param w mode: :py:func:`str` mode to use for file, by default write  </span>
+<span class="sd">    :param None path_w: :py:func:`str` path to dump the files, by default None </span>
+<span class="sd">    </span>
+<span class="sd">    TODO: extend light and dark to other possible values using variables</span>
+<span class="sd">          Eventually separate into two different functions write_cytoband and write_bed </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">end_t</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="nb">chr</span> <span class="o">=</span> <span class="s">&quot;chr1&quot;</span>
+    <span class="n">name_cytob</span> <span class="o">=</span> <span class="s">&quot;cytoband_file&quot;</span>
+    <span class="n">phase</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">light_ph</span> <span class="o">=</span> <span class="s">&quot;light&quot;</span> 
+    <span class="n">light_stain</span> <span class="o">=</span> <span class="s">&quot;gneg&quot;</span>
+    <span class="n">dark_ph</span> <span class="o">=</span> <span class="s">&quot;dark&quot;</span>
+    <span class="n">dark_stain</span> <span class="o">=</span> <span class="s">&quot;gpos25&quot;</span>
+    <span class="n">dict_stain</span> <span class="o">=</span> <span class="p">{</span><span class="n">light_ph</span><span class="p">:</span> <span class="s">&quot;gneg&quot;</span><span class="p">,</span> <span class="n">dark_ph</span><span class="p">:</span><span class="s">&quot;gpos25&quot;</span><span class="p">}</span>
+    
+    <span class="n">name_bed</span> <span class="o">=</span> <span class="s">&quot;phases&quot;</span>
+    <span class="n">name_bed_light</span> <span class="o">=</span> <span class="n">name_bed</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">light_ph</span>
+    <span class="n">name_bed_dark</span> <span class="o">=</span> <span class="n">name_bed</span> <span class="o">+</span> <span class="s">&quot;_&quot;</span> <span class="o">+</span> <span class="n">dark_ph</span>
+    
+    <span class="n">dict_bed_values</span> <span class="o">=</span> <span class="p">{</span><span class="n">light_ph</span><span class="p">:</span> <span class="s">&quot;0&quot;</span><span class="p">,</span> <span class="n">dark_ph</span><span class="p">:</span><span class="s">&quot;1000&quot;</span><span class="p">}</span>
+     
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path_w</span><span class="p">:</span> 
+        <span class="n">path</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">()</span>
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;Cytoband like file will be dump into </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s"> &#39;</span> \
+                        <span class="s">&#39;as it has not been set using path_w&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">)</span> 
+        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&#39;Bed files with phases will be dump into </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s"> &#39;</span> \
+                        <span class="s">&#39;as it has not been set using path_w&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">)</span>     
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path_w</span>
+             
+    <span class="n">cytoband_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_cytob</span> <span class="o">+</span> <span class="n">_cytoband_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>  
+    <span class="n">phases_bed_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_bed</span> <span class="o">+</span> <span class="n">_bed_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>  
+    <span class="n">phases_bed_light_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_bed_light</span> <span class="o">+</span> <span class="n">_bed_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span> 
+    <span class="n">phases_bed_dark_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_bed_dark</span> <span class="o">+</span> <span class="n">_bed_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span> 
+    
+    <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;track name=</span><span class="se">\&quot;</span><span class="s">phases</span><span class="se">\&quot;</span><span class="s"> description=</span><span class="se">\&quot;</span><span class="s">Track annotating phases of the experiment</span><span class="se">\&quot;</span><span class="s"> visibility=2 color=0,0,255 useScore=1 priority=user</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;track name=</span><span class="se">\&quot;</span><span class="s">phases</span><span class="se">\&quot;</span><span class="s"> description=</span><span class="se">\&quot;</span><span class="s">Track annotating phases of the experiment</span><span class="se">\&quot;</span><span class="s"> visibility=2 color=0,0,255 useScore=1 priority=user</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;track name=</span><span class="se">\&quot;</span><span class="s">phases</span><span class="se">\&quot;</span><span class="s"> description=</span><span class="se">\&quot;</span><span class="s">Track annotating phases of the experiment</span><span class="se">\&quot;</span><span class="s"> visibility=2 color=0,0,255 useScore=1 priority=user</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+    
+    <span class="n">phase</span> <span class="o">=</span> <span class="n">start_phase</span>
+    
+    <span class="k">if</span> <span class="n">phase</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dict_stain</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Phase allowed values are dark or light, current value is:  </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">phase</span><span class="p">))</span> 
+         
+    <span class="k">if</span> <span class="n">start</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span>  <span class="s">&quot;{0}</span><span class="se">\t</span><span class="s">{1}</span><span class="se">\t</span><span class="s">{2}</span><span class="se">\t</span><span class="s">{3}</span><span class="se">\t</span><span class="s">{4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">dict_stain</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>
+        <span class="n">line_bed</span> <span class="o">=</span> <span class="s">&quot;{0}</span><span class="se">\t</span><span class="s">{1}</span><span class="se">\t</span><span class="s">{2}</span><span class="se">\t</span><span class="s">{3}</span><span class="se">\t</span><span class="s">{4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">dict_bed_values</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">end_t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">delta</span>
+        
+        <span class="k">if</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">light_ph</span><span class="p">:</span> 
+            <span class="n">phase</span><span class="o">=</span><span class="n">dark_ph</span>
+            <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">dark_ph</span><span class="p">:</span> 
+            <span class="n">phase</span><span class="o">=</span><span class="n">light_ph</span>
+            <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span> 
+        
+        <span class="n">cytoband_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">end_t</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">end_t</span> <span class="o">+=</span> <span class="n">delta</span>
+                
+    <span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">end</span> <span class="o">-</span> <span class="n">delta</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span>  <span class="s">&quot;{0}</span><span class="se">\t</span><span class="s">{1}</span><span class="se">\t</span><span class="s">{2}</span><span class="se">\t</span><span class="s">{3}</span><span class="se">\t</span><span class="s">{4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">end_t</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">dict_stain</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>
+        <span class="n">line_bed</span> <span class="o">=</span> <span class="s">&quot;{0}</span><span class="se">\t</span><span class="s">{1}</span><span class="se">\t</span><span class="s">{2}</span><span class="se">\t</span><span class="s">{3}</span><span class="se">\t</span><span class="s">{4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">end_t</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">dict_bed_values</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>
+        <span class="n">cytoband_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">end_t</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">end_t</span> <span class="o">+=</span> <span class="n">delta</span>
+        
+        <span class="k">if</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">light_ph</span><span class="p">:</span> 
+            <span class="n">phase</span><span class="o">=</span><span class="n">dark_ph</span>
+            <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">dark_ph</span><span class="p">:</span> 
+            <span class="n">phase</span><span class="o">=</span><span class="n">light_ph</span> 
+            <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span> 
+            
+    <span class="n">line</span> <span class="o">=</span>  <span class="s">&quot;{0}</span><span class="se">\t</span><span class="s">{1}</span><span class="se">\t</span><span class="s">{2}</span><span class="se">\t</span><span class="s">{3}</span><span class="se">\t</span><span class="s">{4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">dict_stain</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span> 
+    <span class="n">line_bed</span> <span class="o">=</span> <span class="s">&quot;{0}</span><span class="se">\t</span><span class="s">{1}</span><span class="se">\t</span><span class="s">{2}</span><span class="se">\t</span><span class="s">{3}</span><span class="se">\t</span><span class="s">{4}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">dict_bed_values</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>   
+    
+    <span class="n">cytoband_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+    <span class="n">cytoband_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Jose Espinosa-Carrasco.
+      Last updated on Sep 01, 2015.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+</body>
+</html>
