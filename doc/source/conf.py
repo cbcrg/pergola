@@ -19,7 +19,8 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('..'))
-sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../../pergola'))
+# sys.path.insert(0, os.path.abspath('../..'))
 
 # -- General configuration ------------------------------------------------
 
@@ -296,7 +297,7 @@ texinfo_documents = [
 epub_title = u'Pergola'
 epub_author = u'Jose Espinosa-Carrasco'
 epub_publisher = u'Jose Espinosa-Carrasco'
-epub_copyright = u'2014, Jose Espinosa-Carrasco'
+epub_copyright = u'2015, Jose Espinosa-Carrasco'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'Pergola'

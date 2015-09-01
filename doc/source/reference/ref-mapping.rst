@@ -1,9 +1,9 @@
-.. currentmodule:: pergola.mapping
+.. currentmodule:: mapping
 
 Mapping class
 =============
 
-.. autoclass:: pergola.mapping.MappingInfo
+.. autoclass:: mapping.MappingInfo
    :members:
 
 Create a chromosome in fasta format
