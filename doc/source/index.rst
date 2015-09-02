@@ -25,6 +25,8 @@ Documentation index:
      :maxdepth: 3
   
      installation
+     
+     tutorial
   
      reference/index
  
