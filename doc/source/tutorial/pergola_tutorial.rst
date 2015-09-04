@@ -1,4 +1,3 @@
-
 .. _getting_start:
                 
 Getting started
@@ -942,10 +941,10 @@ Bed file
 
 ::
 
-    track type=bed name="1_drink" description="1 drink" visibility=2 itemRgb="On" priority=20
-    chr1    168.0   192.0   ""  0.02    +   168.0   192.0   0,0,128
-    chr1    457.0   482.0   ""  0.02    +   457.0   482.0   0,0,128
-    chr1    569.0   601.0   ""  0.03    +   569.0   601.0   203,203,254
+    track type=bed name="1_eat" description="1 eat" visibility=2 itemRgb="On" priority=20
+    chr1    0   19  ""  0.06    +   0   19  51,254,51
+    chr1    113 144 ""  0.07    +   113 144 0,254,0
+    chr1    174 196 ""  0.08    +   174 196 25,115,25
 
 .. code:: python
 
