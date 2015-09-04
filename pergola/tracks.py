@@ -653,7 +653,7 @@ class Track(GenomicContainer):
                     start_new = chr_start
                     end_new = chr_end
                     
-                    for start_w in range (ini_window, chr_end, delta_window):
+                    for start_w in range (int(ini_window), int(chr_end), delta_window):
                         weighted_value = 0.0
                         
                         if (end_w == start_w):
@@ -690,7 +690,7 @@ class Track(GenomicContainer):
                     start_new = chr_start
                     end_new = chr_end
                     
-                    for start_w in range (ini_window, chr_end, delta_window):
+                    for start_w in range (int(ini_window), int(chr_end), delta_window):                
                         weighted_value = 0
                         
                         if (end_w == start_w):
