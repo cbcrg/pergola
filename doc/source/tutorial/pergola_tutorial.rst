@@ -2,7 +2,6 @@
 .. _getting_start:
                 
 Getting started
-===============
 
 Input data
 ==========
@@ -608,6 +607,9 @@ point as 0:
 .. code:: python
 
     bedG_8_food_sc = dict_bedGraph[('8', 'food_sc')]
+Track object
+============
+
 .. code:: python
 
     bedG_8_food_sc.data
@@ -621,7 +623,6 @@ point as 0:
 .. parsed-literal::
 
     <generator object track_convert2bedGraph at 0x10c9afe60>
-
 
 
 
@@ -926,6 +927,26 @@ point as 0:
     File tr_11_dt_food_sc.bed generated
 
 
+Output data
+===========
+
+Bed file
+========
+
+::
+
+    track type=bed name="1_eat" description="1 eat" visibility=2 itemRgb="On" priority=20
+    chr1    137.0   156.0   ""  0.06    +   137.0   156.0   51,254,51
+    chr1    250.0   281.0   ""  0.07    +   250.0   281.0   0,254,0
+    chr1    311.0   333.0   ""  0.08    +   311.0   333.0   25,115,25
+
+::
+
+    track type=bed name="1_drink" description="1 drink" visibility=2 itemRgb="On" priority=20
+    chr1    168.0   192.0   ""  0.02    +   168.0   192.0   0,0,128
+    chr1    457.0   482.0   ""  0.02    +   457.0   482.0   0,0,128
+    chr1    569.0   601.0   ""  0.03    +   569.0   601.0   203,203,254
+
 .. code:: python
 
     data_type_col_bedGraph = {'food_sc':'green', 'food_fat_food_sc':'red'}
@@ -989,6 +1010,27 @@ point as 0:
     No path selected, files dump into path:  /Users/jespinosa/git/pergola
     File tr_11_dt_food_sc.bedGraph generated
 
+
+Output data
+===========
+
+bedGraph files
+==============
+
+::
+
+    track type=bedGraph name="1_eat" description="1_eat" visibility=full color=0,254,0 altColor=25,115,25 priority=20
+    chr1    137.0   157.0   0.06
+    chr1    157.0   177.0   0
+    chr1    177.0   197.0   0
+    chr1    197.0   217.0   0
+    chr1    217.0   237.0   0
+    chr1    237.0   257.0   0.0158064516129
+    chr1    257.0   277.0   0.0451612903226
+    chr1    277.0   297.0   0.00903225806452
+    chr1    297.0   317.0   0.0218181818182
+    chr1    317.0   337.0   0.0581818181818
+    chr1    337.0   357.0   0.0
 
 .. code:: python
 
