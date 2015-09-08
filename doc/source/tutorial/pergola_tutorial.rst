@@ -1088,3 +1088,20 @@ bedGraph files
     No path selected, files dump into path:  /Users/jespinosa/git/pergola
     File files_data.bed generated
 
+
+means bed file to delete
+
+::
+
+    chr1    1   1801    ""  1000    +   0   1   0.06
+    chr1    137171  138971  ""  1000    +   132936  137171  0
+    chr1    397442  399242  ""  1000    +   391684  397442  0
+    chr1    568633  570433  ""  1000    +   563646  568633  0.125714
+
+intermeal to delete
+
+::
+
+    chr1    1   30  ""  1000    +   1   30  0
+    chr1    183 345 ""  1000    +   183 345 0
+    chr1    502 924 ""  1000    +   502 924 0
