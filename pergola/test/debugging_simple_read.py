@@ -25,23 +25,33 @@ track_data.convert(mode="bed")
 
 #electro for single time point validation
 
-# mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
-# mapping_info_e.write()
-# 
-# int_data_e = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
-# int_data_e_int = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
-#  
-#  
-# print ("debugging_simple_read", int_data_e.data[:12])
-# print ("debugging_simple_read",int_data_e.fieldsB)
-# print ("debugging_simple_read",int_data_e.fieldsG_dict)
-# # print (int_data.fieldsG_dict.keys())
-# print ("debugging_simple_read",int_data_e.dataTypes)
-# print ("debugging_simple_read",int_data_e.tracks)
-# # int_data_e.read(multiply_t=1000, relative_coord=True)# este tiene que petar no endChrom
-# print ("debugging_simple_read",int_data_e_int.data)
-# tracks_data_e = int_data_e_int.read(multiply_t=1000, intervals=True)
-# print "debugging_simple_read", tracks_data_e
+mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
+mapping_info_e.write()
+
+print ("debugging_simple_read correspondence.........................................................",mapping_info_e.correspondence.values())
+
+int_data_e = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
+int_data_e_int = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
+  
+print ("debugging_simple_read keys fieldsG_dict................",int_data_e.fieldsG_dict.keys())
+print ("debugging_simple_read****************************************", int_data_e)
+print ("debugging_simple_read", int_data_e.data[:12])
+print ("debugging_simple_read",int_data_e.fieldsB)
+print ("debugging_simple_read",int_data_e.fieldsG_dict)
+print ("min in electrophysiology================================", int_data_e.min)
+print ("min in electrophysiology================================", int_data_e.max)
+# print (int_data.fieldsG_dict.keys())
+print ("debugging_simple_read",int_data_e.dataTypes)
+print ("debugging_simple_read",int_data_e.tracks)
+# int_data_e.read(multiply_t=1000, relative_coord=True)# este tiene que petar no endChrom
+print ("debugging_simple_read",int_data_e_int.data)
+tracks_data_e = int_data_e_int.read(multiply_t=1000, intervals=True)
+print "debugging_simple_read", tracks_data_e
+print "debugging_simple_read", int_data_e_int.range_values
+print "debugging_simple_read", tracks_data_e.range_values
+print "debugging_simple_read", tracks_data_e.max
+print "debugging_simple_read", tracks_data_e.data[0]
+
 
 
 
