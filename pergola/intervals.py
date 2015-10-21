@@ -673,7 +673,7 @@ class IntData(object):
         # Coordinates multiplied by a given factor set by the user
         if multiply_t:
             print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t 
-            
+                        
             try:            
                 f=""
                 name_fields2mult = [f for f in _f2mult if f in self.fieldsG_dict] 
@@ -705,7 +705,7 @@ class IntData(object):
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
 
             self.data = self._time2rel_time(i_time_f)
-        
+            
         # From only start value for each time point we generate intervals
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"
@@ -898,7 +898,7 @@ class IntData(object):
                         if v_m-v_i != 0:
                             raise ValueError ("Intervals values (chromStart and chromEnd) can not be decimal\nPlease use a bigger factor " \
                                               "with -m,--multiply_intervals flag to multiply your values, current value is %s"%factor)
-                        temp.append(v_m)
+                        temp.append(v_i)
                         
                     else: 
                         raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
