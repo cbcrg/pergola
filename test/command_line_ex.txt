@@ -38,7 +38,9 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology
 pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e
 
 # Files of the tutorial - file separation
-pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/files.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
+pergola_rules.py -i "/Users/jespinosa/git/pergola/sample_data/files.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
+# Files of peaks for validation paper
+pergola_rules.py -i "/Users/jespinosa/phecomp/20140807_pergola/20150411_validationPaper/files_val_peaks.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
 
 # JAABA jaaba example chase
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
