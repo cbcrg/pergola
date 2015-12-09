@@ -27,6 +27,7 @@ Python libraries
   $ pip install numpy argparse
   $ pip install csv
   $ pip install biopy-isatab
+  $ pip install scipy
 
 
 .. note:: **You might need to install** first `pip`_  if your python version is not 2.7.9 or later
