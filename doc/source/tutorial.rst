@@ -9,6 +9,14 @@ Getting started
    
    tutorial/pergola_tutorial
 
+Ready-to-use scripts
+--------------------
+
+.. toctree::
+   :maxdepth: 2
+   
+   tutorial/ready_to_use_scripts 
+
 Jaaba data
 ----------
 

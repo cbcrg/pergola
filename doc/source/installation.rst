@@ -47,7 +47,7 @@ Download Pergola tarball from github, unpack and install it:
   $ cd pergola-master
   $ sudo python setup.py install
 
-or, you can download the code a a ``.zip`` file from Github website and follow the three last instructions above.
+or, you can download the code as a ``.zip`` file from Github website and follow the three last instructions above.
 
 .. image:: images/github_zip_red.png
 
