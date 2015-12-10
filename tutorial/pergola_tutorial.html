@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting started &mdash; Pergola 0.1.0 documentation</title>
+  <title>Code your own scripts &mdash; Pergola 0.1.0 documentation</title>
   
 
   
@@ -55,7 +55,7 @@
   
     <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Tutorials" href="../tutorial.html"/>
-        <link rel="next" title="Reference Guide" href="../reference/index.html"/>
+        <link rel="next" title="Ready-to-use scripts" href="ready_to_use_scripts.html"/>
         <link rel="prev" title="Tutorials" href="../tutorial.html"/> 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -92,6 +92,7 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#ready-to-use-scripts">Ready-to-use scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial.html#jaaba-data">Jaaba data</a></li>
 </ul>
 </li>
@@ -126,7 +127,7 @@
       
           <li><a href="../tutorial.html">Tutorials</a> &raquo;</li>
       
-    <li>Getting started</li>
+    <li>Code your own scripts</li>
       <li class="wy-breadcrumbs-aside">
         
           <a href="../_sources/tutorial/pergola_tutorial.txt" rel="nofollow"> View page source</a>
@@ -137,14 +138,13 @@
 </div>
           <div role="main">
             
-  <div class="section" id="getting-started">
-<span id="getting-start"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-</div>
+  <div class="section" id="code-your-own-scripts">
+<h1>Code your own scripts<a class="headerlink" href="#code-your-own-scripts" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="input-data">
-<h1>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h1>
+<h2>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="sequence-of-temporal-events">
-<h1>Sequence of temporal events<a class="headerlink" href="#sequence-of-temporal-events" title="Permalink to this headline">¶</a></h1>
+<h2>Sequence of temporal events<a class="headerlink" href="#sequence-of-temporal-events" title="Permalink to this headline">¶</a></h2>
 <p>Pergola can process any sequence of temporal events contained in a
 character-separated file as in the example below:</p>
 <div class="highlight-python"><div class="highlight"><pre>Animal  StartT  EndT    Behavior    Value
@@ -160,7 +160,7 @@ character-separated file as in the example below:</p>
 a experiment where mice were used to study feeding behavior *</p>
 </div>
 <div class="section" id="mapping-file">
-<h1>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h1>
+<h2>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h2>
 <p>Pergola needs that you set the equivalences between the fields of the
 input data and a controled vocabular defined by Pergola ontology. The
 format of the mapping file is <em>`the external mapping file
@@ -184,7 +184,7 @@ behavioural_file:Value &gt; pergola:dataValue
 </div>
 </div>
 <div class="section" id="mappinginfo-objects">
-<h1>MappingInfo objects<a class="headerlink" href="#mappinginfo-objects" title="Permalink to this headline">¶</a></h1>
+<h2>MappingInfo objects<a class="headerlink" href="#mappinginfo-objects" title="Permalink to this headline">¶</a></h2>
 <p>Mappings between the input data and pergola ontology are loaded in
 MappingInfo objects:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pergola</span> <span class="kn">import</span> <span class="n">mapping</span>
@@ -209,7 +209,7 @@ CAGE        track
 will be explained in the lines below.</p>
 </div>
 <div class="section" id="intdata-objects">
-<h1>IntData objects<a class="headerlink" href="#intdata-objects" title="Permalink to this headline">¶</a></h1>
+<h2>IntData objects<a class="headerlink" href="#intdata-objects" title="Permalink to this headline">¶</a></h2>
 <p>IntData objects load all the intervals of a file:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pergola</span> <span class="kn">import</span> <span class="n">parsers</span>
 <span class="kn">from</span> <span class="nn">pergola</span> <span class="kn">import</span> <span class="n">intervals</span>
@@ -351,11 +351,11 @@ CAGE        track
 </div>
 </div>
 <div class="section" id="data-conversion">
-<h1>Data conversion:<a class="headerlink" href="#data-conversion" title="Permalink to this headline">¶</a></h1>
+<h2>Data conversion:<a class="headerlink" href="#data-conversion" title="Permalink to this headline">¶</a></h2>
 <p>GenomicContainer is a generic class from which three subclasses derive:</p>
 </div>
 <div class="section" id="track-objects">
-<h1>Track objects<a class="headerlink" href="#track-objects" title="Permalink to this headline">¶</a></h1>
+<h2>Track objects<a class="headerlink" href="#track-objects" title="Permalink to this headline">¶</a></h2>
 <p>Data can be loaded into a Track objects by read function. This function
 allows to convert the intervals to relative values using the first time
 point as 0:</p>
@@ -625,6 +625,9 @@ key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">bedG_8_food_sc</span> <span class="o">=</span> <span class="n">dict_bedGraph</span><span class="p">[(</span><span class="s">&#39;8&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="track-object">
+<h2>Track object<a class="headerlink" href="#track-object" title="Permalink to this headline">¶</a></h2>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">bedG_8_food_sc</span><span class="o">.</span><span class="n">data</span>
 
 <span class="c"># Code to print the data inside a bed object (generator object)</span>
@@ -857,6 +860,24 @@ No path selected, files dump into path:  /Users/jespinosa/git/pergola
 File tr_11_dt_food_sc.bed generated
 </pre></div>
 </div>
+</div>
+<div class="section" id="output-data">
+<h2>Output data<a class="headerlink" href="#output-data" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="bed-file">
+<h2>Bed file<a class="headerlink" href="#bed-file" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>track type=bed name=&quot;1_eat&quot; description=&quot;1 eat&quot; visibility=2 itemRgb=&quot;On&quot; priority=20
+chr1    137.0   156.0   &quot;&quot;  0.06    +   137.0   156.0   51,254,51
+chr1    250.0   281.0   &quot;&quot;  0.07    +   250.0   281.0   0,254,0
+chr1    311.0   333.0   &quot;&quot;  0.08    +   311.0   333.0   25,115,25
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>track type=bed name=&quot;1_eat&quot; description=&quot;1 eat&quot; visibility=2 itemRgb=&quot;On&quot; priority=20
+chr1    0   19  &quot;&quot;  0.06    +   0   19  51,254,51
+chr1    113 144 &quot;&quot;  0.07    +   113 144 0,254,0
+chr1    174 196 &quot;&quot;  0.08    +   174 196 25,115,25
+</pre></div>
+</div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">data_type_col_bedGraph</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;food_sc&#39;</span><span class="p">:</span><span class="s">&#39;green&#39;</span><span class="p">,</span> <span class="s">&#39;food_fat_food_sc&#39;</span><span class="p">:</span><span class="s">&#39;red&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
@@ -913,6 +934,23 @@ No path selected, files dump into path:  /Users/jespinosa/git/pergola
 File tr_11_dt_food_sc.bedGraph generated
 </pre></div>
 </div>
+</div>
+<div class="section" id="id3">
+<h2>Output data<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="bedgraph-files">
+<h2>bedGraph files<a class="headerlink" href="#bedgraph-files" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>track type=bedGraph name=&quot;1_eat&quot; description=&quot;1_eat&quot; visibility=full color=0,254,0 altColor=25,115,25 priority=20
+chr1    0   30  0.06
+chr1    30  60  0
+chr1    60  90  0
+chr1    90  120 0.0158064516129
+chr1    120 150 0.0541935483871
+chr1    150 180 0.0218181818182
+chr1    180 210 0.0581818181818
+chr1    210 240 0
+</pre></div>
+</div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c">## Bed file showing the files (recordings)</span>
 <span class="c"># reading correspondence file</span>
 <span class="n">mapping_file_data</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">OntologyInfo</span><span class="p">(</span><span class="s">&quot;test/f2g.txt&quot;</span><span class="p">)</span>
@@ -959,6 +997,20 @@ If you want to set your own factor please use -m,--multiply_intervals n
 File files_data.bed generated
 </pre></div>
 </div>
+<p>means bed file to delete</p>
+<div class="highlight-python"><div class="highlight"><pre>chr1    1   1801    &quot;&quot;  1000    +   0   1   0.06
+chr1    137171  138971  &quot;&quot;  1000    +   132936  137171  0
+chr1    397442  399242  &quot;&quot;  1000    +   391684  397442  0
+chr1    568633  570433  &quot;&quot;  1000    +   563646  568633  0.125714
+</pre></div>
+</div>
+<p>intermeal to delete</p>
+<div class="highlight-python"><div class="highlight"><pre>chr1    1   30  &quot;&quot;  1000    +   1   30  0
+chr1    183 345 &quot;&quot;  1000    +   183 345 0
+chr1    502 924 &quot;&quot;  1000    +   502 924 0
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -967,7 +1019,7 @@ File files_data.bed generated
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../reference/index.html" class="btn btn-neutral float-right" title="Reference Guide"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ready_to_use_scripts.html" class="btn btn-neutral float-right" title="Ready-to-use scripts"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../tutorial.html" class="btn btn-neutral" title="Tutorials"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -980,7 +1032,7 @@ File files_data.bed generated
   <div role="contentinfo">
     <p>
         &copy; Copyright 2014, Jose Espinosa-Carrasco.
-      Last updated on Sep 02, 2015.
+      Last updated on Dec 10, 2015.
     </p>
   </div>
 
