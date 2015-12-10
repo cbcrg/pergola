@@ -598,8 +598,10 @@ class Track(GenomicContainer):
         # no relative coordinates contained tones of empty data
 #         ini_window = 0 #ojo
 #         ini_window = 1       
-        ini_window = track[0][i_chr_start]
+        # I have to find the closest number multiple of the window size so that all 
+        # bedGraph have the same intervals
         delta_window = window      
+        ini_window = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
         end_window = ini_window + delta_window
         partial_value = 0 
         cross_interv_dict = {}
