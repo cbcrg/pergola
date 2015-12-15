@@ -39,12 +39,14 @@ _black_gradient = ["226,226,226", "198,198,198", "170,170,170", "141,141,141", "
 _blue_gradient = ["229,229,254", "203,203,254", "178,178,254", "152,152,254", "127,127,254", "102,102,254", "76,76,173", "51,51,162", "0,0,128"]
 _red_gradient = ["254,172,182", "254,153,162", "254,134,142", "254,115,121", "254,96,101", "254,77,81", "254,57,61", "254,38,40", "254,19,20"]
 _green_gradient = ["203,254,203", "178,254,178", "152,254,152", "127,254,127", "102,254,102", "76,254,76", "51,254,51", "0,254,0", "25,115,25"]
+_orange_gradient = ["139,69,19", "210,105,30", "255,140,0", "255,160,0", "255,180,0", "255,200,0", "255,220,0", "255,240,0", "250,250,210"]
 
 _dict_colors = {
                 'black' : _black_gradient,
                 'blue' : _blue_gradient,
                 'red' : _red_gradient,
-                'green' : _green_gradient}
+                'green' : _green_gradient,
+                'orange' : _orange_gradient}
 
 # _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000] #del
 
@@ -802,7 +804,7 @@ def assign_color (set_dataTypes, color_restrictions=None):
         Possible color gradients are
         ::
          
-             'black', 'blue', 'red', 'green' 
+             'black', 'blue', 'red', 'green', 'orange'
     
     :returns: d_dataType_color dictionary with dataTypes as keys and color gradients
         as values
