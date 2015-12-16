@@ -531,12 +531,15 @@ class Track(GenomicContainer):
         #Generate dictionary of field and color gradients
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
+        ## TODO Set 9 as the number of colors in the gradient and thus as a variable
         step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
 
         if step == 0: 
             _intervals = [0, self.range_values[1]]
         else: 
             _intervals = list(arange(float(self.range_values[0]), float(self.range_values[1]), step))
+        
+        print >> stderr,("FATAL ERROR: Something went wrong"), _intervals
         
         for row in track:
             temp_list = []
@@ -556,7 +559,7 @@ class Track(GenomicContainer):
                     color = _dict_col_grad[d_type][len(_intervals)-1]
 
                     if float(row[i_data_value]) <= v:                    
-                        color = _dict_col_grad[d_type][i-1]                                 
+                        color = _dict_col_grad[d_type][i]                               
                         break
             else:
                  d_type = row [self.fields.index("dataTypes")]
