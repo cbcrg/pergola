@@ -536,7 +536,7 @@ class Track(GenomicContainer):
         if step == 0: 
             _intervals = [0, self.range_values[1]]
         else: 
-            _intervals = list(arange(float(self.range_values[0]),float(self.range_values[1]), step))
+            _intervals = list(arange(float(self.range_values[0]), float(self.range_values[1]), step))
         
         for row in track:
             temp_list = []
@@ -549,15 +549,20 @@ class Track(GenomicContainer):
             temp_list.append(row[i_chr_start])
             temp_list.append(row[i_chr_end])
             
-            for i,v in enumerate(_intervals):    
-                d_type = row [self.fields.index("dataTypes")]
-                global color
-                color = _dict_col_grad[d_type][len(_intervals)-1]
+            if step != 0:
+                for i,v in enumerate(_intervals):    
+                    d_type = row [self.fields.index("dataTypes")]
+                    global color
+                    color = _dict_col_grad[d_type][len(_intervals)-1]
 
-                if float(row[i_data_value]) <= v:                    
-                    color = _dict_col_grad[d_type][i-1]                                 
-                    break
-
+                    if float(row[i_data_value]) <= v:                    
+                        color = _dict_col_grad[d_type][i-1]                                 
+                        break
+            else:
+                 d_type = row [self.fields.index("dataTypes")]
+                 global color
+                 color = _dict_col_grad[d_type][-1]
+                 
             temp_list.append(color)          
             
             yield(tuple(temp_list))
