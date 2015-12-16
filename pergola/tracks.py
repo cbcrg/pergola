@@ -36,12 +36,22 @@ _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),
               'txt': ('Track', '', '.txt')}
 
 # From light to dark
-_black_gradient = ["226,226,226", "198,198,198", "170,170,170", "141,141,141", "113,113,113", "85,85,85", "56,56,56", "28,28,28", "0,0,0"]
-# _blue_gradient = ["229,229,254", "203,203,254", "178,178,254", "152,152,254", "127,127,254", "102,102,254", "76,76,173", "51,51,162", "0,0,128"]
-_blue_gradient = ["224,255,255", "173,216,230", "135,206,250", "135,206,235", "65,105,225", "0,0,255", "0,0,205", "0,0,139", "0,0,128"] 
-_red_gradient = ["254,172,182", "254,153,162", "254,134,142", "254,115,121", "254,96,101", "254,77,81", "254,57,61", "254,38,40", "254,19,20"]
-_green_gradient = ["203,254,203", "178,254,178", "152,254,152", "127,254,127", "102,254,102", "76,254,76", "51,254,51", "0,254,0", "25,115,25"]
-_orange_gradient = ["255,223,0", "255,240,0", "255,220,0", "255,200,0", "255,180,0", "255,160,0", "255,140,0", "250,115,0", "255,100,0"]
+# n_interval = 9
+
+# _black_gradient = ["226,226,226", "198,198,198", "170,170,170", "141,141,141", "113,113,113", "85,85,85", "56,56,56", "28,28,28", "0,0,0"]
+# _blue_gradient = ["224,255,255", "173,216,230", "135,206,250", "135,206,235", "65,105,225", "0,0,255", "0,0,205", "0,0,139", "0,0,128"] 
+# _red_gradient = ["254,172,182", "254,153,162", "254,134,142", "254,115,121", "254,96,101", "254,77,81", "254,57,61", "254,38,40", "254,19,20"]
+# _green_gradient = ["203,254,203", "178,254,178", "152,254,152", "127,254,127", "102,254,102", "76,254,76", "51,254,51", "0,254,0", "25,115,25"]
+# _orange_gradient = ["255,223,0", "255,240,0", "255,220,0", "255,200,0", "255,180,0", "255,160,0", "255,140,0", "250,115,0", "255,100,0"]
+
+n_interval = 4
+
+# short gradients
+_black_gradient = ["170,170,170", "113,113,113", "85,85,85", "56,56,56", "28,28,28", "0,0,0"]
+_blue_gradient = ["135,206,250", "65,105,225", "0,0,255", "0,0,205", "0,0,139", "0,0,128"] 
+_red_gradient = ["254,134,142", "254,96,101", "254,77,81", "254,57,61", "254,38,40", "254,19,20"]
+_green_gradient = ["152,254,152", "102,254,102", "76,254,76", "51,254,51", "0,254,0", "25,115,25"]
+_orange_gradient = ["255,220,0", "255,180,0", "255,160,0", "255,140,0", "250,115,0", "255,100,0"]
 
 _dict_colors = {
                 'black' : _black_gradient,
@@ -180,7 +190,7 @@ class GenomicContainer(object):
             track_file.write (annotation_track + "\n")
             
         elif self.format == 'bedGraph' and track_line:
-            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[7] + ' altColor=' + self.color_gradient[8] + ' priority=20'        #             
+            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
             
 #         print "fields are: ......................... " , self.fields #del        
@@ -510,7 +520,7 @@ class Track(GenomicContainer):
         """        
 
         #This fields are mandatory in objects of class Bed
-        _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]
+        _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]        
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -531,15 +541,13 @@ class Track(GenomicContainer):
         #Generate dictionary of field and color gradients
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = assign_color (self.dataTypes, color_restrictions)
-        ## TODO Set 9 as the number of colors in the gradient and thus as a variable
-        step = (float(self.range_values[1]) - float(self.range_values[0])) / 9
+        
+        step = (float(self.range_values[1]) - float(self.range_values[0])) / n_interval
 
         if step == 0: 
             _intervals = [0, self.range_values[1]]
         else: 
             _intervals = list(arange(float(self.range_values[0]), float(self.range_values[1]), step))
-        
-        print >> stderr,("FATAL ERROR: Something went wrong"), _intervals
         
         for row in track:
             temp_list = []
