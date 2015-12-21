@@ -9,6 +9,7 @@ Script to run pergola from the command line using isatab format
 sp = " "
 
 from pergola import parsers
+from pergola import isatab_parser
 from pergola  import intervals
 from pergola  import mapping
 # from scripts import pergola_rules
@@ -49,7 +50,7 @@ def main():
         raise ValueError ("Argument input must be a folder containning data in isatab format")
     
     # It might be interesting to check inside the function whether files are url or in path
-    dict_files = parsers.parse_isatab_assays (args.input)
+    dict_files = isatab_parser.parse_isatab_assays (args.input)
     print dict_files
     
     # First try with files in local then with url
@@ -61,7 +62,7 @@ def main():
         # Tengo que relacionar de alguna manera cual es el assay de donde tiene que sacar los archivos
         #Probar varios isatab files 
         
-        file_path = parsers.check_assay_pointer(pointer_file, download_path=path_pergola) 
+        file_path = isatab_parser.check_assay_pointer(pointer_file, download_path=path_pergola) 
         print "File name is::::::::::::::::::::::::::%s   \n" % file_path
         
 #         dataTypes_list=args.dataTypes_list #del
