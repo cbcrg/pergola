@@ -74,4 +74,4 @@ Finally, if you want to check that your installation completed succesfully, move
 .. code-block:: bash
   
   $ cd test
-  $ python test_pergola.py
+  $ python test_all.py
