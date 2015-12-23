@@ -1,6 +1,9 @@
-.. _getting_start:
-                
-Getting started
+
+.. \_getting\_start:
+
+=====================
+Code your own scripts
+=====================
 
 Input data
 ==========
