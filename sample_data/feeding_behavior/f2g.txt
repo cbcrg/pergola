@@ -1,0 +1,7 @@
+! Mapping of file fields into genome browser fields
+!
+behavioural_file:File > genome_file:track
+behavioural_file:NameFile > genome_file:dataTypes
+behavioural_file:StartT > genome_file:chromStart
+behavioural_file:EndT > genome_file:chromEnd
+behavioural_file:Value > genome_file:dataValue
