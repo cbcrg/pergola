@@ -43,7 +43,7 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/sample_data/files.csv" -m  "/U
 pergola_rules.py -i "/Users/jespinosa/phecomp/20140807_pergola/20150411_validationPaper/files_val_peaks.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
 
 # JAABA jaaba example chase
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/sample_data/jaaba_example/jaaba2pergola.txt"
 
 # ActiTrack position files example bed file
 pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n
