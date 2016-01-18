@@ -220,7 +220,7 @@ class IntData(object):
                 except KeyError:
                     raise KeyError ("Field %s is not mapped in your ontology mapping. " \
                                     "TIP: Fields that are not use from the input data have to be set to dummy " \
-                                    "in the ontology mapping. Example: behavioural_file:%s > pergola:dummy"                               
+                                    "in the ontology mapping. Example: behavioral_file:%s > pergola:dummy"                               
                                     % (field_B, field_B))                                                                                                                        
                 dict_fields_g[map_dict [field_B]] = i_field_b
             i_field_b = i_field_b + 1                    
