@@ -55,11 +55,11 @@ class IntData(object):
     
     .. attribute:: min
     
-        First time value in the file. Read from field set as "chromStart"
+        First time value in the file. Read from field set as "chrom_start"
     
     .. attribute:: max
     
-        Last timepoint in the file. Read from field set as "chromEnd"
+        Last timepoint in the file. Read from field set as "chrom_end"
     
     .. attribute:: range_values
     
@@ -234,10 +234,10 @@ class IntData(object):
 #          YA ESTA HECVHO ARRIBA
         
         #Input file at least should have two fields that correspond to:
-        mandatory_fields = ["chromStart", "dataValue"]
+        mandatory_fields = ["chrom_start", "dataValue"]
         
         if not all(f in dict_fields_g.keys() for f in mandatory_fields):
-            raise ValueError("Input file mandatory fields  are \"chromStart\" and \"dataValue\" \n" \
+            raise ValueError("Input file mandatory fields  are \"chrom_start\" and \"dataValue\" \n" \
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
@@ -274,10 +274,10 @@ class IntData(object):
 #         """
 #         Reads the information inside the input file and returns minimun and maximun.
 #         
-#         :param 1 multiply: multiplies the values of the field set as chromStart and 
-#             chromEnd
+#         :param 1 multiply: multiplies the values of the field set as chrom_start and 
+#             chrom_end
 #         :param False intervals: if True pergola creates intervals from the field set
-#             as chromStart, 
+#             as chrom_start, 
 #         
 #         :returns: list with intervals contained in file, minimum and maximum values inside the file 
 #         
@@ -294,14 +294,14 @@ class IntData(object):
 #         # Field assign to data value should be an integer or float
 #         idx_dataValue = [self.fieldsG_dict["dataValue"]]
 #         
-#         _int_points = ["chromStart", "chromEnd"]
+#         _int_points = ["chrom_start", "chrom_end"]
 #         idx_fields2int = [10000000000000]
 #         i_new_field = [10000000000000]                                    
 #         
 #         if intervals:             
 #             print >>stderr, "Intervals will be inferred from timepoints"
-#             _time_points = ["chromStart"]
-#             f_int_end = "chromEnd"
+#             _time_points = ["chrom_start"]
+#             f_int_end = "chrom_end"
 #         
 #             if f_int_end in self.fieldsG_dict:
 #                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (f_int_end, self.path))
@@ -329,7 +329,7 @@ class IntData(object):
 #         p_min = None
 #         p_max = None
 #         
-#         _start_f = ["chromStart"]
+#         _start_f = ["chrom_start"]
 #         
 #         try:
 # #             i_min = [self.fieldsG_dict.index(f) for f in _start_f]
@@ -337,14 +337,14 @@ class IntData(object):
 #         except KeyError:
 #             raise KeyError("Field '%s' for min interval calculation time not in file %s." % (f, self.path))
 #             
-#         _end_f = ["chromEnd"]
+#         _end_f = ["chrom_end"]
 #         
 #         try:
 #             i_max = [self.fieldsG_dict[f] for f in _end_f]              
 #         except KeyError:
 #             raise KeyError("Field '%s' for max interval calculation time not in file %s \n" \
 #                              "TIP: If your file contains timepoints you can transform them to intervals" \
-#                              " setting the field containing them to chromStart and setting intervals=True" 
+#                              " setting the field containing them to chrom_start and setting intervals=True" 
 #                              % (f, self.path))
 #         
 #         # Range of dataValue field
@@ -391,7 +391,7 @@ class IntData(object):
 #             # give the info of how to set the value #COPIAR
 #             if multiply_t != 1:
 #                 print ("Factor to transform time values has been set to %s. "%multiply_t)
-#                 print ("pergola set this parameter because values in chromStart are decimals.\n"  
+#                 print ("pergola set this parameter because values in chrom_start are decimals.\n"  
 #                        "You can set your own factor using option -mi,--multiply_intervals n")        
 #         
 #         # If track exists data is order by track, this way I can avoid having problems 
@@ -448,7 +448,7 @@ class IntData(object):
 #                     try:
 #                         float(interv[i])
 #                     except ValueError:
-#                         raise ValueError("Values set as chromStart and chromEnd should be numerical not others: \"%s\".\n" %
+#                         raise ValueError("Values set as chrom_start and chrom_end should be numerical not others: \"%s\".\n" %
 #                                           interv[i])
 #                         
 #                 if i in idx_fields2mult and i in idx_fields2int:        
@@ -457,7 +457,7 @@ class IntData(object):
 #                     b = int(a)
 # 
 #                     if a-b != 0:
-#                         raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease set a bigger factor " \
+#                         raise ValueError ("Intervals values (chrom_start and chrom_end)can not be decimal\nPlease set a bigger factor " \
 #                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)                                                
 #                     v = int(float(interv[i]) * multiply_t)
 #                     
@@ -490,7 +490,7 @@ class IntData(object):
 #                     a = round (float(interv[i]) * multiply_t, 6)
 #                     b = int(a)
 #                     if a-b != 0:
-#                         raise ValueError ("Intervals values (chromStart and chromEnd)can not be decimal\nPlease use a bigger factor " \
+#                         raise ValueError ("Intervals values (chrom_start and chrom_end)can not be decimal\nPlease use a bigger factor " \
 #                                           "using -m,--multiply_intervals flag to multiply your values, current value is %s"%multiply_t)          
 #                     
 #                     v = int(float(interv[i]) * multiply_t)
@@ -616,13 +616,13 @@ class IntData(object):
         Reads the data and converts it depending on selected options
         
         :param fields: :py:func:`list` with data columns to read
-        :param False relative_coord: If true all coordinates in chromStart and chromEnd are
+        :param False relative_coord: If true all coordinates in chrom_start and chrom_end are
             make relative to the minimal value
         :param False intervals: if set to true intervals will be inferred from timepoints in
-            chromStart 
+            chrom_start 
         :param fields2rel: :py:func:`list` with data columns to make relative
-        :param multiply_t: :py:func:`int` multiplies the values of the field set as chromStart and 
-            chromEnd
+        :param multiply_t: :py:func:`int` multiplies the values of the field set as chrom_start and 
+            chrom_end
         
         :returns: Track object
         
@@ -631,10 +631,10 @@ class IntData(object):
         Eventually do not change self.data but a list inside read and return the Track object with the modifications
         this way data is always the original one.
         """
-        _f_rel_mand = "chromStart"
-        _f_int_end = "chromEnd"
-        _f2rel = ["chromStart","chromEnd"]
-        _f2mult = ["chromStart","chromEnd"]
+        _f_rel_mand = "chrom_start"
+        _f_int_end = "chrom_end"
+        _f2rel = ["chrom_start","chrom_end"]
+        _f2mult = ["chrom_start","chrom_end"]
         i_time_f = [10000000000000]
         
         #If fields is not set then all the data columns are read
@@ -648,7 +648,7 @@ class IntData(object):
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
         
-        # If chromStart not present out     
+        # If chrom_start not present out     
         try:
  
             idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
@@ -710,8 +710,8 @@ class IntData(object):
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"
             
-            # If chromend is present ERROR
-#             _time_points = ["chromStart"]#del
+            # If chrom_end is present ERROR
+#             _time_points = ["chrom_start"]#del
 #         _f_rel_mand#del
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
@@ -745,13 +745,13 @@ class IntData(object):
 #         Reads the data and converts it depending on selected options
 #         
 #         :param fields: :py:func:`list` with data columns to read
-#         :param False relative_coord: If true all coordinates in chromStart and chromEnd are
+#         :param False relative_coord: If true all coordinates in chrom_start and chrom_end are
 #             make relative to the minimal value
 #         :param False intervals: if set to true intervals will be inferred from timepoints in
-#             chromStart 
+#             chrom_start 
 #         :param fields2rel: :py:func:`list` with data columns to make relative
-#         :param 1 multiply: :py:func:`int` multiplies the values of the field set as chromStart and 
-#             chromEnd
+#         :param 1 multiply: :py:func:`int` multiplies the values of the field set as chrom_start and 
+#             chrom_end
 #         
 #         :returns: Track object
 #         """
@@ -773,12 +773,12 @@ class IntData(object):
 #         if relative_coord:             
 #                 
 #             if fields2rel is None and intervals: 
-#                 _f2rel = ["chromStart","chromEnd"] 
+#                 _f2rel = ["chrom_start","chrom_end"] 
 #             elif fields2rel is None and not intervals:
-#                 if "chromEnd" in self.fieldsG:
-#                     _f2rel = ["chromStart","chromEnd"] 
+#                 if "chrom_end" in self.fieldsG:
+#                     _f2rel = ["chrom_start","chrom_end"] 
 #                 else:
-#                     _f2rel = ["chromStart"]
+#                     _f2rel = ["chrom_start"]
 #                     
 #             else:
 #                 if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
@@ -796,7 +796,7 @@ class IntData(object):
 # #         return self.data
 #         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
     
-    def _min_max(self, list_data, t_start="chromStart", t_end="chromEnd"):
+    def _min_max(self, list_data, t_start="chrom_start", t_end="chrom_end"):
         """
         TODO Documentation
         """
@@ -838,7 +838,7 @@ class IntData(object):
         I have two problems with this, first that if i have intervals min will be only in one of the two
         fields set for convert into relative.
         The second problem is that the min is read far before here is where I have to check this
-        In principal this should be always in chromStart that is why I have the terms in the ontology!!!!!
+        In principal this should be always in chrom_start that is why I have the terms in the ontology!!!!!
         
         """
         data_rel = list()
@@ -854,7 +854,7 @@ class IntData(object):
                         
                         if n % 1 == 0:                        
 #                             temp.append(int(row[i])- self.min + 1)
-                            temp.append(int(row[i])- self.min)
+                            temp.append(int(row[i]) - self.min)
                         else: 
                             raise ValueError("Value can not be relativize because is not an integer \'%.16f\'" \
                                             ". Use option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
@@ -896,7 +896,7 @@ class IntData(object):
                         v_m = round (float(row[i]) * factor, 6)
                         v_i = int(v_m)
                         if v_m-v_i != 0:
-                            raise ValueError ("Intervals values (chromStart and chromEnd) can not be decimal\nPlease use a bigger factor " \
+                            raise ValueError ("Intervals values (chrom_start and chrom_end) can not be decimal\nPlease use a bigger factor " \
                                               "with -m,--multiply_intervals flag to multiply your values, current value is %s"%factor)
                         temp.append(v_i)
                         
@@ -921,7 +921,7 @@ class IntData(object):
         :returns: list of tuples (self.data-like)
         """
         data_int = list()
-        _f_int_end = "chromEnd"
+        _f_int_end = "chrom_end"
         
         #Field is add as supplementary column
         end_int = len(self.fieldsG)      

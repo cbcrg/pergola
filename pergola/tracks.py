@@ -193,8 +193,8 @@ class GenomicContainer(object):
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'description=\"' + self.track + "_" + self.dataTypes + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
             
-#         print "fields are: ......................... " , self.fields #del        
-        data_out = sorted(self.data, key=itemgetter(self.fields.index('chromStart')))
+        print "fields are: ......................... " , self.fields #del        
+        data_out = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
                 
         # for row in self.data:
         for row in data_out:  
@@ -520,7 +520,7 @@ class Track(GenomicContainer):
         """        
 
         #This fields are mandatory in objects of class Bed
-        _bed_fields = ["track","chromStart","chromEnd","dataTypes", "dataValue"]        
+        _bed_fields = ["track","chrom_start","chrom_end","dataTypes", "dataValue"]        
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -533,8 +533,8 @@ class Track(GenomicContainer):
             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
         
         i_track = self.fields.index("track")
-        i_chr_start = self.fields.index("chromStart")
-        i_chr_end = self.fields.index("chromEnd")
+        i_chr_start = self.fields.index("chrom_start")
+        i_chr_end = self.fields.index("chrom_end")
         i_data_value = self.fields.index("dataValue")
         i_data_types = self.fields.index("dataTypes")
         
@@ -592,7 +592,7 @@ class Track(GenomicContainer):
         """
         
         #This fields are mandatory in objects of class BedGraph
-        _bed_fields = ["track","chromStart","chromEnd","dataValue"] 
+        _bed_fields = ["track","chrom_start","chrom_end","dataValue"] 
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -757,7 +757,9 @@ class Bed(GenomicContainer):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bed'
-        kwargs['fields'] = ['chr','chromStart','end','name','score','strand',
+        
+        # 
+        kwargs['fields'] = ['chr','chrom_start','chrom_end','name','score','strand',
                             'thick_start','thick_end','item_rgb']
         
         GenomicContainer.__init__(self,data,**kwargs)

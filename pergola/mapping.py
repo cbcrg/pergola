@@ -23,7 +23,7 @@ _generic_nt = "N"
 _cytoband_file_ext = ".txt"
 _bed_file_ext = ".bed"
 
-_p_ontology_terms = ["chromStart", "dataValue", "chromEnd", "dataTypes", "track", "chrom", "dummy"]
+_p_ontology_terms = ["chrom_start", "dataValue", "chrom_end", "dataTypes", "track", "chrom", "dummy"]
                     
 class MappingInfo():
     """
