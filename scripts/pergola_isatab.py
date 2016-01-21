@@ -65,11 +65,11 @@ def main():
         file_path = isatab_parser.check_assay_pointer(pointer_file, download_path=path_pergola) 
         print "File name is::::::::::::::::::::::::::%s   \n" % file_path
         
-#         dataTypes_list=args.dataTypes_list #del
+#         data_types_list=args.data_types_list #del
         pergola_rules.main(path=file_path, map_file_path=args.mapping_file,
                            sel_tracks=args.tracks, list=args.list, range=args.range,
-                           track_actions=args.track_actions, dataTypes_list=args.dataTypes_list,
-                           dataTypes_actions=args.dataTypes_actions, write_format=args.format,
+                           track_actions=args.track_actions, data_types_list=args.data_types_list,
+                           data_types_actions=args.data_types_actions, write_format=args.format,
                            relative_coord=args.relative_coord, intervals_gen=args.intervals_gen,                        
                            multiply_f=args.multiply_intervals, fields2read=args.fields_read, 
                            window_size=args.window_size)

@@ -21,7 +21,7 @@ from pergola import parsers
 # _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
 def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
-         dataTypes_actions=None, dataTypes_list=None, write_format=None, relative_coord=False, intervals_gen=False,
+         data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
@@ -54,12 +54,12 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     track_act = track_actions
     print >> stderr, "@@@Pergola_rules.py: Track actions are: ", track_act
     
-    data_types_list = dataTypes_list
-    print >> stderr, "@@@Pergola_rules.py: dataTypes list is: ", data_types_list
+    data_types_list = data_types_list
+    print >> stderr, "@@@Pergola_rules.py: data_types list is: ", data_types_list
       
-    # Handling argument dataTypes actions
-    dataTypes_act = dataTypes_actions
-    print >> stderr, "@@@Pergola_rules.py: dataTypes actions are: ", dataTypes_act
+    # Handling argument data_types actions
+    data_types_act = data_types_actions
+    print >> stderr, "@@@Pergola_rules.py: data_types actions are: ", data_types_act
     
     # Handling argument format    
     if write_format:
@@ -178,7 +178,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     # I don't need anymore the start to be shift because files are trimmed
     mapping.write_cytoband(intData, end=end)
     
-#     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.dataTypes",data_read.dataTypes
+#     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.data_types",data_read.data_types
 
     # Save the data in a text file similar to the original read file
     data_read.save_track(name_file="all_intervals")
@@ -190,7 +190,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #     print "Selected tracks.....................", sel_tracks#del
     
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-                                 data_types=data_types_list, dataTypes_actions=dataTypes_act, 
+                                 data_types=data_types_list, data_types_actions=data_types_act, 
                                  window=window_size)
     
      
@@ -202,7 +202,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     for key in bed_str:
 #         print "key.......: ",key#del
         bedSingle = bed_str[key]
-#         print "::::::::::::::",bedSingle.dataTypes
+#         print "::::::::::::::",bedSingle.data_types
 #         print "::::::::::::::",bedSingle.track        
         # TODO add an if checking whether it is a bedgraph or not to get the mean 
 #         bedGraph_mean = bedSingle.win_mean()
@@ -236,7 +236,7 @@ if __name__ == '__main__':
     
     exit(main(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
-              dataTypes_actions=args.dataTypes_actions, dataTypes_list=args.dataTypes_list,
+              data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
               write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
               multiply_f=args.multiply_intervals, no_header=args.no_header, 
               fields2read=args.fields_read, window_size=args.window_size, 
