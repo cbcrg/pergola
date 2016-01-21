@@ -3,7 +3,7 @@
 behavioural_file:CAGE > genome_file:track
 behavioural_file:StartT > genome_file:chrom_start
 behavioural_file:EndT > genome_file:chrom_end
-behavioural_file:Nature > genome_file:dataTypes
+behavioural_file:Nature > genome_file:data_types
 behavioural_file:Value > genome_file:dataValue
 behavioural_file:Phase > genome_file:chrom
 

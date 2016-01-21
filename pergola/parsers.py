@@ -258,10 +258,10 @@ parent_parser.add_argument('-r', '--range', required=False, type=parse_num_range
 parent_parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
                     help='Option of action with tracks selected, split_all, join_all,' + \
                          ' join_odd, join_even, join_range or join_list')
-parent_parser.add_argument('-dl', '--dataTypes_list', required=False, metavar="LIST_OF_DATA_TYPES", type=str, nargs='+',
-                    help='List of dataTypes to be joined')
-parent_parser.add_argument('-d', '--dataTypes_actions', required=False, choices=_dt_act_options,
-                    help='Unique values of dataTypes field should be dumped on' + \
+parent_parser.add_argument('-dl', '--data_types_list', required=False, metavar="LIST_OF_DATA_TYPES", type=str, nargs='+',
+                    help='List of data_types to be joined')
+parent_parser.add_argument('-d', '--data_types_actions', required=False, choices=_dt_act_options,
+                    help='Unique values of data_types field should be dumped on' + \
                          ' different data structures or not')
 parent_parser.add_argument('-f', '--format', required=False, type=str, 
                     help='Write file output format (bed or bedGraph)')

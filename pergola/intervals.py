@@ -69,10 +69,10 @@ class IntData(object):
     
         List of tuples containing the data read from the file
     
-    .. attribute:: dataTypes
+    .. attribute:: data_types
     
-        All different dataTypes that appear in the data read from "dataTypes" field.
-        If dataTypes field not in file, all intervals are set as belonging to dataTypes "a"
+        All different data_types that appear in the data read from "data_types" field.
+        If data_types field not in file, all intervals are set as belonging to data_types "a"
 
     .. attribute:: tracks
     
@@ -97,7 +97,7 @@ class IntData(object):
         self.range_values = 0
         self.data = self._simple_read()        
 #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
-        self.dataTypes = self.get_field_items(field ="dataTypes", data = self.data, default="a")
+        self.data_types = self.get_field_items(field ="data_types", data = self.data, default="a")
         self.tracks = self.get_field_items(field="track", data = self.data, default="1")#TODO maybe this function will be more general if instead of giving field name
         #i pass the index 
         
@@ -246,7 +246,7 @@ class IntData(object):
     
     def _simple_read(self):
         """
-        This function just needs to read the raw data set min and maximum, dataTypes and this stuff
+        This function just needs to read the raw data set min and maximum, data_types and this stuff
         _read was too much complicated
         
         :returns: list with intervals contained in file, minimum and maximum values inside the file 
@@ -562,7 +562,7 @@ class IntData(object):
 # #         return (list_data, p_min, p_max)
 #         return (list_data)
     
-    def get_field_items(self, data, field="dataTypes", default=None): 
+    def get_field_items(self, data, field="data_types", default=None): 
         """
         Reads the unique values inside a field and returns them as a set
         If default is set and field does not exist in the data then the field is
@@ -738,7 +738,7 @@ class IntData(object):
             
         self.fieldsG = list_fields
         
-        return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
+        return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
 #         """        
@@ -794,7 +794,7 @@ class IntData(object):
 #         idx_fields2int = [10000000000000]
 #         
 # #         return self.data
-#         return Track(self.data, self.fieldsG, dataTypes=self.dataTypes, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
+#         return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
     
     def _min_max(self, list_data, t_start="chrom_start", t_end="chrom_end"):
         """
