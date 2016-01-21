@@ -1,7 +1,7 @@
 
 .. \_getting\_start:
+====================
 
-=====================
 Code your own scripts
 =====================
 
@@ -32,8 +32,8 @@ Mapping file
 
 Pergola needs that you set the equivalences between the fields of the
 input data and a controled vocabular defined by Pergola ontology. The
-format of the mapping file is *`the external mapping file
-format <http://geneontology.org/page/external-mapping-file-format>`__*
+format of the mapping file is `the external mapping file
+format <http://geneontology.org/page/external-mapping-file-format>`__
 from the Gene Ontology Consortium, you can see an example below:
 
 ::
@@ -53,6 +53,7 @@ from the Gene Ontology Consortium, you can see an example below:
     
     my_path_to_modules = "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/"
     sys.path.append(my_path_to_modules)
+
 MappingInfo objects
 ===================
 
@@ -64,12 +65,14 @@ MappingInfo objects:
     from pergola import mapping
     # load mapping file 
     mapping_info = mapping.MappingInfo("../../sample_data/feeding_behavior/b2g.txt")
+
 To view the mappings MappingInfo objects provide the
 :func:``pergola.mapping.Mapping.write`` method
 
 .. code:: python
 
     mapping_info.write()
+
 
 .. parsed-literal::
 
@@ -96,7 +99,8 @@ IntData objects load all the intervals of a file:
     
     
     # load the data into an IntData object that will store the sequence of events
-    int_data = intervals.IntData("../../sample_data/feedingBehavior_HF_mice.csv", map_dict=mapping_info.correspondence)
+    int_data = intervals.IntData("../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv", map_dict=mapping_info.correspondence)
+
 
 Intervals when loaded are stored in a list of tuples that can be
 accessed by data attribute:
@@ -105,6 +109,7 @@ accessed by data attribute:
 
     #Displays first 10 tuples of data list
     int_data.data[:10]
+
 
 
 
@@ -133,6 +138,7 @@ data:
 
 
 
+
 .. parsed-literal::
 
     {'food_fat', 'food_sc', 'water'}
@@ -144,6 +150,7 @@ The minimun value present in the data:
 .. code:: python
 
     int_data.min
+
 
 
 
@@ -161,6 +168,7 @@ The maximun value:
 
 
 
+
 .. parsed-literal::
 
     1337766069
@@ -173,6 +181,7 @@ in pergola ontology). In this case the different IDs for each mice:
 .. code:: python
 
     int_data.tracks
+
 
 
 
@@ -208,6 +217,7 @@ ontology) that can be used to encode for example different behaviours:
 
 
 
+
 .. parsed-literal::
 
     {'food_fat', 'food_sc', 'water'}
@@ -217,6 +227,7 @@ ontology) that can be used to encode for example different behaviours:
 .. code:: python
 
     mapping_info.write()
+
 
 .. parsed-literal::
 
@@ -234,6 +245,7 @@ ontology) that can be used to encode for example different behaviours:
 
 
 
+
 .. parsed-literal::
 
     'chromEnd'
@@ -242,11 +254,13 @@ ontology) that can be used to encode for example different behaviours:
 
 .. code:: python
 
-    path_intervals = "../../sample_data/feedingBehavior_HF_mice.csv"
+    path_intervals = "../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv"
     int_data = intervals.IntData(path_intervals, map_dict=mapping_info.correspondence)
+
 .. code:: python
 
     print int_data.min
+
 
 .. parsed-literal::
 
@@ -257,6 +271,7 @@ ontology) that can be used to encode for example different behaviours:
 
     print int_data.max
 
+
 .. parsed-literal::
 
     1337766069
@@ -265,6 +280,7 @@ ontology) that can be used to encode for example different behaviours:
 .. code:: python
 
     int_data.tracks
+
 
 
 
@@ -308,6 +324,7 @@ point as 0:
     int_data_read = int_data.read(relative_coord=True)
 
 
+
 .. parsed-literal::
 
     Relative coordinates set to: True
@@ -316,6 +333,7 @@ point as 0:
 .. code:: python
 
     int_data_read.list_tracks
+
 
 
 
@@ -348,6 +366,7 @@ point as 0:
 
 
 
+
 .. parsed-literal::
 
     [0.02, 4.46]
@@ -357,6 +376,7 @@ point as 0:
 .. code:: python
 
     dict_bed = int_data_read.convert(mode='bed')
+
 .. code:: python
 
     #dict_bed = data_read.convert(mode='bed')
@@ -364,6 +384,7 @@ point as 0:
         print "key.......: ",key#del
         bedSingle = dict_bed [key]
         print "::::::::::::::",bedSingle.dataTypes
+
 
 .. parsed-literal::
 
@@ -462,9 +483,11 @@ point as 0:
 .. code:: python
 
     bed_12_food_sc = dict_bed[('2', 'food_sc')]
+
 .. code:: python
 
     bed_12_food_sc.range_values
+
 
 
 
@@ -477,6 +500,7 @@ point as 0:
 .. code:: python
 
     type(bed_12_food_sc)
+
 
 
 
@@ -496,21 +520,24 @@ point as 0:
 
 
 
+
 .. parsed-literal::
 
-    <generator object track_convert2bed at 0x10cd5e730>
+    <generator object track_convert2bed at 0x1059968c0>
 
 
 
 .. code:: python
 
     dict_bedGraph = int_data_read.convert(mode='bedGraph')
+
 .. code:: python
 
     for key in dict_bedGraph:
         print "key.......: ",key#del
         bedGraphSingle = dict_bedGraph [key]
         print "::::::::::::::",bedGraphSingle.dataTypes
+
 
 .. parsed-literal::
 
@@ -609,6 +636,7 @@ point as 0:
 .. code:: python
 
     bedG_8_food_sc = dict_bedGraph[('8', 'food_sc')]
+
 Track object
 ============
 
@@ -622,15 +650,17 @@ Track object
 
 
 
+
 .. parsed-literal::
 
-    <generator object track_convert2bedGraph at 0x10c9afe60>
+    <generator object track_convert2bedGraph at 0x1058dbbe0>
 
 
 
 .. code:: python
 
     type(int_data_read)
+
 
 
 
@@ -646,6 +676,7 @@ Track object
 
 
 
+
 .. parsed-literal::
 
     list
@@ -658,6 +689,7 @@ Track object
 
 
 
+
 .. parsed-literal::
 
     [0.02, 4.46]
@@ -667,6 +699,7 @@ Track object
 .. code:: python
 
     int_data_read.list_tracks
+
 
 
 
@@ -699,20 +732,20 @@ Track object
 
 
 
+
 .. parsed-literal::
 
     ('18', 1778342, 'food_fat', 1778315, '0.0800000000000001')
 
 
 
-.. code:: python
-
-    Primero poner todo lo que se puede hacer con el intdata
-    y luego ya poner el resto
+Primero poner todo lo que se puede hacer con el intdata y luego ya poner
+el resto
 
 .. code:: python
 
-    data_read.dataTypes
+    int_data_read.dataTypes
+
 
 
 
@@ -727,9 +760,11 @@ Track object
     #data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
     #                                 data_types=data_types_list, dataTypes_actions=dataTypes_act, 
     #                                 window=window_size) 
+
 .. code:: python
 
-    mapping.write_chr (int_data)
+    mapping.write_chr (int_data_read)
+
 
 .. parsed-literal::
 
@@ -740,7 +775,8 @@ Track object
 .. code:: python
 
     # Generate a cytoband file and a bed file with phases
-    mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark")
+    mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark", lab_bed=False)
+
 
 .. parsed-literal::
 
@@ -753,6 +789,7 @@ Track object
     #data_read = intData.read(relative_coord=True, multiply_t=1)
     data_read = int_data.read(relative_coord=True)
 
+
 .. parsed-literal::
 
     Relative coordinates set to: True
@@ -762,13 +799,16 @@ Track object
 
     #for i in data_read.data:
     #        print i
+
 .. code:: python
 
-    data_type_col = {'food_sc': 'green', 'food_fat':'red'}
+    data_type_col = {'food_sc': 'orange', 'food_fat':'blue'}
+
 .. code:: python
 
     bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
                                 color_restrictions=data_type_col)
+
 
 .. parsed-literal::
 
@@ -781,9 +821,10 @@ Track object
         bedSingle = bed_str[key]
         bedSingle.save_track()
 
+
 .. parsed-literal::
 
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_8_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -795,9 +836,9 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_7_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_6_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -811,7 +852,7 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_14_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -823,11 +864,11 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_3_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_2_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_5_dt_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -843,10 +884,8 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_10_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
-    File tr_1_dt_food_sc.bed generated
     No path selected, files dump into path: 
 
 .. parsed-literal::
@@ -859,7 +898,9 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_1_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_18_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -871,9 +912,9 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_17_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_16_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -887,9 +928,9 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_9_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_4_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -903,9 +944,9 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_13_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_12_dt_food_fat_food_sc.bed generated
     No path selected, files dump into path: 
 
@@ -923,9 +964,9 @@ Track object
 
 .. parsed-literal::
 
-     /Users/jespinosa/git/pergola
+     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_15_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_11_dt_food_sc.bed generated
 
 
@@ -951,10 +992,12 @@ Bed file
 
 .. code:: python
 
-    data_type_col_bedGraph = {'food_sc':'green', 'food_fat_food_sc':'red'}
+    data_type_col_bedGraph = {'food_sc':'orange', 'food_fat_food_sc':'blue'}
+
 .. code:: python
 
     bedGraph_str = data_read.convert(mode="bedGraph", window=1800, data_types=["food_sc", "food_fat"], dataTypes_actions="all", color_restrictions=data_type_col_bedGraph)
+
 
 .. parsed-literal::
 
@@ -973,43 +1016,44 @@ Bed file
         bedGraph_single = bedGraph_str[key]
         bedGraph_single.save_track()
 
+
 .. parsed-literal::
 
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_8_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_7_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_6_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_14_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_3_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_2_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_5_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_10_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_1_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_18_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_17_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_16_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_9_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_4_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_13_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_12_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_15_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_11_dt_food_sc.bedGraph generated
 
 
@@ -1035,10 +1079,12 @@ bedGraph files
 
     ## Bed file showing the files (recordings)
     # reading correspondence file
-    mapping_file_data = mapping.OntologyInfo("test/f2g.txt")
+    mapping_file_data = mapping.MappingInfo("../../sample_data/feeding_behavior/f2g.txt")
+
 .. code:: python
 
     mapping_file_data.write()
+
 
 .. parsed-literal::
 
@@ -1052,17 +1098,8 @@ bedGraph files
 .. code:: python
 
     # Reading file info
-    files_data = intervals.IntData("data/sample_data/files.csv", ontology_dict=mapping_file_data.correspondence)
+    files_data = intervals.IntData("../../sample_data/feeding_behavior/files.csv", map_dict=mapping_file_data.correspondence)
     data_file_read = files_data.read(relative_coord=True)
-
-.. parsed-literal::
-
-    ..............fieldsB ['File', 'NameFile', 'StartT', 'EndT', 'Value']
-    {'track': 0, 'chromStart': 2, 'dataTypes': 1, 'dataValue': 4, 'chromEnd': 3}
-    range in dicitionary is [0, 1, 2, 3, 4]
-    Factor to transform time values has been set to 1.0 as values set as chromStart are decimals
-    If you want to set your own factor please use -m,--multiply_intervals n
-    .......... [('track', 0), ('dataTypes', 1), ('chromStart', 2), ('chromEnd', 3), ('dataValue', 4)]
 
 
 .. parsed-literal::
@@ -1073,6 +1110,7 @@ bedGraph files
 .. code:: python
 
     bed_file = data_file_read.convert(mode="bed", dataTypes_actions="all", tracks_merge=files_data.tracks)
+
 
 
 .. parsed-literal::
@@ -1086,10 +1124,46 @@ bedGraph files
         bed_file_single = bed_file[key]
         bed_file_single.save_track(name_file = "files_data")
 
+
 .. parsed-literal::
 
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File files_data.bed generated
+
+
+.. code:: python
+
+    # Reading phase info
+    phase_data = intervals.IntData("../../sample_data/feeding_behavior/phases_exp.csv", map_dict=mapping_file_data.correspondence)
+    data_phase_read = phase_data.read(relative_coord=True)
+
+
+.. parsed-literal::
+
+    Relative coordinates set to: True
+
+
+.. code:: python
+
+    bed_file = data_phase_read.convert(mode="bed", dataTypes_actions="all", tracks_merge=phase_data.tracks)
+
+
+.. parsed-literal::
+
+    Tracks that will be merged are: 1 2
+
+
+.. code:: python
+
+    for key in bed_file:
+        bed_file_single = bed_file[key]
+        bed_file_single.save_track(name_file = "phase_exp")
+
+
+.. parsed-literal::
+
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File phase_exp.bed generated
 
 
 means bed file to delete
