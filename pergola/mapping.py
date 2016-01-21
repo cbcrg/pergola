@@ -22,6 +22,7 @@ _genome_file_ext = ".fa"
 _generic_nt = "N"
 _cytoband_file_ext = ".txt"
 _bed_file_ext = ".bed"
+_chrm_size_ext = ".sizes"
 
 _p_ontology_terms = ["chrom_start", "data_value", "chrom_end", "data_types", "track", "chrom", "dummy"]
                     
@@ -156,7 +157,6 @@ def check_path(path):
 
 def write_chr(self, mode="w", path_w=None):
     """
-    
     Creates a fasta file of the length of the range of value inside the IntData object
     that will be use for the mapping the data into it
     
@@ -181,6 +181,34 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile.write (_generic_nt * (self.max - self.min) + "\n")
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
+
+def write_chr_sizes(self, mode="w", path_w=None):
+    """    
+    Creates a text file of the length of the "chromomosomes" that is needed to 
+    perform some BEDtools operations such as BEDcomplement
+    
+    :param mode: :py:func:`str` mode to use by default write
+    :param None path_w: :py:func:`str` path to dump the files, by default None 
+    
+    """
+    assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
+    
+    chrom = 'chr1'
+    file_sizes = 'chrom'
+    path = ""
+    
+    if not path_w: 
+        path = getcwd()
+        print >>stderr, 'chromsizes text file will be dump into \"%s\" ' \
+                       'as it has not been set using path_w' % (path)
+    else:
+        path = path_w
+                            
+    chrom_size_f = open(join(path, file_sizes + _chrm_size_ext), mode)        
+    chrom_size_f.write('%s ' % chrom)
+    chrom_size_f.write ('%d\n' % (self.max - self.min))
+    chrom_size_f.close()
+    print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes + _chrm_size_ext)
 
 def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True):
     """

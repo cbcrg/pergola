@@ -160,6 +160,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     data_read = intData.read(relative_coord=relative_coord, intervals=intervals_gen, multiply_t=multiply_f)
     
     mapping.write_chr (data_read)#mantain 
+    mapping.write_chr_sizes (data_read)
        
     start = intData.min
     end = intData.max
