@@ -63,7 +63,7 @@ class IntData(object):
     
     .. attribute:: range_values
     
-        Range of values inside dataValue field
+        Range of values inside data_value field
         
     .. attribute:: data
     
@@ -234,10 +234,10 @@ class IntData(object):
 #          YA ESTA HECVHO ARRIBA
         
         #Input file at least should have two fields that correspond to:
-        mandatory_fields = ["chrom_start", "dataValue"]
+        mandatory_fields = ["chrom_start", "data_value"]
         
         if not all(f in dict_fields_g.keys() for f in mandatory_fields):
-            raise ValueError("Input file mandatory fields  are \"chrom_start\" and \"dataValue\" \n" \
+            raise ValueError("Input file mandatory fields  are \"chrom_start\" and \"data_value\" \n" \
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
@@ -263,7 +263,7 @@ class IntData(object):
         self.min, self.max = self._min_max(list_data)
         
         #Initialize range_values
-        self.range_values = list(self._min_max(list_data,t_start="dataValue", t_end="dataValue"))
+        self.range_values = list(self._min_max(list_data, t_start="data_value", t_end="data_value"))
         
         # Back to file beginning
         self._in_file.seek(0)
@@ -292,7 +292,7 @@ class IntData(object):
 #         if self.header: self.reader.next()
 #         
 #         # Field assign to data value should be an integer or float
-#         idx_dataValue = [self.fieldsG_dict["dataValue"]]
+#         idx_data_value = [self.fieldsG_dict["data_value"]]
 #         
 #         _int_points = ["chrom_start", "chrom_end"]
 #         idx_fields2int = [10000000000000]
@@ -347,16 +347,16 @@ class IntData(object):
 #                              " setting the field containing them to chrom_start and setting intervals=True" 
 #                              % (f, self.path))
 #         
-#         # Range of dataValue field
+#         # Range of data_value field
 #         p_min_data_v = None
 #         p_max_data_v = None
 #         
-#         _start_f = ["dataValue"]
+#         _start_f = ["data_value"]
 #         
 #         try:
 #             i_data_value = [self.fieldsG_dict[f] for f in _start_f]
 #         except ValueError:
-#             raise ValueError("Field '%s' for dataValue range calculation time not in file %s." % (f, self.path))
+#             raise ValueError("Field '%s' for data_value range calculation time not in file %s." % (f, self.path))
 #         
 #         v = 0
 #         p_v = 0
@@ -438,11 +438,11 @@ class IntData(object):
 # #                     p_tr = interv[i]
 #                     
 #                 # Field assign to data value should be an integer or float        
-#                 if i in idx_dataValue:                    
+#                 if i in idx_data_value:                    
 #                     try:                        
 #                         float(interv[i])
 #                     except ValueError:
-#                         raise ValueError("Values in dataValue should be numerical not others: \"%s\".\n" %
+#                         raise ValueError("Values in data_value should be numerical not others: \"%s\".\n" %
 #                                           interv[i])
 #                 if i in idx_fields2int:
 #                     try:

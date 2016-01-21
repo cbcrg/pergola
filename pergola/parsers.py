@@ -272,7 +272,7 @@ parent_parser.add_argument('-n', '--intervals_gen', required=False, action='stor
                     default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
                                         'using field set as startChrom')
 parent_parser.add_argument('-mi', '--multiply_intervals', metavar='N', type=int, required=False,
-                    help='Multiplies value in dataValue by the given factor')
+                    help='Multiplies value in data_value by the given factor')
 parent_parser.add_argument('-nh', '--no_header', required=False, action='store_true', 
                     default=False, help='Data file contains no header')
 parent_parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',

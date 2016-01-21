@@ -88,7 +88,7 @@ class GenomicContainer(object):
     
     .. attribute:: range_values
        
-       Range of values inside dataValue field
+       Range of values inside data_value field
        
     ..
        Indicates the presence of a header.
@@ -193,7 +193,7 @@ class GenomicContainer(object):
             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
             track_file.write (annotation_track + "\n")        
             
-        print "fields are: ......................... " , self.fields #del        
+#         print "fields are: ......................... " , self.fields #del        
         data_out = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
                 
         # for row in self.data:
@@ -372,7 +372,7 @@ class Track(GenomicContainer):
     
     def _get_range (self, data_tr):
         """
-        Calculates the range of values in dataValue field 
+        Calculates the range of values in data_value field 
         
         :param data_tr: :py:func:`tuple` of tuples containing data of a single track    
                 
@@ -380,7 +380,7 @@ class Track(GenomicContainer):
 
         """        
         try:
-            i_data_value = self.fields.index("dataValue")
+            i_data_value = self.fields.index("data_value")
         except KeyError:
             raise ValueError("Data value index is not set")
         
@@ -520,7 +520,7 @@ class Track(GenomicContainer):
         """        
 
         #This fields are mandatory in objects of class Bed
-        _bed_fields = ["track","chrom_start","chrom_end","data_types", "dataValue"]        
+        _bed_fields = ["track","chrom_start","chrom_end","data_types", "data_value"]        
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -535,7 +535,7 @@ class Track(GenomicContainer):
         i_track = self.fields.index("track")
         i_chr_start = self.fields.index("chrom_start")
         i_chr_end = self.fields.index("chrom_end")
-        i_data_value = self.fields.index("dataValue")
+        i_data_value = self.fields.index("data_value")
         i_data_types = self.fields.index("data_types")
         
         #Generate dictionary of field and color gradients
@@ -592,7 +592,7 @@ class Track(GenomicContainer):
         """
         
         #This fields are mandatory in objects of class BedGraph
-        _bed_fields = ["track","chrom_start","chrom_end","dataValue"] 
+        _bed_fields = ["track","chrom_start","chrom_end","data_value"] 
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -609,7 +609,7 @@ class Track(GenomicContainer):
         i_track = self.fields.index("track")
         i_chr_start = self.fields.index("chrom_start")
         i_chr_end = self.fields.index("chrom_end")
-        i_data_value = self.fields.index("dataValue")
+        i_data_value = self.fields.index("data_value")
         
         #When the tracks have been join it is necessary to order by chr_start
         track = sorted(track, key=itemgetter(*[i_chr_start]))
