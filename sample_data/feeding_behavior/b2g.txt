@@ -3,8 +3,8 @@
 ! Comments here
 
 behavioral_file:CAGE > pergola:track
-behavioral_file:StartT > pergola:chromStart
-behavioral_file:EndT > pergola:chromEnd
-behavioral_file:Nature > pergola:dataTypes
-behavioral_file:Value > pergola:dataValue
+behavioral_file:StartT > pergola:chrom_start
+behavioral_file:EndT > pergola:chrom_end
+behavioral_file:Nature > pergola:data_types
+behavioral_file:Value > pergola:data_value
 behavioral_file:Phase > pergola:chrom
