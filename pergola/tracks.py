@@ -782,7 +782,7 @@ class Bed(GenomicContainer):
     def create_pybedtools(self):
         f_bed = self._tmp_bed()
         path_bed, name_bed = path_split(f_bed)
-        self.save_track(path = path_bed, name_file=name_bed)
+        self.save_track(path = path_bed, name_file=name_bed, bed_label=True)
         return BedTool(f_bed)
 
 class BedGraph(GenomicContainer):
