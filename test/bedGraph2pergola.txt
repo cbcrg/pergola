@@ -1,6 +1,6 @@
 ! Mapping of behavioural fields into genome browser fields
 !
-behavioural_file:chrm > genome_file:dummy
-behavioural_file:start > genome_file:chromStart
-behavioural_file:end > genome_file:chromEnd
-behavioural_file:value > genome_file:dataValue
+behavioural_file:chrm > pergola:dummy
+behavioural_file:start > pergola:chrom_start
+behavioural_file:end > pergola:chrom_end
+behavioural_file:value > pergola:data_value
