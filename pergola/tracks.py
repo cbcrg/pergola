@@ -29,6 +29,9 @@ from os.path import join
 from operator import itemgetter
 from itertools import groupby
 from numpy import arange 
+import tempfile
+from pybedtools import BedTool
+from ntpath import split as path_split
 
 #Contains class and file extension
 _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
@@ -175,8 +178,9 @@ class GenomicContainer(object):
                 name_file = "tr_" + self.track + "all_data_types" +  file_ext 
                 
         else:
-            name_file = name_file + file_ext
-            
+            if not name_file.endswith('.tmp'):
+                name_file = name_file + file_ext
+                
         print >> stderr, "File %s generated" % name_file       
 
         track_file = open(join(pwd, name_file), mode)
@@ -247,9 +251,9 @@ class Track(GenomicContainer):
         
         # User set values for bed file colors
         if range_color:
-            if (len(range_color) != 2 or not (all(isinstance(n, int) for n in range_color) or all(isinstance(n, float) for n in range_color))):
+            if (len(range_color) != 2 or not(all(isinstance(n, (int, float)) for n in range_color))):
                 raise ValueError ("Range color must be a list with two numeric values" \
-                                  % (range_color))
+                                % (range_color))
         
             self.range_values = range_color
 
@@ -763,6 +767,23 @@ class Bed(GenomicContainer):
                             'thick_start','thick_end','item_rgb']
         
         GenomicContainer.__init__(self,data,**kwargs)
+    
+    def _tmp_bed(self):
+#         tempfile_prefix = 'pybedtools.'
+#         tempfile_suffix = '.tmp'
+        tmp_bed = tempfile.NamedTemporaryFile(prefix='pergola.',
+                                            suffix='.tmp',
+                                            delete=False)
+        tmp_bed = tmp_bed.name
+        return tmp_bed
+    
+    # Quiza mejor hacerlo fuera porque asi puedo hacer excepciones en plan no se ha instaldo pybedtools
+    # sino tengo dependencia con pybedtools 
+    def create_pybedtools(self):
+        f_bed = self._tmp_bed()
+        path_bed, name_bed = path_split(f_bed)
+        self.save_track(path = path_bed, name_file=name_bed)
+        return BedTool(f_bed)
 
 class BedGraph(GenomicContainer):
     """
@@ -787,8 +808,8 @@ class BedGraph(GenomicContainer):
         GenomicContainer.__init__(self,data,**kwargs)
     
     def win_mean (self):
-        print "........................................"
-        print self.data
+        print "........................................" #del
+        print self.data #del
         n_tracks = len (self.track.split("_"))
 
         # TODO if number of trakcs is 1 exit returning self
@@ -855,7 +876,9 @@ def assign_color (set_data_types, color_restrictions=None):
             colors_not_used = _dict_colors.keys() 
         
         if dataType in d_dataType_color:
-            print ("Data type color gradient already set '%s'."%(dataType))
+#             print ("Data type color gradient already set '%s'."%(dataType))
+            print >> stderr, ("Data type color gradient already set '%s'." % (dataType))
+#             print >> stderr, "No path selected, files dump into path: ", pwd
         else:
             d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
     
