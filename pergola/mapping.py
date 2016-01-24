@@ -182,7 +182,7 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 
-def write_chr_sizes(self, mode="w", path_w=None):
+def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     """    
     Creates a text file of the length of the "chromomosomes" that is needed to 
     perform some BEDtools operations such as BEDcomplement
@@ -194,7 +194,12 @@ def write_chr_sizes(self, mode="w", path_w=None):
     assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
     
     chrom = 'chr1'
-    file_sizes = 'chrom'
+    
+    if file_n is None:
+        file_sizes_n = 'chrom'
+    else:
+        file_sizes_n = file_n
+        
     path = ""
     
     if not path_w: 
@@ -204,11 +209,11 @@ def write_chr_sizes(self, mode="w", path_w=None):
     else:
         path = path_w
                             
-    chrom_size_f = open(join(path, file_sizes + _chrm_size_ext), mode)        
-    chrom_size_f.write('%s ' % chrom)
+    chrom_size_f = open(join(path, file_sizes_n + _chrm_size_ext), mode)        
+    chrom_size_f.write('%s\t' % chrom)
     chrom_size_f.write ('%d\n' % (self.max - self.min))
     chrom_size_f.close()
-    print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes + _chrm_size_ext)
+    print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
 
 def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True):
     """
