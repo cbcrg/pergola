@@ -212,97 +212,7 @@ class GenomicContainer(object):
                   
         track_file.close()
     
-    def new_create_pybedtools(self, track):
-        """
-        Converts a single data belonging to a single track in a list of tuples in
-        an object of class BedGraph. The data is grouped in time windows.
-            
-        :param track: :py:func:`list` of tuples containing data of a single track
-        :param False in_call: If False the call to the function is from the user otherwise
-            is from inside :py:func: `convert2single_track()`
-        :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
-                 
-        :returns: BedGraph objectx
-        """
-        f_track = self._tmp_track()
-        
-        
- ############################
-        if not(isinstance(self, GenomicContainer)):
-            raise Exception("Object \'%s\' can not be converted to BedTool" % (type(self)))    
-        
-        try:
-            file_ext = _dict_file.get(self.format)[2]      
-        except KeyError:
-            raise ValueError("File types \'%s\' not convertible to BedTool" % (self.format))
-        
-#         if name_file is None:
-#             conc_data_types = self.data_types
-#             if isinstance(conc_data_types, set):
-#                 conc_data_types="_".join(self.data_types)        
-#             
-#             if len ("tr_" + self.track + "_dt_" + conc_data_types + file_ext) < _max_file_name_len: 
-#                 name_file = "tr_" + self.track + "_dt_" + conc_data_types + file_ext
-#             else:
-#                 name_file = "tr_" + self.track + "all_data_types" +  file_ext 
-#                 
-#         else:
-#             if not name_file.endswith('.tmp'):
-#                 name_file = name_file + file_ext
-                
-#         print >> stderr, "File %s generated" % name_file       
-
-        f_bedtools = open(f_track, "w")
-        
-        data_tmp = []
-        data_tmp = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
-        
-        for r in data_tmp:  
-            track_file.write('\t'.join(str(f) for f in r))           
-            track_file.write("\n")
-        
-               
-        #Annotation track to set the genome browser interface
-#         annotation_track = ''
-        
-        
-#         if self.format == 'bed' and track_line:
-#             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
-#             track_file.write (annotation_track + "\n")
-#             
-#         elif self.format == 'bedGraph' and track_line:
-#             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
-#             track_file.write (annotation_track + "\n")        
-            
-#         print "fields are: ......................... " , self.fields #del        
-        
-                
-        # for row in self.data:
-        for row in data_out:  
-            
-            if self.format == 'bed' and not bed_label:
-                index_name = self.fields.index ('name') 
-                empty_label = '""'
-                row = [empty_label if (i == index_name) else (v) for (i, v) in enumerate(row)]
-                
-            track_file.write('\t'.join(str(v) for v in row))           
-            track_file.write("\n")
-        
-        bedtool_obj = BedTool(f_bedtools)          
-        f_bedtools.close()
- ###########################       
-        
-        returns(bedtool_obj)
-        
-    def _tmp_track(self):
-        """
-        TODO: comment
-        """
-        tmp_track = tempfile.NamedTemporaryFile(prefix='pergola.', suffix='.tmp', delete=False)
-        tmp_track = tmp_track.name
-        
-        return tmp_track    
-        
+    
 #     def _tmp_bed(self):
 #         tmp_bed = tempfile.NamedTemporaryFile(prefix='pergola.',
 #                                             suffix='.tmp',
@@ -850,8 +760,60 @@ class Track(GenomicContainer):
 #         temp_list.append(end_window)
 #         temp_list.append(data_value)
 #         yield(tuple(temp_list))
-                            
-class Bed(GenomicContainer):
+
+class BedToolConvertible(GenomicContainer):
+    def __init__(self, data, **kwargs):
+#         GenomicContainer.__init__(self,data,**kwargs)
+#         GenomicContainer.__init__(self, data, fields, data_types, **kwargs)
+        GenomicContainer.__init__(self, data, **kwargs)
+    
+    def new_create_pybedtools(self):
+        """
+        Converts a single data belonging to a single track in a list of tuples in
+        an object of class BedGraph. The data is grouped in time windows.
+            
+        :param track: :py:func:`list` of tuples containing data of a single track
+        :param False in_call: If False the call to the function is from the user otherwise
+            is from inside :py:func: `convert2single_track()`
+        :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
+                 
+        :returns: BedGraph objectx
+        """
+        track_tmp = self._tmp_track()
+        
+        if not(isinstance(self, GenomicContainer)):
+            raise Exception("Object \'%s\' can not be converted to BedTool" % (type(self)))    
+        
+        try:
+            file_ext = _dict_file.get(self.format)[2]      
+        except KeyError:
+            raise ValueError("File types \'%s\' not convertible to BedTool" % (self.format))
+        
+        data_tmp = []
+        data_tmp = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
+        
+        with open(track_tmp, "w") as bedtool_out:         
+            for r in data_tmp:  
+                bedtool_out.write('\t'.join(str(f) for f in r))           
+                bedtool_out.write("\n")
+        
+        bedtool_obj = BedTool(track_tmp)            
+        
+        return(bedtool_obj)
+        
+    def _tmp_track(self):
+        """
+        TODO: comment
+        """
+        tmp_track = tempfile.NamedTemporaryFile(prefix='pergola.', suffix='.tmp', delete=False)
+        tmp_track = tmp_track.name
+        
+        return tmp_track    
+            
+        
+                              
+# class Bed(GenomicContainer):
+class Bed(BedToolConvertible):
     """
     A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
     fields and features of **bed files**
@@ -872,24 +834,27 @@ class Bed(GenomicContainer):
         kwargs['fields'] = ['chr','chrom_start','chrom_end','name','score','strand',
                             'thick_start','thick_end','item_rgb']
         
-        GenomicContainer.__init__(self,data,**kwargs)
-    
-    def _tmp_bed(self):
-        tmp_bed = tempfile.NamedTemporaryFile(prefix='pergola.',
-                                            suffix='.tmp',
-                                            delete=False)
-        tmp_bed = tmp_bed.name
-        return tmp_bed
-    
-    # Quiza mejor hacerlo fuera porque asi puedo hacer excepciones en plan no se ha instaldo pybedtools
-    # sino tengo dependencia con pybedtools 
-    def create_pybedtools(self):
-        f_bed = self._tmp_bed()
-        path_bed, name_bed = path_split(f_bed)
-        self.save_track(path = path_bed, name_file=name_bed, bed_label=True)
-        return BedTool(f_bed)
+#         GenomicContainer.__init__(self,data,**kwargs)
+        BedToolConvertible.__init__(self,data,**kwargs)
+        
+        
+#     def _tmp_bed(self):
+#         tmp_bed = tempfile.NamedTemporaryFile(prefix='pergola.',
+#                                             suffix='.tmp',
+#                                             delete=False)
+#         tmp_bed = tmp_bed.name
+#         return tmp_bed
+#     
+#     # Quiza mejor hacerlo fuera porque asi puedo hacer excepciones en plan no se ha instaldo pybedtools
+#     # sino tengo dependencia con pybedtools 
+#     def create_pybedtools(self):
+#         f_bed = self._tmp_bed()
+#         path_bed, name_bed = path_split(f_bed)
+#         self.save_track(path = path_bed, name_file=name_bed, bed_label=True)
+#         return BedTool(f_bed)
 
-class BedGraph(GenomicContainer):
+class BedGraph(BedToolConvertible):
+# class BedGraph(GenomicContainer):
     """
     A :class:`~pergola.tracks.GenomicContainer` object designed to include specific 
     fields and features of **bedGraph files**
@@ -909,10 +874,12 @@ class BedGraph(GenomicContainer):
         kwargs['format'] = 'bedGraph'
         kwargs['fields'] = ['chr','chrom_start','end','score']        
         self.color_gradient = kwargs.get('color',_blue_gradient)
-        GenomicContainer.__init__(self,data,**kwargs)
-    
+#         GenomicContainer.__init__(self,data,**kwargs)
+#         BedToolConvertible.__init__(self, **kwargs)
+        BedToolConvertible.__init__(self,data, **kwargs)
+        
     def win_mean (self):
-        print "........................................" #del
+#         print "........................................" #del
         print self.data #del
         n_tracks = len (self.track.split("_"))
 
