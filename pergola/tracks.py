@@ -222,11 +222,11 @@ class GenomicContainer(object):
     
     # Quiza mejor hacerlo fuera porque asi puedo hacer excepciones en plan no se ha instaldo pybedtools
     # sino tengo dependencia con pybedtools 
-    def create_pybedtools(self):
-        f_bed = self._tmp_bed()
-        path_bed, name_bed = path_split(f_bed)
-        self.save_track(path = path_bed, name_file=name_bed, bed_label=True)
-        return BedTool(f_bed)
+#     def create_pybedtools(self): #del
+#         f_bed = self._tmp_bed()
+#         path_bed, name_bed = path_split(f_bed)
+#         self.save_track(path = path_bed, name_file=name_bed, bed_label=True)
+#         return BedTool(f_bed)
     
     
 class Track(GenomicContainer):
@@ -767,7 +767,7 @@ class BedToolConvertible(GenomicContainer):
 #         GenomicContainer.__init__(self, data, fields, data_types, **kwargs)
         GenomicContainer.__init__(self, data, **kwargs)
     
-    def new_create_pybedtools(self):
+    def create_pybedtools(self):
         """
         Converts a single data belonging to a single track in a list of tuples in
         an object of class BedGraph. The data is grouped in time windows.
