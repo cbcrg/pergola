@@ -7,14 +7,11 @@
 ################################################################
 
 import pybedtools
-# pybedtools.helpers.set_bedtools_path('/Users/jespinosa/software/bedTools/bedtools2/bin/')
 
-import sys
+# import sys
 
-# os.chdir(path)
-
-my_path_to_modules = "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/"
-sys.path.append(my_path_to_modules)
+# my_path_to_modules = "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/"
+# sys.path.append(my_path_to_modules)
 
 from pergola import mapping
 from pergola import intervals
@@ -29,29 +26,18 @@ data_type_col = {'food_sc': 'orange', 'food_fat':'blue'}
 
 bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", color_restrictions=data_type_col)
 
-bed_tr1_food_sc = bed_str[('1', 'food_sc')]
-type (bed_tr1_food_sc)
-# for i in bed_tr1_food_sc: print i
+# bed_tr1_food_sc = bed_str[('1', 'food_sc')]
 
-# Esto es del propio codigo de bedtools
-# If *from_string* is True, then you can pass a string that contains
-# the contents of the BedTool you want to create.  This will treat all
-# spaces as TABs and write to tempfile, treating whatever you pass as
-# *fn* as the contents of the bed file.  This also strips empty lines.
+# bedTools_tr1 = bed_tr1_food_sc.create_pybedtools()
 
-# print (bed_tr1_food_sc)
-bedTools_tr1 = bed_tr1_food_sc.create_pybedtools()
-# print (bedTools_tr1)
-
-bed_tr2_food_fat = bed_str[('2', 'food_fat')]
+# bed_tr2_food_fat = bed_str[('2', 'food_fat')]
 
 bedTools_tr2 = bed_tr2_food_fat.create_pybedtools()
-# print (bedTools_tr2)
 
 # Subseting of bed file for testing meal merging
-c = pybedtools.BedTool(bedTools_tr2 [1:5])
-type (c)
-for i in c: print(i)
+# c = pybedtools.BedTool(bedTools_tr2 [1:5])
+# type (c)
+# for i in c: print(i)
 
 ############# Working command
 ###### c_values = c_short.merge(d=100, stream=True, c=5, o="sum")
@@ -93,7 +79,7 @@ mapping_bed = mapping.MappingInfo("/Users/jespinosa/git/pergola/test/pybed2perg.
 pybed_intdata = intervals.IntData(merged_bed_fn, map_dict=mapping_bed.correspondence, header=False, fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
 
 pybed_intdata_read = pybed_intdata.read(relative_coord=False)
-data_type_col = {'food_fat':'blue'}
+# data_type_col = {'food_fat':'blue'}
 pybed_tr = pybed_intdata_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", color_restrictions=data_type_col)
 print (pybed_tr)
 py_bed_tr1 = pybed_tr [('chr1', 'food_fat')]
