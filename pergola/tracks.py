@@ -36,6 +36,7 @@ from ntpath import split as path_split
 #Contains class and file extension
 _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
               'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
+              'gff': ('Gff', 'track_convert2gff', '.gff'),
               'txt': ('Track', '', '.txt')}
 
 # From light to dark
@@ -127,7 +128,7 @@ class GenomicContainer(object):
         """
         return self.data.next()
     
-    def save_track(self, mode="w", path=None, name_file=None, track_line=True, bed_label=False):
+    def save_track(self, mode="w", path=None, name_file=None, track_line=True, bed_label=False, gff_label=False):
         """
         Save the data in a file of format set by *self.format* 
         
@@ -189,13 +190,21 @@ class GenomicContainer(object):
         data_out = []
         
         if self.format == 'bed' and track_line:
-            annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
+#             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
+            annotation_track = 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
             track_file.write (annotation_track + "\n")
             
         elif self.format == 'bedGraph' and track_line:
-            annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
+#             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
+            annotation_track = 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #                         
             track_file.write (annotation_track + "\n")        
-            
+        
+        if self.format == 'gff' and track_line:
+            file_format_line = '##gff-version 3'
+#             annotation_track = '#track ' + 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
+            annotation_track = '#track' + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"            
+            track_file.write (file_format_line + "\n" + annotation_track + "\n")  
+                
 #         print "fields are: ......................... " , self.fields #del        
         data_out = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
                 
@@ -203,10 +212,15 @@ class GenomicContainer(object):
         for row in data_out:  
             
             if self.format == 'bed' and not bed_label:
-                index_name = self.fields.index ('name') 
-                empty_label = '""'
+                index_name = self.fields.index ('name')                 
+                empty_label = "."
                 row = [empty_label if (i == index_name) else (v) for (i, v) in enumerate(row)]
-                
+            
+            elif self.format == 'gff' and not bed_label:
+                index_name = self.fields.index ('feature')                 
+                empty_label = "."
+                row = [empty_label if (i == index_name) else (v) for (i, v) in enumerate(row)]
+                    
             track_file.write('\t'.join(str(v) for v in row))           
             track_file.write("\n")
                   
@@ -238,9 +252,9 @@ class Track(GenomicContainer):
     def __init__(self, data, fields=None, data_types=None, list_tracks=None, min=0, max=0, **kwargs):
         self.list_tracks = list_tracks
         self.list_tracks_filt = []
-        self.list_data_types=data_types
-        self.min=min
-        self.max=max
+        self.list_data_types = data_types
+        self.min = min
+        self.max = max
 #         print "initiation of track*********************", fields#del
         GenomicContainer.__init__(self, data, fields, data_types, **kwargs)
         
@@ -382,7 +396,7 @@ class Track(GenomicContainer):
                 raise ValueError ("The structure that holds the tracks should be a dictionary of dictionaries")
             
             for k_2, d_2 in d.items():
-                if not k_2 in _dict_col_grad and mode == "bed":
+                if not k_2 in _dict_col_grad and mode == "bed" or mode == "gff":
                     _dict_col_grad[k_2] = ""
 
                 range_val = self._get_range(d_2)
@@ -546,7 +560,7 @@ class Track(GenomicContainer):
         try:
             [self.fields.index(f) for f in _bed_fields]
         except ValueError:
-            raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
+            raise ValueError("Mandatory field for Bed object creation '%s' is missing." % (f))
 
 #         if (not in_call and len(self.list_tracks) != 1):
         if (not in_call and len(self.list_tracks_filt) != 1):
@@ -597,7 +611,118 @@ class Track(GenomicContainer):
             temp_list.append(color)          
             
             yield(tuple(temp_list))
+    
+    def track_convert2gff(self, track, in_call=False, **kwargs):
+        """
+        Converts data belonging to a single track (in the form of a list of tuples) in
+        an object of class Gff
+        
+        :param track: :py:func:`list` of tuples containing data of a single track
+        :param False in_call: If False the call to the function is from the user otherwise
+            is from inside :py:func: `convert2single_track()`
+        :param None color_restrictions: Set colors not to be used #TODO this is not clear example??        
+                
+        :returns: Gff object
+        
+        """        
 
+        #This fields are mandatory in objects of class Bed
+#         _bed_fields = ["track","chrom_start","chrom_end","data_types", "data_value"]        
+
+#         _gff_fields = ['seqname','source','feature','start','end','score', 'strand','frame','attribute']
+        
+        ## Following specifications of:
+        ## http://gmod.org/wiki/GFF3
+#         _bed_fields = ["track","chrom_start","chrom_end","data_types", "data_value"]        
+        
+#         _gff_fields_mand = ['seqname','source','type','start','end','score', 'strand','frame','attribute']
+        print "@@@@@@@@@@@@@@@", self.fields #del
+        _gff_fields_mand = ["track","data_types", "chrom_start","chrom_end", "data_value"] 
+#         _gff_fields_mand = ["seqname", "feature", "chrom_start", "chrom_end", "score"]
+        
+        
+    
+        
+        '''
+        'seqname' track
+        'source'  NA NOT MANDATORY "." (a period) in this field.
+        'type' "data_types"
+        'start'   "chrom_start" REQUIRED
+        'end'     "chrom_end"   REQUIRED
+        'score'   "data_value" Not required
+        'strand'  NA AND NOT MANDATORY "." (a period) in this field.
+        'frame'   NA AND NOT MANDATORY "." (a period) in this field.
+        'attribute'  Not required 
+        http://gmod.org/wiki/GFF3
+        ''' 
+        #Check whether these fields are in the original otherwise raise exception
+        try:
+            [self.fields.index(f) for f in _gff_fields_mand]
+        except ValueError:
+            raise ValueError("Mandatory field for Gff object creation '%s' is missing." % (f))
+
+#         if (not in_call and len(self.list_tracks) != 1):
+        if (not in_call and len(self.list_tracks_filt) != 1):
+            raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
+        """
+        i_track = self.fields.index("track")
+        i_chr_start = self.fields.index("chrom_start")
+        i_chr_end = self.fields.index("chrom_end")
+        i_data_value = self.fields.index("data_value")
+        i_data_types = self.fields.index("data_types")
+        """
+        print "......................", self.fields #del
+#         i_seqname = self.fields.index("seqname")
+#         i_types = self.fields.index("feature")        
+#         i_start = self.fields.index("chrom_start")
+#         i_end = self.fields.index("chrom_end")        
+#         i_score = self.fields.index("score")        
+        i_seqname = self.fields.index("track")
+        i_types = self.fields.index("data_types")        
+        i_start = self.fields.index("chrom_start")
+        i_end = self.fields.index("chrom_end")        
+        i_score = self.fields.index("data_value") 
+        
+        #Generate dictionary of field and color gradients
+        color_restrictions = kwargs.get('color_restrictions', None)
+        _dict_col_grad = assign_color (self.data_types, color_restrictions)
+        
+        step = (float(self.range_values[1]) - float(self.range_values[0])) / n_interval
+
+        if step == 0: 
+            _intervals = [0, self.range_values[1]]
+        else: 
+            _intervals = list(arange(float(self.range_values[0]), float(self.range_values[1]), step))
+        
+        for row in track:
+            temp_list = []
+            temp_list.append(row[i_seqname])
+            temp_list.append(".")
+            temp_list.append(row[i_types])
+            temp_list.append(row[i_start])
+            temp_list.append(row[i_end])
+            temp_list.append(row[i_score])
+            temp_list.append(".")
+            temp_list.append(".")
+            
+            if step != 0:
+                for i,v in enumerate(_intervals):    
+                    d_type = row [self.fields.index("data_types")]
+                    global color
+                    color = _dict_col_grad[d_type][len(_intervals)-1]
+
+                    if float(row[i_score]) <= v:                    
+                        color = _dict_col_grad[d_type][i]                               
+                        break
+            else:
+                 d_type = row [self.fields.index("data_types")]
+                 global color
+                 color = _dict_col_grad[d_type][-1]
+                 
+            temp_list.append(color)          
+            
+            yield(tuple(temp_list))
+            
     def track_convert2bedGraph(self, track, in_call=False, window=300, **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
@@ -618,8 +743,7 @@ class Track(GenomicContainer):
         try:
             idx_f = [self.fields.index(f) for f in _bed_fields]                          
         except ValueError:
-#             raise ValueError("Mandatory field for bed creation '%s' not in file %s." % (f, self.path))
-              raise ValueError("Mandatory field for bed creation '%s' is missing." % (f))
+              raise ValueError("Mandatory field for BedGraph object creation '%s' is missing." % (f))
         
 #         if (not in_call and len(self.list_tracks)  != 1):            
         if (not in_call and len(self.list_tracks_filt)  != 1):
@@ -899,7 +1023,33 @@ class BedGraph(BedToolConvertible):
                     temp_list.append (v)
                 
            yield (tuple(temp_list))
-                
+           
+class Gff(BedToolConvertible):
+    """
+    A :class:`~pergola.tracks.GenomicContainer.BedToolConvertible` object designed 
+    to include specific fields and features of **gff files**
+    
+    Default fields are
+        ::
+        
+         ['seqname','source','feature','start','end','score',
+          'strand','frame','attribute']
+    
+    :returns: Gff object    
+        
+    """
+    def __init__(self, data, **kwargs):
+        kwargs['format'] = 'gff'
+        
+        # 
+        kwargs['fields'] = ['seqname','source','feature','chrom_start','chrom_end','score',
+                            'strand','frame','attribute'] 
+        
+#         ['chr','chrom_start','chrom_end','name','score','strand',
+#                             'thick_start','thick_end','item_rgb']
+
+        BedToolConvertible.__init__(self,data,**kwargs)
+                      
 def assign_color (set_data_types, color_restrictions=None):
     """
     Assign colors to fields randomly. It is optional to set given color to given 
