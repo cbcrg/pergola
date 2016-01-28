@@ -56,14 +56,14 @@ data_exp_ph_tr = exp_ph_data.read(relative_coord=True)
 exp_ph_bed = data_exp_ph_tr.convert(mode="bed", dataTypes_actions="all", tracks_merge=exp_ph_data.tracks)
 
 
-hab_bed = exp_ph_bed [('1_2', 'Habituation phase')].new_create_pybedtools()
-dev_bed = exp_ph_bed [('1_2', 'Development phase')].new_create_pybedtools()
+hab_bed = exp_ph_bed [('1_2', 'Habituation phase')].create_pybedtools()
+dev_bed = exp_ph_bed [('1_2', 'Development phase')].create_pybedtools()
 
 # For each track merge feeding acts that are separated by less than 120 seconds (thus generating feeding bouts track)
 # Calculates the complement of feeding bouts (intermeal intervals) and intersect them with day and experimental phases
 # Dumping results into bed files
 for tr, bed in bed_str.iteritems():
-    bed_BedTools = bed.new_create_pybedtools()
+    bed_BedTools = bed.create_pybedtools()
     bed_merged_fn = bed_BedTools.merge(d=120, stream=True, c=(4,5,6,9), o=("distinct","sum","distinct","collapse")).saveas().fn
     
     pybed_intdata = intervals.IntData(bed_merged_fn, map_dict=mapping_bed.correspondence, header=False, fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
