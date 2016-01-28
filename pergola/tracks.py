@@ -719,7 +719,7 @@ class Track(GenomicContainer):
                  global color
                  color = _dict_col_grad[d_type][-1]
                  
-            temp_list.append(color)          
+            temp_list.append("color=" + color)          
             
             yield(tuple(temp_list))
             
