@@ -38,9 +38,10 @@ gff_str = data_read.convert(mode="gff", data_types=["food_sc", "food_fat"], data
 print gff_str
 
 tr_1_gff = gff_str[('1', 'food_sc')]
+tr_1_gff_BedTools = tr_1_gff.create_pybedtools()
+
+for l in tr_1_gff_BedTools: print l
 
 tr_1_gff.save_track()
-
-# print tr_1_gff
 
 
