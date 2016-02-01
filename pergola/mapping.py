@@ -215,7 +215,7 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     chrom_size_f.close()
     print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
 
-def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True):
+def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True, track_line=True):
     """
      
     Creates a cytoband-like and a bed file with phases of the experiment 
@@ -228,6 +228,7 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
     :param None path_w: :py:func:`str` path to dump the files, by default None 
     :param True lab_bed: If true shows label corresponding to dataType in bed file otherwise 
         shows "."
+    :param True track_line: If true includes track_line in the file 
     TODO: extend light and dark to other possible values using variables
           Eventually separate into two different functions write_cytoband and write_bed 
     """
@@ -264,9 +265,10 @@ def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w
     phases_bed_light_f = open(join(path, name_bed_light + _bed_file_ext), mode) 
     phases_bed_dark_f = open(join(path, name_bed_dark + _bed_file_ext), mode) 
     
-    phases_bed_file.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
-    phases_bed_light_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
-    phases_bed_dark_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
+    if track_line:
+        phases_bed_file.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
+        phases_bed_light_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
+        phases_bed_dark_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
     
     phase = start_phase
     
