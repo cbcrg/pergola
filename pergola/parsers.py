@@ -248,7 +248,7 @@ parent_parser = ArgumentParser(description = 'Script to transform behavioral dat
 parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
 parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
                     help='File to set the reciprocity between fields in behavioral file and terms used by Pergola' + \
-                    'and genome browser grammar')
+                    ' and genome browser grammar')
 parent_parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                     help='List of selected tracks')
 parent_parser.add_argument('-l','--list', required=False, metavar="LIST_OF_TRACKS", type=str, nargs='+',
