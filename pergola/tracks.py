@@ -191,12 +191,12 @@ class GenomicContainer(object):
         
         if self.format == 'bed' and track_line:
 #             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
-            annotation_track = 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
+            annotation_track = 'track ' + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
             track_file.write (annotation_track + "\n")
             
         elif self.format == 'bedGraph' and track_line:
 #             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
-            annotation_track = 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #                         
+            annotation_track = 'track ' + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #                         
             track_file.write (annotation_track + "\n")        
         
         if self.format == 'gff' and track_line:
