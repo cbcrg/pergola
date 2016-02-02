@@ -256,7 +256,10 @@ class IntData(object):
         
         if self.header: self._reader.next()
         
+#         print "??????????????????????", self.fieldsG_dict["chrom_start"]#del
+        
         for row in self._reader:
+            row[self.fieldsG_dict["chrom_start"]] = float(row[self.fieldsG_dict["chrom_start"]])
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         #Initialize min, max

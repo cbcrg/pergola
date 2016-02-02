@@ -204,8 +204,7 @@ class GenomicContainer(object):
 #             annotation_track = '#track ' + 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
             annotation_track = '#track' + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"            
             track_file.write (file_format_line + "\n" + annotation_track + "\n")  
-                
-#         print "fields are: ......................... " , self.fields #del        
+
         data_out = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
                 
         # for row in self.data:
@@ -1083,8 +1082,8 @@ def assign_color (set_data_types, color_restrictions=None):
             raise ValueError("Not all restricted colors are available") 
              
         #If there are fields link to related colors they also must be in the data type list 
-        if not all(key in set_data_types for key in color_restrictions):                                  
-            raise ValueError("Some values of data types provided as color restriction are not present in the file", (set_data_types, color_restrictions))
+#         if not all(key in set_data_types for key in color_restrictions):                                  
+#             raise ValueError("Some values of data types provided as color restriction are not present in the file", (set_data_types, color_restrictions))
             
         for dataType in color_restrictions:
             d_dataType_color[dataType] = _dict_colors[color_restrictions[dataType]] 
