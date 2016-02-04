@@ -43,8 +43,10 @@ chr_file = out_dir + chr_file_n + ".sizes"
 
 # Dictionary to set colors of each type of food
 data_type_col = {'food_sc': 'orange', 'food_fat':'blue'}
+data_type_col_m = {'food_sc': 'orange', 'food_fat_food_sc':'blue'}
 
 bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], data_types_actions="all", color_restrictions=data_type_col)
+bed_str_out = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], data_types_actions="all", color_restrictions=data_type_col)
 mapping_bed = mapping.MappingInfo(out_dir + "/pybed2perg.txt")
 
 # Experimentals phases
@@ -63,18 +65,30 @@ dev_bed = exp_ph_bed [('1_2', 'Development phase')].create_pybedtools()
 # Calculates the complement of feeding bouts (intermeal intervals) and intersect them with day and experimental phases
 # Dumping results into bed files
 for tr, bed in bed_str.iteritems():
+    
     bed_BedTools = bed.create_pybedtools()
-    bed_merged_fn = bed_BedTools.merge(d=120, stream=True, c=(4,5,6,9), o=("distinct","sum","distinct","collapse")).saveas().fn
     
-    pybed_intdata = intervals.IntData(bed_merged_fn, map_dict=mapping_bed.correspondence, header=False, fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
-    pybed_intdata_read = pybed_intdata.read(relative_coord=False)
-        
-    pybed_tr = pybed_intdata_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", color_restrictions=data_type_col)
-    
-    ## Complement
-    bed_merged_comp = pybedtools.BedTool(bed_merged_fn).complement(g=chr_file)
+    merged_tr_n = 'merged_' + '_'.join(tr)
+    merged_tr_f = merged_tr_n + '.bed'
 
+    bed_BedTools.merge(d=120, stream=True, c=(4,5,6,9), o=("distinct","sum","distinct","collapse")).saveas(merged_tr_f)
+    
+    pybed_intdata = intervals.IntData(merged_tr_f, map_dict=mapping_bed.correspondence, header=False, fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
+    pybed_intdata_read = pybed_intdata.read(relative_coord=False)
+    
+    pybed_tr = pybed_intdata_read.convert(mode="bed", data_types=["food_sc", "food_fat"], data_types_actions="all", color_restrictions=data_type_col_m)
+
+    k, bed_merged = pybed_tr.items()[0]
+    bed_merged.save_track(name_file=merged_tr_n)
+
+    ## Complement
+    bed_merged_comp = pybedtools.BedTool(merged_tr_f).complement(g=chr_file)
+ 
     hab_light_intermeals_bed = bed_merged_comp.intersect(hab_bed).intersect(light_bed).saveas('tr_' + '_'.join(tr) + "_compl_hab_light.bed")
     hab_dark_intermeals_bed = bed_merged_comp.intersect(hab_bed).intersect(dark_bed).saveas('tr_' + '_'.join(tr) + "_compl_hab_dark.bed")
     dev_light_intermeals_bed = bed_merged_comp.intersect(dev_bed).intersect(light_bed).saveas('tr_' + '_'.join(tr) + "_compl_dev_light.bed")
     dev_dark_intermeals_bed = bed_merged_comp.intersect(dev_bed).intersect(dark_bed).saveas('tr_' + '_'.join(tr) + "_compl_dev_dark.bed")
+    
+for tr, bed in bed_str_out.iteritems():
+    ori_bed_n = 'ori_' + '_'.join(tr) + '.bed'
+    bed.save_track(name_file=ori_bed_n)
