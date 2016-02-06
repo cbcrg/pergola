@@ -259,7 +259,9 @@ class IntData(object):
 #         print "??????????????????????", self.fieldsG_dict["chrom_start"]#del
         
         for row in self._reader:
-            row[self.fieldsG_dict["chrom_start"]] = float(row[self.fieldsG_dict["chrom_start"]])
+            if isinstance((row[self.fieldsG_dict["chrom_start"]]), basestring):                
+                row[self.fieldsG_dict["chrom_start"]] = num(row[self.fieldsG_dict["chrom_start"]])
+
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         #Initialize min, max
@@ -985,3 +987,11 @@ def is_number(var):
         return True
     except ValueError:
         return False
+
+
+def num(s):
+    try:
+        return int(s)
+    except ValueError:
+        return float(s)
+
