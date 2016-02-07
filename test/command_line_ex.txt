@@ -37,6 +37,10 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology
 #pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/sample_data/b2g.txt" -e
 pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e
 
+# Files for shiny pergola
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e -dl food_sc food_fat -d all -nt
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e -dl food_sc food_fat -d all -f bedGraph -w 300 -nt
+
 # Files of the tutorial - file separation
 pergola_rules.py -i "/Users/jespinosa/git/pergola/sample_data/files.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all -nt
 # Files of peaks for validation paper
@@ -56,7 +60,8 @@ pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2a
 
 # ActiTrack position files already transform to bedgraph and now transformed to relative coordinates
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortPos.bedGraph" -m "/Users/jespinosa/git/pergola/test/bedGraph2pergola.txt" -f bedGraph -nh -s 'chrm' 'start' 'end' 'value' -e
-
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortPos.bedGraph" -m "/Users/jespinosa/git/pergola/test/bedGraph2pergola.txt" -f bedGraph -nh -s 'chrm' 'start' 'end' 'value'  -e
+pergola_rules.py -i "/var/folders/3b/0cr04q0s3vq_0389xtsl6tvh0000gp/T/pybedtools.Yp1PDI.tmp" -m "/Users/jespinosa/git/pergola/test/pybed2perg.txt" -nh -s 'chrm' 'start' 'end' 'nature' 'value' 'strain' 'color'
 
 # WORK
 pergola_isatab.py -i "/users/cn/jespinosa/git/pergola_cbcrg/data/isatab_ex/" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/int2gene.txt"
