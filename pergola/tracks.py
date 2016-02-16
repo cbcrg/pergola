@@ -199,11 +199,13 @@ class GenomicContainer(object):
             annotation_track = 'track ' + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #                         
             track_file.write (annotation_track + "\n")        
         
-        if self.format == 'gff' and track_line:
+        if self.format == 'gff':
             file_format_line = '##gff-version 3'
-#             annotation_track = '#track ' + 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
-            annotation_track = '#track' + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"            
-            track_file.write (file_format_line + "\n" + annotation_track + "\n")  
+            track_file.write (file_format_line + "\n")
+            track_file.write ('##sequence-region 1' + "\t" + "1"  "\t" + "1" + "\t" + "50" +  "\n")
+#             if track_line: #del           
+#                 annotation_track = '#track' + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"            
+#                 track_file.write (annotation_track + "\n")  
 
         data_out = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
                 
@@ -694,11 +696,12 @@ class Track(GenomicContainer):
         
         for row in track:
             temp_list = []
-            temp_list.append(row[i_seqname]) #"seqid"
+#             temp_list.append(row[i_seqname]) #"seqid"
+            temp_list.append(1) #"seqid"
             temp_list.append(".") #"source"
 #             temp_list.append(row[i_types]) #"type"
             temp_list.append("exon") #"type"
-            temp_list.append(row[i_start]) #start
+            temp_list.append(row[i_start+1]) #start
             temp_list.append(row[i_end]) #end
             temp_list.append(row[i_score]) #"score"
             temp_list.append(".") #"strand"
