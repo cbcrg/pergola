@@ -635,8 +635,7 @@ class Track(GenomicContainer):
 #         _bed_fields = ["track","chrom_start","chrom_end","data_types", "data_value"]        
         
 #         _gff_fields_mand = ['seqname','source','type','start','end','score', 'strand','frame','attribute']
-        print "@@@@@@@@@@@@@@@", self.fields #del
-        _gff_fields_mand = ["track","data_types", "chrom_start","chrom_end", "data_value"] 
+        _gff_fields_mand = ["track", "data_types", "chrom_start","chrom_end", "data_value"] 
 #         _gff_fields_mand = ["seqname", "feature", "chrom_start", "chrom_end", "score"]
         
         
@@ -670,7 +669,7 @@ class Track(GenomicContainer):
         i_data_value = self.fields.index("data_value")
         i_data_types = self.fields.index("data_types")
         """
-        print "......................", self.fields #del
+#         print "......................", self.fields #del
 #         i_seqname = self.fields.index("seqname")
 #         i_types = self.fields.index("feature")        
 #         i_start = self.fields.index("chrom_start")
@@ -695,14 +694,15 @@ class Track(GenomicContainer):
         
         for row in track:
             temp_list = []
-            temp_list.append(row[i_seqname])
-            temp_list.append(".")
-            temp_list.append(row[i_types])
-            temp_list.append(row[i_start])
-            temp_list.append(row[i_end])
-            temp_list.append(row[i_score])
-            temp_list.append(".")
-            temp_list.append(".")
+            temp_list.append(row[i_seqname]) #"seqid"
+            temp_list.append(".") #"source"
+#             temp_list.append(row[i_types]) #"type"
+            temp_list.append("exon") #"type"
+            temp_list.append(row[i_start]) #start
+            temp_list.append(row[i_end]) #end
+            temp_list.append(row[i_score]) #"score"
+            temp_list.append(".") #"strand"
+            temp_list.append(".") #phase
             
             if step != 0:
                 for i,v in enumerate(_intervals):    
