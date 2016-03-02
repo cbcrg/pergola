@@ -177,7 +177,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
 #     mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
     # I don't need anymore the start to be shift because files are trimmed
-    mapping.write_cytoband(intData, end=end)
+    mapping.write_cytoband(intData, end=end, track_line=track_line)
     
 #     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.data_types",data_read.data_types
 
@@ -208,7 +208,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         # TODO add an if checking whether it is a bedgraph or not to get the mean 
 #         bedGraph_mean = bedSingle.win_mean()
 #         print bedGraph_mean
-        bedSingle.save_track(track_line=track_line)
+        bedSingle.save_track(track_line=track_line, bed_label=True)
 #         print "Tracks in the file", bedSingle.track
         
 #         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
