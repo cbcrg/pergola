@@ -15,7 +15,7 @@ f['info'].keys()
 h5ls -vlr "/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat"
 
 ### INFO
-sex_r= f['info']['experiment']['worm']['sex']
+sex_r = f['info']['experiment']['worm']['sex']
 
 # /info/experiment/worm/sex
 ## How to extract char 
@@ -25,6 +25,7 @@ for c in sex_r:
     print unichr(c)
     
 sex = [''.join(unichr(c) for c in sex_r)]
+sex = str(''.join(unichr(c) for c in sex_r))
 
 # /info/experiment/worm/habituation (time of habituation) 
 # i.e. there is a lapse of time within which they don't track animals:
@@ -34,13 +35,57 @@ sex = [''.join(unichr(c) for c in sex_r)]
 habituation_r = f['info']['experiment']['worm']['habituation']
 
 habituation = [''.join(unichr(c) for c in habituation_r)]
-
+habituation = str(''.join(unichr(c) for c in habituation_r))
 
 f['info']['experiment']['worm']['sex']
 
+f['info']['experiment']['environment'].keys()
 
+# annotations (empty)
+annotations_r = f['info']['experiment']['environment']['annotations']
+annotations = [''.join(c.astype(str) for c in annotations_r)]
+annotations = str(''.join(c.astype(str) for c in annotations_r))
 
+# info/experiment/worm/genotype
+genotype_r = f['info']['experiment']['worm']['genotype'] #type u2
+genotype = [''.join(unichr(c) for c in genotype_r)]
+genotype = str(''.join(unichr(c) for c in genotype_r))
 
+# /info/experiment/worm/strain
+strain_r = f['info']['experiment']['worm']['strain']
+strain = str(''.join(unichr(c) for c in strain_r))
+
+# age worm
+# /info/experiment/worm/age
+age_r = f['info']['experiment']['worm']['age'] #type u2
+age = str(''.join(unichr(c) for c in age_r))
+
+# /info/experiment/environment/food
+food_r = f['info']['experiment']['environment']['food'] #type u2
+food = str(''.join(unichr(c) for c in food_r))
+
+# /info/experiment/environment/timestamp
+timestamp_r = f['info']['experiment']['environment']['timestamp'] #type u2
+timestamp = str(''.join(unichr(c) for c in timestamp_r))
+timestamp
+
+import datetime
+import time
+datetime(timestamp)
+
+#my_date_string = '2012-04-25'
+
+my_date_object = time.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
+from time import mktime
+mktime(my_date_object)
+
+from calendar import timegm
+timegm(my_date_object) # utc based # correct!!!
+
+(my_date_object)
+
+HH:MM:SS.mmmmmm
+##############
 ## WORM DATA
 f['worm'].keys() # [u'locomotion', u'morphology', u'path', u'posture']
 f['worm']['locomotion'].keys()
@@ -56,6 +101,14 @@ f['worm']['path']['duration']['arena']['max']['x'][0]
 f['worm']['path']['duration']['arena']['max']['y'][0]
 
 f['worm']['path']['duration']['head'].keys() # [u'indices', u'times']
+f['worm']['path']['duration']['head']['indices']
+f['worm']['path']['duration']['head']['times'][0][1]
+f['worm']['path']['duration']['head']['indices'][0][1]
+
+times=f['worm']['path']['duration']['head']['times'][0]
+len(head)
+len(times)
+times[0]
 
 ## 
 f['worm']['path']['duration']['arena']
@@ -186,4 +239,8 @@ end_t
 
 # Los datos de los celegans estan en la pagina web cuando pones show all.
 
-
+sex
+habituation # 30 minutes 
+annotations
+genotype
+strain
