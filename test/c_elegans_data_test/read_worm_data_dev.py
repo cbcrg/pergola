@@ -1,8 +1,12 @@
+# Loading libraries
 from scipy.io  import loadmat
-input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat'
-worm_data = loadmat(input_file)
-
 import h5py
+from time import strptime
+from calendar import timegm
+
+input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat'
+# worm_data = loadmat(input_file)
+
 f = h5py.File(input_file)
 
 f.keys()
@@ -12,7 +16,7 @@ f.attrs.keys()
 f['info'].keys()
 
 ## TO get the structure GO TO command line and type:
-h5ls -vlr "/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat"
+## h5ls -vlr "/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat"
 
 ### INFO
 sex_r = f['info']['experiment']['worm']['sex']
@@ -20,9 +24,9 @@ sex_r = f['info']['experiment']['worm']['sex']
 # /info/experiment/worm/sex
 ## How to extract char 
 ## http://stackoverflow.com/questions/12036304/loading-hdf5-matlab-strings-into-python
-for c in sex_r:
-    print c
-    print unichr(c)
+# for c in sex_r:
+#     print c
+#     print unichr(c)
     
 sex = [''.join(unichr(c) for c in sex_r)]
 sex = str(''.join(unichr(c) for c in sex_r))
@@ -33,13 +37,11 @@ sex = str(''.join(unichr(c) for c in sex_r))
 # after being picked and moved to their tracking plate"
 
 habituation_r = f['info']['experiment']['worm']['habituation']
-
 habituation = [''.join(unichr(c) for c in habituation_r)]
 habituation = str(''.join(unichr(c) for c in habituation_r))
 
-f['info']['experiment']['worm']['sex']
-
-f['info']['experiment']['environment'].keys()
+f['info']['experiment']['environment'].keys() # [u'annotations', u'arena', u'chemicals', u'food', 
+                                              #  u'illumination', u'temperature', u'timestamp', u'tracker']
 
 # annotations (empty)
 annotations_r = f['info']['experiment']['environment']['annotations']
@@ -67,24 +69,19 @@ food = str(''.join(unichr(c) for c in food_r))
 # /info/experiment/environment/timestamp
 timestamp_r = f['info']['experiment']['environment']['timestamp'] #type u2
 timestamp = str(''.join(unichr(c) for c in timestamp_r))
-timestamp
 
-import datetime
-import time
-datetime(timestamp)
+# HH:MM:SS.mmmmmm
+my_date_object = strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
+unix_time = timegm(my_date_object) # utc based # correct!!!
 
-#my_date_string = '2012-04-25'
+# /info/video/length/time
+time_recorded_r = f['info']['video']['length']['time']
+time_recorded = time_recorded_r[0][0]
 
-my_date_object = time.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
-from time import mktime
-mktime(my_date_object)
+# /info/video/length/frames
+frames_r = f['info']['video']['length']['frames']
+time = frames_r[0][0] 
 
-from calendar import timegm
-timegm(my_date_object) # utc based # correct!!!
-
-(my_date_object)
-
-HH:MM:SS.mmmmmm
 ##############
 ## WORM DATA
 f['worm'].keys() # [u'locomotion', u'morphology', u'path', u'posture']
@@ -105,8 +102,7 @@ f['worm']['path']['duration']['head']['indices']
 f['worm']['path']['duration']['head']['times'][0][1]
 f['worm']['path']['duration']['head']['indices'][0][1]
 
-times=f['worm']['path']['duration']['head']['times'][0]
-len(head)
+times = f['worm']['path']['duration']['head']['times'][0]
 len(times)
 times[0]
 
@@ -151,13 +147,19 @@ f['worm']['locomotion']['velocity'].keys()  # [u'head', u'headTip', u'midbody', 
 
 for i in midbody_v[1:40]: print i
 
+# Frames contain the frames recorded during the experiment
+frames
 len(midbody_v) # 26995 estos son las frames
 # web frames 26995
+
+time_recorded  # 898.932 
+898.932 / 60 # = 14.9822
+
 # min x 60s/1min
-14.9822 * 60 =  898.932
+14.9822 * 60 # =  898.932
 
 # web FPS 30.03
-898.932 * 30.03 = 26994.92796 #it match OK!!!
+898.932 * 30.03 #= 26994.92796 #it match OK!!!
 
 ## Info
 f['info'].keys()
@@ -165,8 +167,6 @@ f['info']['video'].keys()
 f['info']['video']['resolution'].keys()
 
 fps = f['info']['video']['resolution']['fps'][0][0]
-
-for j in fps: print j
 
 width_pix = f['info']['video']['resolution']['width'][0][0]
 
@@ -196,8 +196,6 @@ for element in end_paused_r:
 start_paused = list()
 for element in start_paused_r:
     start_paused.append(f[element[0]][0][0])
-
-
 
 end_for[-1]
 start_for[-1]
@@ -244,3 +242,7 @@ habituation # 30 minutes
 annotations
 genotype
 strain
+age
+food
+unix_time
+fps
