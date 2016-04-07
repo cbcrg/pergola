@@ -4,7 +4,16 @@ import h5py
 from time import strptime
 from calendar import timegm
 
-input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat'
+## Files are in:
+# ftp://anonymous:@ftp.mrc-lmb.cam.ac.uk/pub/tjucikas/wormdatabase
+
+## I copied all animals from JU440 into:
+## ~/2016_worm_DB/30m_wait/
+## then from ~/2016_worm_DB I create ju440_all folder and use this command 
+# find . -name \*.mat -exec cp {} ju440_all \;
+
+input_file = '/Users/jespinosa/2016_worm_DB/ju440_all/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat'
+
 # worm_data = loadmat(input_file)
 
 f = h5py.File(input_file)
@@ -88,27 +97,6 @@ f['worm'].keys() # [u'locomotion', u'morphology', u'path', u'posture']
 f['worm']['locomotion'].keys()
 f['worm']['locomotion']['velocity'].keys() # [u'head', u'headTip', u'midbody', u'tail', u'tailTip']
 
-f['worm']['path'].keys() # [u'coordinates', u'curvature', u'duration', u'range']
-f['worm']['path']['duration'].keys() # [u'arena', u'head', u'midbody', u'tail', u'worm']
-f['worm']['path']['duration']['arena'].keys() #[u'height', u'max', u'min', u'width']
-f['worm']['path']['duration']['arena']['min'].keys() # x y
-f['worm']['path']['duration']['arena']['min']['x'][0]
-f['worm']['path']['duration']['arena']['min']['y'][0]
-f['worm']['path']['duration']['arena']['max']['x'][0]
-f['worm']['path']['duration']['arena']['max']['y'][0]
-
-f['worm']['path']['duration']['head'].keys() # [u'indices', u'times']
-f['worm']['path']['duration']['head']['indices']
-f['worm']['path']['duration']['head']['times'][0][1]
-f['worm']['path']['duration']['head']['indices'][0][1]
-
-times = f['worm']['path']['duration']['head']['times'][0]
-len(times)
-times[0]
-
-## 
-f['worm']['path']['duration']['arena']
-
 # These primary features were also evaluated in different contexts to give more complex parameterization: 
 # for example, mean speed was measured over the entire video as well as independently for periods when the 
 # animal was moving either forward or backward. Likewise, dorsal and ventral bending were measured over the 
@@ -131,6 +119,27 @@ len(tail_v)
 len(midbody_v)
 len(head_v)
 len(tail_v)
+
+f['worm']['path'].keys() # [u'coordinates', u'curvature', u'duration', u'range']
+f['worm']['path']['duration'].keys() # [u'arena', u'head', u'midbody', u'tail', u'worm']
+f['worm']['path']['duration']['arena'].keys() #[u'height', u'max', u'min', u'width']
+f['worm']['path']['duration']['arena']['min'].keys() # x y
+f['worm']['path']['duration']['arena']['min']['x'][0]
+f['worm']['path']['duration']['arena']['min']['y'][0]
+f['worm']['path']['duration']['arena']['max']['x'][0]
+f['worm']['path']['duration']['arena']['max']['y'][0]
+
+f['worm']['path']['duration']['head'].keys() # [u'indices', u'times']
+f['worm']['path']['duration']['head']['indices']
+f['worm']['path']['duration']['head']['times'][0][1]
+f['worm']['path']['duration']['head']['indices'][0][1]
+
+times = f['worm']['path']['duration']['head']['times'][0]
+len(times)
+times[0]
+
+## 
+f['worm']['path']['duration']['arena']
 
 ## son las tres iguales 26995
 
@@ -192,7 +201,7 @@ end_paused_r = f['worm']['locomotion']['motion']['paused']['frames']['end']
 end_paused = list()
 for element in end_paused_r:
     end_paused.append(f[element[0]][0][0])
-
+end_paused[0]
 start_paused = list()
 for element in start_paused_r:
     start_paused.append(f[element[0]][0][0])
