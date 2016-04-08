@@ -131,7 +131,7 @@ for frame in range(0, 100):    #del #debug
         try:
             v = f['worm']['locomotion']['velocity'][velocity_k]['speed'][frame][0] 
         except KeyError:
-            raise KeyError ("Velocity field %s index %i is corrupted and can not be retrieved from hdf5 file"
+            raise KeyError ("Velocity field %s is corrupted and can not be retrieved from hdf5 file"
                             % (velocity_k, frame))
                             
         if np.isnan(v) : v = -10000    

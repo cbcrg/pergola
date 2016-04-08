@@ -36,24 +36,6 @@ process get_speed {
   """
 }
 
-/*
-process get_motion {
-  
-  input:
-  file file_worm from mat_files_motion
-  
-  output: 
-  file '*_speed.csv' into speed_files
-  
-  script:
-  println "Matlab file containing worm behavior processed: $file_worm"
-
-  """
-  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_speed.py -i \"$file_worm\"
-  """
-}
-*/
-
 // pergola command
 
 // pergola_rules.py -i "575 JU440 on food L_2011_02_17__11_00___3___1_features_speed.csv" -m worms_speed2p.txt
@@ -62,14 +44,14 @@ process get_motion {
 //-nt -nh -s
 
 map_speed_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_speed2p.txt"
-map_speeds=file(map_speed_path)
+map_speed=file(map_speed_path)
 
 body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
 process speed_to_pergola {
   input:
   file speed_file from speed_files
-  file worms_speed2p from map_speeds
+  file worms_speed2p from map_speed
   each body_part from body_parts
   
   output:
@@ -80,8 +62,3 @@ process speed_to_pergola {
   pergola_rules.py -i $speed_file -m mod_map_file 
   """
 } 
-
-//val body_part from body_parts
-  
-
-
