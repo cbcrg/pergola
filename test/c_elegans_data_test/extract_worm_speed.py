@@ -103,16 +103,16 @@ velocity_keys = ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
 fh = open(file_name + "_speed.csv",'wb')
 
-# fh.write("#genotype;%s\n" % genotype)
-# fh.write("#strain;%s\n" % strain)
-# fh.write("#age;%s\n" % age)
-# fh.write("#habituation;%s\n" % habituation)
-# fh.write("#food;%s\n" % food)
-# fh.write("#unix_time;%s\n" % unix_time)
-# fh.write("#time_recorded;%s\n" % time_recorded)
-# fh.write("#frames;%s\n" % frames)
-# fh.write("#fps;%s\n" % fps)
-# fh.write("#annotations;%s\n" % annotations)
+fh.write("#genotype;%s\n" % genotype)
+fh.write("#strain;%s\n" % strain)
+fh.write("#age;%s\n" % age)
+fh.write("#habituation;%s\n" % habituation)
+fh.write("#food;%s\n" % food)
+fh.write("#unix_time;%s\n" % unix_time)
+fh.write("#time_recorded;%s\n" % time_recorded)
+fh.write("#frames;%s\n" % frames)
+fh.write("#fps;%s\n" % fps)
+fh.write("#annotations;%s\n" % annotations)
 
 writer_out = writer(fh, dialect = 'excel-tab')
 
