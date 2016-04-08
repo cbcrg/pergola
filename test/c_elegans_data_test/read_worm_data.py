@@ -9,19 +9,23 @@ from calendar import timegm
 from sys import stderr
 import numpy as np
 from csv import writer
+from os.path import basename
 
-# parser = ArgumentParser(description='File input arguments')
-# parser.add_argument('-i','--input', help='Worms data hdf5 format matlab file', required=True)
+parser = ArgumentParser(description='File input arguments')
+parser.add_argument('-i','--input', help='Worms data hdf5 format matlab file', required=True)
 
-# args = parser.parse_args()
+args = parser.parse_args()
 
-# print ("Input file: %s" % args.input)
-# print >> stderr, "Input file: %s" % args.input
+print ("Input file: %s" % args.input)
+print >> stderr, "Input file: %s" % args.input
 
-# # Input files
-# input_file =  args.input
-input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat' #del
-print >> stderr, "Input file: %s" % input_file #del
+# Input files
+input_file =  args.input
+# input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat' #del
+# print >> stderr, "Input file: %s" % input_file #del
+
+file_name = basename(input_file).split('.')[0]
+file_name = file_name.replace (" ", "_")
 
 f = h5py.File(input_file)
 
@@ -68,7 +72,10 @@ time_recorded = time_recorded_r[0][0]
 # /info/video/length/frames
 frames_r = f['info']['video']['length']['frames']
 frames = frames_r[0][0] 
-frames
+
+fps_r = f['info']['video']['resolution']['fps']
+fps = fps_r[0][0]
+
 ##############
 ## WORM DATA
 # head_v = f['worm']['locomotion']['velocity']['head']['speed']
@@ -90,17 +97,33 @@ frames
 # tail_v_ary = np.array(tail_v, dtype='float64')
 # midbody_v_ary = np.array(midbody_v, dtype='float64')
 
-
 velocity_keys = ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
-fh = open("/Users/jespinosa/git/pergola/test/c_elegans_data_test/output.csv",'wb')
+# fh = open("/Users/jespinosa/git/pergola/test/c_elegans_data_test/output.csv",'wb')
+
+fh = open(file_name + "_speed.csv",'wb')
+
+# fh.write("#genotype;%s\n" % genotype)
+# fh.write("#strain;%s\n" % strain)
+# fh.write("#age;%s\n" % age)
+# fh.write("#habituation;%s\n" % habituation)
+# fh.write("#food;%s\n" % food)
+# fh.write("#unix_time;%s\n" % unix_time)
+# fh.write("#time_recorded;%s\n" % time_recorded)
+# fh.write("#frames;%s\n" % frames)
+# fh.write("#fps;%s\n" % fps)
+# fh.write("#annotations;%s\n" % annotations)
 
 writer_out = writer(fh, dialect = 'excel-tab')
 
 writer_out.writerow(['frame_start', 'frame_end']  + sorted(velocity_keys))
+# from os import getcwd, chdir
+# getcwd()
+# chdir("/Users/jespinosa/git/pergola/test/c_elegans_data_test/")
 
 # range already substract one to frames 
-for frame in range(0, int(frames)):
+# for frame in range(0, int(frames)):
+for frame in range(0, 100):    #del #debug
     list_v = list()
     list_v.extend ([frame, frame+1])
     
