@@ -115,6 +115,9 @@ class IntData(object):
         
         for row in self._in_file:
             
+            # Comments skipped
+            if row.startswith("#"):                 
+                continue
             #Delimiter set by user        
             if row.count(delimiter) >= 1: break
             else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(delimiter))
@@ -151,11 +154,19 @@ class IntData(object):
 #         self.reader =  reader(self.in_file, delimiter=self.delimiter)       
         
         fieldsB = []
+        first_l = []
         
-        if self.header:            
-            header = self._reader.next()
-            first_r = self._reader.next()
+        for row in self._reader:            
+            if row[0].startswith("#"):
+                continue
+            else:
+                first_l = row                
+                break
             
+        if self.header:            
+            header = first_l
+            first_r = self._reader.next()
+                                    
             if len(header) != len(first_r):
                 raise ValueError("Number of fields in header '%d' does not match number of fields in first row '%d'" 
                                  % (len(header), len(first_r)))
@@ -181,7 +192,7 @@ class IntData(object):
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
         else:
-            first_r = self._reader.next()
+            first_r = first_l
             
             if fields:
                 if len(fields) > len(first_r):
@@ -253,15 +264,20 @@ class IntData(object):
         """
         
         list_data = list()
-        
-        if self.header: self._reader.next()
-        
-#         print "??????????????????????", self.fieldsG_dict["chrom_start"]#del
-        
+        header_check = False
+#
         for row in self._reader:
+            # Comments skipped
+            if row[0].startswith("#"):                 
+                continue
+
+            if self.header and not header_check: 
+                header_check = True 
+                continue
+            
             if isinstance((row[self.fieldsG_dict["chrom_start"]]), basestring):                
                 row[self.fieldsG_dict["chrom_start"]] = num(row[self.fieldsG_dict["chrom_start"]])
-
+                
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         #Initialize min, max
