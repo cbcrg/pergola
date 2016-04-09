@@ -1,0 +1,6 @@
+! Mapping of file fields into pergola fields
+!
+! frame_start frame_end value
+behavioural_file:frame_start > pergola:chrom_start
+behavioural_file:frame_end > pergola:chrom_end
+behavioural_file:value > pergola:data_value
