@@ -39,18 +39,30 @@ process get_motion {
   """
 }
 
+motion_files_name = motion_files.flatten().map { motion_file_name ->   
+  println motion_file_name.name
+  
+  [ motion_file_name, motion_file_name.name ]
+}
+
 map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
 map_motion=file(map_motion_path)
 
 process motion_to_pergola {
   input:
-  set file ('motion_file') from motion_files
+  set file ('motion_file'), val (name_file) from motion_files_name
   set worms_motion2p from map_motion
   
   output:
-  stdout result
+  set 'tr*.bed', name_file into bed_motion
   
   """
   pergola_rules.py -i $motion_file -m $worms_motion2p
   """
 } 
+
+bed_motion.subscribe {   
+  bed_file = it[0]
+  bed_file.copyTo ( it[1] + ".bed" )
+}
+
