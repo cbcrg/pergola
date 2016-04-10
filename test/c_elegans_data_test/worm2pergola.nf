@@ -36,6 +36,12 @@ process get_speed {
   """
 }
 
+speed_files_name = speed_files.flatten().map { speed_file_name ->   
+  println speed_file_name.name
+  
+  [ speed_file_name, speed_file_name.name ]
+}
+
 // pergola command
 
 // pergola_rules.py -i "575 JU440 on food L_2011_02_17__11_00___3___1_features_speed.csv" -m worms_speed2p.txt
@@ -50,15 +56,21 @@ body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
 process speed_to_pergola {
   input:
-  file speed_file from speed_files
+
+  set file ('speed_file'), val (name_file) from speed_files_name  
   file worms_speed2p from map_speed
   each body_part from body_parts
   
-  output:
-  stdout result
+  output: 
+  set 'tr*.bed', body_part, name_file into bed_speed
   
   """
   cat $worms_speed2p | sed 's/behavioural_file:$body_part > pergola:dummy/behavioural_file:$body_part > pergola:data_value/g' > mod_map_file   
   pergola_rules.py -i $speed_file -m mod_map_file 
   """
 } 
+
+bed_speed.subscribe {   
+  bed_file = it[0]
+  bed_file.copyTo ( it[1] + "." + it[2] + ".bed" )
+}
