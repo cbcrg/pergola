@@ -278,7 +278,7 @@ parent_parser.add_argument('-nh', '--no_header', required=False, action='store_t
 parent_parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
                     help='List of fields to read from input file')
 parent_parser.add_argument('-w', '--window_size', required=False, metavar="WINDOW_SIZE", type=int, 
-                    help='Window size for bedGraph intervals')
+                    help='Window size for bedGraph intervals, default value 300')
 parent_parser.add_argument('-nt', '--no_track_line', required=False, action='store_true',
                     default=False, help='Track line no included in the bed file')
 parent_parser.add_argument('-fs', '--field_separator', required=False, type=str,
