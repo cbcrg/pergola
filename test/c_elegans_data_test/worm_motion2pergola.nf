@@ -55,9 +55,11 @@ process motion_to_pergola {
   
   output:
   set 'tr*.bed', name_file into bed_motion
+  set 'tr*.bedGraph', name_file into bedGraph_motion
   
   """
   pergola_rules.py -i $motion_file -m $worms_motion2p
+  pergola_rules.py -i $motion_file -m $worms_motion2p -f bedGraph -w 1 
   """
 } 
 
@@ -65,4 +67,10 @@ bed_motion.subscribe {
   bed_file = it[0]
   bed_file.copyTo ( it[1] + ".bed" )
 }
+
+bedGraph_motion.subscribe {   
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo ( it[1] + ".bedGraph" )
+}
+
 

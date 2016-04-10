@@ -63,14 +63,27 @@ process speed_to_pergola {
   
   output: 
   set 'tr*.bed', body_part, name_file into bed_speed
+  set '*.fa', name_file into out_fasta
+  set 'tr*.bedGraph', body_part, name_file into bedGraph_speed
   
   """
   cat $worms_speed2p | sed 's/behavioural_file:$body_part > pergola:dummy/behavioural_file:$body_part > pergola:data_value/g' > mod_map_file   
-  pergola_rules.py -i $speed_file -m mod_map_file 
+  pergola_rules.py -i $speed_file -m mod_map_file
+  pergola_rules.py -i $speed_file -m mod_map_file -f bedGraph -w 1  
   """
 } 
 
 bed_speed.subscribe {   
   bed_file = it[0]
   bed_file.copyTo ( it[1] + "." + it[2] + ".bed" )
+}
+
+out_fasta.subscribe {   
+  fasta_file = it[0]
+  fasta_file.copyTo ( it[1] + ".fa" )
+}
+
+bedGraph_speed.subscribe {   
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo ( it[1] + "." + it[2] + ".bedGraph" )
 }
