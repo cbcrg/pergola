@@ -56,22 +56,21 @@ body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
 process speed_to_pergola {
   input:
-
   set file ('speed_file'), val (name_file) from speed_files_name  
   file worms_speed2p from map_speed
   each body_part from body_parts
   
   output: 
-  set 'tr*.bed', body_part, name_file into bed_speed
-  set '*.fa', name_file into out_fasta
-  set 'tr*.bedGraph', body_part, name_file into bedGraph_speed
+  set 'tr*.bed', body_part, name_file into bed_speed, bed_speed_cp
+  set 'tr*.bedGraph', body_part, name_file into bedGraph_speed, bedGraph_speed_cp
+  set '*.fa', name_file, name_file into out_fasta
   
   """
   cat $worms_speed2p | sed 's/behavioural_file:$body_part > pergola:dummy/behavioural_file:$body_part > pergola:data_value/g' > mod_map_file   
   pergola_rules.py -i $speed_file -m mod_map_file
-  pergola_rules.py -i $speed_file -m mod_map_file -f bedGraph -w 1  
+  pergola_rules.py -i $speed_file -m mod_map_file -f bedGraph -w 1 
   """
-} 
+}
 
 bed_speed.subscribe {   
   bed_file = it[0]
@@ -86,4 +85,29 @@ out_fasta.subscribe {
 bedGraph_speed.subscribe {   
   bedGraph_file = it[0]
   bedGraph_file.copyTo ( it[1] + "." + it[2] + ".bedGraph" )
+}
+
+process zeros_bed_and_bedGraph {
+  input:
+  set file ('bed_file'), val(body_part), val(name_file) from bed_speed_cp
+  set file ('bedGraph_file'), val(body_part), val(name_file) from bedGraph_speed_cp
+  	
+  output:
+  set '*.bedZeros', body_part, name_file into bed_speed_zeros
+  set '*.bedGraphZeros', body_part, name_file into bedGraph_speed_zeros
+  
+  """
+  cat $bed_file | sed 's/-10000/0/g' > ${bed_file}".bedZeros"
+  cat $bedGraph_file | sed 's/-10000/0/g' > ${bedGraph_file}".bedGraphZeros" 
+  """			
+}
+
+bed_speed_zeros.subscribe {   
+  bed_file = it[0]
+  bed_file.copyTo ( it[1] + "." + it[2] + "_zeros.bed" )
+}
+
+bedGraph_speed_zeros.subscribe {   
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo ( it[1] + "." + it[2] + "_zeros.bedGraph" )
 }
