@@ -122,7 +122,7 @@ writer_out.writerow(['frame_start', 'frame_end']  + sorted(velocity_keys))
 # chdir("/Users/jespinosa/git/pergola/test/c_elegans_data_test/")
 
 # range already substract one to frames 
-# for frame in range(0, int(frames)):
+#for frame in range(0, int(frames)):
 for frame in range(0, 100):    #del #debug
     list_v = list()
     list_v.extend ([frame, frame+1])
@@ -134,7 +134,9 @@ for frame in range(0, 100):    #del #debug
             raise KeyError ("Velocity field %s is corrupted and can not be retrieved from hdf5 file"
                             % (velocity_k, frame))
                             
-        if np.isnan(v) : v = -10000    
+        if np.isnan(v) : v = -10000
+        # This can not be done because I am processing all speed at the same time
+        # if np.isnan(v) : continue
         
         list_v.append (v)    
     # print frame
@@ -144,6 +146,7 @@ for frame in range(0, 100):    #del #debug
 
 fh.close()
 
+f['worm']['locomotion']['velocity']['midbody']['speed'][13104][0]
 
 # for velocity_k in velocity_keys:
 #     print velocity_k
