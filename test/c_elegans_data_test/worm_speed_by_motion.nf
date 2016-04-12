@@ -143,16 +143,17 @@ process motion_to_pergola {
   """
 } 
 
-
 //This ones can directly be processed with motion bed file
 map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_pergola = file(map_bed_path)
 
+bed_speed_spread_motion = bed_speed_no_track_line.spread( bed_motion )
 
 process intersect_speed_motion {
 	input:
-	set file ('bed_speed_no_tr'), val (body_part), val(speed_name) from bed_speed_no_track_line
-	set file ('motion_file'), val (motion_name) from bed_motion
+	//set file ('bed_speed_no_tr'), val (body_part), val(speed_name) from bed_speed_no_track_line
+	//set file ('motion_file'), val (motion_name) from bed_motion
+	set file ('bed_speed_no_tr'), val (body_part), val(speed_name), file ('motion_file'), val (motion_name) from bed_speed_spread_motion
 	file bed2pergola from map_bed_pergola
 	
 	output:
@@ -162,3 +163,41 @@ process intersect_speed_motion {
 	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola 
 	"""
 }
+
+
+out_fasta.subscribe {   
+  fasta_file = it[0]
+  fasta_file.copyTo ( it[1] + ".fa" )
+}
+
+bed_speed_no_nas.subscribe {   
+  bed_file = it[0]
+  bed_file.copyTo ( it[1] + "." + it[2] + ".GB.bed" )
+}
+
+bedGraph_speed_no_nas.subscribe {   
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo ( it[1] + "." + it[2] + ".GB.bedGraph" )
+}
+
+/*
+binFileSingleCage = binFilesSingleCages.flatten().map { binSingleCage -> 
+  def pattern = binSingleCage.name =~/^cage(\d+).*$/
+  println binSingleCage.name
+  println pattern [0][1]
+  def cage = pattern[0][1]
+  [ cage, binSingleCage ]
+}
+*/
+
+bed_mean_speed_motion.subscribe {
+  def pattern = it[3] =~/^*+.features_([a-z]+).csv$/
+  bed_mean_file = it[0]
+  //println it[3]
+  //println "============" + pattern
+  println "............" + pattern [0][1]  
+  bed_mean_file.copyTo ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" )
+}
+
+
+
