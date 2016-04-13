@@ -61,8 +61,8 @@ process speed_to_pergola {
   each body_part from body_parts
   
   output: 
-  set 'tr*.bed', body_part, name_file into bed_speed, bed_speed_cp
-  set 'tr*.bedGraph', body_part, name_file into bedGraph_speed, bedGraph_speed_cp
+  set 'tr*.bed', body_part, name_file into bed_speed
+  set 'tr*.bedGraph', body_part, name_file into bedGraph_speed
   set '*.fa', name_file, name_file into out_fasta
   
   """
@@ -72,7 +72,33 @@ process speed_to_pergola {
   """
 }
 
-bed_speed.subscribe {   
+process delete_nas_bed_and_bedGraph {
+  input:
+  set file ('bed_file'), val(body_part), val(name_file) from bed_speed
+  set file ('bedGraph_file'), val(body_part), val(name_file) from bedGraph_speed
+  	
+  output:
+  set '*.no_na.bed', body_part, name_file into bed_speed_no_nas
+  set '*.no_na.bedGraph', body_part, name_file into bedGraph_speed_no_nas
+  
+  set '*.no_tr.bed', body_part, name_file into bed_speed_no_track_line
+  set '*.no_tr.bedGraph', body_part, name_file into bedGraph_speed_no_track_line
+  
+  //cat ${bed_file}".tmp" | sed 's/-10000/0/g' > ${bed_file}".bedZeros"
+  //cat ${bedGraph_file}".tmp" | sed 's/-10000/0/g' > ${bedGraph_file}".bedGraphZeros"
+ 
+  """
+  cat $bed_file | sed 's/track name=\"1_a\"/track name=\"${body_part}_speed\"/g' > ${bed_file}".tmp"
+  cat ${bed_file}".tmp" | grep -v "\\-10000" > ${bed_file}".no_na.bed"
+  cat ${bed_file}".no_na.bed" | grep -v "track name" > ${bed_file}".no_tr.bed"
+  
+  cat $bedGraph_file | sed 's/track name=\"1_a\"/track name=\"${body_part}_speed\"/g' > ${bedGraph_file}".tmp"
+  cat ${bedGraph_file}".tmp" | grep -v "\\-10000" > ${bedGraph_file}".no_na.bedGraph"
+  cat ${bedGraph_file}".no_na.bedGraph" | grep -v "track name" > ${bed_file}".no_tr.bedGraph"  
+  """			
+}
+
+bed_speed_no_track_line.subscribe {   
   bed_file = it[0]
   bed_file.copyTo ( it[1] + "." + it[2] + ".bed" )
 }
@@ -82,32 +108,17 @@ out_fasta.subscribe {
   fasta_file.copyTo ( it[1] + ".fa" )
 }
 
-bedGraph_speed.subscribe {   
+bedGraph_speed_no_track_line.subscribe {   
   bedGraph_file = it[0]
   bedGraph_file.copyTo ( it[1] + "." + it[2] + ".bedGraph" )
 }
 
-process zeros_bed_and_bedGraph {
-  input:
-  set file ('bed_file'), val(body_part), val(name_file) from bed_speed_cp
-  set file ('bedGraph_file'), val(body_part), val(name_file) from bedGraph_speed_cp
-  	
-  output:
-  set '*.bedZeros', body_part, name_file into bed_speed_zeros
-  set '*.bedGraphZeros', body_part, name_file into bedGraph_speed_zeros
-  
-  """
-  cat $bed_file | sed 's/-10000/0/g' > ${bed_file}".bedZeros"
-  cat $bedGraph_file | sed 's/-10000/0/g' > ${bedGraph_file}".bedGraphZeros" 
-  """			
-}
-
-bed_speed_zeros.subscribe {   
+bed_speed_no_nas.subscribe {   
   bed_file = it[0]
-  bed_file.copyTo ( it[1] + "." + it[2] + "_zeros.bed" )
+  bed_file.copyTo ( it[1] + "." + it[2] + ".GB.bed" )
 }
 
-bedGraph_speed_zeros.subscribe {   
+bedGraph_speed_no_nas.subscribe {   
   bedGraph_file = it[0]
-  bedGraph_file.copyTo ( it[1] + "." + it[2] + "_zeros.bedGraph" )
+  bedGraph_file.copyTo ( it[1] + "." + it[2] + ".GB.bedGraph" )
 }
