@@ -1,0 +1,11 @@
+! Mapping of behavioural fields into genome browser fields
+!
+behavioural_file:chrm > genome_file:track
+behavioural_file:start > genome_file:chrom_start
+behavioural_file:end > genome_file:chrom_end
+behavioural_file:nature > genome_file:data_types
+behavioural_file:value > genome_file:data_value
+behavioural_file:strain > genome_file:dummy
+behavioural_file:start_rep > genome_file:dummy
+behavioural_file:end_rep > genome_file:dummy
+behavioural_file:color > genome_file:dummy
