@@ -3,7 +3,17 @@ from scipy.io  import loadmat
 import h5py
 from time import strptime
 from calendar import timegm
+import pysam
 
+print pysam.__version__ 
+print pysam.__file__
+
+# /nfs/software/cn/el6.5/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/RSeQC-2.6.2-py2.7-linux-x86_64.egg
+
+# pip install --target="/nfs/software/cn/el6.5/python/envs/.virtualenvs/cpython279/lib/python2.7/" pysam
+# pip install --target="/nfs/software/cn/el6.5/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/" pysam
+
+# At the end the solution was to chmod by Pablo and desinstall the pysam version inside RSeQC
 ## Files are in:
 # ftp://anonymous:@ftp.mrc-lmb.cam.ac.uk/pub/tjucikas/wormdatabase
 
