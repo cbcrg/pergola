@@ -25,7 +25,7 @@ from os.path import expanduser
 home = expanduser("~")
 
 import pybedtools
-if home == "/users/cn/jespinosa" 
+if home == "/users/cn/jespinosa" :
     pybedtools.helpers.set_bedtools_path('/users/cn/pprieto/soft/bedtools/bedtools2-2.19.1/bin')
 
 from pergola import mapping
