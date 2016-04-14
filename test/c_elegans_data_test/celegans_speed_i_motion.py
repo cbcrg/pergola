@@ -16,8 +16,18 @@
 
 # Loading libraries
 from argparse import ArgumentParser
-import pybedtools
+
 from os import path, getcwd
+
+# Changing path of BedTools binary in the cluster, otherwise map is not available
+# I use Pablo installation
+from os.path import expanduser
+home = expanduser("~")
+
+import pybedtools
+if home == "/users/cn/jespinosa" 
+    pybedtools.helpers.set_bedtools_path('/users/cn/pprieto/soft/bedtools/bedtools2-2.19.1/bin')
+
 from pergola import mapping
 from pergola import intervals
 from sys import stderr, exit
@@ -46,7 +56,7 @@ dir_development = base_dir + "/c_elegans_data_test/"
 # out_dir = base_dir + "/test/"
 out_dir = base_dir + "/c_elegans_data_test/"
 
-# mapping_bed = mapping.MappingInfo(base_dir + "/" + "bed2pergola.txt")
+# mapping_bed = mapping.MappingInfo(base_dir + "/test/" + "bed2pergola.txt")
 mapping_bed = mapping.MappingInfo(args.bed_mapping)
 # speed bed file
 # read file from input args
