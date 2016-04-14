@@ -44,7 +44,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     else:
         tracks2merge = ""
     
-    if tracks2merge: print >> stderr, "Tracks to join are: ", tracks2merge
+    if tracks2merge: print >> stderr, "@@@Pergola_rules.py: Tracks to join are: ", tracks2merge
     
     # Handling argument track actions
     if tracks2merge and track_actions:
@@ -165,9 +165,9 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     start = intData.min
     end = intData.max
     
-#     print "min>>>>>>>>>>>>>>>>>>>", start
-#     print "max>>>>>>>>>>>>>>>>>>>", end
-    
+    print "min>>>>>>>>>>>>>>>>>>>", start
+    print "max>>>>>>>>>>>>>>>>>>>", end
+     
     if relative_coord:
        start = 0
        end = intData.max - intData.min
@@ -205,10 +205,12 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         bedSingle = bed_str[key]
 #         print "::::::::::::::",bedSingle.data_types
 #         print "::::::::::::::",bedSingle.track        
-        # TODO add an if checking whether it is a bedgraph or not to get the mean 
+        # TODO add an if checking whether it is a bedgraph or not to get the mean
 #         bedGraph_mean = bedSingle.win_mean()
+#         print "============="
 #         print bedGraph_mean
-        bedSingle.save_track(track_line=track_line, bed_label=True)
+        bedSingle.save_track(track_line=track_line, bed_label=False)
+#         bedGraph_mean.save_track(track_line=track_line, bed_label=True)
 #         print "Tracks in the file", bedSingle.track
         
 #         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
