@@ -10,15 +10,16 @@
 */
 
 //path_files = "$HOME/2016_worm_DB/ju440_all/"
-path_files = "$HOME/git/pergola/test/c_elegans_data_test/"
+params.path_files = "$HOME/git/pergola/test/c_elegans_data_test/"
 
-mat_files_path = "${path_files}*.mat"
+mat_files_path = "${params.path_files}*.mat"
 mat_files = Channel.fromPath(mat_files_path)
 
 // read_worm_data.py command example 
 // $HOME/git/pergola/test/c_elegans_data_test/read_worm_data.py -i "575 JU440 on food L_2011_02_17__11_00___3___1_features.mat"
 
 mat_files.into { mat_files_speed; mat_files_motion }
+//mat_files_speed.subscribe { println "Matlab file to be processed:" + it }
 
 process get_speed {
   
@@ -165,38 +166,51 @@ process intersect_speed_motion {
 }
 
 
+// Creating results folder
+result_dir_GB = file("$baseDir/results_GB")
+
+result_dir_GB.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_GB"
+}
+
+//tblOutDev = 'tblEvalOneOutDev.tbl'
+//myFileDev = resultDirDev.resolve (tblOutDev)
+
 out_fasta.subscribe {   
   fasta_file = it[0]
-  fasta_file.copyTo ( it[1] + ".fa" )
+  //fasta_file.copyTo ( it[1] + ".fa" )
+  fasta_file.copyTo( result_dir_GB.resolve ( it[1] + ".fa" ) )
 }
 
 bed_speed_no_nas.subscribe {   
   bed_file = it[0]
-  bed_file.copyTo ( it[1] + "." + it[2] + ".GB.bed" )
+  //bed_file.copyTo ( it[1] + "." + it[2] + ".GB.bed" )
+  bed_file.copyTo ( result_dir_GB.resolve ( it[1] + "." + it[2] + ".GB.bed" ) )
 }
 
 bedGraph_speed_no_nas.subscribe {   
   bedGraph_file = it[0]
-  bedGraph_file.copyTo ( it[1] + "." + it[2] + ".GB.bedGraph" )
+  //bedGraph_file.copyTo ( it[1] + "." + it[2] + ".GB.bedGraph" )
+  bedGraph_file.copyTo (result_dir_GB.resolve ( it[1] + "." + it[2] + ".GB.bedGraph" ) )
 }
 
-/*
-binFileSingleCage = binFilesSingleCages.flatten().map { binSingleCage -> 
-  def pattern = binSingleCage.name =~/^cage(\d+).*$/
-  println binSingleCage.name
-  println pattern [0][1]
-  def cage = pattern[0][1]
-  [ cage, binSingleCage ]
+// Creating results folder
+result_dir_mean = file("$baseDir/results_mean")
+
+result_dir_mean.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_mean"
 }
-*/
 
 bed_mean_speed_motion.subscribe {
   def pattern = it[3] =~/^*+.features_([a-z]+).csv$/
   bed_mean_file = it[0]
-  //println it[3]
-  //println "============" + pattern
-  println "............" + pattern [0][1]  
-  bed_mean_file.copyTo ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" )
+  //println "............" + pattern [0][1]  
+  //bed_mean_file.copyTo ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" )
+  bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" ) )
 }
 
 
