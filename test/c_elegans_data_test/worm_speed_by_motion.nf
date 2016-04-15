@@ -135,7 +135,7 @@ process motion_to_pergola {
   set worms_motion2p from map_motion
   
   output:
-  set 'tr*.bed', name_file into bed_motion
+  set 'tr*.bed', name_file into bed_motion, bed_motion_wr
   set 'tr*.bedGraph', name_file into bedGraph_motion
   
   """
@@ -164,7 +164,6 @@ process intersect_speed_motion {
 	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola 
 	"""
 }
-
 
 // Creating results folder
 result_dir_GB = file("$baseDir/results_GB")
@@ -213,5 +212,15 @@ bed_mean_speed_motion.subscribe {
   bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" ) )
 }
 
+// Creating motion results folder
+result_dir_motion_GB = file("$baseDir/results_motion_GB")
 
+result_dir_motion_GB.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_motion_GB"
+}
 
+bed_motion_wr.subscribe {
+  it[0].copyTo ( result_dir_motion_GB.resolve ( it[1] + ".motion.bed" ))
+}
