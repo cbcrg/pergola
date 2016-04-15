@@ -90,12 +90,14 @@ process zeros_bed_and_bedGraph {
  
   """
   cat $bed_file | sed 's/track name=\"1_a\"/track name=\"${body_part}_speed\"/g' > ${bed_file}".tmp"
-  cat ${bed_file}".tmp" | grep -v "\\-10000" > ${bed_file}${name_file}".no_na.bed"
-  cat ${bed_file}${name_file}".no_na.bed" | grep -v "track name" > ${bed_file}".no_tr.bed"
+  cat ${bed_file}".tmp" | grep -v "\\-10000" > ${bed_file}${name_file}".no_na.bed"  
+  echo -e "chr1\t0\t100\t.\t-10000\t+\t0\t100\t135,206,250" >> ${bed_file}${name_file}".no_na.bed"
+  cat ${bed_file}${name_file}".no_na.bed" | grep -v "track name" > ${bed_file}".no_tr.bed" || echo -e "chr1\t0\t100\t.\t100000\t+\t0\t100\t135,206,250\n" > ${bed_file}".no_tr.bed"
   
   cat $bedGraph_file | sed 's/track name=\"1_a\"/track name=\"${body_part}_speed\"/g' > ${bedGraph_file}".tmp"
   cat ${bedGraph_file}".tmp" | grep -v "\\-10000" > ${bedGraph_file}".no_na.bedGraph"
-  cat ${bedGraph_file}".no_na.bedGraph" | grep -v "track name" > ${bed_file}".no_tr.bedGraph"  
+  echo -e "chr1\t0\t100\t100000" >> ${bedGraph_file}".no_na.bedGraph" 
+  cat ${bedGraph_file}".no_na.bedGraph" | grep -v "track name" > ${bedGraph_file}".no_tr.bedGraph" || echo -e "chr1\t0\t100\t100000\n" > ${bedGraph_file}".no_tr.bedGraph" 
   """			
 }
 
