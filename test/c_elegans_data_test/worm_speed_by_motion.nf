@@ -90,8 +90,8 @@ process zeros_bed_and_bedGraph {
  
   """
   cat $bed_file | sed 's/track name=\"1_a\"/track name=\"${body_part}_speed\"/g' > ${bed_file}".tmp"
-  cat ${bed_file}".tmp" | grep -v "\\-10000" > ${bed_file}".no_na.bed"
-  cat ${bed_file}".no_na.bed" | grep -v "track name" > ${bed_file}".no_tr.bed"
+  cat ${bed_file}".tmp" | grep -v "\\-10000" > ${bed_file}${name_file}".no_na.bed"
+  cat ${bed_file}${name_file}".no_na.bed" | grep -v "track name" > ${bed_file}".no_tr.bed"
   
   cat $bedGraph_file | sed 's/track name=\"1_a\"/track name=\"${body_part}_speed\"/g' > ${bedGraph_file}".tmp"
   cat ${bedGraph_file}".tmp" | grep -v "\\-10000" > ${bedGraph_file}".no_na.bedGraph"
