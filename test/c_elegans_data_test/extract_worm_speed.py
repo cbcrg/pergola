@@ -146,7 +146,7 @@ for frame in range(0, int(frames)):
 
 fh.close()
 
-f['worm']['locomotion']['velocity']['midbody']['speed'][13104][0]
+# f['worm']['locomotion']['velocity']['midbody']['speed'][13104][0]
 
 # for velocity_k in velocity_keys:
 #     print velocity_k
