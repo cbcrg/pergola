@@ -21,7 +21,8 @@ print >> stderr, "Input file: %s" % args.input
 
 # Input files
 input_file =  args.input
-
+# input_file = "/Users/jespinosa/git/pergola/test/c_elegans_data_test/N2 on food L_2011_03_17__11_33_44___7___2_features.mat"
+# input_file = "/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_04_14__12_39_24___2___5_features.mat"
 file_name = basename(input_file).split('.')[0]
 file_name = file_name.replace (" ", "_")
 
@@ -101,7 +102,22 @@ def list_from_ref (refs_obj):
         list_v.append(f[r[0]][0][0])   
 
     return (list_v)
-    
+
+# debugging del
+# f['worm']['locomotion']['motion']['backward'].keys()
+# f['worm']['locomotion']['motion']['backward']['frames'].keys()
+# f['worm']['locomotion']['motion']['forward']['frames']['start']
+# f['worm']['locomotion']['motion']['forward']['frames']['end']
+
+# f['worm']['locomotion']['motion']['backward']['frames'][0]
+
+# start_r = f['worm']['locomotion']['motion']['forward']['frames']['start']
+# start_r = f['worm']['locomotion']['motion']['backward']['frames']['start']
+# start_r = f['worm']['locomotion']['motion']['paused']['frames']['start']
+
+# start = list_from_ref (start_r)
+# start
+
 for motion_k in sorted(motion_keys):
     try:
         start_r = f['worm']['locomotion']['motion'][motion_k]['frames']['start']
