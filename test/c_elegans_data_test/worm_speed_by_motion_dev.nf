@@ -188,13 +188,11 @@ process motion_to_pergola {
 map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_pergola = file(map_bed_path)
 
-bed_speed_motion = bed_speed_no_track_line.phase(bed_motion).map { speed, motion ->
-		//println "kkkkkkkkk" + speed + motion
-		[ speed[0], speed[1], speed[2], motion[0], motion[1], motion[2] ]
-		//[ it[0][0], it[0][1], it[0][2], it[1][0], it[1][1] ]
-		//[ it[0][0], it[0][1], it[0][2] ]
-	}
-
+// I use filter to delete pairs that do not come from the same original mat file
+bed_speed_motion = bed_speed_no_track_line
+	.spread(bed_motion)
+	.filter { it[0] == it[3] }
+	
 process intersect_speed_motion {
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion) from bed_speed_motion
@@ -202,6 +200,7 @@ process intersect_speed_motion {
 	
 	output:
 	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
+	set '*.mean.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
 	
 	"""
 	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola	
@@ -216,9 +215,6 @@ result_dir_GB.with {
      mkdirs()
      println "Created: $result_dir_GB"
 }
-
-//tblOutDev = 'tblEvalOneOutDev.tbl'
-//myFileDev = resultDirDev.resolve (tblOutDev)
 
 out_fasta.subscribe {   
   fasta_file = it[0]
@@ -238,7 +234,7 @@ bedGraph_speed_no_nas.subscribe {
   bedGraph_file.copyTo (result_dir_GB.resolve ( it[1] + "." + it[2] + ".GB.bedGraph" ) )
 }
 
-// Creating results folder
+// Creating mean results folder
 result_dir_mean = file("$baseDir/results_mean")
 
 result_dir_mean.with {
@@ -260,29 +256,12 @@ result_dir_motion_GB.with {
 bed_motion_wr.subscribe {
   //println ".......******************    0      " + it[0] + "." + it[2] + ".motion.bed"
   it[1].copyTo ( result_dir_motion_GB.resolve ( it[0] + it[2] + ".motion.bed" ))
-  //it[0].copyTo ( result_dir_motion_GB.resolve ( it[1] + ".motion.bed" ))
 }
-
-bed_mean_speed_motion.into { bed_mean_speed_motion_w; bed_mean_speed_motion_2bG }
 
 //set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
-
-bed_mean_speed_motion_w.subscribe {
+bed_mean_speed_motion.subscribe {
   bed_mean_file = it[0]
   bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
-}
-
-process bed_mean_to_bedGraph {
-	input:
-	set file ('bed_mean_speed'), val(body_part), val (mat_file_speed), val (mat_motion_file), val(name_file_motion) from bed_mean_speed_motion_2bG
-		
-	output:
-	set '*.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
-	//set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
-			
-	"""
-	awk '{OFS="\t"; print \$1,\$2,\$3,\$4,\$10,\$6,\$7,\$8,\$9}' ${bed_mean_speed} > mean_speed.bedGraph
-	"""
 }
 
 bedGr_mean_speed_motion.subscribe {
