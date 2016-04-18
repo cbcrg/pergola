@@ -45,11 +45,11 @@ process get_speed {
   """
 }
 
-
+/*
 speed_files_toprint.subscribe {
 	println ">>>> ${it[0].name}"	
 }
-
+*/
 /*
 speed_files_name = speed_files.flatten().map { //speed_file_name ->
   file_speed = it[0]  
@@ -103,7 +103,7 @@ process zeros_bed_and_bedGraph {
   
   //set '*.no_tr.bed', body_part, name_file into bed_speed_no_track_line
   //set '*.no_tr.bedGraph', body_part, name_file into bedGraph_speed_no_track_line
-  set name_file, body_part, '*.no_tr.bed' into bed_speed_no_track_line
+  set name_file, body_part, '*.no_tr.bed' into bed_speed_no_track_line, bed_speed_no_track_line_cp
   set name_file, body_part, '*.no_tr.bedGraph' into bedGraph_speed_no_track_line
   
   //cat ${bed_file}".tmp" | sed 's/-10000/0/g' > ${bed_file}".bedZeros"
@@ -149,7 +149,7 @@ process get_motion {
 
 motion_files_cp.subscribe {
 	//println "************" + it[0]
-	println it[1]
+	//println it[1]
 	
 }
 
@@ -165,12 +165,6 @@ motion_files_flat = motion_files.map { name_mat, motion_f ->
         }
     }
     .flatMap()
-
-/*
-motion_files_flat.subscribe {
-	println "#############" + it[0] + it[1]
-}
-*/
     
 map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
 map_motion=file(map_motion_path)
@@ -194,12 +188,6 @@ process motion_to_pergola {
 map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_pergola = file(map_bed_path)
 
-//set name_file, body_part, '*.no_tr.bed' into bed_speed_no_track_line
-
-//bed_speed_motion = bed_speed_no_track_line.phase(bed_motion).flatten().toList()
-//.map { name_mat, motion_f ->
-//bed_speed_motion = bed_speed_no_track_line.phase(bed_motion) {
-
 bed_speed_motion = bed_speed_no_track_line.phase(bed_motion).map { speed, motion ->
 		//println "kkkkkkkkk" + speed + motion
 		[ speed[0], speed[1], speed[2], motion[0], motion[1], motion[2] ]
@@ -207,44 +195,13 @@ bed_speed_motion = bed_speed_no_track_line.phase(bed_motion).map { speed, motion
 		//[ it[0][0], it[0][1], it[0][2] ]
 	}
 
-/*
-bed_speed_motion.subscribe { 
-		println "####=+++++++++++" + it		
-	}
-*/	
-
-
-/*
-.map {
-	[ it[0], it[1], it[2], it[3], it[4] ]
-}
-
-
-.map { //speed_file_name ->
-  file_speed = it[0]  
-  mat_file_name = it[1]
-  //println speed_file_name.name
-  println "file_speed_name -------- mat_file_name"
-  //[ speed_file_name, speed_file_name.name ]
-  [ file_speed, file_speed_name, mat_file_name ]
-}
-
-mat_files_name = mat_files.flatten().map { mat_files_file ->      
-   def content = mat_files_file
-   def name = mat_files_file.name.replaceAll(/ /,'_')
-   [ content, name ]
-}
-*/
-
 process intersect_speed_motion {
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion) from bed_speed_motion
 	file bed2pergola from map_bed_pergola
 	
 	output:
-	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
-	//set '*.del' into del_file
-	
+	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
 	
 	"""
 	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola	
@@ -290,17 +247,6 @@ result_dir_mean.with {
      println "Created: $result_dir_mean"
 }
 
-//set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
-bed_mean_speed_motion.subscribe {
-  //println "............" + it[4]
-  //def pattern = it[4] =~/^*+.features_([a-z]+).csv$/
-  //def pattern = it[2] =~/^file_worm_([a-z]+).csv$/
-  bed_mean_file = it[0]
-  //println "............" + pattern  
-  //bed_mean_file.copyTo ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" )
-  bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
-}
-
 // Creating motion results folder
 result_dir_motion_GB = file("$baseDir/results_motion_GB")
 
@@ -317,3 +263,29 @@ bed_motion_wr.subscribe {
   //it[0].copyTo ( result_dir_motion_GB.resolve ( it[1] + ".motion.bed" ))
 }
 
+bed_mean_speed_motion.into { bed_mean_speed_motion_w; bed_mean_speed_motion_2bG }
+
+//set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
+
+bed_mean_speed_motion_w.subscribe {
+  bed_mean_file = it[0]
+  bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
+}
+
+process bed_mean_to_bedGraph {
+	input:
+	set file ('bed_mean_speed'), val(body_part), val (mat_file_speed), val (mat_motion_file), val(name_file_motion) from bed_mean_speed_motion_2bG
+		
+	output:
+	set '*.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
+	//set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
+			
+	"""
+	awk '{OFS="\t"; print \$1,\$2,\$3,\$4,\$10,\$6,\$7,\$8,\$9}' ${bed_mean_speed} > mean_speed.bedGraph
+	"""
+}
+
+bedGr_mean_speed_motion.subscribe {
+  bedGr_mean_file = it[0]
+  bedGr_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
+}
