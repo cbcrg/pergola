@@ -161,7 +161,7 @@ motion_files_cp.subscribe {
 
 motion_files_flat = motion_files.map { name_mat, motion_f ->
         motion_f.collect {            
-            [ it, name_mat ]
+            [ it, name_mat, it.name ]
         }
     }
     .flatMap()
@@ -177,12 +177,12 @@ map_motion=file(map_motion_path)
 
 process motion_to_pergola {
   input:
-  set file ('motion_file'), val (name_file) from motion_files_flat
+  set file ('motion_file'), val (name_file), val (name_file_motion) from motion_files_flat
   set worms_motion2p from map_motion
   
   output:
-  set name_file, 'tr*.bed' into bed_motion, bed_motion_wr
-  set name_file, 'tr*.bedGraph' into bedGraph_motion
+  set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr
+  set name_file, 'tr*.bedGraph', name_file_motion into bedGraph_motion
   
   """
   pergola_rules.py -i $motion_file -m $worms_motion2p -nt
@@ -202,7 +202,7 @@ map_bed_pergola = file(map_bed_path)
 
 bed_speed_motion = bed_speed_no_track_line.phase(bed_motion).map { speed, motion ->
 		//println "kkkkkkkkk" + speed + motion
-		[ speed[0], speed[1], speed[2], motion[0], motion[1] ]
+		[ speed[0], speed[1], speed[2], motion[0], motion[1], motion[2] ]
 		//[ it[0][0], it[0][1], it[0][2], it[1][0], it[1][1] ]
 		//[ it[0][0], it[0][1], it[0][2] ]
 	}
@@ -236,15 +236,13 @@ mat_files_name = mat_files.flatten().map { mat_files_file ->
 }
 */
 
-
-	
 process intersect_speed_motion {
 	input:
-	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file') from bed_speed_motion
+	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion) from bed_speed_motion
 	file bed2pergola from map_bed_pergola
 	
 	output:
-	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file into bed_mean_speed_motion
+	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
 	//set '*.del' into del_file
 	
 	
@@ -253,4 +251,69 @@ process intersect_speed_motion {
 	"""
 }
 
+// Creating results folder
+result_dir_GB = file("$baseDir/results_GB")
+
+result_dir_GB.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_GB"
+}
+
+//tblOutDev = 'tblEvalOneOutDev.tbl'
+//myFileDev = resultDirDev.resolve (tblOutDev)
+
+out_fasta.subscribe {   
+  fasta_file = it[0]
+  //fasta_file.copyTo ( it[1] + ".fa" )
+  fasta_file.copyTo( result_dir_GB.resolve ( it[1] + ".fa" ) )
+}
+
+bed_speed_no_nas.subscribe {   
+  bed_file = it[0]
+  //bed_file.copyTo ( it[1] + "." + it[2] + ".GB.bed" )
+  bed_file.copyTo ( result_dir_GB.resolve ( it[1] + "." + it[2] + ".GB.bed" ) )
+}
+
+bedGraph_speed_no_nas.subscribe {   
+  bedGraph_file = it[0]
+  //bedGraph_file.copyTo ( it[1] + "." + it[2] + ".GB.bedGraph" )
+  bedGraph_file.copyTo (result_dir_GB.resolve ( it[1] + "." + it[2] + ".GB.bedGraph" ) )
+}
+
+// Creating results folder
+result_dir_mean = file("$baseDir/results_mean")
+
+result_dir_mean.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_mean"
+}
+
+//set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
+bed_mean_speed_motion.subscribe {
+  //println "............" + it[4]
+  //def pattern = it[4] =~/^*+.features_([a-z]+).csv$/
+  //def pattern = it[2] =~/^file_worm_([a-z]+).csv$/
+  bed_mean_file = it[0]
+  //println "............" + pattern  
+  //bed_mean_file.copyTo ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" )
+  bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
+}
+
+// Creating motion results folder
+result_dir_motion_GB = file("$baseDir/results_motion_GB")
+
+result_dir_motion_GB.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_motion_GB"
+}
+
+//set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr
+bed_motion_wr.subscribe {
+  //println ".......******************    0      " + it[0] + "." + it[2] + ".motion.bed"
+  it[1].copyTo ( result_dir_motion_GB.resolve ( it[0] + it[2] + ".motion.bed" ))
+  //it[0].copyTo ( result_dir_motion_GB.resolve ( it[1] + ".motion.bed" ))
+}
 
