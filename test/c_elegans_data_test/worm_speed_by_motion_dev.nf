@@ -201,11 +201,66 @@ process intersect_speed_motion {
 	output:
 	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
 	set '*.mean.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
+	set '*.intersect.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_intersect_speed_motion, bed_intersect_speed_motion2p
 	
 	"""
 	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola	
 	"""
 }
+
+/*
+bed_intersect_speed_motion2plot = bed_intersect_speed_motion2p.subscribe() { it ->
+	def pattern = it[4] =~/^file_worm_(.*)\.csv$/
+	def motion_dir = pattern[0][1]	
+	//println "=======" + it[1] + "++++" + it[2] + "++++" + it[4]
+	println "=======******" + motion_dir	
+	//println "=======******" + it[0] + "\n" + it[1] + "\n" + it[2] + "\n" + it[3] + "\n" + it[4] + "\n" + motion_dir	
+	[ it[0], it[1], it[2], it[3], it[4], motion_dir ] 
+}
+
+
+pos_files2Flat = pos_files2.flatten().map { single_pos_file ->   
+   def name = single_pos_file.name
+   def content = single_pos_file
+   [ name,  content ]
+}
+
+
+bed_intersect_speed_motion2plot.subscribe {
+	println "######@@@@@@@@@@@@@@@@@@@@@" + it[4] +"...."+ it[2] + "...." + it[5] 
+}
+*/
+
+/*
+# Esto lo puedo hacer despues porque solo tengo que ir a la carpeta donde este de intersection file y hacer los plots 
+
+worm_strains = ['575_JU440', 'N2', 'flp-19ok2460', 'flp-20ok2964', 'ins-15ok3444I', 'nlp-14tm1880X' ]
+*/
+	
+/*
+bed_speed_motion = bed_speed_no_track_line
+	.spread(bed_motion)
+	.filter { it[0] == it[3] }
+
+process plot_speed_motion_dir {
+	input:	
+	set file ('intersect_file'), val (body_part), val (mat_file_speed), val (mat_file_motion), val (name_file_motion) from bed_intersect_speed_motion2p
+	
+	output:
+	set '*.png' into plot_file 
+	
+	script:  	
+	def pattern = name_file_motion =~/^file_worm_(.*)\.csv$/
+	def motion_dir = pattern[0][1]	
+	println "=======******" + motion_dir	
+	
+	//export R_LIBS="/software/R/packages"
+	
+	"""
+	Rscript \$HOME/git/pergola/test/c_elegans_data_test/results_intersect/plot_speed_motion_mean.R --body_part=${body_part} --pattern_worm=${worm_strain} --motion=${motion_dir}		
+	"""
+}
+*/
 
 // Creating results folder
 result_dir_GB = file("$baseDir/results_GB")
@@ -243,6 +298,15 @@ result_dir_mean.with {
      println "Created: $result_dir_mean"
 }
 
+// Creating intersect results folder
+result_dir_intersect = file("$baseDir/results_intersect")
+
+result_dir_intersect.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_intersect"
+}
+
 // Creating motion results folder
 result_dir_motion_GB = file("$baseDir/results_motion_GB")
 
@@ -264,7 +328,18 @@ bed_mean_speed_motion.subscribe {
   bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
 }
 
+bed_intersect_speed_motion.subscribe {
+  bed_int_file = it[0]
+  bed_int_file.copyTo ( result_dir_intersect.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bed" ) )
+}
+
 bedGr_mean_speed_motion.subscribe {
   bedGr_mean_file = it[0]
   bedGr_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
 }
+/*
+plot_file.subscribe {
+  plot_file= it
+  plot_file.copyTo ( result_dir_intersect.resolve ( it.name + ".png" ) )
+}
+*/

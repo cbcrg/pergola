@@ -25,6 +25,7 @@ from csv import writer
 from os.path import expanduser
 home = expanduser("~")
 
+# In the cluster I use bedtools Pablo installation, because default cluster version has not map
 import pybedtools
 if home == "/users/cn/jespinosa" :
     pybedtools.helpers.set_bedtools_path('/users/cn/pprieto/soft/bedtools/bedtools2-2.19.1/bin')
@@ -96,6 +97,8 @@ speed_BedTools = bed_obj_speed['chr1', '.'].create_pybedtools()
 motion_data_read = int_data_motion.read(relative_coord=False)
 bed_obj_motion = motion_data_read.convert(mode="bed")
 motion_BedTools = bed_obj_motion['chr1', '.'].create_pybedtools()
+
+speed_BedTools.intersect(motion_BedTools).saveas(tag_file + ".intersect.bed")
 
 # motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0).saveas(out_dir + tag_file + ".mean.bed")
 # motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0).saveas(tag_file + ".mean.bed")
