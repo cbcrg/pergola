@@ -18,30 +18,49 @@ mat_files = Channel.fromPath(mat_files_path)
 // read_worm_data.py command example 
 // $HOME/git/pergola/test/c_elegans_data_test/read_worm_data.py -i "575 JU440 on food L_2011_02_17__11_00___3___1_features.mat"
 
-mat_files.into { mat_files_speed; mat_files_motion }
-//mat_files_speed.subscribe { println "Matlab file to be processed:" + it }
+
+// Name of input file and file 
+mat_files_name = mat_files.flatten().map { mat_files_file ->      
+   def content = mat_files_file
+   def name = mat_files_file.name.replaceAll(/ /,'_')
+   [ content, name ]
+}
+
+mat_files_name.into { mat_files_speed; mat_files_motion }
 
 process get_speed {
-  
+
   input:
-  file file_worm from mat_files_speed
+  set file ('file_worm'), val (name_file_worm) from mat_files_speed
+
   
-  output: 
-  file '*_speed.csv' into speed_files
-  
+  output:  
+  set '*_speed.csv', name_file_worm into speed_files, speed_files_toprint
+    
   script:
-  println "Matlab file containing worm behavior processed: $file_worm"
+  println "Matlab file containing worm behavior processed: $name_file_worm"
 
   """
-  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_speed.py -i \"$file_worm\"
+  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_speed.py -i $file_worm
   """
 }
 
-speed_files_name = speed_files.flatten().map { speed_file_name ->   
-  println speed_file_name.name
-  
-  [ speed_file_name, speed_file_name.name ]
+/*
+speed_files_toprint.subscribe {
+	println ">>>> ${it[0].name}"	
 }
+*/
+/*
+speed_files_name = speed_files.flatten().map { //speed_file_name ->
+  file_speed = it[0]  
+  mat_file_name = it[1]
+  //println speed_file_name.name
+  println "file_speed_name -------- mat_file_name"
+  //[ speed_file_name, speed_file_name.name ]
+  [ file_speed, file_speed_name, mat_file_name ]
+}
+*/
+
 
 // pergola command
 
@@ -57,7 +76,7 @@ body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
 process speed_to_pergola {
   input:
-  set file ('speed_file'), val (name_file) from speed_files_name  
+  set file ('speed_file'), val (name_file) from speed_files  
   file worms_speed2p from map_speed
   each body_part from body_parts
   
@@ -82,8 +101,10 @@ process zeros_bed_and_bedGraph {
   set '*.no_na.bed', body_part, name_file into bed_speed_no_nas
   set '*.no_na.bedGraph', body_part, name_file into bedGraph_speed_no_nas
   
-  set '*.no_tr.bed', body_part, name_file into bed_speed_no_track_line
-  set '*.no_tr.bedGraph', body_part, name_file into bedGraph_speed_no_track_line
+  //set '*.no_tr.bed', body_part, name_file into bed_speed_no_track_line
+  //set '*.no_tr.bedGraph', body_part, name_file into bedGraph_speed_no_track_line
+  set name_file, body_part, '*.no_tr.bed' into bed_speed_no_track_line, bed_speed_no_track_line_cp
+  set name_file, body_part, '*.no_tr.bedGraph' into bedGraph_speed_no_track_line
   
   //cat ${bed_file}".tmp" | sed 's/-10000/0/g' > ${bed_file}".bedZeros"
   //cat ${bedGraph_file}".tmp" | sed 's/-10000/0/g' > ${bedGraph_file}".bedGraphZeros"
@@ -103,6 +124,8 @@ process zeros_bed_and_bedGraph {
   """			
 }
 
+////////
+
 // read_worm_data.py command example 
 // $HOME/git/pergola/test/c_elegans_data_test/read_worm_data.py -i "575 JU440 on food L_2011_02_17__11_00___3___1_features.mat"
 
@@ -111,11 +134,11 @@ process zeros_bed_and_bedGraph {
 process get_motion {
   
   input:
-  file file_worm from mat_files_motion
+  set file ('file_worm'), val (name_file_worm) from mat_files_motion
   
   output: 
-  file '*.csv' into motion_files
-  
+  set name_file_worm, '*.csv' into motion_files, motion_files_cp
+    
   script:
   println "Matlab file containing worm behavior processed: $file_worm"
 
@@ -124,23 +147,36 @@ process get_motion {
   """
 }
 
-motion_files_name = motion_files.flatten().map { motion_file_name ->   
-  println motion_file_name.name
-  
-  [ motion_file_name, motion_file_name.name ]
+motion_files_cp.subscribe {
+	//println "************" + it[0]
+	//println it[1]
+	
 }
 
+// From 1 mat I get 3 motions (forward, paused, backward)
+// I made a channel with matfile1 -> forward
+//                       matfile1 -> backward
+//                       matfile1 -> paused
+//                       matfile2 -> forward ...
+
+motion_files_flat = motion_files.map { name_mat, motion_f ->
+        motion_f.collect {            
+            [ it, name_mat, it.name ]
+        }
+    }
+    .flatMap()
+    
 map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
 map_motion=file(map_motion_path)
 
 process motion_to_pergola {
   input:
-  set file ('motion_file'), val (name_file) from motion_files_name
+  set file ('motion_file'), val (name_file), val (name_file_motion) from motion_files_flat
   set worms_motion2p from map_motion
   
   output:
-  set 'tr*.bed', name_file into bed_motion, bed_motion_wr
-  set 'tr*.bedGraph', name_file into bedGraph_motion
+  set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr
+  set name_file, 'tr*.bedGraph', name_file_motion into bedGraph_motion
   
   """
   pergola_rules.py -i $motion_file -m $worms_motion2p -nt
@@ -152,22 +188,79 @@ process motion_to_pergola {
 map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_pergola = file(map_bed_path)
 
-bed_speed_spread_motion = bed_speed_no_track_line.spread( bed_motion )
-
+// I use filter to delete pairs that do not come from the same original mat file
+bed_speed_motion = bed_speed_no_track_line
+	.spread(bed_motion)
+	.filter { it[0] == it[3] }
+	
 process intersect_speed_motion {
 	input:
-	//set file ('bed_speed_no_tr'), val (body_part), val(speed_name) from bed_speed_no_track_line
-	//set file ('motion_file'), val (motion_name) from bed_motion
-	set file ('bed_speed_no_tr'), val (body_part), val(speed_name), file ('motion_file'), val (motion_name) from bed_speed_spread_motion
+	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion) from bed_speed_motion
 	file bed2pergola from map_bed_pergola
 	
 	output:
-	set '*.mean.bed', body_part, speed_name, motion_name into bed_mean_speed_motion
+	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
+	set '*.mean.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
+	set '*.intersect.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_intersect_speed_motion, bed_intersect_speed_motion2p
 	
 	"""
-	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola 
+	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola	
 	"""
 }
+
+/*
+bed_intersect_speed_motion2plot = bed_intersect_speed_motion2p.subscribe() { it ->
+	def pattern = it[4] =~/^file_worm_(.*)\.csv$/
+	def motion_dir = pattern[0][1]	
+	//println "=======" + it[1] + "++++" + it[2] + "++++" + it[4]
+	println "=======******" + motion_dir	
+	//println "=======******" + it[0] + "\n" + it[1] + "\n" + it[2] + "\n" + it[3] + "\n" + it[4] + "\n" + motion_dir	
+	[ it[0], it[1], it[2], it[3], it[4], motion_dir ] 
+}
+
+
+pos_files2Flat = pos_files2.flatten().map { single_pos_file ->   
+   def name = single_pos_file.name
+   def content = single_pos_file
+   [ name,  content ]
+}
+
+
+bed_intersect_speed_motion2plot.subscribe {
+	println "######@@@@@@@@@@@@@@@@@@@@@" + it[4] +"...."+ it[2] + "...." + it[5] 
+}
+*/
+
+/*
+# Esto lo puedo hacer despues porque solo tengo que ir a la carpeta donde este de intersection file y hacer los plots 
+
+worm_strains = ['575_JU440', 'N2', 'flp-19ok2460', 'flp-20ok2964', 'ins-15ok3444I', 'nlp-14tm1880X' ]
+*/
+	
+/*
+bed_speed_motion = bed_speed_no_track_line
+	.spread(bed_motion)
+	.filter { it[0] == it[3] }
+
+process plot_speed_motion_dir {
+	input:	
+	set file ('intersect_file'), val (body_part), val (mat_file_speed), val (mat_file_motion), val (name_file_motion) from bed_intersect_speed_motion2p
+	
+	output:
+	set '*.png' into plot_file 
+	
+	script:  	
+	def pattern = name_file_motion =~/^file_worm_(.*)\.csv$/
+	def motion_dir = pattern[0][1]	
+	println "=======******" + motion_dir	
+	
+	//export R_LIBS="/software/R/packages"
+	
+	"""
+	Rscript \$HOME/git/pergola/test/c_elegans_data_test/results_intersect/plot_speed_motion_mean.R --body_part=${body_part} --pattern_worm=${worm_strain} --motion=${motion_dir}		
+	"""
+}
+*/
 
 // Creating results folder
 result_dir_GB = file("$baseDir/results_GB")
@@ -177,9 +270,6 @@ result_dir_GB.with {
      mkdirs()
      println "Created: $result_dir_GB"
 }
-
-//tblOutDev = 'tblEvalOneOutDev.tbl'
-//myFileDev = resultDirDev.resolve (tblOutDev)
 
 out_fasta.subscribe {   
   fasta_file = it[0]
@@ -199,7 +289,7 @@ bedGraph_speed_no_nas.subscribe {
   bedGraph_file.copyTo (result_dir_GB.resolve ( it[1] + "." + it[2] + ".GB.bedGraph" ) )
 }
 
-// Creating results folder
+// Creating mean results folder
 result_dir_mean = file("$baseDir/results_mean")
 
 result_dir_mean.with {
@@ -208,12 +298,13 @@ result_dir_mean.with {
      println "Created: $result_dir_mean"
 }
 
-bed_mean_speed_motion.subscribe {
-  def pattern = it[3] =~/^*+.features_([a-z]+).csv$/
-  bed_mean_file = it[0]
-  //println "............" + pattern [0][1]  
-  //bed_mean_file.copyTo ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" )
-  bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + pattern[0][1] + ".mean.bed" ) )
+// Creating intersect results folder
+result_dir_intersect = file("$baseDir/results_intersect")
+
+result_dir_intersect.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_intersect"
 }
 
 // Creating motion results folder
@@ -225,6 +316,30 @@ result_dir_motion_GB.with {
      println "Created: $result_dir_motion_GB"
 }
 
+//set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr
 bed_motion_wr.subscribe {
-  it[0].copyTo ( result_dir_motion_GB.resolve ( it[1] + ".motion.bed" ))
+  //println ".......******************    0      " + it[0] + "." + it[2] + ".motion.bed"
+  it[1].copyTo ( result_dir_motion_GB.resolve ( it[0] + it[2] + ".motion.bed" ))
 }
+
+//set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion
+bed_mean_speed_motion.subscribe {
+  bed_mean_file = it[0]
+  bed_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
+}
+
+bed_intersect_speed_motion.subscribe {
+  bed_int_file = it[0]
+  bed_int_file.copyTo ( result_dir_intersect.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bed" ) )
+}
+
+bedGr_mean_speed_motion.subscribe {
+  bedGr_mean_file = it[0]
+  bedGr_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
+}
+/*
+plot_file.subscribe {
+  plot_file= it
+  plot_file.copyTo ( result_dir_intersect.resolve ( it.name + ".png" ) )
+}
+*/
