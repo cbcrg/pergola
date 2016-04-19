@@ -8,10 +8,16 @@
 # To use this script in ant first export this:
 # export R_LIBS="/software/R/packages"
 
+##Getting HOME directory 
+home <- Sys.getenv("HOME")
+
 ### Execution example
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="575_ju440" --motion="backward"
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="N2" --motion="forward"
 library (ggplot2)
+
+# Loading params plot:
+source (paste (home, "/git/mwm/lib/R/plot_param_public.R", sep=""))
 
 #####################
 ### VARIABLES
@@ -107,5 +113,7 @@ tbl_bed <- do.call ("rbind", lapply(list_files, function(fn)
 
 setwd(wd)
 
-ggplot(tbl_bed, aes(x=V5)) + geom_density() + xlim (c(min(tbl_bed$V5)-50, max(tbl_bed$V5)+50))
+ggplot(tbl_bed, aes(x=V5)) + geom_density() + xlim (c(min(tbl_bed$V5)-50, max(tbl_bed$V5)+50)) +
+       labs (title = paste(worm, motion, body_part, "\n", sep=" "))
+
 ggsave(file=paste(pattern_worm, body_part, motion, "plot.png", sep="_"))
