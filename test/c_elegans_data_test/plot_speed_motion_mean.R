@@ -114,6 +114,6 @@ tbl_bed <- do.call ("rbind", lapply(list_files, function(fn)
 setwd(wd)
 
 ggplot(tbl_bed, aes(x=V5)) + geom_density() + xlim (c(min(tbl_bed$V5)-50, max(tbl_bed$V5)+50)) +
-       labs (title = paste(worm, motion, body_part, "\n", sep=" "))
+       labs (title = paste(worm, pattern_worm, body_part, "\n", sep=" "))
 
 ggsave(file=paste(pattern_worm, body_part, motion, "plot.png", sep="_"))
