@@ -26,7 +26,7 @@ mat_files_name = mat_files.flatten().map { mat_files_file ->
    [ content, name ]
 }
 
-mat_files_name.into { mat_files_speed; mat_files_motion }
+mat_files_name.into { mat_files_speed; mat_files_motion; mat_files_turns}
 
 process get_speed {
 
@@ -103,7 +103,7 @@ process zeros_bed_and_bedGraph {
   
   //set '*.no_tr.bed', body_part, name_file into bed_speed_no_track_line
   //set '*.no_tr.bedGraph', body_part, name_file into bedGraph_speed_no_track_line
-  set name_file, body_part, '*.no_tr.bed' into bed_speed_no_track_line, bed_speed_no_track_line_cp
+  set name_file, body_part, '*.no_tr.bed' into bed_speed_no_track_line, bed_speed_no_track_line_cp, bed_speed_no_track_line_turns
   set name_file, body_part, '*.no_tr.bedGraph' into bedGraph_speed_no_track_line
   
   //cat ${bed_file}".tmp" | sed 's/-10000/0/g' > ${bed_file}".bedZeros"
@@ -147,11 +147,11 @@ process get_motion {
   """
 }
 
-motion_files_cp.subscribe {
+//motion_files_cp.subscribe {
 	//println "************" + it[0]
 	//println it[1]
 	
-}
+//}
 
 // From 1 mat I get 3 motions (forward, paused, backward)
 // I made a channel with matfile1 -> forward
@@ -167,7 +167,7 @@ motion_files_flat = motion_files.map { name_mat, motion_f ->
     .flatMap()
     
 map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
-map_motion=file(map_motion_path)
+map_motion = file(map_motion_path)
 
 process motion_to_pergola {
   input:
@@ -175,7 +175,7 @@ process motion_to_pergola {
   set worms_motion2p from map_motion
   
   output:
-  set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr
+  set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr, bed_motion_turns
   set name_file, 'tr*.bedGraph', name_file_motion into bedGraph_motion
   
   """
@@ -186,17 +186,19 @@ process motion_to_pergola {
 
 //This ones can directly be processed with motion bed file
 map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
-map_bed_pergola = file(map_bed_path)
+//map_bed_pergola = file(map_bed_path)
+map_bed_pergola = Channel.fromPath(map_bed_path)
+map_bed_pergola.into { map_bed_pergola_speed; map_bed_pergola_turn}
 
 // I use filter to delete pairs that do not come from the same original mat file
 bed_speed_motion = bed_speed_no_track_line
 	.spread(bed_motion)
 	.filter { it[0] == it[3] }
-	
+
 process intersect_speed_motion {
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion) from bed_speed_motion
-	file bed2pergola from map_bed_pergola
+	file bed2pergola from map_bed_pergola_speed
 	
 	output:
 	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
@@ -209,7 +211,10 @@ process intersect_speed_motion {
 }
 
 /*
-bed_intersect_speed_motion2plot = bed_intersect_speed_motion2p.subscribe() { it ->
+// map transform one thing into another
+// we do not need it, because the declaration is implicit
+// subscribed does nothing because it is like a for but you do not transform anything
+bed_intersect_speed_motion2plot = bed_intersect_speed_motion2p.map { it ->
 	def pattern = it[4] =~/^file_worm_(.*)\.csv$/
 	def motion_dir = pattern[0][1]	
 	//println "=======" + it[1] + "++++" + it[2] + "++++" + it[4]
@@ -229,6 +234,7 @@ pos_files2Flat = pos_files2.flatten().map { single_pos_file ->
 bed_intersect_speed_motion2plot.subscribe {
 	println "######@@@@@@@@@@@@@@@@@@@@@" + it[4] +"...."+ it[2] + "...." + it[5] 
 }
+
 */
 
 /*
@@ -343,3 +349,72 @@ plot_file.subscribe {
   plot_file.copyTo ( result_dir_intersect.resolve ( it.name + ".png" ) )
 }
 */
+
+// Turns 
+process get_turns {
+  
+  input:
+  set file ('file_worm'), val (name_file_worm) from mat_files_turns
+  
+  output: 
+  set name_file_worm, '*.csv' into turns_files, turns_files_cp
+    
+  script:
+  println "Matlab file containing worm behavior processed: $file_worm"
+
+  """
+  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_turns.py -i \"$file_worm\"
+  """
+}
+
+turn_files_flat = turns_files.map { name_mat, turn_f ->
+        turn_f.collect {            
+            [ it, name_mat, it.name ]
+        }
+    }
+    .flatMap()
+    
+// Files used for motion can be used for turns (same format)
+map_turn_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
+turn_motion=file(map_turn_path)
+
+process turns_to_pergola {
+  input:
+  set file ('turn_file'), val (name_file), val (name_file_turn) from turn_files_flat
+  set worms_turn2p from turn_motion
+  
+  output:
+  set name_file, 'tr*.bed', name_file_turn into bed_turn, bed_turn_wr
+  set name_file, 'tr*.bedGraph', name_file_turn into bedGraph_turn
+  
+  """
+  pergola_rules.py -i $turn_file -m $worms_turn2p -nt
+  pergola_rules.py -i $turn_file -m $worms_turn2p -f bedGraph -w 1 -nt 
+  """
+} 
+
+// Calculate mean speed of the two types of turns
+// TO DO
+// Calculate mean speed of the two types of turns during forward, backward and paused motion, regardless of 
+
+// Igual puedo utilizar lo anterior para hacer esto o anyadirlo en lo de antes
+bed_speed_turn = bed_speed_no_track_line_turns
+	.spread(bed_turn)
+	.filter { it[0] == it[3] }
+
+process intersect_speed_turn {
+	input:
+	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_turn_file), file ('turn_file'), val (name_file_turn) from bed_speed_turn
+	file bed2pergola from map_bed_pergola_turn
+	
+	output:
+	set '*.mean.bed', body_part, mat_file_speed, mat_turn_file, name_file_turn into bed_mean_speed_turn	
+	set '*.mean.bedGraph', body_part, mat_file_speed, mat_turn_file, name_file_turn into bedGr_mean_speed_turn
+	set '*.intersect.bed', body_part, mat_file_speed, mat_turn_file, name_file_turn into bed_intersect_speed_turn, bed_intersect_speed_turn2p
+	
+	"""
+	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $turn_file -b $bed2pergola	
+	"""
+}
+
+//Algunos estan vacios

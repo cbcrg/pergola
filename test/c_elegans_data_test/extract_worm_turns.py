@@ -25,8 +25,8 @@ input_file =  args.input
 # input_file = '/Users/jespinosa/2016_worm_DB/ju440_all/575 JU440 on food L_2011_02_17__16_43___3___11_features.mat'
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/N2 Laura on food R_2011_08_04__15_44_14__10_features.mat'
 
-file_name = basename(input_file).split('.')[0] #del
-file_name = file_name.replace (" ", "_") #del
+file_name = basename(input_file).split('.')[0]
+file_name = file_name.replace (" ", "_")
 
 f = h5py.File(input_file)
 
@@ -103,6 +103,8 @@ def get_interv (ary_refs_start, ary_refs_end, writer_obj):
     
     list_interv = list()
     
+    print (len(ary_refs_start))
+    
     for i in range(1, len(ary_refs_start)):
         ref_start = ary_refs_start[i]
         ref_end = ary_refs_end[i]
@@ -137,5 +139,12 @@ for turn_k in sorted(turn_keys):
     writer_out.writerow(['frame_start', 'frame_end', 'value'])
     
     list_data = get_interv (ary_start_refs, ary_end_refs, writer_out)
-
+    
+    if list_data == [] : writer_out.writerow([0, 10, 1000])
+    
     fh.close()
+
+
+
+
+
