@@ -129,7 +129,7 @@ for motion_k in sorted(motion_keys):
     start = list_from_ref (start_r)
     end = list_from_ref (end_r)
 
-    fh = open(file_name + "_" + motion_k + ".csv",'wb')
+    fh = open(file_name + "." + motion_k + ".csv",'wb')
 
     fh.write("#genotype;%s\n" % genotype)
     fh.write("#strain;%s\n" % strain)
