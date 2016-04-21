@@ -198,7 +198,7 @@ bed_speed_motion = bed_speed_no_track_line
 process intersect_speed_motion {
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion) from bed_speed_motion
-	file bed2pergola from map_bed_pergola_speed
+	file bed2pergola from map_bed_pergola_speed.first()
 	
 	output:
 	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
@@ -208,6 +208,55 @@ process intersect_speed_motion {
 	"""
 	$HOME/git/pergola/test/c_elegans_data_test/celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola	
 	"""
+}
+
+/*
+// This version works but it could be even more simplified by the code below
+// bed_intersect_speed_motion2p.subscribe { println it }
+bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.map {
+	def name = it[1] + "_" + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]
+	def file = it [0]	
+	[name, file]
+}.groupTuple()	
+.collectFile(newLine: true) { 
+	[ it[0], it[1].collect{ it2 -> it2.text }.join()+'\n' ] 
+}.subscribe { println it } 
+*/
+
+bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.collectFile(newLine: false) { 
+	def name = it[1] + "_" + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1] 
+	[ name, it[0].text ] 
+}
+//.subscribe { println it }
+
+process plot_distro {
+  input:
+  file intersect_speed_motion from bed_intersect_speed_motion_plot
+  
+  output:
+  set '*.png' into plots_speed_motion
+  
+  //export R_LIBS="/software/R/packages"
+  
+  script:
+  println ">>>>>>>>>>>>>>>: $intersect_speed_motion"
+  	
+  """  
+  Rscript \$HOME/git/pergola/test/c_elegans_data_test/plot_speed_distribution.R --bed_file=${intersect_speed_motion}
+  """
+}
+
+// Creating motion results folder
+result_dir_plots_motion_speed = file("$baseDir/plots_motion_speed")
+
+result_dir_plots_motion_speed.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_plots_motion_speed"
+}
+
+plots_speed_motion.subscribe {   
+  it.copyTo( result_dir_plots_motion_speed.resolve ( it.name ) )
 }
 
 /*
@@ -223,18 +272,6 @@ bed_intersect_speed_motion2plot = bed_intersect_speed_motion2p.map { it ->
 	[ it[0], it[1], it[2], it[3], it[4], motion_dir ] 
 }
 
-
-pos_files2Flat = pos_files2.flatten().map { single_pos_file ->   
-   def name = single_pos_file.name
-   def content = single_pos_file
-   [ name,  content ]
-}
-
-
-bed_intersect_speed_motion2plot.subscribe {
-	println "######@@@@@@@@@@@@@@@@@@@@@" + it[4] +"...."+ it[2] + "...." + it[5] 
-}
-
 */
 
 /*
@@ -243,31 +280,6 @@ bed_intersect_speed_motion2plot.subscribe {
 worm_strains = ['575_JU440', 'N2', 'flp-19ok2460', 'flp-20ok2964', 'ins-15ok3444I', 'nlp-14tm1880X' ]
 */
 	
-/*
-bed_speed_motion = bed_speed_no_track_line
-	.spread(bed_motion)
-	.filter { it[0] == it[3] }
-
-process plot_speed_motion_dir {
-	input:	
-	set file ('intersect_file'), val (body_part), val (mat_file_speed), val (mat_file_motion), val (name_file_motion) from bed_intersect_speed_motion2p
-	
-	output:
-	set '*.png' into plot_file 
-	
-	script:  	
-	def pattern = name_file_motion =~/^file_worm_(.*)\.csv$/
-	def motion_dir = pattern[0][1]	
-	println "=======******" + motion_dir	
-	
-	//export R_LIBS="/software/R/packages"
-	
-	"""
-	Rscript \$HOME/git/pergola/test/c_elegans_data_test/results_intersect/plot_speed_motion_mean.R --body_part=${body_part} --pattern_worm=${worm_strain} --motion=${motion_dir}		
-	"""
-}
-*/
-
 // Creating results folder
 result_dir_GB = file("$baseDir/results_GB")
 
@@ -343,12 +355,6 @@ bedGr_mean_speed_motion.subscribe {
   bedGr_mean_file = it[0]
   bedGr_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
 }
-/*
-plot_file.subscribe {
-  plot_file= it
-  plot_file.copyTo ( result_dir_intersect.resolve ( it.name + ".png" ) )
-}
-*/
 
 // Turns 
 process get_turns {
