@@ -103,17 +103,28 @@ setwd(path2files)
 
 # values2print <- paste ("INFO: Prints to stderr:", pattern_worm, body_part, motion, sep="==")
 # write (values2print, stderr())
+# body_part <- "midbody"
+# pattern_worm <- "N2"
+# motion <- "backward"
 
 pattern_files = paste(body_part, ".", pattern_worm, ".*.", motion, "\\.csv\\.intersect\\.bed$", sep="")
 list_files <- list.files (path = ".", pattern = pattern_files, ignore.case=TRUE)
 
-tbl_bed <- do.call ("rbind", lapply(list_files, function(fn) 
+
+
+df_bed <- do.call ("rbind", lapply(list_files, function(fn) 
                                                 data.frame(Filename=fn, read.csv(fn, header=F, sep="\t"))
                                                 ))
 
+# head(df_bed)
+# tbl_bed <- pattern_worm
+# df_bed [ grepl(pattern_files, df_bed$Filename),]
+
+
+
 setwd(wd)
 
-ggplot(tbl_bed, aes(x=V5)) + geom_density() + xlim (c(min(tbl_bed$V5)-50, max(tbl_bed$V5)+50)) +
+ggplot(df_bed, aes(x=V5)) + geom_density() + xlim (c(min(tbl_bed$V5)-50, max(tbl_bed$V5)+50)) +
        labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" "))
 
 ggsave(file=paste(pattern_worm, body_part, motion, "plot.png", sep="_"))
