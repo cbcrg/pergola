@@ -122,8 +122,8 @@ writer_out.writerow(['frame_start', 'frame_end']  + sorted(velocity_keys))
 # chdir("/Users/jespinosa/git/pergola/test/c_elegans_data_test/")
 
 # range already substract one to frames 
-for frame in range(0, int(frames)):
-# for frame in range(0, 100):    #del #debug
+# for frame in range(0, int(frames)):
+for frame in range(0, 5000):    #del #debug
     list_v = list()
     list_v.extend ([frame, frame+1])
     
