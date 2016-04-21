@@ -24,7 +24,7 @@ input_file =  args.input
 # input_file = '/Users/jespinosa/2016_worm_DB/ju440_all/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat'
 # input_file = '/Users/jespinosa/2016_worm_DB/ju440_all/575 JU440 on food L_2011_02_17__16_43___3___11_features.mat'
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/N2 Laura on food R_2011_08_04__15_44_14__10_features.mat'
-
+# input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/N2 on food R_2011_08_04__15_44_14__10_features.mat'
 file_name = basename(input_file).split('.')[0]
 file_name = file_name.replace (" ", "_")
 
@@ -120,8 +120,8 @@ for turn_k in sorted(turn_keys):
     ary_start_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['start'][0]
     ary_end_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['end'][0]
     
-    fh = open(file_name + "_" + turn_k + ".csv",'wb')
-
+    fh = open(file_name + "." + turn_k + ".csv",'wb')
+    
     fh.write("#genotype;%s\n" % genotype)
     fh.write("#strain;%s\n" % strain)
     fh.write("#age;%s\n" % age)

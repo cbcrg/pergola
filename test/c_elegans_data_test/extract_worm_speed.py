@@ -22,6 +22,7 @@ print >> stderr, "Input file: %s" % args.input
 # Input files
 input_file =  args.input
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/575 JU440 on food L_2011_02_17__11_00___3___1_features.mat' #del
+# input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/N2 on food R_2011_08_04__15_44_14__10_features.mat'
 # print >> stderr, "Input file: %s" % input_file #del
 
 file_name = basename(input_file).split('.')[0]
@@ -122,8 +123,8 @@ writer_out.writerow(['frame_start', 'frame_end']  + sorted(velocity_keys))
 # chdir("/Users/jespinosa/git/pergola/test/c_elegans_data_test/")
 
 # range already substract one to frames 
-# for frame in range(0, int(frames)):
-for frame in range(0, 5000):    #del #debug
+for frame in range(0, int(frames)):
+# for frame in range(0, 100):    #del #debug
     list_v = list()
     list_v.extend ([frame, frame+1])
     
@@ -173,3 +174,4 @@ fh.close()
 
 # # How to replace nan by mean values
 # # http://stackoverflow.com/questions/18689235/numpy-array-replace-nan-values-with-average-of-columns
+
