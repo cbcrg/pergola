@@ -147,12 +147,6 @@ process get_motion {
   """
 }
 
-//motion_files_cp.subscribe {
-	//println "************" + it[0]
-	//println it[1]
-	
-//}
-
 // From 1 mat I get 3 motions (forward, paused, backward)
 // I made a channel with matfile1 -> forward
 //                       matfile1 -> backward
@@ -235,13 +229,12 @@ process plot_distro {
   
   output:
   set '*.png' into plots_speed_motion
-  
-  //export R_LIBS="/software/R/packages"
-  
+    
   script:
   println ">>>>>>>>>>>>>>>: $intersect_speed_motion"
   	
-  """  
+  """
+  export R_LIBS="/software/R/packages"  
   Rscript \$HOME/git/pergola/test/c_elegans_data_test/plot_speed_distribution.R --bed_file=${intersect_speed_motion}
   """
 }
@@ -411,7 +404,7 @@ bed_speed_turn = bed_speed_no_track_line_turns
 process intersect_speed_turn {
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_turn_file), file ('turn_file'), val (name_file_turn) from bed_speed_turn
-	file bed2pergola from map_bed_pergola_turn
+	file bed2pergola from map_bed_pergola_turn.first()
 	
 	output:
 	set '*.mean.bed', body_part, mat_file_speed, mat_turn_file, name_file_turn into bed_mean_speed_turn	
@@ -423,4 +416,74 @@ process intersect_speed_turn {
 	"""
 }
 
-//Algunos estan vacios
+//Some turns files are empty, I add a fake interval inside extract_worm_turns.py
+
+// Creating turns results folder
+
+// Creating mean results folder
+result_dir_mean_turn = file("$baseDir/results_mean_turn")
+
+result_dir_mean_turn.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_mean_turn"
+}
+
+bed_mean_speed_turn.subscribe {
+  bed_mean_file = it[0]
+  bed_mean_file.copyTo ( result_dir_mean_turn.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bed" ) )
+}
+
+bedGr_mean_speed_turn.subscribe {
+  bedGr_mean_file = it[0]
+  bedGr_mean_file.copyTo ( result_dir_mean_turn.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
+}
+
+// Creating intersect results folder
+result_dir_intersect_turns = file("$baseDir/results_intersect_turns")
+
+result_dir_intersect_turns.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_intersect_turns"
+}
+
+bed_intersect_speed_turn.subscribe {
+  bed_int_file = it[0]
+  bed_int_file.copyTo ( result_dir_intersect_turns.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bed" ) )
+}
+
+// Channel containning body part, strain, type of turn
+bed_intersect_speed_turn_plot = bed_intersect_speed_turn2p.collectFile(newLine: false) { 
+	def name = it[1] + "_" + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]
+	[ name, it[0].text ] 
+}
+
+process plot_distro_turns {
+  input:
+  file intersect_speed_turn from bed_intersect_speed_turn_plot
+  
+  output:
+  set '*.png' into plots_speed_turn
+    
+  script:
+  println ">>>>>>>>>>>>>>>: $intersect_speed_turn"
+  	
+  """  
+  export R_LIBS="/software/R/packages"
+  Rscript \$HOME/git/pergola/test/c_elegans_data_test/plot_speed_distribution.R --bed_file=${intersect_speed_turn}
+  """
+}
+
+result_dir_plots_turn_speed = file("$baseDir/plots_turn_speed")
+
+result_dir_plots_turn_speed.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_plots_turn_speed"
+}
+
+plots_speed_turn.subscribe {   
+  it.copyTo( result_dir_plots_turn_speed.resolve ( it.name ) )
+}
+
