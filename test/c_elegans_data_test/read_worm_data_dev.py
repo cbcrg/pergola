@@ -265,3 +265,25 @@ age
 food
 unix_time
 fps
+
+##############
+## WORM DATA
+# turns
+# /worm/locomotion/turns/omegas/frames/start
+
+# start_omegas_r = f['worm']['locomotion']['turns']['omegas']['frames']['start'][0][0]
+# end_omegas_r = f['worm']['locomotion']['turns']['omegas']['frames']['end'][0][0]
+# start_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['start'][0][0]
+# start_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['start'][0][1]
+
+## Asi funciona
+# f['worm']['locomotion']['turns'].keys() # [u'omegas', u'upsilons']
+
+# end_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['end'][0][0]
+# end_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['end'][0][1]
+
+# f[end_upsilons_r][0][0]
+
+# ary_start_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['start'][0]
+# ary_end_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['end'][0]
+# ary_refs = ary_end_upsilons_r

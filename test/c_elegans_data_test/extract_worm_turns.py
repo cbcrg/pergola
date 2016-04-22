@@ -81,33 +81,9 @@ frames = frames_r[0][0]
 fps_r = f['info']['video']['resolution']['fps']
 fps = fps_r[0][0]
 
-##############
-## WORM DATA
-# turns
-# /worm/locomotion/turns/omegas/frames/start
-
-# start_omegas_r = f['worm']['locomotion']['turns']['omegas']['frames']['start'][0][0]
-# end_omegas_r = f['worm']['locomotion']['turns']['omegas']['frames']['end'][0][0]
-# start_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['start'][0][0]
-# start_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['start'][0][1]
-
-## Asi funciona
-# f['worm']['locomotion']['turns'].keys() # [u'omegas', u'upsilons']
-
-# end_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['end'][0][0]
-# end_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['end'][0][1]
-
-# f[end_upsilons_r][0][0]
-
-# ary_start_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['start'][0]
-# ary_end_upsilons_r = f['worm']['locomotion']['turns']['upsilons']['frames']['end'][0]
-# ary_refs = ary_end_upsilons_r
-
 def get_interv (ary_refs_start, ary_refs_end, writer_obj):
     
     list_interv = list()
-    
-    print (len(ary_refs_start))
     
     for i in range(1, len(ary_refs_start)):
         ref_start = ary_refs_start[i]
@@ -149,30 +125,15 @@ for turn_k in sorted(turn_keys):
         ary_start_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['start'][0]
         ary_end_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['end'][0]
     
-    except KeyError:    
+    except ValueError:    
         print >> stderr, "@@@extract_worm_turn.py: \"%s\" mat hdf5 format file turns information seems to be corrupted" % input_file
-    
+        print >> stderr, "@@@extract_worm_turn.py:  A fake interval 0, 10, 1000 is generated inside: \"%s\"" % (file_name + "." + turn_k + ".csv")
         writer_out.writerow([0, 10, 1000])
         fh.close()
-    
+        pass
     else:
         list_data = get_interv (ary_start_refs, ary_end_refs, writer_out)
     
         if list_data == [] : writer_out.writerow([0, 10, 1000])
     
         fh.close()
-    
-
-    
-    
-
-    
-    
-    
-    
-
-
-
-
-
-
