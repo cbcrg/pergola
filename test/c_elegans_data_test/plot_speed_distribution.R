@@ -88,6 +88,14 @@ motion <- name_split[[1]][length(name_split[[1]])]
   }
 }
 
+# Hack for cases where I only have one interval, I duplicate it because otherwise version of geom_density
+# in the cluster does not work
+{
+  if (length(df_bed[,1]) == 1) {
+    df_bed <- rbind (df_bed, df_bed[1,])
+  }
+}
+
 ggplot(df_bed, aes(x=V5)) + geom_density() + xlim (c(-1000, 1000)) +
   # c(min(tbl_bed$V5)-200, max(tbl_bed$V5)+200)
   labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" "))
