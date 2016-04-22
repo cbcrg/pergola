@@ -10,7 +10,11 @@ from sys import stderr, exit
 import numpy as np
 from csv import writer
 from os.path import basename
-
+# input_file = "/users/cn/jespinosa/2016_worm_DB/matfiles_all/N2 on food R_2010_02_25__09_43_19___6___1_features.mat" #no 899
+# input_file = "/users/cn/jespinosa/2016_worm_DB/matfiles_all/N2 on food R_2010_02_25__09_43_09___2___1_features.mat" #no 23112
+# input_file = "/users/cn/jespinosa/2016_worm_DB/matfiles_all/N2 on food R_2010_02_25__09_43_43___4___1_features.mat" #no 23883
+# input_file = "/users/cn/jespinosa/2016_worm_DB/matfiles_all/N2 on food L_2010_02_25__09_43___3___1_features.mat" #si 23575.0
+# input_file = "file_worm"
 parser = ArgumentParser(description='File input arguments')
 parser.add_argument('-i','--input', help='Worms data hdf5 format matlab file', required=True)
 
@@ -115,10 +119,9 @@ def get_interv (ary_refs_start, ary_refs_end, writer_obj):
     return (list_interv)
 
 turn_keys = ['omegas', 'upsilons']
-
+# turn_k ='omegas'
+# turn_k ='upsilons'
 for turn_k in sorted(turn_keys):
-    ary_start_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['start'][0]
-    ary_end_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['end'][0]
     
     fh = open(file_name + "." + turn_k + ".csv",'wb')
     
@@ -129,20 +132,45 @@ for turn_k in sorted(turn_keys):
     fh.write("#food;%s\n" % food)
     fh.write("#unix_time;%s\n" % unix_time)
     fh.write("#time_recorded;%s\n" % time_recorded)
-    fh.write("#frames;%s\n" % frames)
+    fh.write("#frames;%s\n" % frames) # 23575
     fh.write("#fps;%s\n" % fps)
     fh.write("#annotations;%s\n" % annotations)
-
+    
     writer_out = writer(fh, dialect = 'excel-tab')
     
     # header
     writer_out.writerow(['frame_start', 'frame_end', 'value'])
     
-    list_data = get_interv (ary_start_refs, ary_end_refs, writer_out)
+    # Some files are corrupted inside this structure
+    # This exception writes a fake turn interval avoiding nextflow to stop
+    #     ary_start_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['start'][0]
+    #     ary_end_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['end'][0]
+    try:
+        ary_start_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['start'][0]
+        ary_end_refs = f['worm']['locomotion']['turns'][turn_k]['frames']['end'][0]
     
-    if list_data == [] : writer_out.writerow([0, 10, 1000])
+    except KeyError:    
+        print >> stderr, "@@@extract_worm_turn.py: \"%s\" mat hdf5 format file turns information seems to be corrupted" % input_file
     
-    fh.close()
+        writer_out.writerow([0, 10, 1000])
+        fh.close()
+    
+    else:
+        list_data = get_interv (ary_start_refs, ary_end_refs, writer_out)
+    
+        if list_data == [] : writer_out.writerow([0, 10, 1000])
+    
+        fh.close()
+    
+
+    
+    
+
+    
+    
+    
+    
+
 
 
 
