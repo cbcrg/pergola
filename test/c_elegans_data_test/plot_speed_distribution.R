@@ -14,7 +14,9 @@ home <- Sys.getenv("HOME")
 ### Execution example
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="575_ju440" --motion="backward"
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="N2" --motion="forward"
-library (ggplot2)
+
+# ggplot2 package loaded locally, cluster version is older and is causing problems
+library(ggplot2, lib.loc="/users/cn/jespinosa/R/library")
 
 # Loading params plot:
 source (paste (home, "/git/mwm/lib/R/plot_param_public.R", sep=""))
@@ -85,14 +87,6 @@ motion <- name_split[[1]][length(name_split[[1]])]
   }
   else {
     pattern_worm <- name_split[[1]][2]
-  }
-}
-
-# Hack for cases where I only have one interval, I duplicate it because otherwise version of geom_density
-# in the cluster does not work
-{
-  if (length(df_bed[,1]) == 1) {
-    df_bed <- rbind (df_bed, df_bed[1,])
   }
 }
 
