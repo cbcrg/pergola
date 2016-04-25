@@ -24,7 +24,7 @@ _cytoband_file_ext = ".txt"
 _bed_file_ext = ".bed"
 _chrm_size_ext = ".sizes"
 
-_p_ontology_terms = ["chrom_start", "data_value", "chrom_end", "data_types", "track", "chrom", "dummy"]
+_p_ontology_terms = ["start", "data_value", "end", "data_types", "track", "chrom", "dummy"]
                     
 class MappingInfo():
     """

@@ -207,7 +207,7 @@ class GenomicContainer(object):
 #                 annotation_track = '#track' + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"            
 #                 track_file.write (annotation_track + "\n")  
 
-        data_out = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
+        data_out = sorted(self.data, key=itemgetter(self.fields.index('start')))
                 
         # for row in self.data:
         for row in data_out:  
@@ -555,7 +555,7 @@ class Track(GenomicContainer):
         """        
 
         #This fields are mandatory in objects of class Bed
-        _bed_fields = ["track","chrom_start","chrom_end","data_types", "data_value"]        
+        _bed_fields = ["track","start","end","data_types", "data_value"]        
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -568,8 +568,8 @@ class Track(GenomicContainer):
             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
         
         i_track = self.fields.index("track")
-        i_chr_start = self.fields.index("chrom_start")
-        i_chr_end = self.fields.index("chrom_end")
+        i_chr_start = self.fields.index("start")
+        i_chr_end = self.fields.index("end")
         i_data_value = self.fields.index("data_value")
         i_data_types = self.fields.index("data_types")
         
@@ -637,7 +637,7 @@ class Track(GenomicContainer):
 #         _bed_fields = ["track","chrom_start","chrom_end","data_types", "data_value"]        
         
 #         _gff_fields_mand = ['seqname','source','type','start','end','score', 'strand','frame','attribute']
-        _gff_fields_mand = ["track", "data_types", "chrom_start","chrom_end", "data_value"] 
+        _gff_fields_mand = ["track", "data_types", "start","end", "data_value"] 
 #         _gff_fields_mand = ["seqname", "feature", "chrom_start", "chrom_end", "score"]
         
         
@@ -647,8 +647,8 @@ class Track(GenomicContainer):
         'seqname' track
         'source'  NA NOT MANDATORY "." (a period) in this field.
         'type' "data_types"
-        'start'   "chrom_start" REQUIRED
-        'end'     "chrom_end"   REQUIRED
+        'start'   "start" REQUIRED
+        'end'     "end"   REQUIRED
         'score'   "data_value" Not required
         'strand'  NA AND NOT MANDATORY "." (a period) in this field.
         'frame'   NA AND NOT MANDATORY "." (a period) in this field.
@@ -666,8 +666,8 @@ class Track(GenomicContainer):
             raise ValueError("Your file '%s' has more than one track, only single tracks can be converted to bed" % (self.path))
         """
         i_track = self.fields.index("track")
-        i_chr_start = self.fields.index("chrom_start")
-        i_chr_end = self.fields.index("chrom_end")
+        i_chr_start = self.fields.index("start")
+        i_chr_end = self.fields.index("end")
         i_data_value = self.fields.index("data_value")
         i_data_types = self.fields.index("data_types")
         """
@@ -679,8 +679,8 @@ class Track(GenomicContainer):
 #         i_score = self.fields.index("score")        
         i_seqname = self.fields.index("track")
         i_types = self.fields.index("data_types")        
-        i_start = self.fields.index("chrom_start")
-        i_end = self.fields.index("chrom_end")        
+        i_start = self.fields.index("start")
+        i_end = self.fields.index("end")        
         i_score = self.fields.index("data_value") 
         
         #Generate dictionary of field and color gradients
@@ -739,7 +739,7 @@ class Track(GenomicContainer):
         """
         
         #This fields are mandatory in objects of class BedGraph
-        _bed_fields = ["track","chrom_start","chrom_end","data_value"] 
+        _bed_fields = ["track","start","end","data_value"] 
         
         #Check whether these fields are in the original otherwise raise exception
         try:
@@ -753,8 +753,8 @@ class Track(GenomicContainer):
             raise ValueError("Your data has more than one track, only single tracks can be converted to bedGraph.")
         
         i_track = self.fields.index("track")
-        i_chr_start = self.fields.index("chrom_start")
-        i_chr_end = self.fields.index("chrom_end")
+        i_chr_start = self.fields.index("start")
+        i_chr_end = self.fields.index("end")
         i_data_value = self.fields.index("data_value")
         
         #When the tracks have been join it is necessary to order by chr_start
@@ -916,7 +916,7 @@ class BedToolConvertible(GenomicContainer):
             raise ValueError("File types \'%s\' not convertible to BedTool" % (self.format))
         
         data_tmp = []
-        data_tmp = sorted(self.data, key=itemgetter(self.fields.index('chrom_start')))
+        data_tmp = sorted(self.data, key=itemgetter(self.fields.index('start')))
         
         with open(track_tmp, "w") as bedtool_out:         
             for r in data_tmp:  
@@ -957,7 +957,7 @@ class Bed(BedToolConvertible):
         kwargs['format'] = 'bed'
         
         # 
-        kwargs['fields'] = ['chr','chrom_start','chrom_end','name','score','strand',
+        kwargs['fields'] = ['chr','start','end','name','score','strand',
                             'thick_start','thick_end','item_rgb']
         
 #         GenomicContainer.__init__(self,data,**kwargs)
@@ -998,7 +998,7 @@ class BedGraph(BedToolConvertible):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bedGraph'
-        kwargs['fields'] = ['chr','chrom_start','end','score']        
+        kwargs['fields'] = ['chr','start','end','score']        
         self.color_gradient = kwargs.get('color',_blue_gradient)
 #         GenomicContainer.__init__(self,data,**kwargs)
 #         BedToolConvertible.__init__(self, **kwargs)
@@ -1044,7 +1044,7 @@ class Gff(BedToolConvertible):
         kwargs['format'] = 'gff'
         
         # 
-        kwargs['fields'] = ['seqname','source','feature','chrom_start','chrom_end','score',
+        kwargs['fields'] = ['seqname','source','feature','start','end','score',
                             'strand','frame','attribute'] 
         
 #         ['chr','chrom_start','chrom_end','name','score','strand',

@@ -55,11 +55,11 @@ class IntData(object):
     
     .. attribute:: min
     
-        First time value in the file. Read from field set as "chrom_start"
+        First time value in the file. Read from field set as "start"
     
     .. attribute:: max
     
-        Last timepoint in the file. Read from field set as "chrom_end"
+        Last timepoint in the file. Read from field set as "end"
     
     .. attribute:: range_values
     
@@ -245,10 +245,10 @@ class IntData(object):
 #          YA ESTA HECVHO ARRIBA
         
         #Input file at least should have two fields that correspond to:
-        mandatory_fields = ["chrom_start", "data_value"]
+        mandatory_fields = ["start", "data_value"]
         
         if not all(f in dict_fields_g.keys() for f in mandatory_fields):
-            raise ValueError("Input file mandatory fields  are \"chrom_start\" and \"data_value\" \n" \
+            raise ValueError("Input file mandatory fields  are \"start\" and \"data_value\" \n" \
                              "Your current assigned fields are \"%s\"\n" \
                              "TIP: Check your ontology_file"                               
                              % ("\",\"".join(name_fields_g)))            
@@ -275,8 +275,8 @@ class IntData(object):
                 header_check = True 
                 continue
             
-            if isinstance((row[self.fieldsG_dict["chrom_start"]]), basestring):                
-                row[self.fieldsG_dict["chrom_start"]] = num(row[self.fieldsG_dict["chrom_start"]])
+            if isinstance((row[self.fieldsG_dict["start"]]), basestring):                
+                row[self.fieldsG_dict["start"]] = num(row[self.fieldsG_dict["start"]])
                 
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
@@ -637,13 +637,13 @@ class IntData(object):
         Reads the data and converts it depending on selected options
         
         :param fields: :py:func:`list` with data columns to read
-        :param False relative_coord: If true all coordinates in chrom_start and chrom_end are
+        :param False relative_coord: If true all coordinates in start and end are
             make relative to the minimal value
         :param False intervals: if set to true intervals will be inferred from timepoints in
-            chrom_start 
+            start 
         :param fields2rel: :py:func:`list` with data columns to make relative
-        :param multiply_t: :py:func:`int` multiplies the values of the field set as chrom_start and 
-            chrom_end
+        :param multiply_t: :py:func:`int` multiplies the values of the field set as start and 
+            end
         
         :returns: Track object
         
@@ -652,10 +652,10 @@ class IntData(object):
         Eventually do not change self.data but a list inside read and return the Track object with the modifications
         this way data is always the original one.
         """
-        _f_rel_mand = "chrom_start"
-        _f_int_end = "chrom_end"
-        _f2rel = ["chrom_start","chrom_end"]
-        _f2mult = ["chrom_start","chrom_end"]
+        _f_rel_mand = "start"
+        _f_int_end = "end"
+        _f2rel = ["start","end"]
+        _f2mult = ["start","end"]
         i_time_f = [10000000000000]
         
         #If fields is not set then all the data columns are read
@@ -669,7 +669,7 @@ class IntData(object):
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
         
-        # If chrom_start not present out     
+        # If start not present out     
         try:
  
             idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
@@ -731,8 +731,8 @@ class IntData(object):
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"
             
-            # If chrom_end is present ERROR
-#             _time_points = ["chrom_start"]#del
+            # If end is present ERROR
+#             _time_points = ["start"]#del
 #         _f_rel_mand#del
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
@@ -817,7 +817,7 @@ class IntData(object):
 # #         return self.data
 #         return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values) #TODO assess whether there is any difference in this two lines of code
     
-    def _min_max(self, list_data, t_start="chrom_start", t_end="chrom_end"):
+    def _min_max(self, list_data, t_start="start", t_end="end"):
         """
         TODO Documentation
         """
@@ -859,7 +859,7 @@ class IntData(object):
         I have two problems with this, first that if i have intervals min will be only in one of the two
         fields set for convert into relative.
         The second problem is that the min is read far before here is where I have to check this
-        In principal this should be always in chrom_start that is why I have the terms in the ontology!!!!!
+        In principal this should be always in start that is why I have the terms in the ontology!!!!!
         
         """
         data_rel = list()
@@ -917,7 +917,7 @@ class IntData(object):
                         v_m = round (float(row[i]) * factor, 6)
                         v_i = int(v_m)
                         if v_m-v_i != 0:
-                            raise ValueError ("Intervals values (chrom_start and chrom_end) can not be decimal\nPlease use a bigger factor " \
+                            raise ValueError ("Intervals values (start and end) can not be decimal\nPlease use a bigger factor " \
                                               "with -m,--multiply_intervals flag to multiply your values, current value is %s"%factor)
                         temp.append(v_i)
                         
@@ -942,7 +942,7 @@ class IntData(object):
         :returns: list of tuples (self.data-like)
         """
         data_int = list()
-        _f_int_end = "chrom_end"
+        _f_int_end = "end"
         
         #Field is add as supplementary column
         end_int = len(self.fieldsG)      

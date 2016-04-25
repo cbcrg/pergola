@@ -10,8 +10,7 @@ from pergola  import intervals
 from pergola  import mapping
 # from pergola  import tracks
 from argparse import ArgumentParser
-from sys      import stderr
-from sys      import exit 
+from sys      import stderr, exit
 # from re       import match
 import os
 from pergola import parsers
