@@ -4,7 +4,7 @@
 behavioural_file:frame_start > pergola:chrom_start
 behavioural_file:frame_end > pergola:chrom_end
 behavioural_file:head > pergola:dummy
-behavioural_file:headTip > pergola:dummy
-behavioural_file:midbody > pergola:data_value
+behavioural_file:headTip > pergola:data_value
+behavioural_file:midbody > pergola:dummy
 behavioural_file:tail > pergola:dummy
 behavioural_file:tailTip > pergola:dummy
