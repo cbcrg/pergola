@@ -42,7 +42,7 @@ class TestTutorial(unittest.TestCase):
         mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/tutorial/b2g.txt")
         
         msg_mappings = "Equivalences set in tutorial mapping file are not correct."
-        self.assertEqual(mappings_tutorial.correspondence['EndT'], 'chromEnd', msg_mappings)
+        self.assertEqual(mappings_tutorial.correspondence['EndT'], 'end', msg_mappings)
         
     def test_read_int_data(self):
         """
@@ -68,7 +68,7 @@ class TestTutorial(unittest.TestCase):
         msg_mappings = "Equivalences set in electrophysiology mapping file are not correct."
         
         mappings_electro = mapping.MappingInfo(PATH + "/electrophysiology/e2p.txt")
-        keys_electro = ['track', 'dataTypes', 'dataValue', 'chromStart']        
+        keys_electro = ['track', 'data_types', 'data_value', 'start']        
         fields = mappings_electro.correspondence.values()
         
         self.assertEqual(keys_electro, fields, msg_mappings)
