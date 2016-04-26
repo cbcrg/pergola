@@ -74,14 +74,14 @@ def main():
     # First try with files in local then with url
     for key in dict_files:
         pointer_file = dict_files[key]
-        print "key %s -----value %s"% (key, dict_files[key])
-        print ">>>>>>>>>>>>>>>>>>>>>pointer to file is:", pointer_file
+#         print "key %s -----value %s"% (key, dict_files[key]) #del or #perm
+#         print ">>>>>>>>>>>>>>>>>>>>>pointer to file is:", pointer_file #del or #perm
         
         # Tengo que relacionar de alguna manera cual es el assay de donde tiene que sacar los archivos
         #Probar varios isatab files 
         
         file_path = isatab_parser.check_assay_pointer(pointer_file, download_path=path_pergola) 
-        print "File name is::::::::::::::::::::::::::%s   \n" % file_path
+#         print "File name is::::::::::::::::::::::::::%s   \n" % file_path #del or #perm
         
 #         data_types_list=args.data_types_list #del
         pergola_rules.main(path=file_path, map_file_path=args.mapping_file,
@@ -92,7 +92,8 @@ def main():
                            multiply_f=args.multiply_intervals, fields2read=args.fields_read, 
                            window_size=args.window_size)
         
-        exit ("Going out to see what do I have here")#del
+        print >> stderr, "@@@Pergola_isatab.py: execution finished correctly" 
+#         exit ("Going out to see what do I have here")#del
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':
