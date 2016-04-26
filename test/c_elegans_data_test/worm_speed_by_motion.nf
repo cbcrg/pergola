@@ -217,7 +217,7 @@ bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.map {
 }.subscribe { println it } 
 */
 
-bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.collectFile(newLine: false) { 
+bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.collectFile(newLine: false, sort:'none') { 
 	def name = it[1] + "_" + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1] 
 	[ name, it[0].text ] 
 }
