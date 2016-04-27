@@ -439,6 +439,21 @@ bedGr_mean_speed_turn.subscribe {
   bedGr_mean_file.copyTo ( result_dir_mean_turn.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
 }
 
+// Creating motion results folder
+result_turn_GB = file("$baseDir/results_turn_periods")
+
+result_turn_GB.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_turn_GB"
+}
+
+//set name_file, 'tr*.bed', name_file_turn into bed_turn, bed_turn_wr
+bed_turn_wr.subscribe {
+  //println ".......******************    0      " + it[0] + "." + it[2] + ".turn.bed"
+  it[1].copyTo ( result_turn_GB.resolve ( it[0] + it[2] + ".turn.bed" ))
+}
+
 // Creating intersect results folder
 result_dir_intersect_turns = file("$baseDir/results_intersect_turns")
 
