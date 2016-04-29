@@ -43,7 +43,7 @@ COPY pergola /pergola/pergola
 COPY scripts /pergola/scripts
 COPY requirements.txt /pergola/
 COPY setup.py /pergola/	
-COPY README.md /pergola/
+COPY README.md /pergola/ 
  
 # TODO add requirements.txt file to pergola
 RUN pip install -r /pergola/requirements.txt
