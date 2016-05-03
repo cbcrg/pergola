@@ -1,0 +1,168 @@
+#!/usr/bin/env nextflow
+
+/*
+#################################################################################
+### Jose Espinosa-Carrasco. CB/CSN-CRG. April 2016                            ###
+#################################################################################
+### Code : 04.29                                                              ### 
+### Worm DB processed by pergola for paper                                    ###
+#################################################################################
+*/
+
+//params.path_files = "$HOME/git/pergola/test/c_elegans_data_test/results_motion_GB/"
+
+params.path_files = "$HOME/git/pergola/test/c_elegans_data_test/"
+
+mat_files_path = "${params.path_files}*.mat"
+mat_files = Channel.fromPath(mat_files_path)
+
+
+// Name of input file and file 
+mat_files_name = mat_files.flatten().map { mat_files_file ->      
+   def content = mat_files_file
+   def name = mat_files_file.name.replaceAll(/ /,'_')
+   [ content, name ]
+}
+
+process get_motion {
+  
+  input:  
+  set file ('file_worm'), val (name_file_worm) from mat_files_name
+  
+  output: 
+  set name_file_worm, '*forward.csv' into forward_motion_csv
+  set name_file_worm, '*backward.csv' into backward_motion_csv
+  set name_file_worm, '*paused.csv' into paused_motion_csv
+  //set name_file_worm, '*forward.csv', '*.backward.csv', '*.paused.csv' into forward_backward_motion_csv
+  
+  script:
+  println "Matlab file containing worm behavior processed: $file_worm"
+
+  """
+  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_motion.py -i \"$file_worm\"
+  """
+}
+
+//forward_backward_motion_csv.subscribe { println it }
+/*
+motion_files_flat = forward_motion_csv.map { name_mat, motion_f ->
+        motion_f.collect {            
+            [ it, it.name, name_mat ]
+        }
+    }
+    .flatMap()
+
+
+motion_files_flat.subscribe { println it }
+
+*/
+
+//forward_backward_csv.subscribe {println it}
+map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion_joined2p.txt"
+map_motion_file = Channel.fromPath(map_motion_path)
+map_motion_file.into { map_file_f; map_file_b; map_file_p }
+
+//map_turn_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
+//turn_motion=file(map_turn_path)
+
+// Combines forward and backward and gets the complement
+
+process motionf_to_bed {
+	input:		
+	//set val(name_mat_file), file ('forward_csv'), file ('backward_csv'), file ('paused_csv') from forward_backward_motion_csv
+	set val(name_mat_file), file ('forward_csv') from forward_motion_csv
+	file map_csv_motion from map_file_f.first()
+	
+	output:
+	set  name_mat_file, 'tr_1_dt_a.bed' into forward_bed
+	
+	"""
+	pergola_rules.py -i $forward_csv -m $map_csv_motion -nt  	
+	"""	
+}
+
+process motion_b_to_bed {
+	input:		
+	//set val(name_mat_file), file ('forward_csv'), file ('backward_csv'), file ('paused_csv') from forward_backward_motion_csv
+	set val(name_mat_file), file ('backward_csv') from backward_motion_csv
+	file map_csv_motion from map_file_b.first()
+	
+	output:
+	set name_mat_file, 'tr_1_dt_a.bed' into backward_bed
+	
+	"""
+	pergola_rules.py -i $backward_csv -m $map_csv_motion -nt  	
+	"""	
+}
+
+process motion_p_to_bed {
+	input:		
+	//set val(name_mat_file), file ('forward_csv'), file ('backward_csv'), file ('paused_csv') from forward_backward_motion_csv
+	set val(name_mat_file), file ('paused_csv') from paused_motion_csv
+	file map_csv_motion from map_file_p.first()
+	
+	output:
+	set name_mat_file, 'tr_1_dt_a.bed' into paused_bed
+	
+	"""
+	pergola_rules.py -i $paused_csv -m $map_csv_motion -nt  	
+	"""	
+}
+
+motion_for_back = forward_bed.phase(backward_bed).map { 
+		[ it[0][0], it[0][1], it[1][1] ]	   
+	}
+
+motion_for_back_paused = motion_for_back.phase(paused_bed).map { 
+		[ it[0][0], it[0][1], it[0][2], it[1][1] ]	   
+	}
+
+map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
+map_bed_file = file (map_bed_path)
+
+//map_speed_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_speed2p.txt"
+//map_speed=file(map_speed_path)
+
+
+//map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion2p.txt"
+//map_motion_file = Channel.fromPath(map_motion_path)
+//map_motion_file.into { map_file_f; map_file_b; map_file_p }
+
+
+process join_and_complement {
+	input:
+	set val (name_mat_file), file ('forward_bed'), file ('backward_bed'), file ('paused_bed') from motion_for_back_paused
+	file map_bed from map_bed_file
+	
+	output:
+  	set '*.del' into delete  
+  	
+  	
+  	"""
+  	echo "ddd" > culo.del
+  	$HOME/git/pergola/test/c_elegans_data_test/time_bw_motion_for_back.py -f $forward_bed -b $backward_bed -m $map_bed
+  	"""
+  
+	}
+	
+
+/*
+process get_complement {
+  input:
+  set file ('forward_bed'), file ('backward_bed') from for_back_paired
+ 
+  output:
+  set '*.del' into delete  
+  
+  
+  //set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr, bed_motion_turns
+  //set name_file, 'tr*.bedGraph', name_file_motion into bedGraph_motion
+  
+  """
+  echo "ddd" > culo.del
+  """
+} 
+*/
+//culo.subscribe { println it }
+//$HOME/git/pergola/test/c_elegans_data_test/time_bw_motion_for_back.py -f $forward_csv -b $backward_csv -m $map_csv_motion
+	
