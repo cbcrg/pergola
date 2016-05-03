@@ -30,16 +30,17 @@ process get_motion {
   set file ('file_worm'), val (name_file_worm) from mat_files_name
   
   output: 
-  set name_file_worm, '*forward.csv' into forward_motion_csv
-  set name_file_worm, '*backward.csv' into backward_motion_csv
-  set name_file_worm, '*paused.csv' into paused_motion_csv
+  //set name_file_worm, '*forward.csv' into forward_motion_csv
+  //set name_file_worm, '*backward.csv' into backward_motion_csv
+  //set name_file_worm, '*paused.csv' into paused_motion_csv
   //set name_file_worm, '*forward.csv', '*.backward.csv', '*.paused.csv' into forward_backward_motion_csv
+  set name_file_worm, '*.csv' into motion_csv
   
   script:
   println "Matlab file containing worm behavior processed: $file_worm"
 
   """
-  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_motion.py -i \"$file_worm\"
+  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_motion_joined.py -i \"$file_worm\"
   """
 }
 
@@ -67,55 +68,22 @@ map_motion_file.into { map_file_f; map_file_b; map_file_p }
 
 // Combines forward and backward and gets the complement
 
-process motionf_to_bed {
+process motion_to_bed {
 	input:		
 	//set val(name_mat_file), file ('forward_csv'), file ('backward_csv'), file ('paused_csv') from forward_backward_motion_csv
-	set val(name_mat_file), file ('forward_csv') from forward_motion_csv
+	//set val(name_mat_file), file ('forward_csv') from forward_motion_csv
+	set val(name_mat_file), file ('motion_file') from motion_csv
+	
 	file map_csv_motion from map_file_f.first()
 	
 	output:
-	set  name_mat_file, 'tr_1_dt_a.bed' into forward_bed
+	set  name_mat_file, 'tr_1_dt_forward.bed', 'tr_1_dt_backward.bed', 'tr_1_dt_paused.bed', 'chrom.sizes' into motion_bed
 	
 	"""
-	pergola_rules.py -i $forward_csv -m $map_csv_motion -nt  	
+	pergola_rules.py -i $motion_file -m $map_csv_motion -nt  	
 	"""	
 }
 
-process motion_b_to_bed {
-	input:		
-	//set val(name_mat_file), file ('forward_csv'), file ('backward_csv'), file ('paused_csv') from forward_backward_motion_csv
-	set val(name_mat_file), file ('backward_csv') from backward_motion_csv
-	file map_csv_motion from map_file_b.first()
-	
-	output:
-	set name_mat_file, 'tr_1_dt_a.bed' into backward_bed
-	
-	"""
-	pergola_rules.py -i $backward_csv -m $map_csv_motion -nt  	
-	"""	
-}
-
-process motion_p_to_bed {
-	input:		
-	//set val(name_mat_file), file ('forward_csv'), file ('backward_csv'), file ('paused_csv') from forward_backward_motion_csv
-	set val(name_mat_file), file ('paused_csv') from paused_motion_csv
-	file map_csv_motion from map_file_p.first()
-	
-	output:
-	set name_mat_file, 'tr_1_dt_a.bed' into paused_bed
-	
-	"""
-	pergola_rules.py -i $paused_csv -m $map_csv_motion -nt  	
-	"""	
-}
-
-motion_for_back = forward_bed.phase(backward_bed).map { 
-		[ it[0][0], it[0][1], it[1][1] ]	   
-	}
-
-motion_for_back_paused = motion_for_back.phase(paused_bed).map { 
-		[ it[0][0], it[0][1], it[0][2], it[1][1] ]	   
-	}
 
 map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_file = file (map_bed_path)
@@ -131,22 +99,31 @@ map_bed_file = file (map_bed_path)
 
 process join_and_complement {
 	input:
-	set val (name_mat_file), file ('forward_bed'), file ('backward_bed'), file ('paused_bed') from motion_for_back_paused
+	set val (name_mat_file), file ('forward_bed'), file ('backward_bed'), file ('paused_bed'), file ('chrom_sizes') from motion_bed
 	file map_bed from map_bed_file
 	
 	output:
-  	set '*.del' into delete  
+  	set name_mat_file, 'time_bw_motion.bed' into time_bw_motion  
   	
   	
-  	"""
-  	echo "ddd" > culo.del
-  	$HOME/git/pergola/test/c_elegans_data_test/time_bw_motion_for_back.py -f $forward_bed -b $backward_bed -m $map_bed
+  	"""  	
+  	$HOME/git/pergola/test/c_elegans_data_test/time_bw_motion_for_back.py -f $forward_bed -b $backward_bed -m $map_bed -c $chrom_sizes  	
   	"""
   
 	}
-	
 
-/*
+/*	
+process plot_distro_time {
+	input:
+		
+	output:
+	
+	"""
+	"""
+} 
+
+
+
 process get_complement {
   input:
   set file ('forward_bed'), file ('backward_bed') from for_back_paired
