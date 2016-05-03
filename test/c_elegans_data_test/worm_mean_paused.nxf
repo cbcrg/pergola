@@ -112,16 +112,53 @@ process join_and_complement {
   
 	}
 
-/*	
+time_bw_motion_plot = time_bw_motion.collectFile(newLine: false, sort:'none') { 	
+	def name = it[0].split("_on_")[0]
+	[ name, it[1].text ] 
+	}
+	
+
 process plot_distro_time {
 	input:
-		
+		file time_bw_motion from time_bw_motion_plot
 	output:
+		set '*.png' into plots_time_bw_motion
 	
 	"""
+	export R_LIBS="/software/R/packages"  
+  	Rscript \$HOME/git/pergola/test/c_elegans_data_test/plot_time_bw_distro.R --bed_file=${time_bw_motion}
 	"""
 } 
 
+// Creating motion results folder
+result_dir_plots_time_bw_motion = file("$baseDir/plots_time_bw_motion")
+
+result_dir_plots_time_bw_motion.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_plots_time_bw_motion"
+}
+
+plots_time_bw_motion.subscribe {   
+  it.copyTo( result_dir_plots_time_bw_motion.resolve ( it.name ) )
+}
+
+/*
+process plot_distro {
+  input:
+  file intersect_speed_motion from bed_intersect_speed_motion_plot
+  
+  output:
+  set '*.png' into plots_speed_motion
+    
+  script:
+  println ">>>>>>>>>>>>>>>: $intersect_speed_motion"
+  	
+  """
+  export R_LIBS="/software/R/packages"  
+  Rscript \$HOME/git/pergola/test/c_elegans_data_test/plot_speed_distribution.R --bed_file=${intersect_speed_motion}
+  """
+}
 
 
 process get_complement {

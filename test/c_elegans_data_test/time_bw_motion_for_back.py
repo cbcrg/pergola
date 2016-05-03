@@ -54,6 +54,7 @@ backward = intervals.IntData(backward_file, map_dict=mapping_bed.correspondence,
 backward_read = backward.read(relative_coord=False)
 backward_bed_obj = backward_read.convert(mode="bed")['chr1', '.'].create_pybedtools()
 
+# All between time intervals
 time_bw_motion_bed = forward_bed_obj.cat(backward_bed_obj).complement(g=chrom_sizes)
 time_bw_motion_bed.saveas("time_bw_motion.bed")
 
