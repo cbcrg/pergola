@@ -46,13 +46,13 @@ mat_files_name = mat_files.flatten().map { mat_files_file ->
 }
 
 process get_motion {
-  container 'dataquestio/python2-starter'
+  container 'scivm/scientific-python-2.7'
   
   input:  
   set file ('file_worm'), val (name_file_worm) from mat_files_name
   
   output: 
-  set name_file_worm, '*.csv' into motion_csv
+  set name_file_worm, '*.csv' into motion_csv, motion_csv_wr
   
   script:
   println "Matlab file containing worm behavior processed: $file_worm"
@@ -91,18 +91,18 @@ map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_file = file (map_bed_path)
 
 process join_and_complement {
-	container 'dataquestio/python2-starter'
+	container 'scivm/scientific-python-2.7'
 	
 	input:
 	set val (name_mat_file), file ('forward_bed'), file ('backward_bed'), file ('paused_bed'), file ('chrom_sizes') from motion_bed
 	file map_bed from map_bed_file
 	
 	output:
-  	set name_mat_file, 'time_bw_motion.bed'   into time_bw_motion  
-  	set name_mat_file, 'time_bw_for_for.bed' into time_for_for
-  	set name_mat_file, 'time_bw_back_back.bed' into time_back_back
-  	set name_mat_file, 'time_bw_for_back.bed' into time_for_back
-  	set name_mat_file, 'time_bw_back_for.bed' into time_back_for
+  	set name_mat_file, 'time_bw_motion.bed'   into time_bw_motion, time_bw_motion_wr    
+  	set name_mat_file, 'time_bw_for_for.bed' into time_for_for, time_for_for_wr
+  	set name_mat_file, 'time_bw_back_back.bed' into time_back_back, time_back_back_wr
+  	set name_mat_file, 'time_bw_for_back.bed' into time_for_back, time_for_back_wr
+  	set name_mat_file, 'time_bw_back_for.bed' into time_back_for, time_back_for_wr
   	
   	//$HOME/git/pergola/test/c_elegans_data_test/time_bw_motion_for_back.py -f $forward_bed -b $backward_bed -m $map_bed -c $chrom_sizes  	
   	
@@ -179,3 +179,51 @@ result_dir_plots_time_bw_motion.with {
 plots_time_bw_motion.subscribe {   
   it.copyTo( result_dir_plots_time_bw_motion.resolve ( it.name ) )
 }
+
+// Saving csv files into a folder
+result_dir_csv_motion = file("$baseDir/csv_motion")
+
+result_dir_csv_motion.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_csv_motion"
+}
+
+motion_csv_wr.subscribe { 
+	csv_file = it[1]
+	csv_file.copyTo( result_dir_csv_motion.resolve ( it[0] + ".motion.csv" ) )
+}  
+
+//Saving bed files into a folder
+result_dir_bw_motion = file("$baseDir/bed_files_bw_motion")
+
+result_dir_plots_time_bw_motion.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_bw_motion"
+}
+
+time_bw_motion_wr.subscribe { 
+	bed_file = it[1]
+	bed_file.copyTo( result_dir_bw_motion.resolve ( "bw_motion_" + it[0] + ".bed" ) )
+}  
+
+time_for_for_wr.subscribe { 
+	bed_file = it[1]
+	bed_file.copyTo( result_dir_bw_motion.resolve ( "for_for_" + it[0] + ".bed" ) )
+}  
+
+time_back_back_wr.subscribe { 
+	bed_file = it[1]
+	bed_file.copyTo( result_dir_bw_motion.resolve ( "back_back_" + it[0] + ".bed" ) )
+}  
+
+time_for_back_wr.subscribe { 
+	bed_file = it[1]
+	bed_file.copyTo( result_dir_bw_motion.resolve ( "for_back_" + it[0] + ".bed" ) )
+}  
+
+time_back_for_wr.subscribe { 
+	bed_file = it[1]
+	bed_file.copyTo( result_dir_bw_motion.resolve ( "back_for_" + it[0] + ".bed" ) )
+}  
