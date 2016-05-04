@@ -6,7 +6,7 @@
 #############################################################################
 
 # To use this script in ant first export this:
-export R_LIBS="/software/R/packages"
+# export R_LIBS="/software/R/packages"
 
 ##Getting HOME directory 
 home <- Sys.getenv("HOME")
