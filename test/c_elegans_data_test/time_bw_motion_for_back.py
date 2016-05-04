@@ -70,17 +70,15 @@ size_win = 2
 ## Forward to forward 
 ## bedtools window -a A.bed -b B.bed -l 5000 -r 1000 -sw
 ## both r and l are needed
-time_after_forward = forward_bed_obj.window(pybedtools.BedTool(time_bw_motion_bed_fn), l=0, r=size_win).each(window2bed)#.saveas("time_after_for.bed")
-
-forward_bed_obj.window(pybedtools.BedTool(time_after_forward), l=size_win, r=0).each(window2bed).saveas("time_bw_for_for.bed")
+time_after_forward_fn = forward_bed_obj.window(pybedtools.BedTool(time_bw_motion_bed_fn), l=0, r=size_win).each(window2bed).saveas().fn#.saveas("time_after_for.bed")
+forward_bed_obj.window(pybedtools.BedTool(time_after_forward_fn), l=size_win, r=0).each(window2bed).saveas("time_bw_for_for.bed")
 
 ## Backward to backward
-time_after_backward = backward_bed_obj.window(pybedtools.BedTool(time_bw_motion_bed_fn), l=0, r=size_win).each(window2bed)#.saveas("time_after_back.bed")
-
-backward_bed_obj.window(pybedtools.BedTool(time_after_backward), l=size_win, r=0).each(window2bed).saveas("time_bw_back_back.bed")
+time_after_backward_fn = backward_bed_obj.window(pybedtools.BedTool(time_bw_motion_bed_fn), l=0, r=size_win).each(window2bed).saveas().fn#.saveas("time_after_back.bed")
+backward_bed_obj.window(pybedtools.BedTool(time_after_backward_fn), l=size_win, r=0).each(window2bed).saveas("time_bw_back_back.bed")
 
 ## Forward to backward
-backward_bed_obj.window(pybedtools.BedTool(time_after_forward), l=size_win, r=0).each(window2bed).saveas("time_bw_for_back.bed")
+backward_bed_obj.window(pybedtools.BedTool(time_after_forward_fn), l=size_win, r=0).each(window2bed).saveas("time_bw_for_back.bed")
 
 ## Backward to forward
-forward_bed_obj.window(pybedtools.BedTool(time_after_backward), l=size_win, r=0).each(window2bed).saveas("time_bw_back_for.bed")
+forward_bed_obj.window(pybedtools.BedTool(time_after_backward_fn), l=size_win, r=0).each(window2bed).saveas("time_bw_back_for.bed")
