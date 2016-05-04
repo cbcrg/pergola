@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 #  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
 #  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
 #
@@ -33,11 +35,12 @@ home <- Sys.getenv("HOME")
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="N2" --motion="forward"
 
 # ggplot2 package loaded locally, cluster version is older and is causing problems
-# library(ggplot2)
-library(ggplot2, lib.loc="/users/cn/jespinosa/R/library")
+library(ggplot2)
+# library(ggplot2, lib.loc="/users/cn/jespinosa/R/library")
 
 # Loading params plot:
-source (paste (home, "/git/mwm/lib/R/plot_param_public.R", sep=""))
+# source (paste (home, "/git/mwm/lib/R/plot_param_public.R", sep=""))
+source("https://raw.githubusercontent.com/cbcrg/mwm/master/lib/R/plot_param_public.R")
 
 #####################
 ### VARIABLES
@@ -179,7 +182,7 @@ df_bed$time_bw <- df_bed$end - df_bed$start
 size_strips <- 12
 size_titles <- 12
 size_axis <- 12
-size_axis_ticks <- 8
+size_axis_ticks <- 10
 xmin <- -1000
 xmax <- 1000
 
