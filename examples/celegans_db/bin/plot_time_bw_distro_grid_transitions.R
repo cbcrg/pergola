@@ -172,6 +172,9 @@ df_bed_file_back_for <- read_bed (bed_file_back_for, "Backward to forward")
 
 df_bed <- rbind (df_bed_file_all_tr, df_bed_file_for_for, df_bed_file_back_back, df_bed_file_for_back, df_bed_file_back_for)
 
+# We remove this fake rows they were included just to avoid last line of code above to crash
+df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
+
 # all files are equally named
 name_file <- strain
 name_out <- paste(name_file, ".png", sep="")
@@ -183,8 +186,8 @@ size_strips <- 12
 size_titles <- 13
 size_axis <- 12
 size_axis_ticks <- 10
-xmin <- -1000
-xmax <- 1000
+xmin <- -500
+xmax <- 500
 
 ggplot(df_bed, aes(x=time_bw)) + geom_density() +
   labs (x = "\nTime between motion", y = "Density\n", title = paste(strain, "\n", sep=" ")) + 
