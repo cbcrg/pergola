@@ -92,11 +92,15 @@ int_data_motion = intervals.IntData(motion_bed_file, map_dict=mapping_bed.corres
 
 speed_data_read = int_data_speed.read(relative_coord=False)
 bed_obj_speed = speed_data_read.convert(mode="bed")
-speed_BedTools = bed_obj_speed['chr1', '.'].create_pybedtools()
+key_s = bed_obj_speed.keys()[0]
+# speed_BedTools = bed_obj_speed['chr1', '.'].create_pybedtools()
+speed_BedTools = bed_obj_speed[key_s].create_pybedtools()
 
 motion_data_read = int_data_motion.read(relative_coord=False)
 bed_obj_motion = motion_data_read.convert(mode="bed")
-motion_BedTools = bed_obj_motion['chr1', '.'].create_pybedtools()
+key_m = bed_obj_motion.keys()[0]
+motion_BedTools = bed_obj_motion[key_m].create_pybedtools()
+# motion_BedTools = bed_obj_motion['chr1', '.'].create_pybedtools()
 
 speed_BedTools.intersect(motion_BedTools).saveas(tag_file + ".intersect.bed")
 

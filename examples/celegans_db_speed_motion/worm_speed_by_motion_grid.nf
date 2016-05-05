@@ -222,11 +222,37 @@ process intersect_speed_motion {
 /*
  * Grouping (collect) bed files in order to plot the distribution by strain, motion direction and body part 
  */
-bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.collectFile(newLine: false, sort:'none') { 
-	def name = it[1] + "_" + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]
-	//headTip_flp-19ok2460_paused	
+ bed_intersect_speed_motion_plot = bed_intersect_speed_motion2p.collectFile(newLine: false, sort:'none') { 
+	def name = it[1] + "_" + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]	
+	[ name, it[0].text ]
+}.map { 
+	def body_part =  it.name.split("_")[0]
+	def strain =  it.name.split("_")[1]
+	def direction =  it.name.split("_")[2]
+ 	[ it, body_part, direction, strain, it.name ]
+}
+
+/*
+ * Tagging files for plotting
+ */
+process tag_bed_files {
+	input: 
+	set file ('bed_file'), val (body_part), val (direction), val (strain), val (mat_name) from bed_intersect_speed_motion_plot
+	
+	output:
+	set '*.bed', strain, body_part, direction into bed_tagged
+	
+	"""
+	awk '{ print \$0, \"\\t$body_part\\t$direction\" }' ${bed_file} > ${mat_name}.bed   
+	"""
+}
+
+bed_intersect_speed_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') { 
+	def name = it[1] 	
 	[ name, it[0].text ]
 }
+
+//bed_intersect_speed_motion_plot_col.subscribe { println it }
 
 /*
  * Plots the distribution of bed containing all intervals by strain, motion and body part
@@ -235,7 +261,7 @@ process plot_distro {
 	container 'joseespinosa/docker-r-ggplot2:v0.1'
 
   	input:
-  	file intersect_speed_motion from bed_intersect_speed_motion_plot
+  	file intersect_speed_motion from bed_intersect_speed_motion_plot_col
   
   	output:
   	set '*.png' into plots_speed_motion
@@ -244,7 +270,7 @@ process plot_distro {
   	println ">>>>>>>>>>>>>>>: $intersect_speed_motion"
   	
   	"""
-  	plot_speed_distribution.R --bed_file=${intersect_speed_motion}
+  	plot_speed_distribution_grid.R --bed_file=${intersect_speed_motion}
   	"""
 }
 
@@ -529,5 +555,3 @@ plots_speed_turn.subscribe {
 // Calculate mean speed of the two types of turns
 // TO DO
 // Calculate mean speed of the two types of turns during forward, backward and paused motion, regardless of 
-
-

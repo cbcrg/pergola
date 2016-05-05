@@ -124,8 +124,20 @@ motion <- name_split[[1]][length(name_split[[1]])]
   }
 }
 
-ggplot(df_bed, aes(x=value)) + geom_density() + xlim (c(-1000, 1000)) +
-  # c(min(tbl_bed$V5)-200, max(tbl_bed$V5)+200)
-  labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" "))
+size_strips <- 12
+size_titles <- 13
+size_axis <- 12
+size_axis_ticks <- 10
 
-ggsave(file=name_out)
+ggplot(df_bed, aes(x=value)) + geom_density() + xlim (c(-1000, 1000)) +  
+  labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" ")) +
+  labs (x = "\nMicrons/Seconds ", y = "Density\n") + 
+  # theme (strip.text.x = element_text(size=size_strips, face="bold")) +
+  theme (plot.title = element_text(size=size_titles)) + 
+  theme (axis.title.x = element_text(size=size_axis)) +
+  theme (axis.title.y = element_text(size=size_axis)) +
+  theme (axis.text.x = element_text(size=size_axis_ticks)) +  
+  theme (axis.text.y = element_text(size=size_axis_ticks)) +  
+  # theme (strip.background = element_blank()) 
+  
+ggsave (file=name_out)

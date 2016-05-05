@@ -145,9 +145,9 @@ for motion_k in sorted(motion_keys):
     writer_out = writer(fh, dialect = 'excel-tab')
     
     # header
-    writer_out.writerow(['frame_start', 'frame_end', 'value'])
+    writer_out.writerow(['frame_start', 'frame_end', 'value', 'direction'])
     
     for i in range(0, len(start)):
-        writer_out.writerows([[start[i], end[i], 1000]])
+        writer_out.writerows([[start[i], end[i], 1000, motion_k]])
 
     fh.close()

@@ -22,3 +22,4 @@
 behavioral_file:frame_start > pergola:start
 behavioral_file:frame_end > pergola:end
 behavioral_file:value > pergola:data_value
+behavioral_file:direction > pergola:data_types
