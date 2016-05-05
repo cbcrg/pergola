@@ -34,12 +34,10 @@ home <- Sys.getenv("HOME")
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="575_ju440" --motion="backward"
 ## Rscript plot_speed_motion_mean.R --body_part="midbody" --pattern_worm="N2" --motion="forward"
 
-# ggplot2 package loaded locally, cluster version is older and is causing problems
 library(ggplot2)
-# library(ggplot2, lib.loc="/users/cn/jespinosa/R/library")
 
 # Loading params plot:
-source (paste (home, "/git/mwm/lib/R/plot_param_public.R", sep=""))
+source("https://raw.githubusercontent.com/cbcrg/mwm/master/lib/R/plot_param_public.R")
 
 #####################
 ### VARIABLES
