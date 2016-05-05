@@ -1,0 +1,120 @@
+May-05 22:07:03.432 [main] DEBUG nextflow.cli.Launcher - $> /Users/jespinosa/git/phecomp/lib/nxf/nextflow run worm_speed_by_motion.nf --path_files=/Users/jespinosa/git/pergola/test/c_elegans_data_test/ -profile standard
+May-05 22:07:03.530 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 0.18.0
+May-05 22:07:03.531 [main] INFO  nextflow.cli.CmdRun - Launching worm_speed_by_motion.nf
+May-05 22:07:03.552 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: nextflow.config
+May-05 22:07:03.555 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/jespinosa/git/pergola/examples/celegans_db_speed_motion/nextflow.config
+May-05 22:07:03.927 [main] DEBUG nextflow.config.ConfigBuilder - Setting config profile: 'standard'
+May-05 22:07:04.097 [main] DEBUG nextflow.Session - Session uuid: 23f9a47f-c0c3-482b-ada3-15638fb76f9b
+May-05 22:07:04.099 [main] DEBUG nextflow.Session - Executor pool size: 8
+May-05 22:07:04.119 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 0.18.0 build 3662
+  Modified: 11-04-2016 08:47 UTC (10:47 CEST)
+  System: Mac OS X 10.9.5
+  Runtime: Groovy 2.4.5 on Java HotSpot(TM) 64-Bit Server VM 1.8.0_31-b13
+  Encoding: US-ASCII (UTF-8)
+  Process: 47953@C02FP3TZDF8Y [192.168.1.35]
+
+May-05 22:07:04.132 [main] DEBUG nextflow.Session - Session start invoked
+May-05 22:07:04.135 [main] DEBUG nextflow.processor.TaskDispatcher - Dispatcher > start
+May-05 22:07:04.136 [main] DEBUG nextflow.script.ScriptRunner - > Script parsing
+May-05 22:07:04.420 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+May-05 22:07:04.429 [main] INFO  nextflow.Nextflow - C. elegans speed vs motion  - N F  ~  version 0.1
+May-05 22:07:04.429 [main] INFO  nextflow.Nextflow - =========================================
+May-05 22:07:04.429 [main] INFO  nextflow.Nextflow - c. elegans data    : /Users/jespinosa/git/pergola/test/c_elegans_data_test/
+May-05 22:07:04.429 [main] INFO  nextflow.Nextflow - 
+
+May-05 22:07:04.445 [main] DEBUG nextflow.Channel - files for syntax: glob; folder: /Users/jespinosa/git/pergola/test/c_elegans_data_test/; pattern: *.mat; options: null
+May-05 22:07:04.704 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+May-05 22:07:04.704 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+May-05 22:07:04.712 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+May-05 22:07:04.715 [main] INFO  nextflow.executor.Executor - [warm up] executor > local
+May-05 22:07:04.723 [main] DEBUG n.processor.TaskPollingMonitor - Creating task monitor for executor 'local' > capacity: 8; pollInterval: 100ms; dumpInterval: 5m 
+May-05 22:07:04.730 [main] DEBUG nextflow.processor.TaskDispatcher - Starting monitor: TaskPollingMonitor
+May-05 22:07:04.731 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+May-05 22:07:04.739 [main] DEBUG nextflow.executor.Executor - Invoke register for executor: local
+May-05 22:07:04.779 [main] DEBUG nextflow.Session - >>> barrier register (process: get_speed)
+May-05 22:07:04.804 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > get_speed -- maxForks: 8
+May-05 22:07:04.818 [Actor Thread 2] DEBUG n.processor.ParallelTaskProcessor - <get_speed> Poison pill arrived
+May-05 22:07:04.820 [Actor Thread 3] DEBUG nextflow.processor.StateObj - <get_speed> State before poison: StateObj[submitted: 3; completed: 0; poisoned: false; allScalar: false]
+May-05 22:07:04.820 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+May-05 22:07:04.821 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+May-05 22:07:04.821 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+May-05 22:07:04.822 [main] DEBUG nextflow.Session - >>> barrier register (process: speed_to_pergola)
+May-05 22:07:04.839 [main] DEBUG n.processor.ParallelTaskProcessor - Creating *combiner* operator for each param(s) at index(es): [2]
+May-05 22:07:04.884 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > speed_to_pergola -- maxForks: 8
+May-05 22:07:04.892 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+May-05 22:07:04.892 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+May-05 22:07:04.893 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+May-05 22:07:04.893 [main] DEBUG nextflow.Session - >>> barrier register (process: zeros_bed_and_bedGraph)
+May-05 22:07:04.906 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > zeros_bed_and_bedGraph -- maxForks: 8
+May-05 22:07:04.912 [main] DEBUG nextflow.processor.ProcessFactory - << taskConfig executor: local
+May-05 22:07:04.912 [main] DEBUG nextflow.processor.ProcessFactory - >> processorType: 'local'
+May-05 22:07:04.912 [main] DEBUG nextflow.executor.Executor - Initializing executor: local
+May-05 22:07:04.913 [main] DEBUG nextflow.Session - >>> barrier register (process: get_motion)
+May-05 22:07:04.925 [main] DEBUG n.processor.ParallelTaskProcessor - Creating operator > get_motion -- maxForks: 8
+May-05 22:07:04.928 [Actor Thread 2] DEBUG n.processor.ParallelTaskProcessor - <get_motion> Poison pill arrived
+May-05 22:07:04.929 [Actor Thread 3] DEBUG nextflow.processor.StateObj - <get_motion> State before poison: StateObj[submitted: 3; completed: 0; poisoned: false; allScalar: false]
+May-05 22:07:04.945 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+May-05 22:07:04.945 [main] DEBUG nextflow.Session - Session await
+May-05 22:07:05.223 [Actor Thread 8] INFO  nextflow.processor.TaskDispatcher - [c5/c71bde] Submitted process > get_motion (2)
+May-05 22:07:05.223 [Actor Thread 5] INFO  nextflow.processor.TaskDispatcher - [5e/1afe8c] Submitted process > get_speed (3)
+May-05 22:07:05.223 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [4e/e3dc25] Submitted process > get_motion (3)
+May-05 22:07:05.224 [Actor Thread 1] INFO  nextflow.processor.TaskDispatcher - [60/493216] Submitted process > get_speed (1)
+May-05 22:07:05.224 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [f1/672791] Submitted process > get_speed (2)
+May-05 22:07:05.224 [Actor Thread 6] INFO  nextflow.processor.TaskDispatcher - [63/6f65ea] Submitted process > get_motion (1)
+May-05 22:07:06.471 [Actor Thread 3] DEBUG nextflow.processor.TaskProcessor - <get_motion> Sending poison pills and terminating process
+May-05 22:07:06.473 [Actor Thread 3] DEBUG nextflow.Session - <<< barrier arrive (process: get_motion)
+May-05 22:07:06.476 [Actor Thread 1] DEBUG n.processor.ParallelTaskProcessor - <get_motion> After stop
+May-05 22:07:06.651 [Actor Thread 3] DEBUG nextflow.processor.TaskProcessor - <get_speed> Sending poison pills and terminating process
+May-05 22:07:06.652 [Actor Thread 3] DEBUG nextflow.Session - <<< barrier arrive (process: get_speed)
+May-05 22:07:06.652 [Actor Thread 12] DEBUG n.processor.ParallelTaskProcessor - <get_speed> After stop
+May-05 22:07:06.662 [Actor Thread 6] INFO  nextflow.processor.TaskDispatcher - [64/6f10a8] Submitted process > speed_to_pergola (1)
+May-05 22:07:06.670 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [61/f8938a] Submitted process > speed_to_pergola (3)
+May-05 22:07:06.671 [Actor Thread 10] INFO  nextflow.processor.TaskDispatcher - [12/d7109d] Submitted process > speed_to_pergola (6)
+May-05 22:07:06.673 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [57/4a1d73] Submitted process > speed_to_pergola (7)
+May-05 22:07:06.675 [Actor Thread 8] INFO  nextflow.processor.TaskDispatcher - [0e/702a83] Submitted process > speed_to_pergola (5)
+May-05 22:07:06.678 [Actor Thread 6] INFO  nextflow.processor.TaskDispatcher - [f7/2f920c] Submitted process > speed_to_pergola (9)
+May-05 22:07:06.680 [Actor Thread 5] INFO  nextflow.processor.TaskDispatcher - [a0/5fea14] Submitted process > speed_to_pergola (4)
+May-05 22:07:06.681 [Actor Thread 2] DEBUG n.processor.ParallelTaskProcessor - <speed_to_pergola> Poison pill arrived
+May-05 22:07:06.681 [Actor Thread 2] DEBUG n.processor.ParallelTaskProcessor - <speed_to_pergola> Poison pill arrived
+May-05 22:07:06.681 [Actor Thread 2] DEBUG n.processor.ParallelTaskProcessor - <speed_to_pergola> Poison pill arrived
+May-05 22:07:06.684 [Actor Thread 1] INFO  nextflow.processor.TaskDispatcher - [ec/2a268f] Submitted process > speed_to_pergola (2)
+May-05 22:07:06.684 [Actor Thread 3] DEBUG nextflow.processor.StateObj - <speed_to_pergola> State before poison: StateObj[submitted: 15; completed: 0; poisoned: false; allScalar: false]
+May-05 22:07:06.685 [Actor Thread 3] DEBUG nextflow.processor.StateObj - <speed_to_pergola> State before poison: StateObj[submitted: 15; completed: 0; poisoned: true; allScalar: false]
+May-05 22:07:06.685 [Actor Thread 3] DEBUG nextflow.processor.StateObj - <speed_to_pergola> State before poison: StateObj[submitted: 15; completed: 0; poisoned: true; allScalar: false]
+May-05 22:07:09.068 [Actor Thread 11] INFO  nextflow.processor.TaskDispatcher - [d5/1925b9] Submitted process > speed_to_pergola (8)
+May-05 22:07:09.112 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [12/25aaaf] Submitted process > speed_to_pergola (13)
+May-05 22:07:09.166 [Actor Thread 8] INFO  nextflow.processor.TaskDispatcher - [b6/1618c6] Submitted process > speed_to_pergola (12)
+May-05 22:07:09.260 [Actor Thread 5] INFO  nextflow.processor.TaskDispatcher - [d5/a458b7] Submitted process > speed_to_pergola (15)
+May-05 22:07:09.377 [Actor Thread 10] INFO  nextflow.processor.TaskDispatcher - [59/4c2fd5] Submitted process > speed_to_pergola (10)
+May-05 22:07:09.441 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [81/f34be9] Submitted process > speed_to_pergola (11)
+May-05 22:07:09.461 [Actor Thread 6] INFO  nextflow.processor.TaskDispatcher - [44/1ab3fe] Submitted process > speed_to_pergola (14)
+May-05 22:07:10.768 [Actor Thread 1] INFO  nextflow.processor.TaskDispatcher - [c3/8eb549] Submitted process > zeros_bed_and_bedGraph (1)
+May-05 22:07:11.175 [Actor Thread 6] INFO  nextflow.processor.TaskDispatcher - [f2/b67886] Submitted process > zeros_bed_and_bedGraph (8)
+May-05 22:07:11.427 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [a5/1ba261] Submitted process > zeros_bed_and_bedGraph (3)
+May-05 22:07:11.707 [Actor Thread 8] INFO  nextflow.processor.TaskDispatcher - [99/4a6a09] Submitted process > zeros_bed_and_bedGraph (4)
+May-05 22:07:11.732 [Actor Thread 10] INFO  nextflow.processor.TaskDispatcher - [2f/d2cc1f] Submitted process > zeros_bed_and_bedGraph (5)
+May-05 22:07:11.753 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [58/519d82] Submitted process > zeros_bed_and_bedGraph (6)
+May-05 22:07:11.811 [Actor Thread 5] INFO  nextflow.processor.TaskDispatcher - [ee/05cf52] Submitted process > zeros_bed_and_bedGraph (7)
+May-05 22:07:11.885 [Actor Thread 11] INFO  nextflow.processor.TaskDispatcher - [61/77b207] Submitted process > zeros_bed_and_bedGraph (2)
+May-05 22:07:11.912 [Actor Thread 4] INFO  nextflow.processor.TaskDispatcher - [ce/9d38ca] Submitted process > zeros_bed_and_bedGraph (9)
+May-05 22:07:11.931 [Actor Thread 8] INFO  nextflow.processor.TaskDispatcher - [db/2aff70] Submitted process > zeros_bed_and_bedGraph (10)
+May-05 22:07:11.957 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [4d/994dee] Submitted process > zeros_bed_and_bedGraph (11)
+May-05 22:07:11.977 [Actor Thread 5] INFO  nextflow.processor.TaskDispatcher - [f9/b9af5c] Submitted process > zeros_bed_and_bedGraph (12)
+May-05 22:07:12.113 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [a8/7740b2] Submitted process > zeros_bed_and_bedGraph (13)
+May-05 22:07:12.136 [Actor Thread 5] INFO  nextflow.processor.TaskDispatcher - [3b/af2144] Submitted process > zeros_bed_and_bedGraph (14)
+May-05 22:07:12.140 [Actor Thread 3] DEBUG nextflow.processor.TaskProcessor - <speed_to_pergola> Sending poison pills and terminating process
+May-05 22:07:12.140 [Actor Thread 3] DEBUG nextflow.Session - <<< barrier arrive (process: speed_to_pergola)
+May-05 22:07:12.140 [Actor Thread 5] DEBUG n.processor.ParallelTaskProcessor - <zeros_bed_and_bedGraph> Poison pill arrived
+May-05 22:07:12.140 [Actor Thread 5] DEBUG n.processor.ParallelTaskProcessor - <zeros_bed_and_bedGraph> Poison pill arrived
+May-05 22:07:12.140 [Actor Thread 8] DEBUG n.processor.ParallelTaskProcessor - <speed_to_pergola> After stop
+May-05 22:07:12.140 [Actor Thread 9] DEBUG nextflow.processor.StateObj - <zeros_bed_and_bedGraph> State before poison: StateObj[submitted: 15; completed: 12; poisoned: false; allScalar: false]
+May-05 22:07:12.141 [Actor Thread 9] DEBUG nextflow.processor.StateObj - <zeros_bed_and_bedGraph> State before poison: StateObj[submitted: 15; completed: 12; poisoned: true; allScalar: false]
+May-05 22:07:12.147 [Actor Thread 7] INFO  nextflow.processor.TaskDispatcher - [45/f7f638] Submitted process > zeros_bed_and_bedGraph (15)
+May-05 22:07:12.231 [Actor Thread 3] DEBUG nextflow.processor.TaskProcessor - <zeros_bed_and_bedGraph> Sending poison pills and terminating process
+May-05 22:07:12.232 [Actor Thread 3] DEBUG nextflow.Session - <<< barrier arrive (process: zeros_bed_and_bedGraph)
+May-05 22:07:12.232 [main] DEBUG nextflow.Session - Session await > processes completed
+May-05 22:07:12.232 [Actor Thread 7] DEBUG n.processor.ParallelTaskProcessor - <zeros_bed_and_bedGraph> After stop
+May-05 22:07:12.323 [Thread-3] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local)
+May-05 22:07:12.324 [main] DEBUG nextflow.Session - Session await > done
+May-05 22:07:12.362 [main] DEBUG nextflow.Session - Session destroyed
