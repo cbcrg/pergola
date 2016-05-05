@@ -133,7 +133,7 @@ process zeros_bed_and_bedGraph {
  * Transform motion intervals from mat files (forward, backward and paused)
  */ 
 process get_motion {
-	container 'joseespinosa/pergola:celegans'
+	container 'ipython/scipyserver'
 	  
   	input:
   	set file ('file_worm'), val (name_file_worm) from mat_files_motion
