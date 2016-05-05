@@ -46,6 +46,6 @@ COPY setup.py /pergola/
 COPY README.md /pergola/ 
  
 # TODO add requirements.txt file to pergola
-RUN pip install -r /pergola/requirements.txt
-RUN apt-get install -y python-scipy 
-RUN cd pergola && python setup.py install
+RUN pip install -r /pergola/requirements.txt && \
+apt-get install -y python-scipy && \
+cd pergola && python setup.py install
