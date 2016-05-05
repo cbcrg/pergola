@@ -46,8 +46,9 @@ mat_files_name = mat_files.flatten().map { mat_files_file ->
 }
 
 process get_motion {
-  container 'scivm/scientific-python-2.7'
-  
+  //container 'scivm/scientific-python-2.7'
+  container 'ipython/scipyserver'	  
+
   input:  
   set file ('file_worm'), val (name_file_worm) from mat_files_name
   
@@ -71,7 +72,7 @@ map_motion_file.into { map_file_f; map_file_b; map_file_p }
 
 // Combines forward and backward and gets the complement
 process motion_to_bed {
-	container 'joseespinosa/pergola:latest'
+	container 'joseespinosa/pergola:celegans'
 	
 	input:			
 	set val(name_mat_file), file ('motion_file') from motion_csv
@@ -91,8 +92,9 @@ map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
 map_bed_file = file (map_bed_path)
 
 process join_and_complement {
-	container 'scivm/scientific-python-2.7'
-	
+	//container 'scivm/scientific-python-2.7'
+        //container 'ipython/scipyserver'
+	container 'joseespinosa/pergola:celegans'
 	input:
 	set val (name_mat_file), file ('forward_bed'), file ('backward_bed'), file ('paused_bed'), file ('chrom_sizes') from motion_bed
 	file map_bed from map_bed_file
@@ -148,7 +150,7 @@ all_trans = time_bw_motion_plot
 
 
 process plot_distro_time {
-	container 'r-base:latest'
+	container 'joseespinosa/docker-r-ggplot2:v0.1'
 	
 	input:
 		set file ('time_bw_motion'), file ('time_for_for'), file ('time_back_back'), file ('time_for_back'), file ('time_back_for'), strain from all_trans
