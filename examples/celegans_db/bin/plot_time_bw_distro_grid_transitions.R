@@ -179,16 +179,16 @@ name_out <- paste(name_file, ".png", sep="")
 fps <- 30.03003003
 df_bed$time_bw <- df_bed$end - df_bed$start
 
-size_strips <- 13
-size_titles <- 14
-size_axis <- 13
+size_strips <- 12
+size_titles <- 13
+size_axis <- 12
 size_axis_ticks <- 10
 xmin <- -1000
 xmax <- 1000
 
-ggplot(df_bed, aes(x=time_bw)) + geom_density() + #xlim (c(-1000, 1000)) +
-  labs (x = "\nTime between motion", y = "density\n", title = paste(strain, "\n", sep=" ")) + 
-  scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin+100, xmax+100)) +
+ggplot(df_bed, aes(x=time_bw)) + geom_density() +
+  labs (x = "\nTime between motion", y = "Density\n", title = paste(strain, "\n", sep=" ")) + 
+  scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +
 #   scale_y_continuous (limits=c(0, 0.02)) +
   facet_grid (. ~ transition) +
   theme(strip.text.x = element_text(size=size_strips, face="bold")) +
