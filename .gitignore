@@ -10,9 +10,9 @@
 /pergola_tutorial_files/*.bed
 /pergola_tutorial_files/*.bedGraph
 /pergola_tutorial_files/*.fa
-/examples/celegans_db/work
-/examples/celegans_db/plots_time_bw_motion
-/examples/celegans_db/csv_motion
-/examples/celegans_db/bed_files_bw_motion
+/examples/celegans_db_inter_motion/work
+/examples/celegans_db_inter_motion/plots_time_bw_motion
+/examples/celegans_db_inter_motion/csv_motion
+/examples/celegans_db_inter_motion/bed_files_bw_motion
 .pydevproject
 .project
