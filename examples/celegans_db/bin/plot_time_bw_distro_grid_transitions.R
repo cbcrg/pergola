@@ -179,9 +179,9 @@ name_out <- paste(name_file, ".png", sep="")
 fps <- 30.03003003
 df_bed$time_bw <- df_bed$end - df_bed$start
 
-size_strips <- 12
-size_titles <- 12
-size_axis <- 12
+size_strips <- 14
+size_titles <- 14
+size_axis <- 14
 size_axis_ticks <- 10
 xmin <- -1000
 xmax <- 1000
@@ -194,6 +194,7 @@ ggplot(df_bed, aes(x=time_bw)) + geom_density() + #xlim (c(-1000, 1000)) +
   theme(strip.text.x = element_text(size=size_strips, face="bold")) +
   theme(plot.title = element_text(size=size_titles)) + 
   theme(axis.title.x = element_text(size=size_axis)) +
+  theme(axis.title.y = element_text(size=size_axis)) +
   theme(axis.text.x = element_text(size=size_axis_ticks)) +  
   theme(axis.text.y = element_text(size=size_axis_ticks)) +  
   theme(strip.background = element_blank()) 
