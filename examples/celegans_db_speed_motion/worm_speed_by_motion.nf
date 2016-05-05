@@ -54,7 +54,7 @@ mat_files_name.into { mat_files_speed; mat_files_motion; mat_files_turns}
  * Get speed from mat files
  */ 
 process get_speed {
-	container 'joseespinosa/pergola:celegans'
+	container 'ipython/scipyserver'
   
   	input:
   	set file ('file_worm'), val (name_file_worm) from mat_files_speed
@@ -252,7 +252,7 @@ process plot_distro {
  */
 
 process get_turns {
-	container 'joseespinosa/pergola:celegans'
+	container 'ipython/scipyserver'
 	
   	input:
   	set file ('file_worm'), val (name_file_worm) from mat_files_turns

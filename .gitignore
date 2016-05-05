@@ -14,5 +14,8 @@
 /examples/celegans_db_inter_motion/plots_time_bw_motion
 /examples/celegans_db_inter_motion/csv_motion
 /examples/celegans_db_inter_motion/bed_files_bw_motion
+/examples/celegans_db_inter_motion/results*
+/examples/celegans_db_speed_motion/work
+/examples/celegans_db_speed_motion/results*
 .pydevproject
 .project
