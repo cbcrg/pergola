@@ -82,7 +82,7 @@ map_speed=file(map_speed_path)
 body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
 
 process speed_to_pergola {
-	container 'joseespinosa/pergola:celegans'
+	container 'cbcrg/pergola:latest'
   
   	input:
   	set file ('speed_file'), val (name_file) from speed_files  
@@ -105,7 +105,7 @@ process speed_to_pergola {
  * Changing track name and processing periods with NA that are annotated as -10000 by extract_worm_speed.py 
  */ 
 process zeros_bed_and_bedGraph {
-	container 'joseespinosa/pergola:celegans'
+	container 'cbcrg/pergola:latest'
 	
   	input:
   	set file ('bed_file'), val(body_part), val(name_file) from bed_speed
@@ -170,7 +170,7 @@ map_motion_path = "$baseDir/data/worms_motion2p.txt"
 map_motion = file(map_motion_path)
 
 process motion_to_pergola {
-	container 'joseespinosa/pergola:celegans'  
+	container 'cbcrg/pergola:latest'  
   
   	input:
   	set file ('motion_file'), val (name_file), val (name_file_motion), val (motion) from motion_files_flat
@@ -203,7 +203,7 @@ bed_speed_motion = bed_speed_no_track_line
 	.filter { it[0] == it[3] }
 	
 process intersect_speed_motion {
-	container 'joseespinosa/pergola:celegans'
+	container 'cbcrg/pergola:latest'
 	
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion), val (direction) from bed_speed_motion
@@ -310,7 +310,7 @@ turn_motion=file(map_turn_path)
  * Transforming turns files to bed format
  */
 process turns_to_pergola {
-	container 'joseespinosa/pergola:celegans'
+	container 'cbcrg/pergola:latest'
 	
   	input:
   	set file ('turn_file'), val (name_file), val (name_file_turn), val (turn) from turn_files_flat
@@ -338,7 +338,7 @@ bed_speed_turn = bed_speed_no_track_line_turns
  * Intersecting turns intervals with speed
  */
 process intersect_speed_turn {
-	container 'joseespinosa/pergola:celegans'
+	container 'cbcrg/pergola:latest'
 	
 	input:
 	set val (mat_file_speed), val (body_part), file ('bed_speed_no_tr'), val (mat_turn_file), file ('turn_file'), val (name_file_turn) from bed_speed_turn
