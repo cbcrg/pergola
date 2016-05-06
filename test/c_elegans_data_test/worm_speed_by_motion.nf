@@ -1,15 +1,32 @@
 #!/usr/bin/env nextflow
 
 /*
-#################################################################################
-### Jose Espinosa-Carrasco. CB/CSN-CRG. April 2016                            ###
-#################################################################################
-### Code : 04.12                                                              ### 
-### Worm DB processed by pergola for paper                                    ###
-#################################################################################
+*  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
+*  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+*
+*  This file is part of Pergola.
+*
+*  Pergola is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  Pergola is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//path_files = "$HOME/2016_worm_DB/ju440_all/"
+/*
+* Wormbehavior DB (http://wormbehavior.mrc-lmb.cam.ac.uk/) processed by pergola for paper
+* Process mat files downloaded from the DB to extract periods of motion (forward, backward, 
+* and turns) in order to intersect them with speed during this periods using pergola
+*/    
+
+
 params.path_files = "$HOME/git/pergola/test/c_elegans_data_test/"
 
 mat_files_path = "${params.path_files}*.mat"
@@ -41,7 +58,7 @@ process get_speed {
   println "Matlab file containing worm behavior processed: $name_file_worm"
 
   """
-  $HOME/git/pergola/test/c_elegans_data_test/extract_worm_speed.py -i $file_worm
+  extract_worm_speed.py -i $file_worm
   """
 }
 
