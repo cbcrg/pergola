@@ -128,8 +128,11 @@ size_strips <- 12
 size_titles <- 13
 size_axis <- 12
 size_axis_ticks <- 10
+xmin <- -1000
+xmax <- 1000
 
-ggplot(df_bed, aes(x=value)) + geom_density() + xlim (c(-1000, 1000)) +  
+ggplot(df_bed, aes(x=value)) + geom_density() +
+  scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +  
   labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" ")) +
   labs (x = "\nMicrons/Seconds ", y = "Density\n") + 
   # theme (strip.text.x = element_text(size=size_strips, face="bold")) +

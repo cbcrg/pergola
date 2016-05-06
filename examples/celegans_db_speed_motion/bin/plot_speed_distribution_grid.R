@@ -109,27 +109,31 @@ df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
 name_file <- basename(bed_file)
 name_out <- paste(name_file, ".png", sep="")
 
-name_split <- strsplit (name_file, "_" )
+#name_split <- strsplit (name_file, "_" )
 
-body_part <- name_split[[1]][1]
-motion <- name_split[[1]][length(name_split[[1]])]
+#body_part <- name_split[[1]][1]
+#motion <- name_split[[1]][length(name_split[[1]])]
 
-{
-  if (length(name_split[[1]]) > 3) {
-    pattern_worm <- paste(name_split[[1]][2], name_split[[1]][3], sep="_")
-  }
-  else {
-    pattern_worm <- name_split[[1]][2]
-  }
-}
+#{
+#  if (length(name_split[[1]]) > 3) {
+#    pattern_worm <- paste(name_split[[1]][2], name_split[[1]][3], sep="_")
+#  }
+#  else {
+#    pattern_worm <- name_split[[1]][2]
+#  }
+#}
+pattern_worm <- name_file
 
 size_strips <- 12
 size_titles <- 13
 size_axis <- 12
 size_axis_ticks <- 10
+xmin <- -1000
+xmax <- 1000
 
-ggplot(df_bed, aes(x=value)) + geom_density() + xlim (c(-1000, 1000)) +  
-  labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" ")) +
+ggplot(df_bed, aes(x=value)) + geom_density() +
+  scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +
+  labs (title = paste(pattern_worm, "\n", sep=" ")) +
   labs (x = "\nMicrons/Seconds ", y = "Density\n") + 
   facet_grid (body_part ~ direction) +
   theme (strip.text.x = element_text(size=size_strips, face="bold")) +
