@@ -109,19 +109,20 @@ df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
 name_file <- basename(bed_file)
 name_out <- paste(name_file, ".png", sep="")
 
-name_split <- strsplit (name_file, "_" )
+#name_split <- strsplit (name_file, "_" )
 
-body_part <- name_split[[1]][1]
-motion <- name_split[[1]][length(name_split[[1]])]
+#body_part <- name_split[[1]][1]
+#motion <- name_split[[1]][length(name_split[[1]])]
 
-{
-  if (length(name_split[[1]]) > 3) {
-    pattern_worm <- paste(name_split[[1]][2], name_split[[1]][3], sep="_")
-  }
-  else {
-    pattern_worm <- name_split[[1]][2]
-  }
-}
+#{
+#  if (length(name_split[[1]]) > 3) {
+#    pattern_worm <- paste(name_split[[1]][2], name_split[[1]][3], sep="_")
+#  }
+#  else {
+#    pattern_worm <- name_split[[1]][2]
+#  }
+#}
+pattern_worm <- name_file
 
 size_strips <- 12
 size_titles <- 13
