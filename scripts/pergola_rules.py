@@ -39,7 +39,8 @@ from pergola import parsers
 
 def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
-         multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None):
+         multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
+         bed_lab_sw=False):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -134,7 +135,12 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         print >> stderr, "@@@Pergola_rules.py input file field separator set to \"\\t\" by default."
     else:        
         print >>stderr, "@@@Pergola_rules.py input file field separator set to \"%s\"" % separator
-        
+    
+    if bed_lab_sw:
+        bed_lab = True
+        print >>stderr, "@@@Pergola_rules.py: bed_label set to: %s" % bed_lab
+    else:
+        bed_lab = False
         
     ################
     # Reading data
@@ -226,7 +232,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #         bedGraph_mean = bedSingle.win_mean()
 #         print "============="
 #         print bedGraph_mean
-        bedSingle.save_track(track_line=track_line, bed_label=False)
+        bedSingle.save_track(track_line=track_line, bed_label=bed_lab)
 #         bedGraph_mean.save_track(track_line=track_line, bed_label=True)
 #         print "Tracks in the file", bedSingle.track
         
@@ -260,4 +266,4 @@ if __name__ == '__main__':
               write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
               multiply_f=args.multiply_intervals, no_header=args.no_header, 
               fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line, separator=args.field_separator))
+              no_track_line=args.no_track_line, separator=args.field_separator, bed_lab_sw=args.bed_label))
