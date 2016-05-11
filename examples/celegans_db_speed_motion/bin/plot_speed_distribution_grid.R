@@ -133,6 +133,8 @@ xmax <- 1000
 
 ggplot(df_bed, aes(x=value)) + geom_density() +
   scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +
+  # scale_x_continuous (breaks=c(xmin, 0, xmax) + 
+  # coord_cartesian (xlim=c(xmin-100, xmax+100)) +
   labs (title = paste(pattern_worm, "\n", sep=" ")) +
   labs (x = "\nMicrons/Seconds ", y = "Density\n") + 
   facet_grid (body_part ~ direction) +
