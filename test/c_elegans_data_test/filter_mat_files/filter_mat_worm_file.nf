@@ -42,19 +42,28 @@ mat_files = Channel.fromPath(mat_files_path)
 tag_file_out = "${params.strain_tag}"
 
 /*
+ * Creates a channel with file content and name of input file without spaces
+ */ 
+mat_files_name = mat_files.flatten().map { mat_files_file ->      
+	def content = mat_files_file
+	def name = mat_files_file.name.replaceAll(/ /,'_')
+    [ content, name ]
+}
+
+/*
  * Files not reaching the filtering criteria
  */ 
 process get_speed {
-	//container 'ipython/scipyserver'
+	container 'ipython/scipyserver'
   
   	input:
-  	set file ('file_worm') from mat_files
+  	set file ('file_worm'), val (name_file) from mat_files_name
 
   	output:
     stdout result
     
   	"""
-  	frames_by_file.py -i ${file_worm} > files_to_filter.txt
+  	frames_by_file.py -i ${file_worm} -n ${name_file} > files_to_filter.txt
   	cat files_to_filter.txt
   	"""
 }
