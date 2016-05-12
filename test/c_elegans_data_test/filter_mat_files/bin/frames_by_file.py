@@ -44,12 +44,5 @@ time_min = f['info']['video']['length']['time'][0][0]/60
 
 if time_min < 14:
     print  "time_min < 14 =============== ", file_name
-
-
-"575 JU440 on food L_2010_11_25__11_38_16___7___1_features.mat" 
-# if 
-
-# n_frames = int(frames)
-
-# if n_frames <   
+    
 
