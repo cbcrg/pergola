@@ -30,16 +30,16 @@
 
 
 params.path_files = "$baseDir/mat_worm_data/"
-
+params.strain_tag = "no_strain"
 log.info "C. elegans mat files filter  - N F  ~  version 0.1"
 log.info "========================================="
 log.info "c. elegans data    : ${params.path_files}"
+log.info "c. elegans data    : ${params.strain_tag}"
 log.info "\n"
 
 mat_files_path = "${params.path_files}*.mat"
 mat_files = Channel.fromPath(mat_files_path)
-mat_files_path = "${params.path_files}*.mat"
-mat_files = Channel.fromPath(mat_files_path)
+tag_file_out = "${params.strain_tag}"
 
 /*
  * Files not reaching the filtering criteria
@@ -67,5 +67,7 @@ result_dir = file( "$baseDir" )
 //result.subscribe {  println it }
 
 result
-    .collectFile(name: "files_to_filter.txt")
-    .subscribe { it.copyTo ( result_dir.resolve () ) } 
+    .collectFile(name: "files_to_filter")
+    .subscribe {  
+    	it.copyTo ( result_dir.resolve (  tag_file_out + "." + it.name + ".txt" ) ) 
+    } 
