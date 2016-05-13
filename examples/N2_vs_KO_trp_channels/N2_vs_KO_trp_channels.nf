@@ -96,8 +96,8 @@ process locomotion_to_pergola {
   	set '*.no_na.bed', pheno_feature, name_file into bed_loc_no_nas
   	set '*.no_na.bedGraph', pheno_feature, name_file into bedGraph_loc_no_nas
   	
-  	set name_file, pheno_feature, '*.no_tr.bed' into bed_speed_no_track_line, bed_speed_no_track_line_cp, bed_speed_no_track_line_turns
-  	set name_file, pheno_feature, '*.no_tr.bedGraph' into bedGraph_speed_no_track_line
+  	set name_file, pheno_feature, '*.no_tr.bed' into bed_loc_no_track_line, bed_loc_no_track_line_cp, bed_loc_no_track_line_turns
+  	set name_file, pheno_feature, '*.no_tr.bedGraph' into bedGraph_loc_no_track_line
   	
   	set '*.fa', pheno_feature, name_file into out_fasta
   
@@ -121,4 +121,91 @@ process locomotion_to_pergola {
   	cat ${name_file}".no_na.bedGraph" | grep -v "track name" > ${name_file}".no_tr.bedGraph" || echo -e echo -e "chr1\t0\t100\t1" > ${name_file}".no_tr.bedGraph"
   	rm bedGraph_file.tmp 
   	"""
+}
+
+/*
+ * Transform motion intervals from mat files (forward, backward and paused)
+ */ 
+process get_motion {
+	container 'ipython/scipyserver'
+	  
+  	input:
+  	set file ('file_worm'), val (name_file_worm) from mat_files_motion
+  
+  	output: 
+  	set name_file_worm, '*.csv' into motion_files, motion_files_wr
+    
+  	script:
+  	println "Matlab file containing worm behavior processed: $file_worm"
+
+  	"""
+  	extract_worm_motion.py -i \"$file_worm\"
+  	"""
+}
+
+//#####
+/*
+ * From one mat file 3 motion (forward, paused, backward) files are obtained
+ * A channel is made with matfile1 -> forward
+ *                        matfile1 -> backward
+ *                        matfile1 -> paused
+ *                        matfile2 -> forward ...
+ */
+motion_files_flat_p = motion_files.map { name_mat, motion_f ->
+        motion_f.collect { 
+        	def motion = it.name.split("\\.")[1]   
+            [ it, name_mat, it.name, motion ]
+        }
+    }
+    .flatMap()
+
+motion_files_flat_p.into { motion_files_flat; motion_files_flat_wr }
+
+map_motion_path = "$baseDir/data/worms_motion2p.txt"
+map_motion = file(map_motion_path)
+
+process motion_to_pergola {
+	container 'cbcrg/pergola:latest'  
+  
+  	input:
+  	set file ('motion_file'), val (name_file), val (name_file_motion), val (motion) from motion_files_flat
+  	set worms_motion_map from map_motion
+    
+  	output:
+  	set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr, bed_motion_turns
+  	  	
+  	"""
+  	pergola_rules.py -i $motion_file -m $worms_motion_map
+  	cat tr_1_dt_${motion}.bed | sed 's/track name=\"1_a\"/track name=\"${motion}\"/g' > tr_1_dt_${motion}.bed.tmp
+  	cat tr_1_dt_${motion}.bed.tmp | grep -v 'track name' > tr_1_dt_${motion}.bed
+  	rm tr_1_dt_${motion}.bed.tmp  	
+  	"""
+} 
+
+map_bed_path = "$baseDir/data/bed2pergola.txt"
+map_bed_pergola = Channel.fromPath(map_bed_path)
+map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_turn}
+
+/*
+ * Filter is used to delete pairs that do not come from the same original mat file
+ */
+bed_loc_motion = bed_loc_no_track_line
+	.spread (bed_motion)
+	.filter { it[0] == it[3] }
+	
+process intersect_loc_motion {
+	container 'cbcrg/pergola:latest'
+	
+	input:
+	set val (mat_file_loc), val (pheno_feature), file ('bed_loc_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion), val (direction) from bed_loc_motion
+	file bed2pergola from map_bed_pergola_loc.first()
+	
+	output:
+	set '*.mean.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bed_mean_speed_motion	
+	set '*.mean.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bedGr_mean_loc_motion
+	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bed_intersect_loc_motion, bed_intersect_loc_motion2p
+	
+	"""
+	celegans_feature_i_motion.py -p $bed_loc_no_tr -m $motion_file -b $bed2pergola
+	"""
 }
