@@ -66,7 +66,8 @@ process get_motion {
 }
 
 //forward_backward_csv.subscribe {println it}
-map_motion_path = "$HOME/git/pergola/test/c_elegans_data_test/worms_motion_joined2p.txt"
+
+map_motion_path = "$baseDir/data/worms_motion_joined2p.txt" 
 map_motion_file = Channel.fromPath(map_motion_path)
 map_motion_file.into { map_file_f; map_file_b; map_file_p }
 
@@ -88,7 +89,7 @@ process motion_to_bed {
 }
 
 
-map_bed_path = "$HOME/git/pergola/test/c_elegans_data_test/bed2pergola.txt"
+map_bed_path = "$baseDir/data/bed2pergola.txt" 
 map_bed_file = file (map_bed_path)
 
 process join_and_complement {
