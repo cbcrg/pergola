@@ -93,13 +93,32 @@ process locomotion_to_pergola {
   	each pheno_feature from phenotypic_features
   
   	output: 
-  	set 'tr*.bed', pheno_feature, name_file into bed_speed
-  	set 'tr*.bedGraph', pheno_feature, name_file into bedGraph_speed
+  	set '*.no_na.bed', pheno_feature, name_file into bed_loc_no_nas
+  	set '*.no_na.bedGraph', pheno_feature, name_file into bedGraph_loc_no_nas
+  	
+  	set name_file, pheno_feature, '*.no_tr.bed' into bed_speed_no_track_line, bed_speed_no_track_line_cp, bed_speed_no_track_line_turns
+  	set name_file, pheno_feature, '*.no_tr.bedGraph' into bedGraph_speed_no_track_line
+  	
   	set '*.fa', pheno_feature, name_file into out_fasta
   
   	"""  
   	cat $map_features2p | sed 's/behavioural_file:$pheno_feature > pergola:dummy/behavioural_file:$pheno_feature > pergola:data_value/g' > feat_map_file
   	pergola_rules.py -i $loc_file -m feat_map_file
   	pergola_rules.py -i $loc_file -m feat_map_file -f bedGraph -w 1 
+  	
+  	# This is done just because is easy to see in the display of the genome browsers
+  	cat tr*.bed | sed 's/track name=\"1_a\"/track name=\"${pheno_feature}\"/g' > bed_file.tmp
+  	
+  	cat tr*.bedGraph | sed 's/track name=\"1_a\"/track name=\"${pheno_feature}\"/g' > bedGraph_file.tmp
+  	
+  	# delete values that were assigned as -10000 to skip na of the original file
+  	# to avoid problems if a file got a feature with a feature always set to NA I add this code (short files for examples)
+  	cat bed_file.tmp | grep -v "\\-10000" > ${name_file}".no_na.bed"  
+  	cat ${name_file}".no_na.bed" | grep -v "track name" > ${name_file}.no_tr.bed || echo -e "chr1\t0\t100\t.\t-10000\t+\t0\t100\t135,206,250" > ${name_file}".no_tr.bed.no_tr.bed"
+  	rm bed_file.tmp
+  	
+  	cat bedGraph_file.tmp | grep -v "\\-10000" > ${name_file}".no_na.bedGraph"  
+  	cat ${name_file}".no_na.bedGraph" | grep -v "track name" > ${name_file}".no_tr.bedGraph" || echo -e echo -e "chr1\t0\t100\t1" > ${name_file}".no_tr.bedGraph"
+  	rm bedGraph_file.tmp 
   	"""
 }
