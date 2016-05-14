@@ -189,6 +189,8 @@ map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_turn}
 /*
  * Filter is used to delete pairs that do not come from the same original mat file
  */
+//bed_motion.subscribe { println (it) } #del 
+
 bed_loc_motion = bed_loc_no_track_line
 	.spread (bed_motion)
 	.filter { it[0] == it[3] }
@@ -208,4 +210,66 @@ process intersect_loc_motion {
 	"""
 	celegans_feature_i_motion.py -p $bed_loc_no_tr -m $motion_file -b $bed2pergola
 	"""
+}
+
+/*
+ * Grouping (collect) bed files in order to plot the distribution by strain, motion direction and body part 
+ */
+//bed_intersect_loc_motion2p.subscribe { println ( it ) } 
+
+// Sometimes names have underscores use points instead
+bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: false, sort:'none') { 
+	def name = it[1] + "." + it[3].split("_on_")[0] + "." + it[4].tokenize(".")[1]	
+	[ name, it[0].text ]	
+}.map { 
+	def pheno_feature =  it.name.split("\\.")[0]	
+	def strain =  it.name.split("\\.")[1]	
+	def direction =  it.name.split("\\.")[2]
+ 	[ it, pheno_feature, direction, strain, it.name ]
+}
+
+//bed_intersect_loc_motion_plot.subscribe { println ( it ) }
+ 
+/*
+ * Tagging files for plotting
+ */
+
+process tag_bed_files {
+	input: 
+	set file ('bed_file'), val (pheno_feature), val (direction), val (strain), val (mat_name) from bed_intersect_loc_motion_plot
+	
+	output:
+	set '*.bed', strain, pheno_feature, direction into bed_tagged
+	
+	"""
+	# Adds to the bed file a tag for being used inside the R dataframe
+	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\" }' ${bed_file} > ${mat_name}.bed   
+	"""
+}
+
+bed_i_feature_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') { 
+	def name = it[1] 	
+	[ name, it[0].text ]
+}
+
+//bed_intersect_speed_motion_plot_col.subscribe { println it }
+
+/*
+ * Plots the distribution of bed containing all intervals by strain, motion and body part
+ */
+process plot_distro {
+	container 'joseespinosa/docker-r-ggplot2:v0.1'
+
+  	input:
+  	file intersect_feature_motion from bed_i_feature_motion_plot_col
+  
+  	output:
+  	set '*.png' into plots_speed_motion
+    
+  	script:
+  	println ">>>>>>>>>>>>>>>: $intersect_feature_motion"
+  	
+  	"""
+  	plot_speed_distribution_grid.R --bed_file=${intersect_feature_motion}
+  	"""
 }
