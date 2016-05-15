@@ -245,9 +245,13 @@ process tag_bed_files {
 	"""
 }
 
-bed_i_feature_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') { 
-	def name = it[1] 	
-	[ name, it[0].text ]
+/*
+ * Channel containning body part, strain, type of turn
+ */
+bed_i_feature_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') {
+	def name = it[1] + "." + it[2] + "." + it[3] 
+	//def name = it[1] + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]
+	[ name, it[0].text ] 
 }
 
 //bed_intersect_speed_motion_plot_col.subscribe { println it }
