@@ -143,7 +143,6 @@ process get_motion {
   	"""
 }
 
-//#####
 /*
  * From one mat file 3 motion (forward, paused, backward) files are obtained
  * A channel is made with matfile1 -> forward
@@ -233,7 +232,6 @@ bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: 
 /*
  * Tagging files for plotting
  */
-
 process tag_bed_files {
 	input: 
 	set file ('bed_file'), val (pheno_feature), val (direction), val (strain), val (mat_name) from bed_intersect_loc_motion_plot
@@ -264,12 +262,28 @@ process plot_distro {
   	file intersect_feature_motion from bed_i_feature_motion_plot_col
   
   	output:
-  	set '*.png' into plots_speed_motion
+  	set '*.png' into plots_pheno_feature
     
   	script:
   	println ">>>>>>>>>>>>>>>: $intersect_feature_motion"
   	
   	"""
-  	plot_speed_distribution_grid.R --bed_file=${intersect_feature_motion}
+  	# plot_pheno_feature_distribution_grid.R --bed_file=${intersect_feature_motion}
+  	plot_pheno_feature_distribution.R --bed_file=${intersect_feature_motion}
   	"""
+}
+
+/*
+ * Folder to keep plots
+ */
+result_dir_pheno_features = file("$baseDir/plots_pheno_features")
+ 
+result_dir_pheno_features.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_pheno_features"
+}
+
+plots_pheno_feature.subscribe {   
+  it.copyTo( result_dir_pheno_features.resolve ( it.name ) )
 }
