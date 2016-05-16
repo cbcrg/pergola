@@ -31,7 +31,7 @@
 home <- Sys.getenv("HOME")
 
 ### Execution example
-## Rscript plot_speed_motion_mean.R --body_part="midbody"
+## Rscript plot_speed_motion_mean.R --bed_file="bed_file"
 
 library(ggplot2)
 

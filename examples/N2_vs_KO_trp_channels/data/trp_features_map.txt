@@ -18,7 +18,7 @@
 !
 ! Mapping of file fields into pergola fields
 !
-! frame_start	frame_end	head	headTip	midbody	tail	tailTip
+! frame_start	frame_end	foraging_speed	tail_motion	crawling
 behavioural_file:frame_start > pergola:start
 behavioural_file:frame_end > pergola:end
 behavioural_file:foraging_speed > pergola:dummy

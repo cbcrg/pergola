@@ -29,7 +29,6 @@
  * TODO  explain what pergola does
  */    
 
-
 params.path_files = "$baseDir/data/"
 
 log.info "C. elegans trp locomotion phenotypes - N F  ~  version 0.1"
@@ -49,12 +48,12 @@ mat_files_name = mat_files.flatten().map { mat_files_file ->
     [ content, name ]
 }
 
-mat_files_name.into { mat_files_loc; mat_files_motion; mat_files_turns}
+mat_files_name.into { mat_files_loc; mat_files_motion }
 
 /*
- * Get speed from mat files
+ * Get locomotion phenotypic features from mat files
  */ 
-process get_locomotion {
+process get_pheno_measure {
 	container 'ipython/scipyserver'
   
   	input:
@@ -72,7 +71,7 @@ process get_locomotion {
 }
 
 /*
- * Transform speed files into bed format files
+ * Transform locomotion files into bed format files
  */ 
 
 map_features_path = "$baseDir/data/trp_features_map.txt" 

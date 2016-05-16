@@ -45,7 +45,6 @@ input_file =  args.input
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/filter_mat_files/mat_worm_data/575 JU440 on food L_2010_11_25__11_38_16___7___1_features.mat'
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/filter_mat_files/mat_worm_data/ocr_4_tm2173.mat'
 file_name = basename(input_file)
-# file_name = args.name
 
 f = h5py.File(input_file)
 
@@ -123,7 +122,7 @@ writer_out.writerow(['frame_start', 'frame_end', 'foraging_speed', 'tail_motion'
 try:
     foraging_speed = f['worm']['locomotion']['bends']['foraging']['angleSpeed']
 except KeyError:
-    raise KeyError ("Foraging angle speed frame is corrupted and can not be retrieved from hdf5 file")
+    raise KeyError ("Foraging angle speed is corrupted and can not be retrieved from hdf5 file")
                             
 # tail motion                            
 # This one!!!
@@ -138,10 +137,9 @@ try:
     crawling = f['worm']['locomotion']['bends']['midbody']['amplitude']
 except KeyError:
     raise KeyError ("Crawling is corrupted and can not be retrieved from hdf5 file")
-
-# range already substract 1 to frames 
-# for frame in range(0, int(frames)):
-for frame in range(0, 100):    #del #debug
+ 
+for frame in range(0, int(frames)):
+# for frame in range(0, 100):    #debug
     list_v = list()
     list_v.extend ([frame, frame+1])
     
@@ -153,16 +151,10 @@ for frame in range(0, 100):    #del #debug
     if np.isnan(v_tm) : v_tm = -10000
     if np.isnan(v_c) : v_c = -10000
     
-    # This can not be done because I am processing all speed at the same time
-    # if np.isnan(v) : continue
-    
     list_v.append (v_fs)
     list_v.append (v_tm)
     list_v.append (v_c)
-    # print frame
-    # print list_v
-    
-    # print [list_v] #del
+
     writer_out.writerows([list_v])
 
 fh.close()
