@@ -64,7 +64,7 @@ process check_file {
     stdout result
     
   	"""
-  	mat_hourly_N2_mat_file.py -i ${file_worm} -n \'${name_file}\' > files_to_filter.txt
+  	mat_hourly_by_file.py -i ${file_worm} -n \'${name_file}\' > files_to_filter.txt
   	cat files_to_filter.txt
   	"""
 }
