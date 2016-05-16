@@ -18,7 +18,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
 
-# ./extract_supplementary_materials_info_DEV.py -i mat_file -n name
+# ./extract_trp_features.py -i mat_file
 
 # Loading libraries
 from argparse import ArgumentParser

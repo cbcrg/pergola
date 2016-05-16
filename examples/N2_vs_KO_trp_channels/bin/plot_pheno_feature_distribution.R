@@ -130,7 +130,8 @@ info = file.info(bed_file)
   }  
 }
 
-pattern_worm <- name_file
+pattern_worm <- gsub ("\\.", " - ", name_file)
+pattern_worm <- gsub ("_", " ", pattern_worm)
 
 size_strips <- 12
 size_titles <- 13
