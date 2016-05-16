@@ -5,6 +5,8 @@ from argparse import ArgumentParser
 from os.path import basename
 from sys import stderr
 import h5py
+from time import strptime
+from calendar import timegm
 
 parser = ArgumentParser(description='File input arguments')
 parser.add_argument('-i','--input', help='Worms data hdf5 format matlab file', required=True)
