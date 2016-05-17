@@ -99,6 +99,9 @@ info = file.info(bed_file)
 # We remove this fake rows they were included just to avoid last line of code above to crash
 df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
 
+# Filtering any data that is record before 9 and after 16
+df_bed <- df_bed [!(df_bed$hour < 9 | df_bed$hour > 16), ]
+
 name_file <- basename(bed_file)
 pheno_feature <-strsplit (name_file, "\\." )[[1]][2]
 
