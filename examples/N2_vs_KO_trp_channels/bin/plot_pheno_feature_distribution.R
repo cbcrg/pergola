@@ -86,8 +86,11 @@ names (argsL) <- argsDF$V1
   }
 }
 
+
 # bed_file<-"/Users/jespinosa/git/pergola/test/c_elegans_data_test/work/tmp/2a/44c5b934c39a3af6a8318fd61127f8/headTip_575_JU440_backward"
 # bed_file<- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/45/ad8b5ae7744b93fc456eb9d8c0a934/ocr-4_tm2173"
+#  bed_file<- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/0e/3789d1217ee1c631d41d7d633dd0c3/tail_motion.575_JU440.paused.bed"
+# bed_file<- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/b3/13da3ae83a8ed9ac189b2b98691790/575_JU440.tail_motion.forward.bed"
 
 info = file.info(bed_file)
 {  
@@ -106,19 +109,10 @@ df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
 name_file <- basename(bed_file)
 name_out <- paste(name_file, ".png", sep="")
 
-name_split <- strsplit (name_file, "_" )
+name_split <- strsplit (name_file, "\\." )
 
-body_part <- name_split[[1]][1]
-motion <- name_split[[1]][length(name_split[[1]])]
-
-# {
-#   if (length(name_split[[1]]) > 3) {
-#     pattern_worm <- paste(name_split[[1]][2], name_split[[1]][3], sep="_")
-#   }
-#   else {
-#     pattern_worm <- name_split[[1]][2]
-#   }
-# }
+body_part <- name_split[[1]][2]
+motion <- name_split[[1]][3]
 
 info = file.info(bed_file)
 {  
@@ -130,8 +124,13 @@ info = file.info(bed_file)
   }  
 }
 
-pattern_worm <- gsub ("\\.", " - ", name_file)
-pattern_worm <- gsub ("_", " ", pattern_worm)
+pheno_feature <- strsplit (name_file,  "\\.")[[1]][2]
+units <- switch (pheno_feature, foraging_speed="Degrees/seconds", tail_motion="Degrees/seconds", crawling="Degrees", 'no units')
+
+title_strain_pheno_dir <- gsub("_", " ", gsub ("\\.", " - ", gsub ("\\.bed", "", name_file)))
+
+# many files of gk298 strain are annotated as ok298
+title_strain_pheno_dir <- gsub ("ok298", "gk298", title_strain_pheno_dir)
 
 size_strips <- 12
 size_titles <- 13
@@ -145,8 +144,8 @@ df_bed$body_part <- gsub ("_", " ", df_bed$body_part)
 ggplot(df_bed, aes(x=value)) + geom_density() +
   scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +  
 #   labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" ")) +
-  labs (title = paste(pattern_worm, "\n", sep=" ")) +
-  labs (x = "\nMicrons/Seconds ", y = "Probability density\n") + 
+  labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
+  labs (x = paste("\n", units, sep=""), y = "Probability density\n") +  
   # theme (strip.text.x = element_text(size=size_strips, face="bold")) +
   theme (plot.title = element_text(size=size_titles)) + 
   theme (axis.title.x = element_text(size=size_axis)) +

@@ -187,11 +187,14 @@ map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_turn}
 /*
  * Filter is used to delete pairs that do not come from the same original mat file
  */
-//bed_motion.subscribe { println (it) } #del 
-
+//bed_motion.subscribe { println ("=========" + it) }  
+//bed_loc_no_track_line.subscribe { println ("********" + it) }
+ 
 bed_loc_motion = bed_loc_no_track_line
 	.spread (bed_motion)
 	.filter { it[0] == it[3] }
+
+//bed_loc_motion.subscribe { println ("=========" + it) }  
 	
 process intersect_loc_motion {
 	container 'cbcrg/pergola:latest'
@@ -213,17 +216,17 @@ process intersect_loc_motion {
 /*
  * Grouping (collect) bed files in order to plot the distribution by strain, motion direction and body part 
  */
-//bed_intersect_loc_motion2p.subscribe { println ( it ) } 
-
+//bed_intersect_loc_motion2p.subscribe { println ( "@@@@@@@@@" + it ) } 
+//bed_intersect_loc_motion2p.subscribe { println ( "@@@@@@@@@" + it[1] + "." + it[3].split("_on_")[0] + "." + it[4].tokenize(".")[1] ) }
 // Sometimes names have underscores use points instead
 bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: false, sort:'none') { 
-	def name = it[1] + "." + it[3].split("_on_")[0] + "." + it[4].tokenize(".")[1]	
+	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1]
 	[ name, it[0].text ]	
 }.map { 
 	def pheno_feature =  it.name.split("\\.")[0]	
 	def strain =  it.name.split("\\.")[1]	
 	def direction =  it.name.split("\\.")[2]
- 	[ it, pheno_feature, direction, strain, it.name ]
+ 	[ it, strain, pheno_feature, direction, it.name ]
 }
 
 //bed_intersect_loc_motion_plot.subscribe { println ( it ) }
@@ -233,25 +236,31 @@ bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: 
  */
 process tag_bed_files {
 	input: 
-	set file ('bed_file'), val (pheno_feature), val (direction), val (strain), val (mat_name) from bed_intersect_loc_motion_plot
+	set file ('bed_file'), val (strain), val (pheno_feature), val (direction), val (strain_beh_dir) from bed_intersect_loc_motion_plot
 	
 	output:
 	set '*.bed', strain, pheno_feature, direction into bed_tagged
 	
 	"""
 	# Adds to the bed file a tag for being used inside the R dataframe
-	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\" }' ${bed_file} > ${mat_name}.bed   
+	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\" }' ${bed_file} > ${strain_beh_dir}.bed   
 	"""
 }
+
+//bed_tagged.subscribe { println ("^^^^^^^" + it) }
+
 
 /*
  * Channel containning body part, strain, type of turn
  */
+ /*
 bed_i_feature_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') {
 	def name = it[1] + "." + it[2] + "." + it[3] 
 	//def name = it[1] + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]
 	[ name, it[0].text ] 
 }
+*/
+
 
 //bed_intersect_speed_motion_plot_col.subscribe { println it }
 
@@ -262,16 +271,13 @@ process plot_distro {
 	container 'joseespinosa/docker-r-ggplot2:v0.1'
 
   	input:
-  	file intersect_feature_motion from bed_i_feature_motion_plot_col
+	set file (intersect_feature_motion), strain, pheno_feature, direction from bed_tagged
   
   	output:
-  	set '*.png' into plots_pheno_feature
+  	set '*.png', strain, pheno_feature, direction into plots_pheno_feature
     
-  	script:
-  	println ">>>>>>>>>>>>>>>: $intersect_feature_motion"
-  	
   	"""
-  	# plot_pheno_feature_distribution_grid.R --bed_file=${intersect_feature_motion}
+  	#plot_pheno_feature_distribution_grid.R --bed_file=${intersect_feature_motion}  	
   	plot_pheno_feature_distribution.R --bed_file=${intersect_feature_motion}
   	"""
 }
@@ -287,6 +293,8 @@ result_dir_pheno_features.with {
      println "Created: $result_dir_pheno_features"
 }
 
-plots_pheno_feature.subscribe {   
-  it.copyTo( result_dir_pheno_features.resolve ( it.name ) )
-}
+plots_pheno_feature.subscribe {		
+	it[0].copyTo( result_dir_pheno_features.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
+}  
+  
+  
