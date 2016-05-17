@@ -234,14 +234,14 @@ process plot_distro {
 /*
  * Folder to keep plots
  */
-result_dir_pheno_features = file("$baseDir/plots_N2_pheno_features")
+result_dir_plots_pheno_features = file("$baseDir/plots_N2_pheno_features")
  
-result_dir_pheno_features.with {
+result_dir_plots_pheno_features.with {
      if( !empty() ) { deleteDir() }
      mkdirs()
-     println "Created: $result_dir_pheno_features"
+     println "Created: $result_dir_plots_pheno_features"
 }
 
 plots_measure_by_hour.subscribe {   
-  it.copyTo( result_dir_pheno_features.resolve ( it.name ) )
+  it.copyTo( result_dir_plots_pheno_features.resolve ( it.name ) )
 }
