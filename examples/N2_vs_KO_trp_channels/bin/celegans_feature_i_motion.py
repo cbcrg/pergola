@@ -62,11 +62,7 @@ key_s = bed_obj_phenotypic.keys()[0]
 phenotypic_feature_bt = bed_obj_phenotypic[key_s].create_pybedtools()
 
 ###################
-# Generate to BedTool objects containing motion type (forward, backward, paused)
-# motion_bed_file = dir_development +  "575_JU440_on_food_L_2011_02_17__11_00___3___1_features_forward.csv.bed"
-# motion_bed_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/work/be/c8a7942756ee7053d0f9856e1caa88/bed_speed_no_tr/motion_file'
-## motion_bed_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/work/8a/b26a0fbfb292bb573e582ef842b646/tr_1_dt_a.bed'
-# motion_bed_file = dir_development + args.motion
+# Generate two BedTool objects containing motion type (forward, backward, paused)
 motion_bed_file = args.motion_file
 int_data_motion = intervals.IntData(motion_bed_file, map_dict=mapping_bed.correspondence, header=False, 
                                     fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
@@ -92,3 +88,21 @@ for i in phenotypic_feature_means:
 
 fh.close()
 fh_bG.close()
+
+### Getting mean value of the intervals of the file containing the phenotypic feature of a given motion:
+## Generates a bed file of a single interval of the size of the whole bed file
+list_full_length = [(phenotypic_feature_bt[0]["chrom"], phenotypic_feature_bt[0]["start"], phenotypic_feature_bt[phenotypic_feature_bt.count() - 1]["end"], 0)]
+bed_full_length = pybedtools.BedTool(list_full_length)
+
+# print bed_full_length #del
+
+# Takes the bed file containing the phenotypic feature intersected with motion and uses pybedtools to calculate the mean 
+ph_feature_motion_bt = pybedtools.BedTool(tag_file + ".intersect.bed")
+
+if ph_feature_motion_bt.count() == 0: 
+    print >> stderr, "No intersecting intervals between phenotypic feature and motion file\n"
+    # When there is any intersecting interval we set it to zero
+    list_no_intervals = [(phenotypic_feature_bt[0]["chrom"], phenotypic_feature_bt[0]["start"], phenotypic_feature_bt[phenotypic_feature_bt.count() - 1]["end"], 0, 0)]
+    bed_no_intervals = pybedtools.BedTool(list_no_intervals).saveas(tag_file + ".mean_file.bed")  
+else: 
+    bed_full_length.map(ph_feature_motion_bt, c=5, o="mean", null=0).saveas (tag_file + ".mean_file.bed")
