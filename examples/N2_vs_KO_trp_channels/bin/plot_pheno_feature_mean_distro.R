@@ -86,98 +86,90 @@ names (argsL) <- argsDF$V1
   }
 }
 
-# bed_file<- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/b3/13da3ae83a8ed9ac189b2b98691790/575_JU440.tail_motion.forward.bed"
-# bed_file<- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/ab/5caa9eac6c274c2fe0ae2ca65f7452/N2.crawling.forward.bed"
-# info = file.info(bed_file)
-# {  
-#   if (info$size == 0) { 
-#     df_bed <- data.frame (chr="chr1", start=0, end=0, data_type=0, value=0, strand=0, s=0, e=0, color_code=0)
-#   }
-#   else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")
-#          colnames (df_bed) <- c("chr", "start", "end", "data_type", "value", "strand", "s", "e", "color_code")         
-#          #return (df)
-#   }  
-# }
-
 info = file.info(bed_file)
+
 {  
   if (info$size == 0) { 
-    df_bed <- data.frame (chr="chr1", start=0, end=0, data_type=0, value=0, strand=0, s=0, e=0, color_code=0, body_part=0, direction=0)
+#     df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, body_part="", direction="")
+    df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, strain="")
   }
   else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")
-         colnames (df_bed) <- c("chr", "start", "end", "data_type", "value", "strand", "s", "e", "color_code", "body_part", "direction")         
+#          colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "body_part", "direction")
+         colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "strain") 
+         #return (df)
   }  
 }
 
-# We remove this fake rows they were included just to avoid last line of code above to crash
+## We remove this fake rows they were included just to avoid last line of code above to crash
 df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
+
+## Absolute value of the means
+df_bed$mean_value_abs <- abs(df_bed$mean_value)
 
 name_file <- basename(bed_file)
 name_out <- paste(name_file, ".png", sep="")
 
 name_split <- strsplit (name_file, "\\." )
 
-body_part <- name_split[[1]][2]
-motion <- name_split[[1]][3]
-
-# info = file.info(bed_file)
-# {  
-#   if (info$size == 0) { 
-#     df_bed <- data.frame (chr="chr1", start=0, end=0, data_type=0, value=0, strand=0, s=0, e=0, color_code=0, body_part=0, direction=0)
-#   }
-#   else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")
-#          colnames (df_bed) <- c("chr", "start", "end", "data_type", "value", "strand", "s", "e", "color_code", "body_part", "direction")         
-#   }  
-# }
+# body_part <- name_split[[1]][2]
+# motion <- name_split[[1]][3]
+# motion <- gsub ("backward", "when reversing", motion)
 
 pheno_feature <- strsplit (name_file,  "\\.")[[1]][2]
 units <- switch (pheno_feature, foraging_speed="Degrees/seconds", tail_motion="Degrees/seconds", crawling="Degrees", 'no units')
 
 title_strain_pheno_dir <- gsub("_", " ", gsub ("\\.", " - ", gsub ("\\.bed", "", name_file)))
+title_strain_pheno_dir <- gsub ("backward", "when reversing", title_strain_pheno_dir)
 
-# many files of gk298 strain are annotated as ok298
+## many files of gk298 strain are annotated as ok298
 title_strain_pheno_dir <- gsub ("ok298", "gk298", title_strain_pheno_dir)
 
-size_strips <- 12
-size_titles <- 13
-size_axis <- 12
-size_axis_ticks <- 10
-# xmin <- -1000
-# xmax <- 1000
+### Functions summary stats for plot
+## Returns mean and standard deviation
+mean_and_sd <- function(x) {
+  m <- mean(x)
+  sd_min <- m - sd(x)
+  sd_max <- m + sd(x)
+  return(c(y=m,ymin=sd_min,ymax=sd_max))
+}
 
-df_bed$body_part <- gsub ("_", " ", df_bed$body_part)
+## Returns mean and standard error of the mean 
+mean_and_se <- function(x) {
+  m <- mean(x)
+  se_min <- m - sd(x)/sqrt(length(x))
+  se_max <- m + sd(x)/sqrt(length(x))
+  return(c(y=m,ymin=se_min,ymax=se_max))
+}
 
-ggplot(df_bed, aes(x=value)) + geom_density() +
-  #scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +  
-#   labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" ")) +
-  labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
-  labs (x = paste("\n", units, sep=""), y = "Probability density\n") +  
-  # theme (strip.text.x = element_text(size=size_strips, face="bold")) +
-  theme (plot.title = element_text(size=size_titles)) + 
-  theme (axis.title.x = element_text(size=size_axis)) +
-  theme (axis.title.y = element_text(size=size_axis)) +
-  theme (axis.text.x = element_text(size=size_axis_ticks)) +  
-  theme (axis.text.y = element_text(size=size_axis_ticks)) +  
-  theme (strip.background = element_blank()) 
-  
+## Returns mean for crossbar
+mean_for_cross <- function(x) {
+  return(c(y=mean(x), ymin=mean(x), ymax=mean(x)))
+}
+
+## color blind friendly palette
+cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+size_titles <- 20
+size_axis <- 18
+size_axis_ticks <- 18
+size_axis_ticks_y <- 14
+
+ggplot(df_bed, aes(x=strain, y=mean_value_abs)) +        
+       ## standard deviation
+       stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.25, fill=cbb_palette[3]) +
+       ## standard error
+#        stat_summary(fun.data="mean_se", geom="crossbar", width=0.25, fill=cbb_paletee[8]) +
+       stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.25,  col="gray30", fatten=3, fill=cbb_palette[8]) +
+       # mean in orange
+       stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.25, size=1, colour=cbb_palette[2]) +     
+       ## plots means as dots  
+       geom_point(position = position_jitter(w = 0.05, h = 0), size=3) +
+       labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
+       labs (y = paste(units, "\n", sep=""), x="") +
+       theme (axis.text.x = element_text(size=size_axis_ticks)) +
+       theme (plot.title = element_text(size=size_titles)) + 
+       theme (axis.title.x = element_text(size=size_axis)) +
+       theme (axis.title.y = element_text(size=size_axis)) +
+       theme (axis.text.x = element_text(size=size_axis_ticks)) +  
+       theme (axis.text.y = element_text(size=size_axis_ticks_y))
+
 ggsave (file=name_out)
-
-### Developing mean plot
-
-# http://www.sthda.com/english/wiki/print.php?id=180
-
-# plotar uno encima de otro, el pequenyo encima y con los puntos
-## gitter
-# library(ggplot2)
-# df <- ToothGrowth
-# df$dose <- as.factor(df$dose)
-# p <- ggplot(df, aes(x=dose, y=len)) + 
-#   geom_dotplot(binaxis='y', stackdir='center')
-# p
-# # use geom_crossbar()
-# # The function mean_sdl is used. mean_sdl computes the mean plus or minus a constant times the standard deviation.
-# # In the R code below, the constant is specified using the argument mult (mult = 1). By default mult = 2.
-# p + stat_summary(fun.data="mean_sdl", geom="crossbar", width = 0.5, mult=1)
-#                  , mult=1, 
-#                  geom="crossbar", width=0.5)
-# ?stat_summary

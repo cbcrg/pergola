@@ -207,6 +207,7 @@ process intersect_loc_motion {
 	set '*.mean.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bed_mean_speed_motion	
 	set '*.mean.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bedGr_mean_loc_motion
 	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bed_intersect_loc_motion, bed_intersect_loc_motion2p
+	set '*.mean_file.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into mean_intersect_loc_motion
 	
 	"""
 	celegans_feature_i_motion.py -p $bed_loc_no_tr -m $motion_file -b $bed2pergola
@@ -223,8 +224,8 @@ bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: 
 	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1]
 	[ name, it[0].text ]	
 }.map { 
-	def pheno_feature =  it.name.split("\\.")[0]	
-	def strain =  it.name.split("\\.")[1]	
+	def strain =  it.name.split("\\.")[0]	
+	def pheno_feature =  it.name.split("\\.")[1]	
 	def direction =  it.name.split("\\.")[2]
  	[ it, strain, pheno_feature, direction, it.name ]
 }
@@ -243,7 +244,7 @@ process tag_bed_files {
 	
 	"""
 	# Adds to the bed file a tag for being used inside the R dataframe
-	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\" }' ${bed_file} > ${strain_beh_dir}.bed   
+	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\" }' ${bed_file} > ${strain_beh_dir}.bed  
 	"""
 }
 
@@ -251,7 +252,7 @@ process tag_bed_files {
 
 
 /*
- * Channel containning body part, strain, type of turn
+ * Channel containning body part, strain, type of turn //DELETE NOT USED ANYMORE
  */
  /*
 bed_i_feature_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') {
@@ -296,5 +297,64 @@ result_dir_pheno_features.with {
 plots_pheno_feature.subscribe {		
 	it[0].copyTo( result_dir_pheno_features.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
 }  
+
+/*
+ * Grouping mean (collect) of means in order to plot the distribution by strain, motion direction and body part
+ */
+mean_intersect_loc_motion_plot = mean_intersect_loc_motion.collectFile(newLine: false, sort:'none') { 
+	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1]
+	[ name, it[0].text ]	
+}.map { 
+	def strain =  it.name.split("\\.")[0]	
+	def pheno_feature =  it.name.split("\\.")[1]	
+	def direction =  it.name.split("\\.")[2]
+ 	[ it, strain, pheno_feature, direction, it.name ]
+}
+
+//mean_intersect_loc_motion_plot.subscribe {println it}
+
+/*
+ * Tagging files for plotting
+ */
+process tag_bed_files {
+	input: 
+	set file ('bed_file'), val (strain), val (pheno_feature), val (direction), val (strain_beh_dir) from mean_intersect_loc_motion_plot
+	
+	output:
+	set '*.bed', strain, pheno_feature, direction into bed_mean_tagged
+	
+	"""
+	# Adds to the bed file a tag for being used inside the R dataframe
+	awk '{ print \$0, \"\\t$strain\" }' ${bed_file} > ${strain_beh_dir}.bed  
+	"""
+}
+
+
+/*
+ * Plots the distribution of bed containing all intervals by strain, motion and body part
+ */
+process plot_distro_means {
+	container 'joseespinosa/docker-r-ggplot2:v0.1'
+
+  	input:
+	set file (mean_intersect_feature_motion), strain, pheno_feature, direction from bed_mean_tagged
   
-  
+  	output:
+  	set '*.png', strain, pheno_feature, direction into plots_pheno_feature_means
+    
+  	""" 	
+  	plot_pheno_feature_mean_distro.R --bed_file=${mean_intersect_feature_motion}
+  	"""
+}
+
+result_dir_means_pheno_features = file("$baseDir/plots_means_pheno_features")
+ 
+result_dir_means_pheno_features.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_means_pheno_features"
+}
+
+plots_pheno_feature_means.subscribe {		
+	it[0].copyTo( result_dir_means_pheno_features.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
+}  
