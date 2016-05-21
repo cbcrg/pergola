@@ -33,20 +33,36 @@ params.path_files = "$baseDir/data/"
 
 log.info "C. elegans trp locomotion phenotypes - N F  ~  version 0.1"
 log.info "========================================="
-log.info "c. elegans data    : ${params.path_files}"
+log.info "c. elegans case data    : ${params.path_files}"
+log.info "c. elegans ctrl data    : ${params.ctrl_path_files}"
 log.info "\n"
 
-mat_files_path = "${params.path_files}*.mat"
-mat_files = Channel.fromPath(mat_files_path)
+case_files_path = "${params.path_files}*.mat"
+case_files = Channel.fromPath(case_files_path)
+
+N2_ctrl_path = "${params.ctrl_path_files}*.mat"
+N2_ctrl_files = Channel.fromPath(N2_ctrl_path)
 
 /*
  * Creates a channel with file content and name of input file without spaces
+ * Substitutes spaces by "_" in file name
  */ 
-mat_files_name = mat_files.flatten().map { mat_files_file ->      
-	def content = mat_files_file
-	def name = mat_files_file.name.replaceAll(/ /,'_')
-    [ content, name ]
+case_files_name = case_files.flatten().map { case_files_file ->      
+	def content = case_files_file
+	def name = case_files_file.name.replaceAll(/ /,'_')
+	def tag = "case_worms"
+    [ content, name, tag ]
 }
+
+ctrl_files_name = N2_ctrl_files.flatten().map { ctrl_files_file ->      
+	def content = ctrl_files_file
+	def name = ctrl_files_file.name.replaceAll(/ /,'_')
+	def tag = "ctrl_worms"
+    [ content, name, tag ]
+}
+
+// Files joined in a single channel
+mat_files_name = case_files_name.mix ( ctrl_files_name )
 
 mat_files_name.into { mat_files_loc; mat_files_motion }
 
@@ -57,10 +73,10 @@ process get_pheno_measure {
 	container 'ipython/scipyserver'
   
   	input:
-  	set file ('file_worm'), val (name_file_worm) from mat_files_loc
+  	set file ('file_worm'), val (name_file_worm), val (exp_group) from mat_files_loc
   
   	output:  
-  	set '*_loc.csv', name_file_worm into locomotions_files, locomotion_files_wr
+  	set '*_loc.csv', name_file_worm, exp_group into locomotions_files, locomotion_files_wr
      
   	script:
   	println "Matlab file containing worm behavior processed: $name_file_worm"
@@ -78,27 +94,24 @@ map_features_path = "$baseDir/data/trp_features_map.txt"
 
 map_features = file(map_features_path)
 
-// Hacer de esto un parametro asi puedo escoger la strain y la feature y no repetir
-// todo el codigo
-// de momento lo dejo asi por el tiempo
 phenotypic_features =  ['foraging_speed', 'tail_motion', 'crawling']
 
 process locomotion_to_pergola {
 	container 'cbcrg/pergola:latest'
   
   	input:
-  	set file ('loc_file'), val (name_file) from locomotions_files
+  	set file ('loc_file'), val (name_file), val (exp_group) from locomotions_files
   	file map_features2p from map_features
   	each pheno_feature from phenotypic_features
   
   	output: 
-  	set '*.no_na.bed', pheno_feature, name_file into bed_loc_no_nas
-  	set '*.no_na.bedGraph', pheno_feature, name_file into bedGraph_loc_no_nas
+  	set '*.no_na.bed', pheno_feature, name_file into bed_loc_no_nas //no_nas are used???
+  	set '*.no_na.bedGraph', pheno_feature, name_file into bedGraph_loc_no_nas //no_nas are used???
   	
-  	set name_file, pheno_feature, '*.no_tr.bed' into bed_loc_no_track_line, bed_loc_no_track_line_cp, bed_loc_no_track_line_turns
-  	set name_file, pheno_feature, '*.no_tr.bedGraph' into bedGraph_loc_no_track_line
+  	set name_file, pheno_feature, '*.no_tr.bed', exp_group into bed_loc_no_track_line, bed_loc_no_track_line_cp, bed_loc_no_track_line_turns
+  	set name_file, pheno_feature, '*.no_tr.bedGraph', exp_group into bedGraph_loc_no_track_line
   	
-  	set '*.fa', pheno_feature, name_file into out_fasta
+  	set '*.fa', pheno_feature, name_file, val(exp_group) into out_fasta
   
   	"""  
   	cat $map_features2p | sed 's/behavioural_file:$pheno_feature > pergola:dummy/behavioural_file:$pheno_feature > pergola:data_value/g' > feat_map_file
@@ -141,6 +154,8 @@ process get_motion {
   	extract_worm_motion.py -i \"$file_worm\"
   	"""
 }
+
+//motion_files_wr.subscribe { println (it) }
 
 /*
  * From one mat file 3 motion (forward, paused, backward) files are obtained
@@ -189,25 +204,25 @@ map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_turn}
  */
 //bed_motion.subscribe { println ("=========" + it) }  
 //bed_loc_no_track_line.subscribe { println ("********" + it) }
- 
+
 bed_loc_motion = bed_loc_no_track_line
 	.spread (bed_motion)
-	.filter { it[0] == it[3] }
+	.filter { it[0] == it[4] }
 
-//bed_loc_motion.subscribe { println ("=========" + it) }  
-	
+//bed_loc_motion.subscribe { println ("=========" + it) }
+
 process intersect_loc_motion {
 	container 'cbcrg/pergola:latest'
 	
 	input:
-	set val (mat_file_loc), val (pheno_feature), file ('bed_loc_no_tr'), val (mat_motion_file), file ('motion_file'), val (name_file_motion), val (direction) from bed_loc_motion
+	set val (mat_file_loc), val (pheno_feature), file ('bed_loc_no_tr'), val (exp_group),  val (mat_motion_file), file (motion_file), val (name_file_motion), val (direction) from bed_loc_motion
 	file bed2pergola from map_bed_pergola_loc.first()
 	
 	output:
-	set '*.mean.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bed_mean_speed_motion	
-	set '*.mean.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bedGr_mean_loc_motion
-	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into bed_intersect_loc_motion, bed_intersect_loc_motion2p
-	set '*.mean_file.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion into mean_intersect_loc_motion
+	set '*.mean.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bed_mean_speed_motion	
+	set '*.mean.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGr_mean_loc_motion
+	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bed_intersect_loc_motion, bed_intersect_loc_motion2p
+	set '*.mean_file.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into mean_intersect_loc_motion
 	
 	"""
 	celegans_feature_i_motion.py -p $bed_loc_no_tr -m $motion_file -b $bed2pergola
@@ -217,9 +232,7 @@ process intersect_loc_motion {
 /*
  * Grouping (collect) bed files in order to plot the distribution by strain, motion direction and body part 
  */
-//bed_intersect_loc_motion2p.subscribe { println ( "@@@@@@@@@" + it ) } 
-//bed_intersect_loc_motion2p.subscribe { println ( "@@@@@@@@@" + it[1] + "." + it[3].split("_on_")[0] + "." + it[4].tokenize(".")[1] ) }
-// Sometimes names have underscores use points instead
+//bed_intersect_loc_motion2p.subscribe { println ( "@@@@@@@@@" + it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1] ) }
 bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: false, sort:'none') { 
 	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1]
 	[ name, it[0].text ]	
@@ -247,23 +260,6 @@ process tag_bed_files {
 	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\" }' ${bed_file} > ${strain_beh_dir}.bed  
 	"""
 }
-
-//bed_tagged.subscribe { println ("^^^^^^^" + it) }
-
-
-/*
- * Channel containning body part, strain, type of turn //DELETE NOT USED ANYMORE
- */
- /*
-bed_i_feature_motion_plot_col = bed_tagged.collectFile(newLine: false, sort:'none') {
-	def name = it[1] + "." + it[2] + "." + it[3] 
-	//def name = it[1] + it[3].split("_on_")[0] + "_" + it[4].tokenize(".")[1]
-	[ name, it[0].text ] 
-}
-*/
-
-
-//bed_intersect_speed_motion_plot_col.subscribe { println it }
 
 /*
  * Plots the distribution of bed containing all intervals by strain, motion and body part
@@ -296,54 +292,63 @@ result_dir_pheno_features.with {
 
 plots_pheno_feature.subscribe {		
 	it[0].copyTo( result_dir_pheno_features.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
-}  
+}
 
-/*
- * Grouping mean (collect) of means in order to plot the distribution by strain, motion direction and body part
- */
 mean_intersect_loc_motion_plot = mean_intersect_loc_motion.collectFile(newLine: false, sort:'none') { 
-	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1]
-	[ name, it[0].text ]	
-}.map { 
+	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1] + "." +  it[5]
+	[ name, it[0].text]	
+}.map {  
 	def strain =  it.name.split("\\.")[0]	
 	def pheno_feature =  it.name.split("\\.")[1]	
 	def direction =  it.name.split("\\.")[2]
- 	[ it, strain, pheno_feature, direction, it.name ]
+	def exp_group =  it.name.split("\\.")[3]
+ 	[ it, strain, pheno_feature, direction, it.name, exp_group ]
 }
-
-//mean_intersect_loc_motion_plot.subscribe {println it}
 
 /*
  * Tagging files for plotting
  */
-process tag_bed_files {
+process tag_bed_mean_files {
 	input: 
-	set file ('bed_file'), val (strain), val (pheno_feature), val (direction), val (strain_beh_dir) from mean_intersect_loc_motion_plot
+	set file ('bed_file'), val (strain), val (pheno_feature), val (direction), val (strain_beh_dir), val (exp_group) from mean_intersect_loc_motion_plot
 	
 	output:
-	set '*.bed', strain, pheno_feature, direction into bed_mean_tagged
+	set '*.bed', strain, pheno_feature, direction, exp_group into bed_tagged_for_case, bed_tagged_for_ctrl
 	
 	"""
 	# Adds to the bed file a tag for being used inside the R dataframe
-	awk '{ print \$0, \"\\t$strain\" }' ${bed_file} > ${strain_beh_dir}.bed  
+	awk '{ print \$0, \"\\t$pheno_feature\\t$direction\\t$strain\" }' ${bed_file} > ${strain_beh_dir}.bed  
 	"""
 }
 
+case_bed_tagged = bed_tagged_for_case.filter { it[4] == 'case_worms' }
+ctrl_bed_tagged = bed_tagged_for_ctrl.filter { it[4] == "ctrl_worms" }
+
+//case_bed_tagged.subscribe { println "***** case **" + it }
+//ctrl_bed_tagged.subscribe { println "***** ctrl **" + it }
 
 /*
- * Plots the distribution of bed containing all intervals by strain, motion and body part
+ * Matching the control group for each strain in the data set
  */
-process plot_distro_means {
+case_ctrl_bed = case_bed_tagged
+	.spread (ctrl_bed_tagged)
+	.filter { it[2] == it[7] && it[3] == it[8] }
+	.map { [ it[0], it[1], it[2], it[3], it[5] ] }	
+	
+//case_ctrl_bed.subscribe { println ( it[1] + it[2] + it[3] + it[6]+ it[7]+ it[8] ) }				
+//case_ctrl_bed.subscribe { println ( it ) }	
+
+process plot_mean_distro {
 	container 'joseespinosa/docker-r-ggplot2:v0.1'
 
   	input:
-	set file (mean_intersect_feature_motion), strain, pheno_feature, direction from bed_mean_tagged
-  
+	set file (intersect_feature_motion), strain, pheno_feature, direction, file (intersect_feature_motion_ctrl) from case_ctrl_bed
+  	
   	output:
   	set '*.png', strain, pheno_feature, direction into plots_pheno_feature_means
     
   	""" 	
-  	plot_pheno_feature_mean_distro.R --bed_file=${mean_intersect_feature_motion}
+  	plot_pheno_feature_mean_distro.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}
   	"""
 }
 
@@ -357,4 +362,4 @@ result_dir_means_pheno_features.with {
 
 plots_pheno_feature_means.subscribe {		
 	it[0].copyTo( result_dir_means_pheno_features.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
-}  
+}

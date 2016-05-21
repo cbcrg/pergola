@@ -86,26 +86,65 @@ names (argsL) <- argsDF$V1
   }
 }
 
-info = file.info(bed_file)
-
-{  
-  if (info$size == 0) { 
-#     df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, body_part="", direction="")
-    df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, strain="")
+{
+  if (is.null (argsL$bed_file_ctrl)) 
+  {
+    stop ("[FATAL]: bed_file_ctrl not provided", stderr())
   }
-  else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")
-#          colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "body_part", "direction")
-         colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "strain") 
-         #return (df)
-  }  
+  else
+  {
+    bed_file_ctrl <- argsL$bed_file_ctrl
+  }
 }
 
+read_bed <- function (bed_file) {
+  info = file.info(bed_file)
+  if (info$size == 0) { 
+    #chr1  9	26849	0	-0.007865187327 	tail_motion	paused	575_JU440
+    #     df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, body_part="", direction="")
+    df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, pheno_feature=0, motion=0, strain="")
+  }
+  else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")
+         #          colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "body_part", "direction")
+         colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "pheno_feature", "motion", "strain") 
+         #return (df)
+  }
+  
+  ## We remove this fake rows they were included just to avoid last line of code above to crash
+  df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
+  
+  ## Absolute value of the means
+  df_bed$mean_value_abs <- abs(df_bed$mean_value)
+  
+  return (df_bed)
+}
+
+# info = file.info(bed_file)
+# 
+# {  
+#   if (info$size == 0) { 
+# #     df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, body_part="", direction="")
+#     df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, mean_value=0, strain="")
+#   }
+#   else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")
+# #          colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "body_part", "direction")
+#          colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "mean_value", "strain") 
+#          #return (df)
+#   }  
+# }
+
 ## We remove this fake rows they were included just to avoid last line of code above to crash
-df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
+# df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
 
-## Absolute value of the means
-df_bed$mean_value_abs <- abs(df_bed$mean_value)
+# ## Absolute value of the means
+# df_bed$mean_value_abs <- abs(df_bed$mean_value)
+#bed_file <- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/ab/2a7a457726d145a4bb77e88e0bd992/575_JU440.foraging_speed.backward.case_worms.bed"
+#bed_file_ctrl <- "/Users/jespinosa/git/pergola/examples/N2_vs_KO_trp_channels/work/ab/2a7a457726d145a4bb77e88e0bd992/N2.foraging_speed.backward.ctrl_worms.bed"
 
+df_bed <- read_bed (bed_file)
+df_ctrl <- read_bed (bed_file_ctrl)
+df_bed <- rbind (df_bed, df_ctrl)
+  
 name_file <- basename(bed_file)
 name_out <- paste(name_file, ".png", sep="")
 
