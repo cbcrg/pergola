@@ -105,8 +105,8 @@ process locomotion_to_pergola {
   	each pheno_feature from phenotypic_features
   
   	output: 
-  	set '*.no_na.bed', pheno_feature, name_file into bed_loc_no_nas //no_nas are used???
-  	set '*.no_na.bedGraph', pheno_feature, name_file into bedGraph_loc_no_nas //no_nas are used???
+  	set '*.no_na.bed', pheno_feature, name_file into bed_loc_no_nas
+  	set '*.no_na.bedGraph', pheno_feature, name_file into bedGraph_loc_no_nas
   	
   	set name_file, pheno_feature, '*.no_tr.bed', exp_group into bed_loc_no_track_line, bed_loc_no_track_line_cp, bed_loc_no_track_line_turns
   	set name_file, pheno_feature, '*.no_tr.bedGraph', exp_group into bedGraph_loc_no_track_line
@@ -185,7 +185,7 @@ process motion_to_pergola {
   	set worms_motion_map from map_motion
     
   	output:
-  	set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr, bed_motion_turns
+  	set name_file, 'tr*.bed', name_file_motion into bed_motion, bed_motion_wr
   	  	
   	"""
   	pergola_rules.py -i $motion_file -m $worms_motion_map
@@ -302,7 +302,9 @@ mean_intersect_loc_motion_plot = mean_intersect_loc_motion.collectFile(newLine: 
 	def pheno_feature =  it.name.split("\\.")[1]	
 	def direction =  it.name.split("\\.")[2]
 	def exp_group =  it.name.split("\\.")[3]
- 	[ it, strain, pheno_feature, direction, it.name, exp_group ]
+	def name_file = it.name.replaceAll('.case_worms', '').replaceAll('.ctrl_worms', '')
+
+ 	[ it, strain, pheno_feature, direction, name_file, exp_group ]
 }
 
 /*
@@ -322,7 +324,7 @@ process tag_bed_mean_files {
 }
 
 case_bed_tagged = bed_tagged_for_case.filter { it[4] == 'case_worms' }
-ctrl_bed_tagged = bed_tagged_for_ctrl.filter { it[4] == "ctrl_worms" }
+ctrl_bed_tagged = bed_tagged_for_ctrl.filter { it[4] == 'ctrl_worms' }
 
 //case_bed_tagged.subscribe { println "***** case **" + it }
 //ctrl_bed_tagged.subscribe { println "***** ctrl **" + it }
@@ -362,4 +364,56 @@ result_dir_means_pheno_features.with {
 
 plots_pheno_feature_means.subscribe {		
 	it[0].copyTo( result_dir_means_pheno_features.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
+}
+
+/*
+ * Creating folder to keep bed files to visualize data
+ */
+result_dir_GB = file("$baseDir/results_GB")
+
+result_dir_GB.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_GB"
+} 
+
+out_fasta.subscribe {  
+  fasta_file = it[0]
+  fasta_file.copyTo( result_dir_GB.resolve ( it[2] + ".fa" ) )
+}
+
+result_dir_bed = file("$baseDir/results_bed")
+
+result_dir_bed.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_bed"
+} 
+
+bed_loc_no_nas.subscribe {   
+  bed_file = it[0]
+  bed_file.copyTo ( result_dir_bed.resolve ( it[1] + "." + it[2] + ".GB.bed" ) )
+}
+
+result_dir_bedGraph = file("$baseDir/results_bedGraph")
+
+result_dir_bedGraph.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_bedGraph"
+} 
+
+bedGraph_loc_no_nas.subscribe {   
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo (result_dir_bedGraph.resolve ( it[1] + "." + it[2] + ".GB.bedGraph" ) )
+}
+
+bed_motion_wr.subscribe {
+  bed_file = it[1]
+  bed_file.copyTo ( result_dir_bed.resolve ( it[0] + it[2] + ".GB.bed" ) )
+}
+
+bed_intersect_loc_motion.subscribe {   
+  bed_file = it[0]
+  bed_file.copyTo ( result_dir_bed.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[2] + ".GB.bed" ) )
 }
