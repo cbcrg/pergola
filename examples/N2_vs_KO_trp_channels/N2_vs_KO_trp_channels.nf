@@ -35,6 +35,7 @@ log.info "C. elegans trp locomotion phenotypes - N F  ~  version 0.1"
 log.info "========================================="
 log.info "c. elegans case data    : ${params.path_files}"
 log.info "c. elegans ctrl data    : ${params.ctrl_path_files}"
+log.info "c. elegans ctrl data    : ${params.tag_results}"
 log.info "\n"
 
 case_files_path = "${params.path_files}*.mat"
@@ -42,6 +43,9 @@ case_files = Channel.fromPath(case_files_path)
 
 N2_ctrl_path = "${params.ctrl_path_files}*.mat"
 N2_ctrl_files = Channel.fromPath(N2_ctrl_path)
+
+params.tag_results = "strain"
+tag_res = "${params.tag_results}"
 
 /*
  * Creates a channel with file content and name of input file without spaces
@@ -282,7 +286,7 @@ process plot_distro {
 /*
  * Folder to keep plots
  */
-result_dir_pheno_features = file("$baseDir/plots_pheno_features")
+result_dir_pheno_features = file("$baseDir/plots_pheno_features_$tag_res")
  
 result_dir_pheno_features.with {
      if( !empty() ) { deleteDir() }
@@ -354,7 +358,7 @@ process plot_mean_distro {
   	"""
 }
 
-result_dir_means_pheno_features = file("$baseDir/plots_means_pheno_features")
+result_dir_means_pheno_features = file("$baseDir/plots_means_pheno_features_$tag_res")
  
 result_dir_means_pheno_features.with {
      if( !empty() ) { deleteDir() }
@@ -369,7 +373,7 @@ plots_pheno_feature_means.subscribe {
 /*
  * Creating folder to keep bed files to visualize data
  */
-result_dir_GB = file("$baseDir/results_GB")
+result_dir_GB = file("$baseDir/results_GB_$tag_res")
 
 result_dir_GB.with {
      if( !empty() ) { deleteDir() }
@@ -382,7 +386,7 @@ out_fasta.subscribe {
   fasta_file.copyTo( result_dir_GB.resolve ( it[2] + ".fa" ) )
 }
 
-result_dir_bed = file("$baseDir/results_bed")
+result_dir_bed = file("$baseDir/results_bed_$tag_res")
 
 result_dir_bed.with {
      if( !empty() ) { deleteDir() }
@@ -395,7 +399,7 @@ bed_loc_no_nas.subscribe {
   bed_file.copyTo ( result_dir_bed.resolve ( it[1] + "." + it[2] + ".GB.bed" ) )
 }
 
-result_dir_bedGraph = file("$baseDir/results_bedGraph")
+result_dir_bedGraph = file("$baseDir/results_bedGraph_$tag_res")
 
 result_dir_bedGraph.with {
      if( !empty() ) { deleteDir() }
