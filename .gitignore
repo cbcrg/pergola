@@ -29,5 +29,8 @@
 /examples/N2_hourly_measures/work
 /examples/N2_hourly_measures/results*
 /examples/N2_hourly_measures/plots*
+/examples/N2_hourly_measures_means/work
+/examples/N2_hourly_measures_means/results*
+/examples/N2_hourly_measures_means/plots*
 .pydevproject
 .project
