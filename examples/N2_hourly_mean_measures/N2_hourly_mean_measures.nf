@@ -181,7 +181,8 @@ process bed_mean {
  * Grouping files by hour and phenotypic feature for plotting
  */ 
 mean_feature_plot_col = mean_feature.collectFile (newLine: false, sort:'none') {
-	def name = "N2." + it[3] + "." + it[1]
+	//def name = "N2." + it[3] + "." + it[1]
+	def name = "N2." + it[1]
 	[ name, it[0].text ] 
 }
 
