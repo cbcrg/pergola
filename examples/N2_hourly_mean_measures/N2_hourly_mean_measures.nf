@@ -160,7 +160,7 @@ map_bed_pergola = Channel.fromPath(map_bed_path)
 
 
 process bed_mean {
-	container 'ipython/scipyserver'
+	container 'cbcrg/pergola:latest'
 	
 	input:
 	set name_file, pheno_feature, bed_file, hour from bed_measure_no_track_line	
