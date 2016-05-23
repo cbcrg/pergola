@@ -130,7 +130,7 @@ process locomotion_to_pergola {
   	# delete values that were assigned as -10000 to skip na of the original file
   	# to avoid problems if a file got a feature with a feature always set to NA I add this code (short files for examples)
   	cat bed_file.tmp | grep -v "\\-10000" > ${name_file}".no_na.bed"  
-  	cat ${name_file}".no_na.bed" | grep -v "track name" > ${name_file}.no_tr.bed || echo -e "chr1\t0\t100\t.\t-10000\t+\t0\t100\t135,206,250" > ${name_file}".no_tr.bed.no_tr.bed"
+  	cat ${name_file}".no_na.bed" | grep -v "track name" > ${name_file}.no_tr.bed || echo -e "chr1\t0\t100\t.\t-10000\t+\t0\t100\t135,206,250" > ${name_file}".no_tr.bed"
   	rm bed_file.tmp
   	
   	cat bedGraph_file.tmp | grep -v "\\-10000" > ${name_file}".no_na.bedGraph"  
