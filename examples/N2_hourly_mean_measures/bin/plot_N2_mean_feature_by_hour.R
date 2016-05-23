@@ -82,6 +82,7 @@ names (argsL) <- argsDF$V1
   }
 }
 
+bed_file <- "/Users/jespinosa/git/pergola/examples/N2_hourly_mean_measures/work/tmp/af/6d44fb757549cb2303e13665fc9c0f/N2.foraging"
 info = file.info(bed_file)
 
 {  
@@ -100,7 +101,7 @@ df_bed <- df_bed [!(df_bed$start == 0 & df_bed$end == 0), ]
 df_bed <- df_bed [!(df_bed$hour < 9 | df_bed$hour > 16), ]
 
 name_file <- basename(bed_file)
-pheno_feature <-strsplit (name_file, "\\." )[[1]][3]
+pheno_feature <-strsplit (name_file, "\\." )[[1]][2]
 df_bed$hour_f <- as.factor (df_bed$hour)
 
 ### Functions summary stats for plot
@@ -138,14 +139,14 @@ name_out <- paste (name_file, ".", "png", sep="")
 
 ggplot(df_bed, aes(x=hour_f, y=mean_value)) +        
   ## standard deviation
-  stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.25, fill=cbb_palette[3]) +
+  stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.3, fill=cbb_palette[3]) +
   ## standard error
   #        stat_summary(fun.data="mean_se", geom="crossbar", width=0.25, fill=cbb_paletee[8]) +
-  stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.25,  col="gray30", fatten=3, fill=cbb_palette[8]) +
+  stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.3, col="gray30", fatten=3, fill=cbb_palette[8]) +
   # mean in orange
-  stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.25, size=1, colour=cbb_palette[2]) +     
+  stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=1, colour=cbb_palette[2]) +     
   ## plots means as dots  
-  geom_point(position = position_jitter(w = 0.05, h = 0), size=3) +
+  geom_point(position = position_jitter(w = 0.05, h = 0), size=1) +
   labs (title = paste(pheno_feature_up, "\n", sep="")) +
   labs (y = paste(paste (pheno_feature_up, " (", units, ")", "\n", sep="")), x="\nHour") +  
   theme (plot.title = element_text(size=size_titles)) + 
