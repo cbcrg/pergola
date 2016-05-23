@@ -143,9 +143,9 @@ ggplot(df_bed, aes(x=hour_f, y=mean_value)) +
   #        stat_summary(fun.data="mean_se", geom="crossbar", width=0.25, fill=cbb_paletee[8]) +
   stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.3, col="gray30", fatten=3, fill=cbb_palette[8]) +
   # mean in orange
-  stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=1, colour=cbb_palette[2]) +     
+  stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.5, colour=cbb_palette[2]) +     
   ## plots means as dots  
-  geom_point(position = position_jitter(w = 0.05, h = 0), size=1) +
+  geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
   labs (title = paste(pheno_feature_up, "\n", sep="")) +
   labs (y = paste(paste (pheno_feature_up, " (", units, ")", "\n", sep="")), x="\nHour") +  
   theme (plot.title = element_text(size=size_titles)) + 
