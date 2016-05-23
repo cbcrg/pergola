@@ -100,7 +100,7 @@ map_features = file(map_features_path)
 
 phenotypic_features =  ['foraging_speed', 'tail_motion', 'crawling']
 
-process locomotion_to_pergola {
+process pheno_feature_to_pergola {
 	container 'cbcrg/pergola:latest'
   
   	input:
@@ -152,7 +152,7 @@ process get_motion {
   	set name_file_worm, '*.csv' into motion_files, motion_files_wr
     
   	script:
-  	println "Matlab file containing worm behavior processed: $file_worm"
+  	println "Matlab file containing worm motion processed: $name_file_worm"
 
   	"""
   	extract_worm_motion.py -i \"$file_worm\"
@@ -219,7 +219,7 @@ process intersect_loc_motion {
 	container 'cbcrg/pergola:latest'
 	
 	input:
-	set val (mat_file_loc), val (pheno_feature), file ('bed_loc_no_tr'), val (exp_group),  val (mat_motion_file), file (motion_file), val (name_file_motion), val (direction) from bed_loc_motion
+	set val (mat_file_loc), val (pheno_feature), file ('bed_loc_no_tr'), val (exp_group), val (mat_motion_file), file (motion_file), val (name_file_motion), val (direction) from bed_loc_motion
 	file bed2pergola from map_bed_pergola_loc.first()
 	
 	output:

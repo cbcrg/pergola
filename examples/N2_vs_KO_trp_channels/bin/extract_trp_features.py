@@ -44,6 +44,7 @@ input_file =  args.input
 
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/filter_mat_files/mat_worm_data/575 JU440 on food L_2010_11_25__11_38_16___7___1_features.mat'
 # input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/filter_mat_files/mat_worm_data/ocr_4_tm2173.mat'
+# input_file = '/Users/jespinosa/git/pergola/test/c_elegans_data_test/filter_mat_files/mat_worm_data/ocr-4 tm2173 on food L_dummy.mat'
 file_name = basename(input_file)
 
 f = h5py.File(input_file)
@@ -128,7 +129,8 @@ except KeyError:
 # This one!!!
 # f['worm']['locomotion']['velocity']['head']['direction'][1000][0]
 try:
-    tail_motion = f['worm']['locomotion']['velocity']['tail']['direction']
+#     tail_motion = f['worm']['locomotion']['velocity']['tail']['direction']
+    tail_motion = f['worm']['locomotion']['velocity']['tail']['speed'] #OK
 except KeyError:
     raise KeyError ("Tail motion is corrupted and can not be retrieved from hdf5 file")
 
@@ -143,9 +145,9 @@ for frame in range(0, int(frames)):
     list_v = list()
     list_v.extend ([frame, frame+1])
     
-    v_fs = foraging_speed[frame][0] 
-    v_tm = tail_motion[frame][0]
-    v_c = crawling[frame][0]    
+    v_fs = abs(foraging_speed[frame][0]) 
+    v_tm = abs(tail_motion[frame][0])
+    v_c = abs(crawling[frame][0])
     
     if np.isnan(v_fs) : v_fs = -10000
     if np.isnan(v_tm) : v_tm = -10000
