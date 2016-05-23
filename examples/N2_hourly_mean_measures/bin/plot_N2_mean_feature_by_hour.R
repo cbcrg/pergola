@@ -82,7 +82,6 @@ names (argsL) <- argsDF$V1
   }
 }
 
-bed_file <- "/Users/jespinosa/git/pergola/examples/N2_hourly_mean_measures/work/tmp/af/6d44fb757549cb2303e13665fc9c0f/N2.foraging"
 info = file.info(bed_file)
 
 {  
