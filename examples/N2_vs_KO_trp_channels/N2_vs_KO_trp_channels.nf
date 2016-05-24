@@ -336,19 +336,52 @@ ctrl_bed_tagged = bed_tagged_for_ctrl.filter { it[4] == 'ctrl_worms' }
 /*
  * Matching the control group for each strain in the data set
  */
-case_ctrl_bed = case_bed_tagged
+case_ctrl_bed_ini = case_bed_tagged
 	.spread (ctrl_bed_tagged)
 	.filter { it[2] == it[7] && it[3] == it[8] }
 	.map { [ it[0], it[1], it[2], it[3], it[5] ] }	
-	
-//case_ctrl_bed.subscribe { println ( it[1] + it[2] + it[3] + it[6]+ it[7]+ it[8] ) }				
-//case_ctrl_bed.subscribe { println ( it ) }	
+			
+//case_ctrl_bed_ini.subscribe { println ( it ) }	
+case_ctrl_bed_ini.into { case_bed_for_crawling; ctrl_bed_for_crawling2; case_ctrl_bed }
+
+/*
+ * Crawling is not separated by direction, collecting bed files in a single file, paused not used always 0
+ */
+case_crawling = case_bed_for_crawling
+	.filter { it[2] == 'crawling' && it[3] != 'paused' }	
+	.collectFile (newLine: false, sort:'none') {
+		def name = it[1] + "." + it[2]	
+		[ name, it[0].text ]
+	}.map {	
+	def strain =  it.name.split("\\.")[0]	
+	def pheno_feature =  it.name.split("\\.")[1]		
+ 	[ it, strain, pheno_feature, it.name ]
+}
+
+ctrl_crawling = ctrl_bed_for_crawling2
+	.filter { it[2] == 'crawling' && it[3] != 'paused' }	
+	.collectFile (newLine: false, sort:'none') {
+		def name = it[1] + "." + it[2] + ".ctrl"  //.split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1]
+		[ name, it[4].text ]	
+	}.map {	
+	def strain =  it.name.split("\\.")[0]	
+	def pheno_feature =  it.name.split("\\.")[1]	
+	def name = 'N2.crawling'
+ 	[ it, strain, pheno_feature, name ]
+}	
+
+case_ctrl_crawling = case_crawling
+	.spread (ctrl_crawling)
+	.filter { it[1] == it[5] && it[2] == it[6] }
+	.map { [ it[0], it[1], it[2], "all", it[4] ] }	
+
+case_ctrl_bed_p = case_ctrl_bed.mix ( case_ctrl_crawling )
 
 process plot_mean_distro {
 	container 'joseespinosa/docker-r-ggplot2:v0.1'
 
   	input:
-	set file (intersect_feature_motion), strain, pheno_feature, direction, file (intersect_feature_motion_ctrl) from case_ctrl_bed
+	set file (intersect_feature_motion), strain, pheno_feature, direction, file (intersect_feature_motion_ctrl) from case_ctrl_bed_p
   	
   	output:
   	set '*.png', strain, pheno_feature, direction into plots_pheno_feature_means
@@ -419,5 +452,5 @@ bed_motion_wr.subscribe {
 
 bed_intersect_loc_motion.subscribe {   
   bed_file = it[0]
-  bed_file.copyTo ( result_dir_bed.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[2] + ".GB.bed" ) )
+  bed_file.copyTo ( result_dir_bed.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".GB.bed" ) )
 }

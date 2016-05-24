@@ -129,8 +129,8 @@ except KeyError:
 # This one!!!
 # f['worm']['locomotion']['velocity']['head']['direction'][1000][0]
 try:
-#     tail_motion = f['worm']['locomotion']['velocity']['tail']['direction']
-    tail_motion = f['worm']['locomotion']['velocity']['tail']['speed'] #OK
+    tail_motion = f['worm']['locomotion']['velocity']['tail']['direction']
+#     tail_motion = f['worm']['locomotion']['velocity']['tail']['speed'] # not angle, linear speed
 except KeyError:
     raise KeyError ("Tail motion is corrupted and can not be retrieved from hdf5 file")
 
