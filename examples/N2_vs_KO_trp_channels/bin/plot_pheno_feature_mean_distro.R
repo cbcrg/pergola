@@ -132,7 +132,7 @@ pheno_feature <- strsplit (name_file,  "\\.")[[1]][2]
 units <- switch (pheno_feature, foraging_speed="Degrees/seconds", tail_motion="Degrees/seconds", crawling="Degrees", 'no units')
 
 title_strain_pheno_dir <- gsub("_", " ", gsub ("\\.", " - ", gsub ("\\.bed", "", name_file)))
-title_strain_pheno_dir <- gsub ("backward", "when reversing", title_strain_pheno_dir)
+title_strain_pheno_dir <- gsub ("backward", "\nwhen reversing", title_strain_pheno_dir)
 
 ## many files of gk298 strain are annotated as ok298
 title_strain_pheno_dir <- gsub ("ok298", "gk298", title_strain_pheno_dir)
