@@ -225,11 +225,41 @@ process intersect_loc_motion {
 	output:
 	set '*.mean.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bed_mean_speed_motion	
 	set '*.mean.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGr_mean_loc_motion
-	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bed_intersect_loc_motion, bed_intersect_loc_motion2p
+	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bed_intersect_loc_motion, bed_intersect_loc_motion2p, bed_intersect_l_m
 	set '*.mean_file.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into mean_intersect_loc_motion
-	
+	//set 'tr_chr1*.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGraph_intersect_loc_motion
 	"""
 	celegans_feature_i_motion.py -p $bed_loc_no_tr -m $motion_file -b $bed2pergola
+		
+	intersect_file="*.intersect.bed"
+	#if [ -s \"\$intersect_file\" ]
+	#then		
+	#	pergola_rules.py -i \$intersect_file -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph
+	#else
+	#	touch tr_chr1_d.bedGraph
+    #fi
+    	
+	"""
+}
+
+process intersect_loc_motion {
+	container 'cbcrg/pergola:latest'
+	
+	input:
+	set val (file_bed_inters), val (pheno_feature), file (mat_file_loc), val (mat_motion_file), val (name_file_motion), val (exp_group) from bed_intersect_l_m
+	file bed2pergola from map_bed_pergola_loc.first()
+	
+	output:
+	set 'tr_chr1*.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGraph_intersect_loc_motion
+	
+	"""			
+	if [ -s \"$file_bed_inters\" ]
+	then		
+		pergola_rules.py -i $file_bed_inters -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph
+	else
+		touch tr_chr1_d.bedGraph
+    fi
+    	
 	"""
 }
 
@@ -453,4 +483,14 @@ bed_motion_wr.subscribe {
 bed_intersect_loc_motion.subscribe {   
   bed_file = it[0]
   bed_file.copyTo ( result_dir_bed.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".GB.bed" ) )
+}
+
+bedGraph_intersect_loc_motion.subscribe {
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo ( result_dir_bedGraph.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".bedGraph" ) )
+}
+
+bedGr_mean_loc_motion.subscribe {   
+  bedGraph_file = it[0]
+  bedGraph_file.copyTo ( result_dir_bedGraph.resolve ( "mean.intersect." + it[1] + "." + it[3] + "." + it[2] + ".bedGraph" ) )
 }
