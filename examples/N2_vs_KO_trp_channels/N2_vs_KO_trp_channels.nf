@@ -201,7 +201,7 @@ process motion_to_pergola {
 
 map_bed_path = "$baseDir/data/bed2pergola.txt"
 map_bed_pergola = Channel.fromPath(map_bed_path)
-map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_turn}
+map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_bG; map_bed_pergola_turn}
 
 /*
  * Filter is used to delete pairs that do not come from the same original mat file
@@ -242,18 +242,18 @@ process intersect_loc_motion {
 	"""
 }
 
-process intersect_loc_motion {
+process inters_to_bedGr {
 	container 'cbcrg/pergola:latest'
 	
 	input:
-	set val (file_bed_inters), val (pheno_feature), file (mat_file_loc), val (mat_motion_file), val (name_file_motion), val (exp_group) from bed_intersect_l_m
-	file bed2pergola from map_bed_pergola_loc.first()
+	set file (file_bed_inters), val (pheno_feature), val (mat_file_loc), val (mat_motion_file), val (name_file_motion), val (exp_group) from bed_intersect_l_m
+	file bed2pergola from map_bed_pergola_bG.first()
 	
 	output:
-	set 'tr_chr1*.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGraph_intersect_loc_motion
+	set '*.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGraph_intersect_loc_motion
 	
-	"""			
-	if [ -s \"$file_bed_inters\" ]
+	"""		
+	if [ -s $file_bed_inters ]
 	then		
 		pergola_rules.py -i $file_bed_inters -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph
 	else
