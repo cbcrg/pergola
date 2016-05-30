@@ -217,6 +217,7 @@ process intersect_speed_motion {
 	set '*.mean.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
 	set '*.intersect.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_intersect_speed_motion, bed_intersect_speed_motion2p
 	set '*.intersect.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGraph_intersect_speed_motion
+	
 	"""
 	celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola
 	"""
@@ -448,7 +449,7 @@ bed_intersect_speed_motion.subscribe {
   bed_int_file.copyTo ( result_dir_intersect.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bed" ) )
 }
 
-bedGraph_intersect_speed_motion {
+bedGraph_intersect_speed_motion.subscribe {
   bedGraph_int_file = it[0]
   bedGraph_int_file.copyTo ( result_dir_intersect.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bedGraph" ) )
 }
