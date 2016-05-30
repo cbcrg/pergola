@@ -255,7 +255,7 @@ process inters_to_bedGr {
 	"""		
 	if [ -s $file_bed_inters ]
 	then		
-		pergola_rules.py -i $file_bed_inters -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph
+		pergola_rules.py -i $file_bed_inters -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph -w 1
 	else
 		touch tr_chr1_d.bedGraph
     fi
