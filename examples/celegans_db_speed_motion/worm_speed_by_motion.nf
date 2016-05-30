@@ -34,10 +34,13 @@ params.path_files = "$baseDir/data/"
 log.info "C. elegans speed vs motion  - N F  ~  version 0.1"
 log.info "========================================="
 log.info "c. elegans data    : ${params.path_files}"
+log.info "c. elegans tag     : ${params.tag_results}"
 log.info "\n"
 
 mat_files_path = "${params.path_files}*.mat"
 mat_files = Channel.fromPath(mat_files_path)
+params.tag_results = ""
+tag_res = "${params.tag_results}"
 
 /*
  * Creates a channel with file content and name of input file without spaces
@@ -213,7 +216,7 @@ process intersect_speed_motion {
 	set '*.mean.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_mean_speed_motion	
 	set '*.mean.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGr_mean_speed_motion
 	set '*.intersect.bed', body_part, mat_file_speed, mat_motion_file, name_file_motion into bed_intersect_speed_motion, bed_intersect_speed_motion2p
-	
+	set '*.intersect.bedGraph', body_part, mat_file_speed, mat_motion_file, name_file_motion into bedGraph_intersect_speed_motion
 	"""
 	celegans_speed_i_motion.py -s $bed_speed_no_tr -m $motion_file -b $bed2pergola
 	"""
@@ -360,7 +363,7 @@ process plot_distro_turns {
 /*
  * Creating folder to keep results
  */
-result_dir_csv = file("$baseDir/results_csv")
+result_dir_csv = file("$baseDir/results_csv$tag_res")
 
 result_dir_csv.with {
      if( !empty() ) { deleteDir() }
@@ -378,7 +381,7 @@ speed_files_wr.subscribe {
   csv_file.copyTo( result_dir_csv.resolve ( it[0] + ".motion.csv" ) )
 }
 
-result_dir_GB = file("$baseDir/results_GB")
+result_dir_GB = file("$baseDir/results_GB$tag_res")
 
 result_dir_GB.with {
      if( !empty() ) { deleteDir() }
@@ -405,7 +408,7 @@ bedGraph_speed_no_nas.subscribe {
 }
 
 // Creating mean results folder
-result_dir_mean = file("$baseDir/results_mean")
+result_dir_mean = file("$baseDir/results_mean$tag_res")
 
 result_dir_mean.with {
      if( !empty() ) { deleteDir() }
@@ -414,7 +417,7 @@ result_dir_mean.with {
 }
 
 // Creating intersect results folder
-result_dir_intersect = file("$baseDir/results_intersect")
+result_dir_intersect = file("$baseDir/results_intersect$tag_res")
 
 result_dir_intersect.with {
      if( !empty() ) { deleteDir() }
@@ -423,7 +426,7 @@ result_dir_intersect.with {
 }
 
 // Creating motion results folder
-result_dir_motion_GB = file("$baseDir/results_motion_GB")
+result_dir_motion_GB = file("$baseDir/results_motion_GB$tag_res")
 
 result_dir_motion_GB.with {
      if( !empty() ) { deleteDir() }
@@ -445,12 +448,17 @@ bed_intersect_speed_motion.subscribe {
   bed_int_file.copyTo ( result_dir_intersect.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bed" ) )
 }
 
+bedGraph_intersect_speed_motion {
+  bedGraph_int_file = it[0]
+  bedGraph_int_file.copyTo ( result_dir_intersect.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bedGraph" ) )
+}
+
 bedGr_mean_speed_motion.subscribe {
   bedGr_mean_file = it[0]
   bedGr_mean_file.copyTo ( result_dir_mean.resolve ( it[1] + "." + it[2] + "." + it[4] + ".mean.bedGraph" ) )
 }
 
-result_dir_plots_motion_speed = file("$baseDir/plots_motion_speed")
+result_dir_plots_motion_speed = file("$baseDir/plots_motion_speed$tag_res")
 
 result_dir_plots_motion_speed.with {
      if( !empty() ) { deleteDir() }
@@ -465,7 +473,7 @@ plots_speed_motion.subscribe {
 // Creating turns results folder
 
 // Creating mean results folder
-result_dir_mean_turn = file("$baseDir/results_mean_turn")
+result_dir_mean_turn = file("$baseDir/results_mean_turn$tag_res")
 
 result_dir_mean_turn.with {
      if( !empty() ) { deleteDir() }
@@ -484,7 +492,7 @@ bedGr_mean_speed_turn.subscribe {
 }
 
 // Creating motion results folder
-result_turn_GB = file("$baseDir/results_turn_periods")
+result_turn_GB = file("$baseDir/results_turn_periods$tag_res")
 
 result_turn_GB.with {
      if( !empty() ) { deleteDir() }
@@ -498,7 +506,7 @@ bed_turn_wr.subscribe {
 }
 
 // Creating intersect results folder
-result_dir_intersect_turns = file("$baseDir/results_intersect_turns")
+result_dir_intersect_turns = file("$baseDir/results_intersect_turns$tag_res")
 
 result_dir_intersect_turns.with {
      if( !empty() ) { deleteDir() }
@@ -511,7 +519,7 @@ bed_intersect_speed_turn.subscribe {
   bed_int_file.copyTo ( result_dir_intersect_turns.resolve ( it[1] + "." + it[2] + "." + it[4] + ".intersect.bed" ) )
 }
 
-result_dir_plots_turn_speed = file("$baseDir/plots_turn_speed")
+result_dir_plots_turn_speed = file("$baseDir/plots_turn_speed$tag_res")
 
 result_dir_plots_turn_speed.with {
      if( !empty() ) { deleteDir() }
@@ -522,12 +530,3 @@ result_dir_plots_turn_speed.with {
 plots_speed_turn.subscribe {   
   it.copyTo( result_dir_plots_turn_speed.resolve ( it.name ) )
 }
-
-/*
-*/
-
-// Calculate mean speed of the two types of turns
-// TO DO
-// Calculate mean speed of the two types of turns during forward, backward and paused motion, regardless of 
-
-
