@@ -1,7 +1,25 @@
 #!/usr/bin/env python
 
+#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#
+#  This file is part of Pergola.
+#
+#  Pergola is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  Pergola is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
+
 ################################################################
-### Jose A Espinosa. CSN/CB-CRG Group. April 2016            ###
+### CSN/CB-CRG Group. April 2016                             ###
 ################################################################
 ### Script reads c elegans behavioral DB data in bed format  ###
 ### generated using pergola_rules.py containing speed for    ###   
@@ -104,11 +122,16 @@ motion_BedTools = bed_obj_motion[key_m].create_pybedtools()
 
 speed_BedTools.intersect(motion_BedTools).saveas(tag_file + ".intersect.bed")
 
-# motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0).saveas(out_dir + tag_file + ".mean.bed")
-# motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0).saveas(tag_file + ".mean.bed")
+# Bedgraph of speed intersected by motion
+speed_intersect_motion = pybedtools.BedTool(tag_file + ".intersect.bed")
+fi_bG = open(tag_file + ".intersect.bedGraph",'wb')
+for i in speed_intersect_motion:
+    fi_bG.write("%s\t%s\t%s\t%s\n" % (i[0],i[1],i[2],i[4]))
+    
+fi_bG.close()
 
+# mean value for intersected regions
 speed_means = motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0)
-# speed_means.saveas(tag_file + ".mean.bed")
 
 fh = open(tag_file + ".mean.bed",'wb')
 fh_bG = open(tag_file + ".mean.bedGraph",'wb')
