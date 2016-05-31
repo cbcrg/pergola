@@ -188,7 +188,7 @@ process motion_to_pergola {
   	//cat tr_1_dt_a.bedGraph.tmp | grep -v 'track name' > tr_1_dt_a.bedGraph
   	
   	"""
-  	pergola_rules.py -i $motion_file -m $worms_motion2p -bl
+  	pergola_rules.py -i $motion_file -m $worms_motion2p
   	cat tr_1_dt_${motion}.bed | sed 's/track name=\"1_a\"/track name=\"${motion}\"/g' > tr_1_dt_${motion}.bed.tmp
   	cat tr_1_dt_${motion}.bed.tmp | grep -v 'track name' > tr_1_dt_${motion}.bed  	
   	"""
