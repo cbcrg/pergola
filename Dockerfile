@@ -34,7 +34,7 @@ MAINTAINER Jose Espinosa-Carrasco <espinosacarrascoj@gmail.com>
 # Install Python and Basic Python Tools
 #
 # Update always before download
-# single command save space, becuase each run generates a folder layer
+# single command save space, because each run generates a folder layer
 RUN apt-get update && \
 apt-get install -y python python-dev python-distribute python-pip gfortran bedtools
 
