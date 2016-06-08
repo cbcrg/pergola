@@ -99,11 +99,11 @@ names (argsL) <- argsDF$V1
 
 read_bed <- function (bed_file) {
   info = file.info(bed_file)
-  if (info$size == 0) { 
-    df_bed <- data.frame (chr="chr1", start=0, end=0, dummy_value=0, value=0, pheno_feature=0, motion=0, strain="")
+  if (info$size == 0) {
+         df_bed <- data.frame (chr="chr1", start=0, end=0, data_type=0, value=0, strand=0, s=0, e=0, color_code=0, body_part="", motion=0, strain="")
   }
   else { df_bed <- read.csv(file=bed_file, header=F, sep="\t")        
-         colnames (df_bed) <- c("chr", "start", "end", "dummy_value", "value", "pheno_feature", "motion", "strain")          
+         colnames (df_bed) <- c("chr", "start", "end", "data_type", "value", "strand", "s", "e", "color_code",  "body_part", "motion", "strain")
   }
   
   ## We remove this fake rows they were included just to avoid last line of code above to crash
@@ -145,6 +145,7 @@ xmax <- round(max (df_bed$value)+400, digits = -2)
 breaks_v <- c(-rev(seq(0,abs(xmin), by=400)[0:-1]), seq (0, xmax, by=400))
 
 labs_plot <- as.vector(levels(df_bed$strain))
+
 labs_plot [!labs_plot %in% "N2"] <- "Exp"
 labs_plot [labs_plot %in% "N2"] <- "Ctrl"
 
@@ -160,6 +161,7 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        theme (axis.title.y = element_text(size=size_axis)) +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +  
        theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-       scale_fill_manual( name='', labels = labs_plot, values = cbb_palette)                                                                 
+       scale_fill_manual( name='', labels = labs_plot, values = cbb_palette) 
+#        scale_fill_manual( name='', values = cbb_palette) 
 
 ggsave (file=name_out)
