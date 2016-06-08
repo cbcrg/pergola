@@ -142,13 +142,14 @@ size_axis_ticks_y <- 14
 xmin <- round(min (df_bed$value)-400, digits = -2)
 xmax <- round(max (df_bed$value)+400, digits = -2)
 
-breaks_v <- c(-rev(seq(0,abs(xmin), by=200)[0:-1]), seq (0, xmax, by=200))
+breaks_v <- c(-rev(seq(0,abs(xmin), by=400)[0:-1]), seq (0, xmax, by=400))
 
 ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
-       scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +  
+       scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +
+       scale_y_continuous(breaks=NULL) +
        labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
        labs (x = paste(units, "\n", sep=""), 
-        y = expression(paste("Probability (", Sigma, "P(x) = 1)", "\n", sep=""))) +
+             y = expression(paste("Probability (", Sigma, "P(x) = 1)", "\n", sep=""))) +       
        theme (axis.text.x = element_text(size=size_axis_ticks)) +
        theme (plot.title = element_text(size=size_titles)) + 
        theme (axis.title.x = element_text(size=size_axis)) +
