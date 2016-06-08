@@ -261,7 +261,7 @@ process inters_to_bedGr {
 /*
  * Grouping (collect) bed files in order to plot the distribution by strain, motion direction and body part 
  */
-bed_intersect_loc_motion_plot = mean_intersect_loc_motion.collectFile(newLine: false, sort:'none') { 
+bed_intersect_loc_motion_plot = bed_intersect_loc_motion2p.collectFile(newLine: false, sort:'none') { 
 	def name = it[3].split("_on_")[0] + "." + it[1] + "." +  it[4].tokenize(".")[1] + "." +  it[5]
 	[ name, it[0].text]	
 }.map {  
