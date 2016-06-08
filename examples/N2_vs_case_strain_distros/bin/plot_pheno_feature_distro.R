@@ -132,31 +132,6 @@ units <-"Degrees/seconds"
 title_strain_pheno_dir <- gsub("_", " ", gsub ("\\.", " - ", gsub ("\\.bed", "", name_file)))
 # title_strain_pheno_dir <- gsub ("backward", "\nwhen reversing", title_strain_pheno_dir)
 
-## many files of gk298 strain are annotated as ok298
-# title_strain_pheno_dir <- gsub ("ok298", "gk298", title_strain_pheno_dir)
-
-### Functions summary stats for plot
-## Returns mean and standard deviation
-# mean_and_sd <- function(x) {
-#   m <- mean(x)
-#   sd_min <- m - sd(x)
-#   sd_max <- m + sd(x)
-#   return(c(y=m,ymin=sd_min,ymax=sd_max))
-# }
-# 
-# ## Returns mean and standard error of the mean 
-# mean_and_se <- function(x) {
-#   m <- mean(x)
-#   se_min <- m - sd(x)/sqrt(length(x))
-#   se_max <- m + sd(x)/sqrt(length(x))
-#   return(c(y=m,ymin=se_min,ymax=se_max))
-# }
-# 
-# ## Returns mean for crossbar
-# mean_for_cross <- function(x) {
-#   return(c(y=mean(x), ymin=mean(x), ymax=mean(x)))
-# }
-
 ## color blind friendly palette
 cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 size_titles <- 20
@@ -171,30 +146,13 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-200, xmax+200)) +  
        labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
        labs (x = paste(units, "\n", sep=""), 
-       		 y = paste("Probability", expression(epsilon), "P(x) = 1", "\n", sep="") +
+        y = expression(paste("Probability (", Sigma, "P(x) = 1)", "\n", sep=""))) +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +
        theme (plot.title = element_text(size=size_titles)) + 
        theme (axis.title.x = element_text(size=size_axis)) +
        theme (axis.title.y = element_text(size=size_axis)) +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +  
        theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-       scale_fill_manual( name='', values = cbb_palette)                                            
-                     
-	   	
-
-
-#ggplot(df_bed, aes(x=value)) + geom_density() +
-  #scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-100, xmax+100)) +  
-#   labs (title = paste(pattern_worm, motion, body_part, "\n", sep=" ")) +
-#  labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
-#  labs (x = paste("\n", units, sep=""), y = "Probability density\n") +  
-  # theme (strip.text.x = element_text(size=size_strips, face="bold")) +
-#  theme (plot.title = element_text(size=size_titles)) + 
-#  theme (axis.title.x = element_text(size=size_axis)) +
-#  theme (axis.title.y = element_text(size=size_axis)) +
-#  theme (axis.text.x = element_text(size=size_axis_ticks)) +  
-#  theme (axis.text.y = element_text(size=size_axis_ticks)) +  
-#  theme (strip.background = element_blank()) 
-  
+       scale_fill_manual( name='', values = cbb_palette)                                                                 
 
 ggsave (file=name_out)
