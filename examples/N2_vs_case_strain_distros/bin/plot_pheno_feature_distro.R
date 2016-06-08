@@ -164,22 +164,14 @@ size_axis <- 18
 size_axis_ticks <- 18
 size_axis_ticks_y <- 14
 
-#ggplot(data,aes(x=value, fill=variable)) + geom_density(alpha=0.25)
-
-#ggplot(df_bed, aes(x=strain, y=value)) +    
+xmin <- min (df_bed$value)  
+xmax <- max (df_bed$value)
+   
 ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
-        
-       ## standard deviation
-       ##stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.3, fill=cbb_palette[3]) +
-       ## standard error
-#      ##  stat_summary(fun.data="mean_se", geom="crossbar", width=0.3, fill=cbb_paletee[8]) +
-       ##stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.3,  col="gray30", fatten=3, fill=cbb_palette[8]) +
-       # mean in orange
-       ##stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.5, colour=cbb_palette[2]) +     
-       ## plots means as dots  
-       ## geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
+       scale_x_continuous (breaks=c(xmin, 0, xmax), limits=c(xmin-200, xmax+200)) +  
        labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
-       labs (y = paste(units, "\n", sep=""), x="") +
+       labs (x = paste(units, "\n", sep=""), 
+       		 y = paste("Probability", expression(epsilon), "P(x) = 1", "\n", sep="") +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +
        theme (plot.title = element_text(size=size_titles)) + 
        theme (axis.title.x = element_text(size=size_axis)) +
