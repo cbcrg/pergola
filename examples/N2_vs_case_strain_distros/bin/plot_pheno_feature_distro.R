@@ -111,8 +111,7 @@ read_bed <- function (bed_file) {
     
   return (df_bed)
 }
-bed_file <- "/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/1d/ab23e18f71becbc8a7a41cb3150e86/ocr-4_tm2173.head.forward.bed"
-bed_file_ctrl <- "/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/1d/ab23e18f71becbc8a7a41cb3150e86/N2.head.forward.bed"
+
 df_bed <- read_bed (bed_file)
 df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
