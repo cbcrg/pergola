@@ -111,7 +111,7 @@ read_bed <- function (bed_file) {
     
   return (df_bed)
 }
-
+bed_file<-"N2.headTip.forward.bed"
 df_bed <- read_bed (bed_file)
 df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
@@ -144,9 +144,9 @@ xmax <- round(max (df_bed$value)+400, digits = -2)
 
 breaks_v <- c(-rev(seq(0,abs(xmin), by=400)[0:-1]), seq (0, xmax, by=400))
 
-labs_plot <- as.vector(df_bed$strain)
-labs_plot [!df_bed$strain %in% "N2"] <- "Exp"
-labs_plot [df_bed$strain %in% "N2"] <- "Ctrl"
+labs_plot <- as.vector(levels(df_bed$strain))
+labs_plot [!labs_plot %in% "N2"] <- "Exp"
+labs_plot [labs_plot %in% "N2"] <- "Ctrl"
 
 ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +
