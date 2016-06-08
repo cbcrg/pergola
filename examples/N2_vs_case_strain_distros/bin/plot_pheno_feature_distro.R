@@ -167,7 +167,7 @@ size_axis_ticks_y <- 14
 #ggplot(data,aes(x=value, fill=variable)) + geom_density(alpha=0.25)
 
 #ggplot(df_bed, aes(x=strain, y=value)) +    
-ggplot(df_bed, aes(x=value, fill=value)) + geom_density(alpha=0.25) +
+ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
         
        ## standard deviation
        ##stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.3, fill=cbb_palette[3]) +
