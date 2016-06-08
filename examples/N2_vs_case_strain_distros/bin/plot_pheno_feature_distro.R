@@ -111,7 +111,7 @@ read_bed <- function (bed_file) {
     
   return (df_bed)
 }
-bed_file<-"N2.headTip.forward.bed"
+
 df_bed <- read_bed (bed_file)
 df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
