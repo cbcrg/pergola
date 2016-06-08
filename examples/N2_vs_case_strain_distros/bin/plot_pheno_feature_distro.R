@@ -145,8 +145,8 @@ xmax <- round(max (df_bed$value)+400, digits = -2)
 breaks_v <- c(-rev(seq(0,abs(xmin), by=400)[0:-1]), seq (0, xmax, by=400))
 
 labs_plot <- as.vector(df_bed$strain)
-ori_lab [!df_bed$strain %in% "N2"] <- "Exp"
-ori_lab [df_bed$strain %in% "N2"] <- "Ctrl"
+labs_plot [!df_bed$strain %in% "N2"] <- "Exp"
+labs_plot [df_bed$strain %in% "N2"] <- "Ctrl"
 
 ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +
@@ -160,6 +160,6 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        theme (axis.title.y = element_text(size=size_axis)) +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +  
        theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-       scale_fill_manual( name='', labels = c("Ctrl", "Exp"), values = cbb_palette)                                                                 
+       scale_fill_manual( name='', labels = labs_plot, values = cbb_palette)                                                                 
 
 ggsave (file=name_out)
