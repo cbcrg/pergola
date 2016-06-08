@@ -32,10 +32,10 @@
 params.path_files = "$baseDir/data/"
 
 log.info "C. elegans trp locomotion phenotypes - N F  ~  version 0.1"
-log.info "========================================="
-log.info "c. elegans case data    : ${params.path_files}"
-log.info "c. elegans ctrl data    : ${params.ctrl_path_files}"
-log.info "c. elegans ctrl data    : ${params.tag_results}"
+log.info "======================================================="
+log.info "c. elegans case data       : ${params.path_files}"
+log.info "c. elegans ctrl data       : ${params.ctrl_path_files}"
+log.info "Tag for results folders    : ${params.tag_results}"
 log.info "\n"
 
 N2_ctrl_path = "${params.ctrl_path_files}*.mat"
@@ -212,8 +212,6 @@ map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_bG; map_bed_pergola_
 bed_loc_motion = bed_loc_no_track_line
 	.spread (bed_motion)
 	.filter { it[0] == it[4] }
-
-//bed_loc_motion.subscribe { println ("=========" + it) }
 
 /*
  * Using bedtools intersect motion with phenotypic feature bed files
