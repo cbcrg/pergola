@@ -111,10 +111,14 @@ class IntData(object):
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
         self.fieldsG = self.fieldsG_dict.keys() #here before I added the new fields
+
         self.min = self.max = 0
         self.range_values = 0
         self.data = self._simple_read()        
 #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
+        
+        # Default value for data type in case data_types does not exist is set to the name of the data_value field
+#         default_label = self.fieldsB [self.fieldsG_dict['data_value']]
         self.data_types = self.get_field_items(field ="data_types", data = self.data, default="a")
         self.tracks = self.get_field_items(field="track", data = self.data, default="1")#TODO maybe this function will be more general if instead of giving field name
         #i pass the index 
