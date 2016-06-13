@@ -227,18 +227,9 @@ process intersect_loc_motion {
 	set '*.mean.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGr_mean_loc_motion
 	set '*.intersect.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bed_intersect_loc_motion, bed_intersect_loc_motion2p, bed_intersect_l_m
 	set '*.mean_file.bed', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into mean_intersect_loc_motion
-	//set 'tr_chr1*.bedGraph', pheno_feature, mat_file_loc, mat_motion_file, name_file_motion, exp_group into bedGraph_intersect_loc_motion
+
 	"""
 	celegans_feature_i_motion.py -p $bed_loc_no_tr -m $motion_file -b $bed2pergola
-		
-	intersect_file="*.intersect.bed"
-	#if [ -s \"\$intersect_file\" ]
-	#then		
-	#	pergola_rules.py -i \$intersect_file -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph
-	#else
-	#	touch tr_chr1_d.bedGraph
-    #fi
-    	
 	"""
 }
 
@@ -258,8 +249,7 @@ process inters_to_bedGr {
 		pergola_rules.py -i $file_bed_inters -m $bed2pergola -nh -s chrm start end nature value strain start_rep end_rep color -f bedGraph -w 1
 	else
 		touch tr_chr1_d.bedGraph
-    fi
-    	
+    fi 	
 	"""
 }
 
