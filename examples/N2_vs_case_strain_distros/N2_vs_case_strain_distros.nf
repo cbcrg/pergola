@@ -146,7 +146,7 @@ process get_motion {
 	container 'ipython/scipyserver'
 	  
   	input:
-  	set file file_worm, val (name_file_worm) from mat_files_motion
+  	set file (file_worm), val (name_file_worm) from mat_files_motion
   
   	output: 
   	set name_file_worm, '*.csv' into motion_files, motion_files_wr
