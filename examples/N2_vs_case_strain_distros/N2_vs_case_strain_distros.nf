@@ -97,8 +97,8 @@ process get_feature {
 map_speed_path = "$baseDir/data/worms_speed2p.txt" 
 
 map_speed=file(map_speed_path)
-
-body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
+//body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
+body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip', 'foraging_speed', 'tail_motion', 'crawling']
 
 process feature_to_pergola {
 	container 'joseespinosa/pergola:celegans'

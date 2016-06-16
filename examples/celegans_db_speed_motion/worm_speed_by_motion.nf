@@ -76,8 +76,6 @@ process get_speed {
 /*
  * Transform speed files into bed format files
  */ 
- "$baseDir/tutorial/data/*.fa"
- 
 map_speed_path = "$baseDir/data/worms_speed2p.txt" 
 
 map_speed=file(map_speed_path)
