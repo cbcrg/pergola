@@ -92,8 +92,26 @@ fh.write("#annotations;%s\n" % annotations)
 
 writer_out = writer(fh, dialect = 'excel-tab')
 
-writer_out.writerow(['frame_start', 'frame_end']  + sorted(velocity_keys))
+writer_out.writerow(['frame_start', 'frame_end']  + sorted(velocity_keys) + ['foraging_speed', 'tail_motion', 'crawling'])
 
+# foraging angle speed
+try:
+    foraging_speed = f['worm']['locomotion']['bends']['foraging']['angleSpeed']
+except KeyError:
+    raise KeyError ("Foraging angle speed is corrupted and can not be retrieved from hdf5 file")
+                            
+# tail motion
+try:
+    tail_motion = f['worm']['locomotion']['velocity']['tail']['direction']
+except KeyError:
+    raise KeyError ("Tail motion is corrupted and can not be retrieved from hdf5 file")
+
+# Crawling
+try:
+    crawling = f['worm']['locomotion']['bends']['midbody']['amplitude']
+except KeyError:
+    raise KeyError ("Crawling is corrupted and can not be retrieved from hdf5 file")
+ 
 # range already substract one to frames 
 for frame in range(0, int(frames)):
 # for frame in range(0, 100):    #del #debug
@@ -110,6 +128,18 @@ for frame in range(0, int(frames)):
         if np.isnan(v) : v = -10000
         
         list_v.append (v)    
+    
+    v_fs = abs(foraging_speed[frame][0]) 
+    v_tm = abs(tail_motion[frame][0])
+    v_c = abs(crawling[frame][0])
+    
+    if np.isnan(v_fs) : v_fs = -10000
+    if np.isnan(v_tm) : v_tm = -10000
+    if np.isnan(v_c) : v_c = -10000
+    
+    list_v.append (v_fs)
+    list_v.append (v_tm)
+    list_v.append (v_c)
     
     writer_out.writerows([list_v])
 
