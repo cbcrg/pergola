@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Dependencies &mdash; Pergola 0.1.0 documentation</title>
+  <title>Installation from Github &mdash; Pergola 0.1.0 documentation</title>
   
 
   
@@ -55,7 +55,7 @@
   
     <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="../installation.html"/>
-        <link rel="next" title="Docker installation" href="pergola_container.html"/>
+        <link rel="next" title="Pergola Docker Container" href="pergola_container.html"/>
         <link rel="prev" title="Installation" href="../installation.html"/> 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -84,8 +84,8 @@
         
             <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../installation.html">Installation</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../installation.html#installation-from-github">Installation from github</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola docker container</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../installation.html#installation-from-github">Installation from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola Docker container</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul>
@@ -125,7 +125,7 @@
       
           <li><a href="../installation.html">Installation</a> &raquo;</li>
       
-    <li>Dependencies</li>
+    <li>Installation from Github</li>
       <li class="wy-breadcrumbs-aside">
         
           <a href="../_sources/install/installing_pergola.txt" rel="nofollow"> View page source</a>
@@ -137,18 +137,21 @@
           <div role="main">
             
   <hr class="docutils" />
-<div class="section" id="dependencies">
-<h1><a class="toc-backref" href="#id1">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-from-github">
+<h1><a class="toc-backref" href="#id1">Installation from Github</a><a class="headerlink" href="#installation-from-github" title="Permalink to this headline">¶</a></h1>
+<p>In this section you will find the details of how to download Pergola source code
+from Github and how to compile it. Prerequisites that Pergola require installed in
+your system are also listed in this section.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#dependencies" id="id1">Dependencies</a><ul>
-<li><a class="reference internal" href="#python-libraries" id="id2">Python libraries</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#installation-from-github" id="id1">Installation from Github</a><ul>
+<li><a class="reference internal" href="#required-python-libraries" id="id2">Required Python libraries</a></li>
 <li><a class="reference internal" href="#download-and-installation" id="id3">Download and installation</a></li>
 <li><a class="reference internal" href="#development-versions" id="id4">Development versions</a></li>
 <li><a class="reference internal" href="#testing-installation" id="id5">Testing installation</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="admonition note">
@@ -157,9 +160,9 @@
 </div>
 <p><strong>Pergola requires python &gt;= 2.6 as well as several dependencies that are
 listed below.</strong></p>
-<div class="section" id="python-libraries">
-<h2><a class="toc-backref" href="#id2">Python libraries</a><a class="headerlink" href="#python-libraries" title="Permalink to this headline">¶</a></h2>
-<p><strong>Required:</strong></p>
+<div class="section" id="required-python-libraries">
+<h2><a class="toc-backref" href="#id2">Required Python libraries</a><a class="headerlink" href="#required-python-libraries" title="Permalink to this headline">¶</a></h2>
+<p>Pergola requires the following Python libraries installed in your system:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>pip install numpy
 <span class="nv">$ </span>pip install argparse
 <span class="nv">$ </span>pip install csv
@@ -178,9 +181,8 @@ to the <a class="reference external" href="http://www.scipy.org/install.html">Sc
 sudo apt-get install python-numpy python-scipy</p>
 </div>
 </div>
-</div>
 <div class="section" id="download-and-installation">
-<h1><a class="toc-backref" href="#id3">Download and installation</a><a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h1>
+<h2><a class="toc-backref" href="#id3">Download and installation</a><a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h2>
 <p>Download Pergola tarball from github, unpack and install it:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -L  http://github.com/cbcrg/pergola/archive/master.zip -o <span class="s2">&quot;pergola.zip&quot;</span>
 <span class="nv">$ </span>unzip pergola.zip
@@ -192,7 +194,7 @@ sudo apt-get install python-numpy python-scipy</p>
 <img alt="install/images/github_zip_red.png" src="install/images/github_zip_red.png" />
 </div>
 <div class="section" id="development-versions">
-<h1><a class="toc-backref" href="#id4">Development versions</a><a class="headerlink" href="#development-versions" title="Permalink to this headline">¶</a></h1>
+<h2><a class="toc-backref" href="#id4">Development versions</a><a class="headerlink" href="#development-versions" title="Permalink to this headline">¶</a></h2>
 <p>The source code of pergola can be found in <a class="reference external" href="https://github.com/cbcrg/pergola">GitHub</a>. There you will find the last
 development version. If you want to modify, contribute or just run the last version
 of the code just clone the repository:</p>
@@ -201,11 +203,12 @@ of the code just clone the repository:</p>
 </div>
 </div>
 <div class="section" id="testing-installation">
-<h1><a class="toc-backref" href="#id5">Testing installation</a><a class="headerlink" href="#testing-installation" title="Permalink to this headline">¶</a></h1>
+<h2><a class="toc-backref" href="#id5">Testing installation</a><a class="headerlink" href="#testing-installation" title="Permalink to this headline">¶</a></h2>
 <p>Finally, if you want to check that your installation completed succesfully, move to test directory and run as in the example:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>pergola/test
 <span class="nv">$ </span>python test_all.py
 </pre></div>
+</div>
 </div>
 </div>
 
@@ -215,7 +218,7 @@ of the code just clone the repository:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pergola_container.html" class="btn btn-neutral float-right" title="Docker installation"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="pergola_container.html" class="btn btn-neutral float-right" title="Pergola Docker Container"/>Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../installation.html" class="btn btn-neutral" title="Installation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -227,8 +230,8 @@ of the code just clone the repository:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Jose Espinosa-Carrasco.
-      Last updated on Jun 17, 2016.
+        &copy; Copyright 2016, Jose Espinosa-Carrasco.
+      Last updated on Jun 19, 2016.
     </p>
   </div>
 
