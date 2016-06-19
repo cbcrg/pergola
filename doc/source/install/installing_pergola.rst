@@ -2,8 +2,12 @@
 .. \_Installing\_from\_Github:
 ==============================
 
-Dependencies
-============
+Installation from Github
+======================
+
+In this section you will find the details of how to download Pergola source code 
+from Github and how to compile it. Prerequisites that Pergola require installed in 
+your system are also listed in this section.
 
 .. contents::
 
@@ -15,12 +19,11 @@ Dependencies
 **Pergola requires python >= 2.6 as well as several dependencies that are
 listed below.**
 
------------------------------
-Python libraries
------------------------------
 
+Required Python libraries
+-------------------------
 
-**Required:**
+Pergola requires the following Python libraries installed in your system:
 
 .. code-block:: bash
 
@@ -44,7 +47,7 @@ Python libraries
 
 
 Download and installation
-=========================
+-------------------------
 
 Download Pergola tarball from github, unpack and install it:
 
@@ -60,7 +63,7 @@ or, you can download the code as a ``.zip`` file from Github website and follow 
 .. image:: images/github_zip_red.png
 
 Development versions
-====================
+--------------------
 
 The source code of pergola can be found in `GitHub`_. There you will find the last 
 development version. If you want to modify, contribute or just run the last version 
@@ -74,7 +77,7 @@ of the code just clone the repository:
 
 
 Testing installation
-====================
+--------------------
 
 Finally, if you want to check that your installation completed succesfully, move to test directory and run as in the example:
 
