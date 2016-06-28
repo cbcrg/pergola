@@ -1,84 +1,38 @@
 
-Installing Pergola
-==================
+Installation
+============
 
-.. contents::
+Pergola can be download from `Github`_ and compiled (`Installation from github`_). 
+However, we strongly recommend to use Pergola in its containerized version 
+(`Pergola docker container`_).
 
-.. note::
+.. _Github: https://www.github.com/
 
-    At the moment the installation has been tested only under Ubuntu-linux and MacOS.
-    
+Installation from Github
+------------------------
+In this section you will find the details of how to download Pergola source code
+from Github and how to compile. Prerequisites that pergola require installed in 
+your system are also listed in this section.
+ 
+.. toctree::
+   :maxdepth: 2
+   
+   install/installing_pergola
 
-**Pergola requires python >= 2.6 as well as several dependencies that are
-listed below.**
+Pergola Docker container
+------------------------
+`Docker`_ allows to sandbox an application with all the requirements it needs to run 
+(operating system, software, libraries and dependencies) in a container. 
+Besides avoiding the tedious process of installing all dependencies, 
+the use of Pergola docker images provides the extra benefit of guarantee 
+the reproducibility of your results. Regardless your operating system 
+and the software installed in your machine, you can always run your computation
+under the same environment and the same version of Pergola using the tag of 
+the image.  
 
------------------------------
-Dependencies
------------------------------
+.. _Docker: https://www.docker.com/
 
-Python libraries
-~~~~~~~~~~~~~~~~
-
-**Required:**
-
-.. code-block:: bash
-
-  $ pip install numpy
-  $ pip install argparse
-  $ pip install csv
-  $ pip install biopy-isatab
-  $ pip install scipy
-
-
-.. note:: **You might need to install** first `pip`_  if your python version is not 2.7.9 or later
-
-.. _pip: https://pip.pypa.io/en/latest/installing.html
-
-.. note:: Under Ubuntu **you might need to install** `python-dev`_  in order to be able to install packages belonging
-			to the `SciPy Stack`_ such as numpy and scipy using pip.  Alternatively you can also use:
-			sudo apt-get install python-numpy python-scipy
-
-.. _python-dev:  http://packages.ubuntu.com/precise/python-dev
-.. _SciPy Stack: http://www.scipy.org/install.html
-
------------------------------
-Download and installation
------------------------------
-
-Download Pergola tarball from github, unpack and install it:
-
-.. code-block:: bash
-  
-  $ curl -L  http://github.com/cbcrg/pergola/archive/master.zip -o "pergola.zip"
-  $ unzip pergola.zip
-  $ cd pergola-master
-  $ sudo python setup.py install
-
-or, you can download the code as a ``.zip`` file from Github website and follow the three last instructions above.
-
-.. image:: images/github_zip_red.png
-
------------------------------
-Development versions
------------------------------
-
-The source code of pergola can be found in `GitHub`_. There you will find the last 
-development version. If you want to modify, contribute or just run the last version 
-of the code just clone the repository:
-
-.. _GitHub: https://github.com/cbcrg/pergola
-
-.. code-block:: bash
-  
-  git clone https://github.com/cbcrg/pergola.git
-
------------------------------
-Testing installation
------------------------------
-
-Finally, if you want to check that your installation completed succesfully, move to test directory and run as in the example:
-
-.. code-block:: bash
-  
-  $ cd pergola/test
-  $ python test_all.py
+.. toctree::
+   :maxdepth: 2
+   
+   install/pergola_container

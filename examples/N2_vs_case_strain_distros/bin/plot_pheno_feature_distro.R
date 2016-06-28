@@ -139,8 +139,10 @@ size_axis <- 18
 size_axis_ticks <- 18
 size_axis_ticks_y <- 14
 
-xmin <- round(min (df_bed$value)-400, digits = -2)
-xmax <- round(max (df_bed$value)+400, digits = -2)
+# From the maximun and minimun value I add a shift to set axes limits
+shift_axes <- 100
+xmin <- round(min (df_bed$value) - shift_axes, digits = -2)
+xmax <- round(max (df_bed$value) + shift_axes, digits = -2)
 
 breaks_v <- c(-rev(seq(0,abs(xmin), by=400)[0:-1]), seq (0, xmax, by=400))
 
