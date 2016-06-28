@@ -259,6 +259,34 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     
     return (int_data_jaaba)
 
+def read_colors (path_color_file):
+    """     
+    Reads user colors for each data_type  
+    
+    :param None path_color_file: :py:func:`str` path to read user color for data_types     
+       
+    :returns: d_user_color dictionary {'data_type_1': 'orange', 'data_type_2':'blue'}
+    """
+        
+    check_path(path_color_file)
+    comment_tag_t = "#"    
+    d_user_color = {}                            
+    
+    with open(path_color_file) as f:    
+       
+       for row in f:
+           
+           if(row.startswith(comment_tag_t) or row.startswith('\n')):               
+                continue
+                       
+           row_split = row.rstrip('\n').split('\t') 
+           (data_type, color) = row_split
+           
+           # colors are checked inside tracks.assign_color
+           d_user_color[data_type] = color
+    
+    return d_user_color
+
 ###############
 ### Argument parsing
     
@@ -303,3 +331,5 @@ parent_parser.add_argument('-fs', '--field_separator', required=False, type=str,
                     default=False, help='Input file field separator')
 parent_parser.add_argument('-bl', '--bed_label', required=False, action='store_true',
                     default=False, help='Show data_types as name field in bed file')
+parent_parser.add_argument('-c', '--color_file', required=False, metavar="PATH_COLOR_FILE", 
+                           help='Dictionary assigning colors of data_types path')
