@@ -40,7 +40,7 @@ from pergola import parsers
 def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
-         bed_lab_sw=False):
+         bed_lab_sw=False, color_dict=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -51,6 +51,13 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     #Configuration file
     map_file_dict = mapping.MappingInfo(map_file_path)
     
+    # Reading color dictionary to set data_types
+    if color_dict:
+        print >> stderr, "@@@Pergola_rules.py: Color for data_types in file: %s" % color_dict
+        d_colors_data_types = parsers.read_colors (color_dict)
+    else:
+        d_colors_data_types = None    
+        
     # Handling list or range of tracks to join if set
     if list and range:
         raise ValueError("Argument -l/--list and -r/--range are not compatible. " \
@@ -200,7 +207,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
 #     mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
     # I don't need anymore the start to be shift because files are trimmed
-    mapping.write_cytoband(intData, end=end, track_line=track_line)
+    mapping.write_cytoband(intData, end=end, track_line=track_line, lab_bed=False)
     
 #     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.data_types",data_read.data_types
 
@@ -215,7 +222,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, data_types_actions=data_types_act, 
-                                 window=window_size)
+                                 window=window_size, color_restrictions=d_colors_data_types)
     
      
 #     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
@@ -245,11 +252,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
     
 #     for  i in iter:
-#         print i                                  
-                                      
-                                    
-                                    
-                               
+#         print i                                                                                                                                        
 
 if __name__ == '__main__':
         
@@ -263,7 +266,7 @@ if __name__ == '__main__':
     exit(main(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
               data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
-              write_format=args.format, relative_coord=args.relative_coord, intervals_gen=args.intervals_gen, 
-              multiply_f=args.multiply_intervals, no_header=args.no_header, 
-              fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line, separator=args.field_separator, bed_lab_sw=args.bed_label))
+              write_format=args.format, relative_coord=args.relative_coord, 
+              intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
+              no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
+              no_track_line=args.no_track_line, separator=args.field_separator, bed_lab_sw=args.bed_label, color_dict=args.color_file))

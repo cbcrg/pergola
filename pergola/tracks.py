@@ -1118,7 +1118,8 @@ def assign_color (set_data_types, color_restrictions=None):
         
         if dataType in d_dataType_color:
 #             print ("Data type color gradient already set '%s'."%(dataType))
-            print >> stderr, ("Data type color gradient already set '%s'." % (dataType))
+            continue
+#             print >> stderr, ("Data type color gradient already set '%s'." % (dataType))
 #             print >> stderr, "No path selected, files dump into path: ", pwd
         else:
             d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
