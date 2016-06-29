@@ -68,8 +68,10 @@ parseArgs <- function(x)
 #Parsing arguments
 argsDF <- as.data.frame (do.call("rbind", parseArgs(args)))
 argsL <- as.list (as.character(argsDF$V2))
+print (paste(">>>>>>>>>>@@@@@@@@@",argsL))
+print(paste(".....argsDF",argsDF$V1))
+print(paste(">>>>>> length",length(names(argsL))))
 names (argsL) <- argsDF$V1
-# print (argsL)
 
 # tag is mandatory
 {
@@ -87,7 +89,7 @@ names (argsL) <- argsDF$V1
 {
   if (is.null (argsL$path2files)) 
   {
-    path2files <- "/Users/jespinosa/phecomp/20140807_pergola/bedtools_ex/starting_regions_file_vs_24h"
+    stop ("[FATAL]: Path to files is mandatory")
   }
   else
   {
@@ -110,32 +112,13 @@ names (argsL) <- argsDF$V1
 
 # Loading params plot:
 source("https://raw.githubusercontent.com/cbcrg/mwm/master/lib/R/plot_param_public.R")
-
-setwd(path2files)
+# path2files <- "/Users/jespinosa/git/pergola/examples/CB1_mice/results/"
+# path2plot <- "/Users/jespinosa/git/pergola/examples/CB1_mice/"
 
 write(paste("Path to files: ", path2files, sep=""), stderr())
-
-path_to_bed <- "/git/pergola/examples/CB1_mice/results/"
-setwd(path_to_bed)
-
-# pattern <- "tr_wt_[1-9].*food_sc_light"
-# pattern <- "tr_wt_[1-9].*food_fat_light"
-# 
-# pattern <- "tr_wt_[1-9].*food_sc_dark"
-# pattern <- "tr_wt_[1-9].*food_fat_dark"
-# 
-# pattern <- "tr_KO_cb1_[1-9].*food_sc_light"
-# pattern <- "tr_KO_cb1_[1-9].*food_fat_light"
-# 
-# pattern <- "tr_KO_cb1_[1-9].*food_sc_dark"
-# pattern <- "tr_KO_cb1_[1-9].*food_fat_dark"
-
+setwd(path2files)
 
 files <- list.files(pattern=paste("tr_.*.bed$", sep=""))
-# files
-# data.frame_bed <- lapply(files, read.table)
-# info = file.info(bed_file)
-# if (info$size == 0) {
   
 data.frame_bed <- NULL
 
@@ -146,276 +129,135 @@ for (bed_file in files) {
     
   df <- read.csv(bed_file, header=F, sep="\t")
   
-  df$group <- gsub("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[1])
-  df$mouse <- gsub("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[2])
-  df$data_type <- gsub("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[3])
-  df$phase <- gsub("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[4])
-  
+  phenotype <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[1])
+  mouse <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[2])
+  data_type <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[3])
+  phase <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[4])
+  df$phenotype <- phenotype
+  df$mouse <- mouse
+  df$data_type <- data_type
+  df$phase <- phase
+  df$group2plot <- paste (phase, data_type)
+#   print (paste (phenotype, phase, data_type)) 
   data.frame_bed <- rbind(data.frame_bed, df)
 }
 
-# head (data.frame_bed)
-# unique(data.frame_bed$phase)
-# unique(data.frame_bed$data_type)
-# data.frame_bed
+### Functions summary stats for plot
+## Returns mean and standard deviation
+mean_and_sd <- function(x) {
+  m <- mean(x)
+  sd_min <- m - sd(x)
+  sd_max <- m + sd(x)
+  return(c(y=m,ymin=sd_min,ymax=sd_max))
+}
 
-# tail (data.frame_bed)
-# data.frame_bed$group == "wt"
+## Returns mean and standard error of the mean 
+mean_and_se <- function(x) {
+  m <- mean(x)
+  se_min <- m - sd(x)/sqrt(length(x))
+  se_max <- m + sd(x)/sqrt(length(x))
+  return(c(y=m,ymin=se_min,ymax=se_max))
+}
 
-tbl_stat_mean <- with (data.frame_bed, aggregate (cbind (V5), list (group=group, data_type=data_type, phase=phase), 
-                       FUN=function (x) c (mean=mean(x), std.error=std.error(x))))
+## Returns mean for crossbar
+mean_for_cross <- function(x) {
+  return(c(y=mean(x), ymin=mean(x), ymax=mean(x)))
+}
+
+## color blind friendly palette
+cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+size_titles <- 20
+size_axis <- 18
+size_axis_ticks_x <- 14
+size_axis_ticks_y <- 14
+
+# pheno_feature_up <- paste (toupper(substr(pheno_feature, 1, 1)), substr(pheno_feature, 2, nchar(pheno_feature)), sep="")
+# units <- switch (pheno_feature, length="mm", foraging="degrees", range="mm", 'no units')
+name_file <- "plot"
+name_out <- paste (path2plot, name_file, ".", "png", sep="")
+
+plot_title <- switch (tag, count="Feeding bouts", mean=paste("Mean intake per feeding bout", ''))
+axis_title <- switch (tag, count="Number of bouts", mean='g', 'no units' )
+
+ggplot(data.frame_bed, aes(x=group2plot, y=V5, colour=phase, fill=data_type)) +
+  ## standard deviation
+  stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.3, lwd=1) +
+  scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
+  ## standard error
+  stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.3, col=cbb_palette[8], fatten=3, fill=cbb_palette[8]) +
+#   # mean in orange
+  stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.3, colour=cbb_palette[5]) +
+  scale_colour_manual(values = c(cbb_palette[6], cbb_palette[3])) +
+  ## plots means as dots  
+  geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
+  labs (title = paste(plot_title, "\n", sep="")) +
+  labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
+  theme (plot.title = element_text(size=size_titles)) + 
+  theme (axis.title.x = element_text(size=size_axis)) +
+  theme (axis.title.y = element_text(size=size_axis)) +
+  theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
+  theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
+  theme (axis.text.x = element_text(angle=-90, vjust=0.4,hjust=1)) +
+  facet_grid(.~phenotype) +
+  theme(strip.background = element_rect(fill="white")) +
+  theme(strip.text.x = element_text(size = size_axis_ticks_x))
+
+ggsave (file=name_out)
+
+tbl_stat_mean <- with (data.frame_bed, aggregate (cbind (V5), list (phenotype=phenotype, data_type=data_type, phase=phase), 
+                                                  FUN=function (x) c (mean=mean(x), std.error=std.error(x))))
 
 tbl_stat_mean$mean <- tbl_stat_mean$V5 [,1]
 tbl_stat_mean$std.error <- tbl_stat_mean$V5 [,2]
 
+name_out_bar <- paste (path2plot, name_file, "_bar", ".", "png", sep="")
 
-# tbl_stat_mean
+ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
+  geom_errorbar(aes(ymin=mean-std.error, ymax=mean+std.error),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) +
+  facet_grid(.~phenotype) +
+  theme(strip.background = element_rect(fill="white")) +
+  theme(strip.text.x = element_text(size = size_axis_ticks_x)) +
+  labs (title = paste(plot_title,  "\n", sep="")) +
+  labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
+  theme (plot.title = element_text(size=size_titles)) + 
+  theme (axis.title.x = element_text(size=size_axis)) +
+  theme (axis.title.y = element_text(size=size_axis)) +
+  theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
+  theme (axis.text.y = element_text(size=size_axis_ticks_y)) 
 
-# load_tbl_measure <- function (pattern="food_fat_dark") {
-#   #print(files <- list.files(pattern=paste(pattern, ".bed$", sep="")))
-#   files <- list.files(pattern=paste(pattern, ".bed$", sep=""))
-#   group <- c()
-#   HF_lab <- paste ("HF", pattern,  sep="")
-#   ctrl_lab <- paste ("Ctrl", pattern,  sep="")
-#   
-#   pattern2grep <- paste ("_dt_food_fat_food_sc_", pattern, "\\.bed",sep="")
-#   group <- sapply (files, y <- function (x) {if (grepl(pattern2grep, x)) return (HF_lab) else {return (ctrl_lab)}})
-#   
-#   labs<-gsub("tr_", "", files, perl=TRUE)
-#   labs<-gsub(paste ("_dt_food_sc_", pattern,  "\\.bed", sep=""), "", labs, perl=TRUE)
-#   labs<-gsub(paste ("_dt_food_fat_food_sc_", pattern,  "\\.bed", sep=""), "", labs, perl=TRUE)
-#   
-#   # Create lists to hold coverage and cumulative coverage for each animal group and phase,
-#   # and read the data into these lists.
-#   cov <- list()
-#   
-#   for (i in 1:length(files)) {
-#     cov[[i]] <- read.table(files[i])
-#   }
-#   
-#   cov_all <- cov[[1]]
-#   cov_all$id <- labs[1]
-#   cov_all$group <- group[1]  
-#   cov_all$index <- c(1:length(cov_all[,1]))
-#   
-#   for (i in 2:length(cov)) {
-#     cov_gr <- cov[[i]] 
-#     cov_gr$id <- labs[i]
-#     cov_gr$group <- group[i]
-#     cov_gr$index <- c(1:length(cov[[i]][,1]))
-#     cov_all<-rbind (cov_all, cov_gr)    
-#   }
-#   
-#   return (cov_all)
-# }
+ggsave (file=name_out_bar)
 
-## PATTERN ==> DEPENDING ON THE PATTERN A DIFFERENT TYPE OF MEASURE WILL BE LOAD: MEAN VALUE, ACCUMULATED VALUE...
-
-# tag = "sum"
-# tag = "mean"
-# tag = "cov"
-# tag = "count"
-
-# path2files <- "~/phecomp/data/CRG/20120502_FDF_CRG/results/mean/"
-# pattern = paste("30min_", tag, sep="")
-# #pattern = "30min_cov" 
-# #pattern = "30min_sum"
-# 
-# tbl_30min <- load_tbl_measure (pattern)
-# 
-# #pattern = "24h_sum"
-# pattern = paste("24h_", tag, sep="")
-# tbl_24h <- load_tbl_measure (pattern)
-# 
-# # In the last post 24 hours guy 18 is an outliers 
-# # tbl_24h[tbl_24h$index==9 & tbl_24h$group==paste("HF24h_", tag, sep=""), ]
-# # tbl_24h <- tbl_24h [!(tbl_24h$index==9 & tbl_24h$group=="HF24h_mean" & tbl_24h$id == "18"),]
-# 
-# pattern = paste("24h_less_", tag, sep="")
-# #pattern = "24h_less_sum"
-# tbl_24h_less <- load_tbl_measure (pattern)
-# 
-# # First period can not be calculated because there is no 24 hours before frist file,
-# # thus I have to add +1 to the index
-# tbl_24h_less$index <- tbl_24h_less$index + 1
-# 
-# # I include a fake values for 24hours before in the first file, otherwise only 4 bars are plot and the width of the bars
-# # differ from the rest, fake intervals and track
-# # chr1 1085008 1086808 1000    + 1171384 1171409     0.056  8   HF24h_less_mean                 6
-# # Two values to get a std.error of the mean value of each group
-# tbl_24h_less <- rbind(tbl_24h_less, c("chr1", 1530455, 1532255, 1000, "+", 1609221, 1616855, 0, 19, paste("Ctrl24h_less_", tag, sep=""), 1))
-# tbl_24h_less <- rbind(tbl_24h_less, c("chr1", 1530455, 1532255, 1000, "+", 1609221, 1616855, 0, 21, paste("Ctrl24h_less_", tag, sep=""), 1))
-# tbl_24h_less <- rbind(tbl_24h_less, c("chr1", 1530455, 1532255, 1000, "+", 1609221, 1616855, 0, 20, paste("HF24h_less_", tag, sep=""), 1))
-# tbl_24h_less <- rbind(tbl_24h_less, c("chr1", 1530455, 1532255, 1000, "+", 1609221, 1616855, 0, 22, paste("HF24h_less_", tag, sep=""), 1))
-# 
-# tbl_24h_less$V8 <- as.numeric(tbl_24h_less$V8)
-# tbl_24h_less$index <- as.numeric(tbl_24h_less$index)
-# 
-# tbl_stat <- c()
-# tbl_stat <- rbind (tbl_30min, tbl_24h, tbl_24h_less)
-# # head (tbl_stat)
-# tail (tbl_stat,20) 
-# 
-# #Calculate mean and stderror of the mean
-# tbl_stat_mean <-with (tbl_stat, aggregate (cbind (V8), list (group=group, index=index), FUN=function (x) c (mean=mean(x), std.error=std.error(x))))
-# 
-# # For the validation of std.error I have created my own function
-# # result is actually the same
-# # my_std_error <- function(x) {
-# #     return (sd(x)/sqrt(length(x)))   
-# # }
-# # 
-# # tbl_stat_mean <-with (tbl_stat, aggregate (cbind (V8), list (group=group, index=index), FUN=function (x) c (mean=mean(x), std.error=my_std_error(x))))
-# 
-# #tbl_stat_mean
-# 
-# tbl_stat_mean$mean <- tbl_stat_mean$V8 [,1]
-# tbl_stat_mean$std.error <- tbl_stat_mean$V8 [,2]
-# 
-# ### Plots
-# # Prettier colors:
-# # Reordering colors for showing dark periods as dark colors
-# col_redish <- colorRampPalette(RColorBrewer::brewer.pal(4,"Reds"))(10)
-# col_greenish <- colorRampPalette(RColorBrewer::brewer.pal(4,"Greens"))(10)
-# cols <- c(col_greenish[c(4,7,10)], col_redish[c(4,7,10)])
-# 
-# # Get title and file name according with stat
-# var_labels<-switch(tag, 
-#                    sum={
-#                      
-#                      c("Accumulated intake ","accu_intake", "(g)\n")
-#                    },
-#                    mean={
-#                      
-#                      c("Mean intake ", "mean_intake", "(g)\n")    
-#                    },
-#                    cov={
-#                      
-#                      c("Coverage ", "coverage", "(g)\n")
-#                    },
-#                    count={
-#                      
-#                      c("Number of meals ", "count", "\n")
-#                    },
-#                    max={
-#                      
-#                      c("Biggest meal ", "max", "(g)\n")
-#                    },
-# {
-#   c("Not defined ", "not_defined", "NA")
-# }
-# )
-# 
-# title_beg <- var_labels[1]
-# file_name <- var_labels[2]
-# 
-# # Save file with prefix new_ not to overwrite old plots
-# #file_name <- paste ("new_", var_labels[2], sep="")
-# 
-# unit <- var_labels[3]
-# title_plot = paste (title_beg[1], "during first 30 min after clean,\n24h before and 24h after\n", sep="")
-# y_lab = paste (title_beg, unit)
-# 
-# # Order for plotting
-# tbl_stat_mean$group2 <- factor(tbl_stat_mean$group, levels=c(paste("Ctrl24h_less_", tag, sep=""),paste("Ctrl24h_", tag, sep=""),
-#                                                              paste("Ctrl30min_", tag, sep=""), paste("HF24h_less_", tag, sep=""), 
-#                                                              paste("HF30min_", tag, sep=""), paste("HF24h_", tag, sep="")))
-# 
-# # Setting folder to dump plot
-# setwd (path2plot)
-# 
-# # Removing last item because there neither first 30 minutes after cleaning nor 24 hours
-# # tail(tbl_stat_mean, 10)
-# tbl_stat_mean <- tbl_stat_mean [!(tbl_stat_mean$index==max (tbl_stat_mean$index)),]
-# 
-# # Removing habituation week
-# # three first files
-# tbl_stat_mean <- tbl_stat_mean [!(tbl_stat_mean$index==1 | tbl_stat_mean$index==2 | tbl_stat_mean$index==3),]
-# tbl_stat_mean$index <- tbl_stat_mean$index - 3
-# 
-# max_file = max(tbl_stat_mean$index)
-# 
-# # Filtering over 3 weeks intervals
-# filter_over <- as.integer(max_file/3) * 3
-# tbl_stat_mean <- tbl_stat_mean [tbl_stat_mean$index <= filter_over, ] 
-# 
-# max_file = max(tbl_stat_mean$index)
-# lim_max_file = max_file + 0.5
-# 
-# ggplot(data=tbl_stat_mean, aes(x=index, y=mean, fill=group2)) + 
-#   geom_bar(stat="identity", position=position_dodge()) +
-#   geom_errorbar(aes(ymin=mean-std.error, ymax=mean+std.error),
-#                 width=.2,                    # Width of the error bars
-#                 position=position_dodge(.9)) +
-#   scale_fill_manual(values=cols, labels=c("Ctrl 24h before", "Ctrl after cleaning", "Ctrl 24h after", 
-#                                           "HF 24h before", "HF after cleaning", "HF 24h after")) +
-#   #               scale_x_continuous(breaks=1:max_file, limits=c(0.6, lim_max_file)) +
-#   scale_x_continuous(breaks = c(seq(from = 2, to = lim_max_file, by = 3)), limits=c(0.4, lim_max_file), 
-#                      labels = c(seq(from = 1, to = lim_max_file/3, by = 1))) +
-#   
-#   #scale_y_continuous(limits=c(0, max(tbl_stat_mean$V8) + max(tbl_stat_mean$V8)/5)) +
-#   #scale_y_continuous(limits=c(0, 1.8)) +  
-#   scale_y_continuous(limits=c(0, max(tbl_stat_mean$mean + tbl_stat_mean$std.error)+0.2)) +    
-#   labs (title = title_plot) +  
-#   labs (x = "\nDevelopment phase (weeks)\n", y=y_lab, fill = NULL)
-# 
-# # ggsave(file=paste(file_name, "_error_bar", ".pdf", sep=""), width=10, height=8)
-# ggsave(file=paste(file_name, "_error_bar", ".pdf", sep=""), width=18, height=10)
-# 
-# 
-# ggplot(data=tbl_stat_mean, aes(x=index, y=mean, fill=group)) + 
-#   geom_bar(stat="identity", position=position_dodge()) +      
-#   #   scale_x_continuous(breaks=1:max_file, limits=c(0.6,9.5))+
-#   #   scale_x_continuous(breaks=1:max_file, limits=c(0.6, max_file))+
-#   scale_fill_manual(values=cols, labels=c("Ctrl 24h before", "Ctrl after cleaning", "Ctrl 24h after", 
-#                                           "HF 24h before", "HF after cleaning", "HF 24h after")) +
-#   #   scale_x_continuous(breaks = c(seq(from = 1, to = lim_max_file, by = 3)), limits=c(0.4, lim_max_file),
-#   scale_x_continuous(breaks = c(seq(from = 2, to = lim_max_file, by = 3)), limits=c(0.4, lim_max_file),
-#                      labels = c(seq(from = 1, to = lim_max_file/3, by = 1))) +
-#   #scale_y_continuous(limits=c(0, max(tbl_stat$V8) + max(tbl_stat$V8)/10)) +
-#   #scale_y_continuous(limits=c(0, 1.8)) +  
-#   scale_y_continuous(limits=c(0, max(tbl_stat_mean$mean + tbl_stat_mean$std.error)+0.2)) + 
-#   labs (title = title_plot) +
-#   labs (x = "\nDevelopment phase (weeks)\n", y=y_lab, fill = NULL)
-# 
-# 
-# # ggsave(file=paste(file_name, ".png", sep=""),width=26, height=14, dpi=300, units ="cm")
-# #ggsave(file=paste(file_name, ".png", sep=""), width=26, height=14, dpi=300, units ="cm")
-# ggsave(file=paste(file_name, ".pdf", sep=""), width=18, height=10)
-# 
-# warning ("Execution finished correctly")
-# 
-# 
-# # # Writing table for excel
-# # library(xlsx)
-# # require(plyr)
-# # 
-# # # Remove duplicated columns 
-# # head (tbl_stat)
-# # tbl_short <- tbl_stat_mean [,c(-1,-3,-5,-6)]
-# # tbl_by_index <- dlply(tbl_short, .(index))
-# # df.by_index <- do.call (cbind.data.frame, tbl_by_index)
-# # df.by.index_only_mean <-df.by_index [,-seq(1, ncol(df.by_index), by=2)]
-# # 
-# # tbl_group <- tbl_stat_mean [ which (tbl_stat_mean$index== 1),]$group
-# # df.by_index$group <- tbl_group
-# # 
-# # tbl_short <- tbl_stat [,c(-1,-2,-3,-4,-5,-6,-7)]
-# # head(tbl_short)
-# # tbl_short <- tbl_short [tbl_short$index <= 24, ] 
-# # tbl_short <- tbl_short [tbl_short$index > 1, ] 
-# # tbl_by_index <- dlply(tbl_short, .(index))
-# # df.by_index <- do.call (cbind.data.frame, tbl_by_index)
-# # head (df.by_index)
-# # df.by.index_only_mean_gr <- df.by_index [,-seq(2, ncol(df.by_index), by=2)]
-# # means <- df.by.index_only_mean_gr [,-seq(2, ncol(df.by.index_only_mean_gr), by=2)]
-# # means$group <- df.by.index_only_mean_gr[,2]
-# # means$id <- df.by_index[,2]
-# # means
-# # means$time <- gsub ("Ctrl", "", gsub ("HF", "" ,gsub ("_mean", "", means$group)))
-# # means$N_group <- sapply (means$group, y <- function (x) {if (grepl("HF", x)) return (2) else {return (1)}})
-# # values_by_time <- dlply(means, .(time))
-# # df.values_by_time <- do.call (cbind.data.frame, values_by_time)
-# # write.xlsx(df.values_by_time, "/Users/jespinosa/phecomp/data/CRG/20120502_FDF_CRG/20120502_FDF_CRG/results/mean/tbl_stat_mean.xlsx") 
-# # 
-# 
+# ggplot(data.frame_bed, aes(x=phase, y=V5, colour=phase, fill=data_type)) +
+#   ## standard deviation
+#   stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.4, lwd=1, position=position_dodge()) +
+#   scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
+#   stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.4, fatten=3, #colour=cbb_palette[8], 
+#                position=position_dodge()) +
+#   scale_fill_manual(values = c(cbb_palette[8], cbb_palette[8])) +
+#   facet_grid(.~phenotype)
+#   #   # mean in orange
+# #   stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.3, colour=cbb_palette[5]) +
+# #   scale_colour_manual(values = c(cbb_palette[6], cbb_palette[3])) +
+# #   ## plots means as dots  
+# #   geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
+# #   
+# #     # mean in orange
+# #     stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.3, colour=cbb_palette[5]) +
+#     scale_colour_manual(values = c(cbb_palette[6], cbb_palette[3])) +
+# #     ## plots means as dots  
+# #     geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
+# #     labs (title = paste("Plot title", "\n", sep="")) +
+# #     labs (y = paste(paste ("Plot title", "\n", sep="")), x="\nGroup") +  
+# #   theme (plot.title = element_text(size=size_titles)) + 
+# #   theme (axis.title.x = element_text(size=size_axis)) +
+# #   theme (axis.title.y = element_text(size=size_axis)) +
+# #   theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
+# #   theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
+# #   theme (axis.text.x = element_text(angle=-90, vjust=0.4,hjust=1)) +
+#   facet_grid(.~phenotype) +
+#   theme(strip.background = element_rect(fill="white")) +
+#   theme(strip.text.x = element_text(size = size_axis_ticks_x))

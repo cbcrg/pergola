@@ -28,169 +28,175 @@
 ### the above described operations.                          ###
 ################################################################
 
-import pybedtools
+# import pybedtools
 from os import path, getcwd, makedirs, chdir
 from pergola import mapping
 from pergola import intervals
 from pergola import tracks
 import subprocess
-
+ 
 # base_dir = path.dirname(getcwd())
 base_dir = getcwd()
-
+ 
 out_dir = base_dir + "/results/"
-
+ 
 if not path.exists(out_dir):
     makedirs(out_dir)
-
+ 
 chdir(out_dir)
-
+ 
 statistic = "count"
-
-mapping_data = mapping.MappingInfo("../../../sample_data/feeding_behavior/b2g.txt")
-
-int_data_b1 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B1.csv", map_dict=mapping_data.correspondence)
-int_data_b2 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B2.csv", map_dict=mapping_data.correspondence)
-int_data_b3 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B3.csv", map_dict=mapping_data.correspondence)
-int_data_b4 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B4.csv", map_dict=mapping_data.correspondence)
-
-data_read_b1 = int_data_b1.read(relative_coord=True)
-data_read_b2 = int_data_b2.read(relative_coord=True)
-data_read_b3 = int_data_b3.read(relative_coord=True)
-data_read_b4 = int_data_b4.read(relative_coord=True)
-
-# Check longest period of time of batches  
-end_time = max (int_data_b1.max - int_data_b1.min, 
-                int_data_b2.max - int_data_b2.min, 
-                int_data_b3.max - int_data_b3.min, 
-                int_data_b4.max - int_data_b4.min) 
-
-data_read_all_batches = tracks.merge_tracks (tracks.merge_tracks (tracks.merge_tracks (data_read_b1, data_read_b2), data_read_b3), data_read_b4)
-
-# print "###############", data_read_all_batches.data[-1] #del
-# print "^^^^^^^^^^^^^^^^^^^^^^", data_read_all_batches.list_tracks #del
-# print "^^^^^^^^^^^^^^^^^^^^^^", type (data_read_all_batches) #del
-
-list_wt = [item for item in data_read_all_batches.list_tracks if int(item) % 2]
-list_KO_cb1 = [item for item in data_read_all_batches.list_tracks if not int(item) % 2]
-
-# print "list of ctrl mice....................", list_wt #del
-# print "list of cb1 mice....................", list_KO_cb1 #del
-
-## Dictionary to set colors of each type of food
-# food_sc    orange
-# food_fat    black
-# water    blue
-# saccharin    red
-data_type_col = {'food_sc': 'orange', 'food_fat':'black'}
-
-bed_dict = dict()
-
-# print "wt mice>>>>>>>", list_wt #del
-
-bed_dict ['wt'] = {}
-bed_dict ['KO_cb1'] = {}
-
-bed_dict ['wt']['food_sc'] = data_read_all_batches.convert(mode="bed", data_types=["food_sc"], #dataTypes_actions="all", 
-                                                           color_restrictions=data_type_col, tracks=list_wt)
-bed_dict ['wt']['food_fat'] = data_read_all_batches.convert(mode="bed", data_types=["food_fat"], #dataTypes_actions="all", 
-                                                            color_restrictions=data_type_col, tracks=list_wt)
-bed_dict ['KO_cb1']['food_sc'] = data_read_all_batches.convert(mode="bed", data_types=["food_sc"], #dataTypes_actions="all", 
-                                                               color_restrictions=data_type_col, tracks=list_KO_cb1)
-bed_dict ['KO_cb1']['food_fat'] =  data_read_all_batches.convert(mode="bed", data_types=["food_fat"], #dataTypes_actions="all", 
-                                                                 color_restrictions=data_type_col, tracks=list_KO_cb1)                                
-
-mapping_bed = mapping.MappingInfo("../../../test/pybed2perg.txt")
-
-####################
-## Generate to BedTool objects containing light and dark phases
-
-## Write phases file
-# mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="light")
-mapping.write_cytoband(end = end_time, delta=43200, start_phase="light", path_w=out_dir)
-
-light_ph_f = out_dir +  "phases_light.bed"
-dark_ph_f = out_dir + "phases_dark.bed"
-
-light_bed = pybedtools.BedTool(light_ph_f)
-dark_bed = pybedtools.BedTool(dark_ph_f)
-
-# for (tr, exp_gr), dict_beds  in bed_dict.iteritems():
-for exp_group, dict_exp_gr in bed_dict.iteritems():
-    print "exp_group.............", exp_group#, exp_gr
-# #         print "exp_group------------------", exp_group, data_type
-#         
-    for data_type, dict_bed in dict_exp_gr.iteritems():
-        for tr, bed in dict_bed.iteritems(): 
-# #             print "tr------------------", tr
-#             print "tr, exp_group------------------", tr, exp_group, data_type, data_type_bed#, bed
-            
-#             print bed
-            bed_BedTools = bed.create_pybedtools()
-            
-            ## Generates a bed file of a single interval of the size of the whole recording
-            list_full_length = [(bed_BedTools[0]["chrom"], bed_BedTools[0]["start"], bed_BedTools[bed_BedTools.count() - 1]["end"], 0)]
-            bed_full_length = pybedtools.BedTool(list_full_length)
+# 
+# mapping_data = mapping.MappingInfo("../../../sample_data/feeding_behavior/b2g.txt")
+# 
+# int_data_b1 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B1.csv", map_dict=mapping_data.correspondence)
+# int_data_b2 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B2.csv", map_dict=mapping_data.correspondence)
+# int_data_b3 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B3.csv", map_dict=mapping_data.correspondence)
+# int_data_b4 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B4.csv", map_dict=mapping_data.correspondence)
+# 
+# data_read_b1 = int_data_b1.read(relative_coord=True)
+# data_read_b2 = int_data_b2.read(relative_coord=True)
+# data_read_b3 = int_data_b3.read(relative_coord=True)
+# data_read_b4 = int_data_b4.read(relative_coord=True)
+# 
+# # Check longest period of time of batches  
+# end_time = max (int_data_b1.max - int_data_b1.min, 
+#                 int_data_b2.max - int_data_b2.min, 
+#                 int_data_b3.max - int_data_b3.min, 
+#                 int_data_b4.max - int_data_b4.min) 
+# 
+# data_read_all_batches = tracks.merge_tracks (tracks.merge_tracks (tracks.merge_tracks (data_read_b1, data_read_b2), data_read_b3), data_read_b4)
+# 
+# # print "###############", data_read_all_batches.data[-1] #del
+# # print "^^^^^^^^^^^^^^^^^^^^^^", data_read_all_batches.list_tracks #del
+# # print "^^^^^^^^^^^^^^^^^^^^^^", type (data_read_all_batches) #del
+# 
+# list_wt = [item for item in data_read_all_batches.list_tracks if int(item) % 2]
+# list_KO_cb1 = [item for item in data_read_all_batches.list_tracks if not int(item) % 2]
+# 
+# # print "list of ctrl mice....................", list_wt #del
+# # print "list of cb1 mice....................", list_KO_cb1 #del
+# 
+# ## Dictionary to set colors of each type of food
+# # food_sc    orange
+# # food_fat    black
+# # water    blue
+# # saccharin    red
+# data_type_col = {'food_sc': 'orange', 'food_fat':'black'}
+# 
+# bed_dict = dict()
+# 
+# # print "wt mice>>>>>>>", list_wt #del
+# 
+# bed_dict ['wt'] = {}
+# bed_dict ['KO_cb1'] = {}
+# 
+# bed_dict ['wt']['food_sc'] = data_read_all_batches.convert(mode="bed", data_types=["food_sc"], #dataTypes_actions="all", 
+#                                                            color_restrictions=data_type_col, tracks=list_wt)
+# bed_dict ['wt']['food_fat'] = data_read_all_batches.convert(mode="bed", data_types=["food_fat"], #dataTypes_actions="all", 
+#                                                             color_restrictions=data_type_col, tracks=list_wt)
+# bed_dict ['KO_cb1']['food_sc'] = data_read_all_batches.convert(mode="bed", data_types=["food_sc"], #dataTypes_actions="all", 
+#                                                                color_restrictions=data_type_col, tracks=list_KO_cb1)
+# bed_dict ['KO_cb1']['food_fat'] =  data_read_all_batches.convert(mode="bed", data_types=["food_fat"], #dataTypes_actions="all", 
+#                                                                  color_restrictions=data_type_col, tracks=list_KO_cb1)                                
+# 
+# mapping_bed = mapping.MappingInfo("../../../test/pybed2perg.txt")
+# 
+# ####################
+# ## Generate to BedTool objects containing light and dark phases
+# 
+# ## Write phases file
+# # mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="light")
+# mapping.write_cytoband(end = end_time, delta=43200, start_phase="light", path_w=out_dir)
+# 
+# light_ph_f = out_dir +  "phases_light.bed"
+# dark_ph_f = out_dir + "phases_dark.bed"
+# 
+# light_bed = pybedtools.BedTool(light_ph_f)
+# dark_bed = pybedtools.BedTool(dark_ph_f)
+# 
+# # for (tr, exp_gr), dict_beds  in bed_dict.iteritems():
+# for exp_group, dict_exp_gr in bed_dict.iteritems():
+#     print "exp_group.............", exp_group#, exp_gr
+# # #         print "exp_group------------------", exp_group, data_type
+# #         
+#     for data_type, dict_bed in dict_exp_gr.iteritems():
+#         for tr, bed in dict_bed.iteritems(): 
+# # #             print "tr------------------", tr
+# #             print "tr, exp_group------------------", tr, exp_group, data_type, data_type_bed#, bed
 #             
-            # no hace falta esto porque en este caso no calculo el complemento
-#             bed_merged_fn = bed_BedTools.merge(d=120, stream=True, c=(4,5,6,9), o=("distinct","sum","distinct","collapse")).saveas().fn
-              
-            # Creates a new pergola object after merging bouts
-#             pybed_intdata = intervals.IntData(bed_merged_fn, map_dict=mapping_bed.correspondence, header=False, fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
-#             pybed_intdata_read = pybed_intdata.read(relative_coord=False)
-                   
-        #     pybed_tr_merged = pybed_intdata_read.convert(mode="bed", data_types=["food_sc", "food_fat"], data_types_actions="all", color_restrictions=data_type_col)
-              
-#             bed_merged = pybedtools.BedTool(bed_merged_fn)
-        #     print pybed_tr_merged
-#             print '*********************tr_' + exp_group + '.' + '.'.join(tr) + ".dark.bed"
-#             print '*********************tr_>>>>>>>>>>>>' + tr
-            
-            ###
-            ####### KEEP
-            ###
-            # Intersect light and dark phases with bouts
-#             light_bouts_bed = bed_BedTools.intersect(light_bed).saveas('all_bouts.' + exp_group + '.' + '.'.join(tr) + ".light.bed")
-#             dark_bouts_bed = bed_BedTools.intersect(dark_bed).saveas('all_bouts.' + exp_group + '.' + '.'.join(tr) + ".dark.bed")
-            light_bouts_bed = bed_BedTools.intersect(light_bed)
-            dark_bouts_bed = bed_BedTools.intersect(dark_bed)           
-            
-            ## Para que me salga mean of means (N2_hourly_mean_measures)
-            # celegans_feature_mean.py 
-            
-            ###################
-            # Generate mean value of the whole record after intersecting with phase
-            if light_bouts_bed.count() == 0: 
-#                 print >> stderr, "No intervals inside the bed file\n"
-                # When there is any interval we set the mean to zero
-                list_no_intervals = [("chr1", 0, 1, "no_intervals", 0)]
-#                 list_full_length = [(phenotypic_feature_bt[0]["chrom"], phenotypic_feature_bt[0]["start"], phenotypic_feature_bt[phenotypic_feature_bt.count() - 1]["end"], 0)]
-                bed_no_intervals = pybedtools.BedTool(list_no_intervals).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".light.bed")  
-            else: 
-                bed_full_length.map(light_bouts_bed, c=5, o=statistic, null=0).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".light.bed")
-            
-            if dark_bouts_bed.count() == 0: 
-#                 print >> stderr, "No intervals inside the bed file\n"
-                # When there is any interval we set the mean to zero
-                list_no_intervals = [("chr1", 0, 1, "no_intervals", 0)]
-                bed_no_intervals = pybedtools.BedTool(list_no_intervals).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".dark.bed")  
-            else: 
-                bed_full_length.map(dark_bouts_bed, c=5, o=statistic, null=0).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".dark.bed")
+# #             print bed
+#             bed_BedTools = bed.create_pybedtools()
+#             
+#             ## Generates a bed file of a single interval of the size of the whole recording
+#             list_full_length = [(bed_BedTools[0]["chrom"], bed_BedTools[0]["start"], bed_BedTools[bed_BedTools.count() - 1]["end"], 0)]
+#             bed_full_length = pybedtools.BedTool(list_full_length)
+# #             
+#             # no hace falta esto porque en este caso no calculo el complemento
+# #             bed_merged_fn = bed_BedTools.merge(d=120, stream=True, c=(4,5,6,9), o=("distinct","sum","distinct","collapse")).saveas().fn
+#               
+#             # Creates a new pergola object after merging bouts
+# #             pybed_intdata = intervals.IntData(bed_merged_fn, map_dict=mapping_bed.correspondence, header=False, fields_names=['chrm', 'start', 'end', 'nature', 'value', 'strain', 'color'])
+# #             pybed_intdata_read = pybed_intdata.read(relative_coord=False)
+#                    
+#         #     pybed_tr_merged = pybed_intdata_read.convert(mode="bed", data_types=["food_sc", "food_fat"], data_types_actions="all", color_restrictions=data_type_col)
+#               
+# #             bed_merged = pybedtools.BedTool(bed_merged_fn)
+#         #     print pybed_tr_merged
+# #             print '*********************tr_' + exp_group + '.' + '.'.join(tr) + ".dark.bed"
+# #             print '*********************tr_>>>>>>>>>>>>' + tr
+#             
+#             ###
+#             ####### KEEP
+#             ###
+#             # Intersect light and dark phases with bouts
+# #             light_bouts_bed = bed_BedTools.intersect(light_bed).saveas('all_bouts.' + exp_group + '.' + '.'.join(tr) + ".light.bed")
+# #             dark_bouts_bed = bed_BedTools.intersect(dark_bed).saveas('all_bouts.' + exp_group + '.' + '.'.join(tr) + ".dark.bed")
+#             light_bouts_bed = bed_BedTools.intersect(light_bed)
+#             dark_bouts_bed = bed_BedTools.intersect(dark_bed)           
+#             
+#             ## Para que me salga mean of means (N2_hourly_mean_measures)
+#             # celegans_feature_mean.py 
+#             
+#             ###################
+#             # Generate mean value of the whole record after intersecting with phase
+#             if light_bouts_bed.count() == 0: 
+# #                 print >> stderr, "No intervals inside the bed file\n"
+#                 # When there is any interval we set the mean to zero
+#                 list_no_intervals = [("chr1", 0, 1, "no_intervals", 0)]
+# #                 list_full_length = [(phenotypic_feature_bt[0]["chrom"], phenotypic_feature_bt[0]["start"], phenotypic_feature_bt[phenotypic_feature_bt.count() - 1]["end"], 0)]
+#                 bed_no_intervals = pybedtools.BedTool(list_no_intervals).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".light.bed")  
+#             else: 
+#                 bed_full_length.map(light_bouts_bed, c=5, o=statistic, null=0).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".light.bed")
+#             
+#             if dark_bouts_bed.count() == 0: 
+# #                 print >> stderr, "No intervals inside the bed file\n"
+#                 # When there is any interval we set the mean to zero
+#                 list_no_intervals = [("chr1", 0, 1, "no_intervals", 0)]
+#                 bed_no_intervals = pybedtools.BedTool(list_no_intervals).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".dark.bed")  
+#             else: 
+#                 bed_full_length.map(dark_bouts_bed, c=5, o=statistic, null=0).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".dark.bed")
 
 
 # Define command and arguments
 command = 'Rscript'
-path2script = 'path/to your script/max.R'
-script_path = base_dir + "/bin/"
+
+# Rscript /Users/jespinosa/git/pergola/examples/CB1_mice/bin/stats_analysis_CB1.R --path2files="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --path2plot="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --tag="mean"
+# path2script = '/pergola/examples/CB1_mice/bin/stats_analysis_CB1.R'
+script_path = base_dir + "/bin/stats_analysis_CB1.R"
 
 # Variable number of args in a list
-args = ['--tag', statistic, '--path2files', out_dir, '--path2plot', out_dir ]
+out_dir='/Users/jespinosa/git/pergola/examples/CB1_mice/results/'
+# args = ['--tag', statistic, '--path2files', out_dir, '--path2plot', out_dir]#, '--tag', statistic
+args = [ '--tag=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] #'--tag', statistic, 
 # --tag="mean" --path2files="/Users/jespinosa/phecomp/20140807_pergola/bedtools_ex/starting_regions_file_vs_24h/" --path2plot=
 # Build subprocess command
 cmd = [command, script_path] + args
 
 # check_output will run the command and store to result
 # check_output
+# x = subprocess.check_output (cmd, universal_newlines=True)
+# subprocess.call (cmd, universal_newlines=True)
 subprocess.call (cmd, universal_newlines=True)
 
 # print('The maximum of the numbers is:', x)
