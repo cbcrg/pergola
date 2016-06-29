@@ -68,9 +68,6 @@ parseArgs <- function(x)
 #Parsing arguments
 argsDF <- as.data.frame (do.call("rbind", parseArgs(args)))
 argsL <- as.list (as.character(argsDF$V2))
-print (paste(">>>>>>>>>>@@@@@@@@@",argsL))
-print(paste(".....argsDF",argsDF$V1))
-print(paste(">>>>>> length",length(names(argsL))))
 names (argsL) <- argsDF$V1
 
 # tag is mandatory
@@ -174,7 +171,7 @@ size_axis_ticks_y <- 14
 # pheno_feature_up <- paste (toupper(substr(pheno_feature, 1, 1)), substr(pheno_feature, 2, nchar(pheno_feature)), sep="")
 # units <- switch (pheno_feature, length="mm", foraging="degrees", range="mm", 'no units')
 name_file <- "plot"
-name_out <- paste (path2plot, name_file, ".", "png", sep="")
+name_out <- paste (path2plot, tag, "_", name_file, ".", "png", sep="")
 
 plot_title <- switch (tag, count="Feeding bouts", mean=paste("Mean intake per feeding bout", ''))
 axis_title <- switch (tag, count="Number of bouts", mean='g', 'no units' )
@@ -200,7 +197,8 @@ ggplot(data.frame_bed, aes(x=group2plot, y=V5, colour=phase, fill=data_type)) +
   theme (axis.text.x = element_text(angle=-90, vjust=0.4,hjust=1)) +
   facet_grid(.~phenotype) +
   theme(strip.background = element_rect(fill="white")) +
-  theme(strip.text.x = element_text(size = size_axis_ticks_x))
+  theme(strip.text.x = element_text(size = size_axis_ticks_x)) +
+  theme(legend.title=element_blank())
 
 ggsave (file=name_out)
 
@@ -210,7 +208,7 @@ tbl_stat_mean <- with (data.frame_bed, aggregate (cbind (V5), list (phenotype=ph
 tbl_stat_mean$mean <- tbl_stat_mean$V5 [,1]
 tbl_stat_mean$std.error <- tbl_stat_mean$V5 [,2]
 
-name_out_bar <- paste (path2plot, name_file, "_bar", ".", "png", sep="")
+name_out_bar <- paste (path2plot, tag, "_", name_file, "_bar", ".", "png", sep="")
 
 ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) + 
   geom_bar(stat="identity", position=position_dodge()) +
@@ -227,7 +225,8 @@ ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) +
   theme (axis.title.x = element_text(size=size_axis)) +
   theme (axis.title.y = element_text(size=size_axis)) +
   theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
-  theme (axis.text.y = element_text(size=size_axis_ticks_y)) 
+  theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
+  theme(legend.title=element_blank())
 
 ggsave (file=name_out_bar)
 
