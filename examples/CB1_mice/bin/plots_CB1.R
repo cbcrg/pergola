@@ -109,8 +109,6 @@ names (argsL) <- argsDF$V1
 
 # Loading params plot:
 source("https://raw.githubusercontent.com/cbcrg/mwm/master/lib/R/plot_param_public.R")
-# path2files <- "/Users/jespinosa/git/pergola/examples/CB1_mice/results/"
-# path2plot <- "/Users/jespinosa/git/pergola/examples/CB1_mice/"
 
 write(paste("Path to files: ", path2files, sep=""), stderr())
 setwd(path2files)
@@ -168,13 +166,12 @@ size_axis <- 18
 size_axis_ticks_x <- 14
 size_axis_ticks_y <- 14
 
-# pheno_feature_up <- paste (toupper(substr(pheno_feature, 1, 1)), substr(pheno_feature, 2, nchar(pheno_feature)), sep="")
-# units <- switch (pheno_feature, length="mm", foraging="degrees", range="mm", 'no units')
 name_file <- "plot"
 name_out <- paste (path2plot, tag, "_", name_file, ".", "png", sep="")
 
-plot_title <- switch (tag, count="Feeding bouts", mean=paste("Mean intake per feeding bout", ''))
-axis_title <- switch (tag, count="Number of bouts", mean='g', 'no units' )
+plot_title <- switch (tag, count="Feeding bouts", mean="Mean intake per feeding bout", sum='Accumulated intake', 
+                      max='Maximun intake', '')
+axis_title <- switch (tag, count="Number of bouts", mean='g', sum='g', max='g', 'no units' )
 
 ggplot(data.frame_bed, aes(x=group2plot, y=V5, colour=phase, fill=data_type)) +
   ## standard deviation
