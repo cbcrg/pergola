@@ -349,11 +349,16 @@ class Track(GenomicContainer):
             sel_tracks = map(str, kwargs.get("tracks",[]))
                    
         ### When any tracks are selected we consider that no track should be removed
-        if sel_tracks != []:
-            tracks2rm = self.list_tracks.difference(sel_tracks)           
+        if sel_tracks != []:            
+            ori_tracks = set(self.list_tracks)
+            tracks2rm = self.list_tracks.difference(sel_tracks)
+            tracks2rm = sel_tracks                           
             dict_split = self.remove (dict_split, tracks2rm)
             print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
-         
+            
+            # I have to keep the original list otherwise the original object is changed
+            self.list_tracks = ori_tracks
+            
         # Eventually I can eliminate tracks of not selected tracks
 #         self.data = [y for y in data_tuples if y[0] in self.list_tracks]
         

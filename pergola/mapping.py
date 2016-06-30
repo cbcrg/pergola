@@ -235,9 +235,8 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     chrom_size_f.close()
     print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
 
-def write_cytoband(self, end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True, track_line=True):
+def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True, track_line=True):
     """
-     
     Creates a cytoband-like and a bed file with phases of the experiment 
     
     :param end: :py:func:`int` last timepoint in the series
