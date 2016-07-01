@@ -28,31 +28,47 @@
 ### the above described operations.                          ###
 ################################################################
 
-import pybedtools
+from argparse import ArgumentParser
 from os import path, getcwd, makedirs, chdir
+from sys import stderr
+import subprocess
+import pybedtools
 from pergola import mapping
 from pergola import intervals
 from pergola import tracks
-import subprocess
+
+_stats_available = ['mean', 'count', 'sum', 'max', 'min', 'median' ]
+
+parser = ArgumentParser(description='Statistic to calculate from the data')
+parser.add_argument('-s','--statistic', help='Choose one of the possible statistical available on Bedtools map option',
+                     required=True, choices=_stats_available)
+
+args = parser.parse_args()
+
+print >> stderr, "Statistic to be calculated: %s" % args.statistic
+
+# Statistic to calculate
+# statistic = "count"
+statistic = args.statistic
+
+mapping_data = mapping.MappingInfo("../../sample_data/feeding_behavior/b2g.txt")
  
+int_data_b1 = intervals.IntData ("../../sample_data/feeding_beh_CB1_mice/intake_CB1_B1.csv", map_dict=mapping_data.correspondence)
+int_data_b2 = intervals.IntData ("../../sample_data/feeding_beh_CB1_mice/intake_CB1_B2.csv", map_dict=mapping_data.correspondence)
+int_data_b3 = intervals.IntData ("../../sample_data/feeding_beh_CB1_mice/intake_CB1_B3.csv", map_dict=mapping_data.correspondence)
+int_data_b4 = intervals.IntData ("../../sample_data/feeding_beh_CB1_mice/intake_CB1_B4.csv", map_dict=mapping_data.correspondence)
+
+mapping_bed = mapping.MappingInfo("../../test/pybed2perg.txt")
+
 # base_dir = path.dirname(getcwd())
 base_dir = getcwd()
  
-out_dir = base_dir + "/results/"
+out_dir = base_dir + "/results/" + statistic + "/"
  
 if not path.exists(out_dir):
     makedirs(out_dir)
  
 chdir(out_dir)
- 
-statistic = "count"
- 
-mapping_data = mapping.MappingInfo("../../../sample_data/feeding_behavior/b2g.txt")
- 
-int_data_b1 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B1.csv", map_dict=mapping_data.correspondence)
-int_data_b2 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B2.csv", map_dict=mapping_data.correspondence)
-int_data_b3 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B3.csv", map_dict=mapping_data.correspondence)
-int_data_b4 = intervals.IntData ("../../../sample_data/feeding_beh_CB1_mice/intake_CB1_B4.csv", map_dict=mapping_data.correspondence)
  
 data_read_b1 = int_data_b1.read(relative_coord=True)
 data_read_b2 = int_data_b2.read(relative_coord=True)
@@ -90,8 +106,6 @@ bed_dict ['KO_cb1']['food_sc'] = data_read_all_batches.convert(mode="bed", data_
                                                                color_restrictions=data_type_col, tracks=list_KO_cb1)
 bed_dict ['KO_cb1']['food_fat'] =  data_read_all_batches.convert(mode="bed", data_types=["food_fat"], #dataTypes_actions="all", 
                                                                  color_restrictions=data_type_col, tracks=list_KO_cb1)                                
- 
-mapping_bed = mapping.MappingInfo("../../../test/pybed2perg.txt")
  
 ####################
 ## Generate to BedTool objects containing light and dark phases
@@ -141,9 +155,11 @@ for exp_group, dict_exp_gr in bed_dict.iteritems():
 # Define command and arguments
 command = 'Rscript'
 
-# Rscript /Users/jespinosa/git/pergola/examples/CB1_mice/bin/stats_analysis_CB1.R --path2files="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --path2plot="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --tag="mean"
+## Command template in local
+# Rscript /Users/jespinosa/git/pergola/examples/CB1_mice/bin/stats_analysis_CB1.R --path2files="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" 
+# --path2plot="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --tag="mean"
 
-script_path = base_dir + "/bin/stats_analysis_CB1.R"
+script_path = base_dir + "/bin/plots_CB1.R"
 
 args = [ '--tag=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] 
 cmd = [command, script_path] + args
