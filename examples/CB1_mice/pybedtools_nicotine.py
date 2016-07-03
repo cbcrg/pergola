@@ -75,7 +75,7 @@ data_read_b2 = int_data_b2.read(relative_coord=True)
 data_read_b3 = int_data_b3.read(relative_coord=True)
 data_read_b4 = int_data_b4.read(relative_coord=True)
  
-# Check longest period of time of batches  
+# Check the longest period of time of any batches    
 end_time = max (int_data_b1.max - int_data_b1.min, 
                 int_data_b2.max - int_data_b2.min, 
                 int_data_b3.max - int_data_b3.min, 
@@ -157,12 +157,11 @@ command = 'Rscript'
 
 ## Command template in local
 # Rscript /Users/jespinosa/git/pergola/examples/CB1_mice/bin/stats_analysis_CB1.R --path2files="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" 
-# --path2plot="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --tag="mean"
+# --path2plot="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --stat="mean"
 
 script_path = base_dir + "/bin/plots_CB1.R"
 
-args = [ '--tag=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] 
+args = [ '--stat=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] 
 cmd = [command, script_path] + args
 
-# subprocess.call (cmd, universal_newlines=True)
 subprocess.call (cmd, universal_newlines=True)

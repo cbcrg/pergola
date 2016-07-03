@@ -111,29 +111,32 @@ names (argsL) <- argsDF$V1
 source("https://raw.githubusercontent.com/cbcrg/mwm/master/lib/R/plot_param_public.R")
 
 write(paste("Path to files: ", path2files, sep=""), stderr())
+# path2files <- "/Users/jespinosa/git/pergola/examples/CB1_mice/results/count/"
+# stat <- 'count'
 setwd(path2files)
 
 files <- list.files(pattern=paste("tr_.*.bed$", sep=""))
-  
+
 data.frame_bed <- NULL
 
 for (bed_file in files) {
   
   info = file.info (bed_file)
   if (info$size == 0) { next }
-    
+  
   df <- read.csv(bed_file, header=F, sep="\t")
   
   phenotype <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[1])
   mouse <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[2])
   data_type <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[3])
   phase <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[4])
+  exp_phase <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[5])
   df$phenotype <- phenotype
   df$mouse <- mouse
   df$data_type <- data_type
   df$phase <- phase
+  df$exp_phase <- gsub("_", " ", exp_phase)
   df$group2plot <- paste (phase, data_type)
-#   print (paste (phenotype, phase, data_type)) 
   data.frame_bed <- rbind(data.frame_bed, df)
 }
 
@@ -182,7 +185,7 @@ ggplot(data.frame_bed, aes(x=group2plot, y=V5, colour=phase, fill=data_type)) +
   scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
   ## standard error
   stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.3, col=cbb_palette[8], fatten=3, fill=cbb_palette[8]) +
-#   # mean in orange
+  #   # mean in orange
   stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.3, colour=cbb_palette[5]) +
   scale_colour_manual(values = c(cbb_palette[6], cbb_palette[3])) +
   ## plots means as dots  
@@ -195,13 +198,14 @@ ggplot(data.frame_bed, aes(x=group2plot, y=V5, colour=phase, fill=data_type)) +
   theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
   theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
   theme (axis.text.x = element_text(angle=-90, vjust=0.4,hjust=1)) +
-  facet_grid(.~phenotype) +
+  facet_grid(phenotype~exp_phase) +
   theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
   theme(legend.title=element_blank())
 
 ggsave (file=name_out, width = plot_width, height=plot_height)
 
-tbl_stat_mean <- with (data.frame_bed, aggregate (cbind (V5), list (phenotype=phenotype, data_type=data_type, phase=phase), 
+tbl_stat_mean <- with (data.frame_bed, aggregate (cbind (V5), list (phenotype=phenotype, data_type=data_type, phase=phase,
+                                                                    exp_phase=exp_phase), 
                                                   FUN=function (x) c (mean=mean(x), std.error=std.error(x))))
 
 tbl_stat_mean$mean <- tbl_stat_mean$V5 [,1]
@@ -215,7 +219,7 @@ ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) +
   geom_errorbar(aes(ymin=mean-std.error, ymax=mean+std.error),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
-  facet_grid(.~phenotype) +
+  facet_grid(phenotype~exp_phase) +
   theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
   labs (title = paste(plot_title,  "\n", sep="")) +
   labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
@@ -226,60 +230,29 @@ ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) +
   theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
   theme(legend.title=element_blank())
 
-ggsave (file=name_out_bar, width = plot_width, height=plot_height)
+ggsave (file=name_out_bar, width=plot_width, height=plot_height, dpi=300)
 
 ####################
 ## relative frequencies of counts
 {
   if (stat == 'count' | stat == 'sum'){
-    name_out_rel_freq <- paste (path2plot, stat, "_", name_file, "_rel_freq", ".", "png", sep="")
-    
+    name_out_rel_freq <- paste (path2plot, stat, "_", name_file, "_rel_freq", ".", "png", sep="") 
     ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) + 
-           geom_bar(stat="identity", position="fill") +
-           scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
-           facet_grid(.~phenotype) +
-           theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
-           labs (title = paste(plot_title,  "\n", sep="")) +
-           labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
-           theme (plot.title = element_text(size=size_titles)) + 
-           theme (axis.title.x = element_text(size=size_axis)) +
-           theme (axis.title.y = element_text(size=size_axis)) +
-           theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
-           theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-           theme(legend.title=element_blank())
+    geom_bar(stat="identity", position="fill") +
+    scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
+    facet_grid(phenotype~exp_phase) +
+    theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
+    labs (title = paste(plot_title,  "\n", sep="")) +
+    labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
+    theme (plot.title = element_text(size=size_titles)) + 
+    theme (axis.title.x = element_text(size=size_axis)) +
+    theme (axis.title.y = element_text(size=size_axis)) +
+    theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
+    theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
+    theme(legend.title=element_blank())
     
     ggsave (file=name_out_rel_freq, width=plot_width, height=plot_height, dpi=300)
     
   }
 }
 
-# ggplot(data.frame_bed, aes(x=phase, y=V5, colour=phase, fill=data_type)) +
-#   ## standard deviation
-#   stat_summary(fun.data=mean_and_sd, geom="crossbar", width=0.4, lwd=1, position=position_dodge()) +
-#   scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
-#   stat_summary(fun.data=mean_and_se, geom="crossbar", width=0.4, fatten=3, #colour=cbb_palette[8], 
-#                position=position_dodge()) +
-#   scale_fill_manual(values = c(cbb_palette[8], cbb_palette[8])) +
-#   facet_grid(.~phenotype)
-#   #   # mean in orange
-# #   stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.3, colour=cbb_palette[5]) +
-# #   scale_colour_manual(values = c(cbb_palette[6], cbb_palette[3])) +
-# #   ## plots means as dots  
-# #   geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
-# #   
-# #     # mean in orange
-# #     stat_summary(fun.data=mean_for_cross, geom="crossbar", width=0.3, size=0.3, colour=cbb_palette[5]) +
-#     scale_colour_manual(values = c(cbb_palette[6], cbb_palette[3])) +
-# #     ## plots means as dots  
-# #     geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
-# #     labs (title = paste("Plot title", "\n", sep="")) +
-# #     labs (y = paste(paste ("Plot title", "\n", sep="")), x="\nGroup") +  
-# #   theme (plot.title = element_text(size=size_titles)) + 
-# #   theme (axis.title.x = element_text(size=size_axis)) +
-# #   theme (axis.title.y = element_text(size=size_axis)) +
-# #   theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
-# #   theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-# #   theme (axis.text.x = element_text(angle=-90, vjust=0.4,hjust=1)) +
-#   facet_grid(.~phenotype) +
-#   theme(strip.background = element_rect(fill="white")) +
-#   theme(strip.text.x = element_text(size = size_axis_ticks_x))

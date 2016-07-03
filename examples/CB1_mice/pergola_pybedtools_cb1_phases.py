@@ -128,14 +128,11 @@ mapping_data_phases = mapping.MappingInfo("../../data/f2g.txt")
 int_exp_phases = intervals.IntData ("../../data/exp_phases.csv", map_dict=mapping_data_phases.correspondence)
 data_read_exp_phases = int_exp_phases.read(relative_coord=True)
 
-# d_exp_phases_bed2file = data_read_exp_phases.convert(mode="bed", data_types_actions="all")
-# d_exp_phases_bed2file[d_exp_phases_bed2file.keys()[0]].save_track(bed_label="True", path=base_dir + "/results/", name_file="exp_phases")
+d_exp_phases_bed2file = data_read_exp_phases.convert(mode="bed", data_types_actions="all")
+d_exp_phases_bed2file[d_exp_phases_bed2file.keys()[0]].save_track(bed_label="True", path=base_dir + "/results/", name_file="exp_phases")
 
 d_exp_phases_bed = data_read_exp_phases.convert(mode="bed", data_types_actions='one_per_channel')
-print "............", d_exp_phases_bed
 
-# for k, b in d_exp_phases_bed.iteritems(): print "*********", k
-    
 # basal_bed = exp_phases_bed['1', 'Basal'].create_pybedtools()
 # nicotine_bed = exp_phases_bed['1', 'Nicotine_withdrawal'].create_pybedtools()
 # withdrawal_bed = exp_phases_bed['1', 'Nicotine_treatment'].create_pybedtools()
@@ -184,7 +181,7 @@ command = 'Rscript'
 
 script_path = base_dir + "/bin/plots_CB1_phase.R"
 
-args = [ '--tag=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] 
+args = [ '--stat=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] 
 cmd = [command, script_path] + args
 
 # subprocess.call (cmd, universal_newlines=True)
