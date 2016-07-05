@@ -195,8 +195,8 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     start = intData.min
     end = intData.max
     
-    print "min>>>>>>>>>>>>>>>>>>>", start
-    print "max>>>>>>>>>>>>>>>>>>>", end
+    print >>stderr, "@@@Pergola_rules.py: min time: %d" % start
+    print >>stderr, "@@@Pergola_rules.py: max time: %d" % end
      
     if relative_coord:
        start = 0
@@ -207,8 +207,8 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
 #     mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
     # I don't need anymore the start to be shift because files are trimmed
-    mapping.write_cytoband(intData, end=end, track_line=track_line, lab_bed=False)
-    
+#     mapping.write_cytoband(intData, end=end, track_line=track_line, lab_bed=False)
+    mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
 #     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.data_types",data_read.data_types
 
     # Save the data in a text file similar to the original read file
