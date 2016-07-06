@@ -31,6 +31,7 @@
 ##Loading libraries
 library ("ggplot2")
 library ("plotrix") #std.error
+library('extrafont')
 
 #####################
 ### VARIABLES
@@ -129,6 +130,8 @@ for (bed_file in files) {
   phenotype <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[1])
   mouse <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[2])
   data_type <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[3])
+  data_type <- gsub ("food_fat", "HF", data_type)
+  data_type <- gsub ("food_sc", "SC", data_type)
   phase <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[4])
   exp_phase <- gsub ("tr_", "", unlist(strsplit(bed_file, split=".",fixed=T))[5])
   df$phenotype <- phenotype
@@ -163,7 +166,17 @@ mean_for_cross <- function(x) {
 }
 
 ## color blind friendly palette
-cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+{
+  if ('food_fat' %in% data.frame_bed$data_type & 'food_sc' %in% data.frame_bed$data_type) {
+    cbb_palette <- c("#E69F00", "#000000", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+  }
+  else if ('water' %in% data.frame_bed$data_type & 'saccharin' %in% data.frame_bed$data_type) {
+    cbb_palette <- c("#0072B2", "#D55E00", "#E69F00", "#000000", "#56B4E9", "#009E73", "#F0E442", "#CC79A7")
+  }
+  else {
+    cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+  }
+}
 size_titles <- 20
 size_axis <- 18
 size_axis_ticks_x <- 14
@@ -171,6 +184,7 @@ size_axis_ticks_y <- 14
 size_strip_txt <- 14
 plot_width <- 12
 plot_height <- 10 
+font <- "Arial"
 
 name_file <- "plot"
 name_out <- paste (path2plot, stat, "_", name_file, ".", "png", sep="")
@@ -192,14 +206,14 @@ ggplot(data.frame_bed, aes(x=group2plot, y=V5, colour=phase, fill=data_type)) +
   geom_point(position = position_jitter(w = 0.12, h = 0), size=0.25) +
   labs (title = paste(plot_title, "\n", sep="")) +
   labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
-  theme (plot.title = element_text(size=size_titles)) + 
-  theme (axis.title.x = element_text(size=size_axis)) +
-  theme (axis.title.y = element_text(size=size_axis)) +
-  theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
-  theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-  theme (axis.text.x = element_text(angle=-90, vjust=0.4,hjust=1)) +
+  theme (plot.title = element_text(family=font, size=size_titles)) + 
+  theme (axis.title.x = element_text(family=font, size=size_axis)) +
+  theme (axis.title.y = element_text(family=font, size=size_axis)) +
+  theme (axis.text.x = element_text(family=font, size=size_axis_ticks_x)) +  
+  theme (axis.text.y = element_text(family=font, size=size_axis_ticks_y)) +
+  theme (axis.text.x = element_text(family=font, angle=-90, vjust=0.4,hjust=1)) +
   facet_grid(phenotype~exp_phase) +
-  theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
+  theme(strip.background = element_rect(fill="white"), strip.text = element_text(family=font, size = size_strip_txt)) +
   theme(legend.title=element_blank())
 
 ggsave (file=name_out, width = plot_width, height=plot_height)
@@ -220,14 +234,14 @@ ggplot(data=tbl_stat_mean, aes(x=phase, y=mean, fill=data_type)) +
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9)) +
   facet_grid(phenotype~exp_phase) +
-  theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
+  theme(strip.background = element_rect(fill="white"), strip.text = element_text(family=font, size = size_strip_txt)) +
   labs (title = paste(plot_title,  "\n", sep="")) +
   labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
-  theme (plot.title = element_text(size=size_titles)) + 
-  theme (axis.title.x = element_text(size=size_axis)) +
-  theme (axis.title.y = element_text(size=size_axis)) +
-  theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
-  theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
+  theme (plot.title = element_text(family=font, size=size_titles)) + 
+  theme (axis.title.x = element_text(family=font, size=size_axis)) +
+  theme (axis.title.y = element_text(family=font, size=size_axis)) +
+  theme (axis.text.x = element_text(family=font, size=size_axis_ticks_x)) +  
+  theme (axis.text.y = element_text(family=font, size=size_axis_ticks_y)) +
   theme(legend.title=element_blank())
 
 ggsave (file=name_out_bar, width=plot_width, height=plot_height, dpi=300)
@@ -241,14 +255,14 @@ ggsave (file=name_out_bar, width=plot_width, height=plot_height, dpi=300)
     geom_bar(stat="identity", position="fill") +
     scale_fill_manual(values = c(cbb_palette[2], cbb_palette[1])) +
     facet_grid(phenotype~exp_phase) +
-    theme(strip.background = element_rect(fill="white"), strip.text = element_text(size = size_strip_txt)) +
+    theme(strip.background = element_rect(fill="white"), strip.text = element_text(family=font, size = size_strip_txt)) +
     labs (title = paste(plot_title,  "\n", sep="")) +
     labs (y = paste(paste (axis_title, "\n", sep="")), x="\nPhase") +  
-    theme (plot.title = element_text(size=size_titles)) + 
-    theme (axis.title.x = element_text(size=size_axis)) +
-    theme (axis.title.y = element_text(size=size_axis)) +
-    theme (axis.text.x = element_text(size=size_axis_ticks_x)) +  
-    theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
+    theme (plot.title = element_text(family=font, size=size_titles)) + 
+    theme (axis.title.x = element_text(family=font, size=size_axis)) +
+    theme (axis.title.y = element_text(family=font, size=size_axis)) +
+    theme (axis.text.x = element_text(family=font, size=size_axis_ticks_x)) +  
+    theme (axis.text.y = element_text(family=font, size=size_axis_ticks_y)) +
     theme(legend.title=element_blank())
     
     ggsave (file=name_out_rel_freq, width=plot_width, height=plot_height, dpi=300)

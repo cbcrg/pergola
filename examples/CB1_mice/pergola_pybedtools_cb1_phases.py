@@ -39,17 +39,40 @@ from pergola import intervals
 from pergola import tracks
 
 _stats_available = ['mean', 'count', 'sum', 'max', 'min', 'median' ]
+_behaviors_available = ['feeding', 'drinking']
 
 parser = ArgumentParser(description='Statistic to calculate from the data')
 parser.add_argument('-s','--statistic', help='Choose one of the possible statistical available on Bedtools map option',
                      required=True, choices=_stats_available)
+parser.add_argument('-b','--behavioral_type', help='Choose whether to work with drinking or feeding mice behavioral data',
+                     required=True, choices=_behaviors_available)
 
 args = parser.parse_args()
 
 print >> stderr, "Statistic to be calculated: %s" % args.statistic
+print >> stderr, "Working with mice %s behavioral data" % args.behavioral_type
 
 # Statistic to calculate
 statistic = args.statistic
+
+## Dictionary to set colors of each type of food
+# food_sc    orange
+# food_fat    black
+# water    blue
+# saccharin    red
+
+### Feeding data
+if args.behavioral_type == "feeding":
+    data_type_1 = "food_sc"
+    data_type_2 = "food_fat"
+    data_type_col = {data_type_1: 'orange', data_type_2:'black'}
+### Drinking data
+elif args.behavioral_type == 'drinking':     
+    data_type_1 = "water"
+    data_type_2 = "saccharin"   
+    data_type_col = {data_type_1: 'blue', data_type_2:'red'}
+else:
+    print >> stderr, "Behavioral data type not available in script, please try again with \"drinking\" or \"feeding\""
 
 mapping_data = mapping.MappingInfo("../../sample_data/feeding_behavior/b2g.txt")
  
@@ -63,13 +86,12 @@ mapping_bed = mapping.MappingInfo("../../test/pybed2perg.txt")
 # base_dir = path.dirname(getcwd())
 base_dir = getcwd()
  
-out_dir = base_dir + "/results/" + statistic + "/"
- 
+out_dir = base_dir + "/results/" + args.behavioral_type + "_by_phases/" +  statistic + "/"
+
 if path.exists(out_dir):    
     rmtree(out_dir)
 
 makedirs(out_dir)
-
 chdir(out_dir)
  
 data_read_b1 = int_data_b1.read(relative_coord=True)
@@ -87,26 +109,19 @@ data_read_all_batches = tracks.merge_tracks (tracks.merge_tracks (tracks.merge_t
  
 list_wt = [item for item in data_read_all_batches.list_tracks if int(item) % 2]
 list_KO_cb1 = [item for item in data_read_all_batches.list_tracks if not int(item) % 2]
- 
-## Dictionary to set colors of each type of food
-# food_sc    orange
-# food_fat    black
-# water    blue
-# saccharin    red
-data_type_col = {'food_sc': 'orange', 'food_fat':'black'}
- 
+
 bed_dict = dict()
  
 bed_dict ['wt'] = {}
 bed_dict ['KO_cb1'] = {}
  
-bed_dict ['wt']['food_sc'] = data_read_all_batches.convert(mode="bed", data_types=["food_sc"],
+bed_dict ['wt'][data_type_1] = data_read_all_batches.convert(mode="bed", data_types=[data_type_1],
                                                            color_restrictions=data_type_col, tracks=list_wt)
-bed_dict ['wt']['food_fat'] = data_read_all_batches.convert(mode="bed", data_types=["food_fat"],
+bed_dict ['wt'][data_type_2] = data_read_all_batches.convert(mode="bed", data_types=[data_type_2],
                                                             color_restrictions=data_type_col, tracks=list_wt)
-bed_dict ['KO_cb1']['food_sc'] = data_read_all_batches.convert(mode="bed", data_types=["food_sc"],
+bed_dict ['KO_cb1'][data_type_1] = data_read_all_batches.convert(mode="bed", data_types=[data_type_1],
                                                                color_restrictions=data_type_col, tracks=list_KO_cb1)
-bed_dict ['KO_cb1']['food_fat'] =  data_read_all_batches.convert(mode="bed", data_types=["food_fat"],
+bed_dict ['KO_cb1'][data_type_2] =  data_read_all_batches.convert(mode="bed", data_types=[data_type_2],
                                                                  color_restrictions=data_type_col, tracks=list_KO_cb1)                                
  
 ####################
@@ -123,9 +138,9 @@ light_bed = pybedtools.BedTool(light_ph_f)
 dark_bed = pybedtools.BedTool(dark_ph_f)
 
 ## Reading experimental phases from csv file
-mapping_data_phases = mapping.MappingInfo("../../data/f2g.txt")
- 
-int_exp_phases = intervals.IntData ("../../data/exp_phases.csv", map_dict=mapping_data_phases.correspondence)
+mapping_data_phases = mapping.MappingInfo("../../../data/f2g.txt")
+
+int_exp_phases = intervals.IntData ("../../../data/exp_phases.csv", map_dict=mapping_data_phases.correspondence)
 data_read_exp_phases = int_exp_phases.read(relative_coord=True)
 
 d_exp_phases_bed2file = data_read_exp_phases.convert(mode="bed", data_types_actions="all")
