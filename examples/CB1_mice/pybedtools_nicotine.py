@@ -108,8 +108,8 @@ end_time = max (int_data_b1.max - int_data_b1.min,
  
 data_read_all_batches = tracks.merge_tracks (tracks.merge_tracks (tracks.merge_tracks (data_read_b1, data_read_b2), data_read_b3), data_read_b4)
  
-list_wt = [item for item in data_read_all_batches.list_tracks if int(item) % 2]
-list_KO_cb1 = [item for item in data_read_all_batches.list_tracks if not int(item) % 2]
+list_KO_cb1 = [item for item in data_read_all_batches.list_tracks if int(item) % 2]
+list_wt = [item for item in data_read_all_batches.list_tracks if not int(item) % 2]
 
 data_type_col = {data_type_1: 'orange', data_type_1:'black'}
  
