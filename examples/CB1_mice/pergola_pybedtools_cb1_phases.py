@@ -110,7 +110,6 @@ data_read_all_batches = tracks.merge_tracks (tracks.merge_tracks (tracks.merge_t
 list_wt = [item for item in data_read_all_batches.list_tracks if not int(item) % 2] 
 list_KO_cb1 = [item for item in data_read_all_batches.list_tracks if int(item) % 2]
 
-
 bed_dict = dict()
  
 bed_dict ['wt'] = {}
