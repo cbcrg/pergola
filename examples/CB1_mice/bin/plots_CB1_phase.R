@@ -171,7 +171,7 @@ mean_for_cross <- function(x) {
 ## color blind friendly palette
 {
   if ('HF' %in% data.frame_bed$data_type & 'SC' %in% data.frame_bed$data_type) {
-    cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    cbb_palette <- c("#E69F00", "#000000", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
     bouts_title <- "Feeding bouts"
     units <- 'g'
   }
