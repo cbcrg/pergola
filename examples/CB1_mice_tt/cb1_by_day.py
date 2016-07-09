@@ -141,12 +141,61 @@ bed_dict ['KO_cb1_nicotine'][data_type_2] =  data_read_all_batches.convert(mode=
 ## Generate to BedTool objects containing light and dark phases
  
 ## Write phases file
-mapping.write_cytoband(end = end_time, delta=86400, start_phase="light", path_w=out_dir)
-light_ph_f = out_dir +  "phases_light.bed"
-dark_ph_f = out_dir + "phases_dark.bed"
+# mapping.write_cytoband(end = end_time, delta=86400, start_phase="light", path_w=out_dir)
+# light_ph_f = out_dir +  "phases_light.bed"
+# dark_ph_f = out_dir + "phases_dark.bed"
+#     
+# light_bed = pybedtools.BedTool(light_ph_f)
+# dark_bed = pybedtools.BedTool(dark_ph_f)
+# 
+# ## Reading experimental phases from csv file
+# mapping_data_phases = mapping.MappingInfo("../../../data/f2g.txt")
+# 
+# int_exp_phases = intervals.IntData ("../../../data/exp_phases.csv", map_dict=mapping_data_phases.correspondence)
+# data_read_exp_phases = int_exp_phases.read(relative_coord=True)
+# 
+# d_exp_phases_bed2file = data_read_exp_phases.convert(mode="bed", data_types_actions="all")
+# d_exp_phases_bed2file[d_exp_phases_bed2file.keys()[0]].save_track(bed_label="True", path=base_dir + "/results/", name_file="exp_phases")
+# 
+# d_exp_phases_bed = data_read_exp_phases.convert(mode="bed", data_types_actions='one_per_channel')
+# 
+# # basal_bed = exp_phases_bed['1', 'Basal'].create_pybedtools()
+# # nicotine_bed = exp_phases_bed['1', 'Nicotine_withdrawal'].create_pybedtools()
+# # withdrawal_bed = exp_phases_bed['1', 'Nicotine_treatment'].create_pybedtools()
+# 
+# for exp_group, dict_exp_gr in bed_dict.iteritems():
+#        
+#     for data_type, dict_bed in dict_exp_gr.iteritems():
+#         for tr, bed in dict_bed.iteritems(): 
+#             bed_BedTools = bed.create_pybedtools()
+#            
+#             for key, bed_phase in d_exp_phases_bed.iteritems():
+#                 exp_phase = key[1]
+#                 
+#                 if not path.isfile(exp_phase + ".bed"):
+#                     bed_phase.create_pybedtools().saveas(exp_phase + ".bed")                            
+#                 
+#                 # bouts per experimental phase
+#                 exp_phase_events_bed = bed_BedTools.intersect(pybedtools.BedTool(exp_phase + ".bed"))
+#                                                 
+#                 ###################
+#                 # Generate mean value of the whole record after intersecting with phase
+#                 if exp_phase_events_bed.count() == 0: 
+#                     # When there is any interval we set the mean to zero
+#                     list_no_intervals_d = [("chr1", 0, 1, "dark", 0, 0)]
+#                     list_no_intervals_l = [("chr1", 0, 1, "light", 0, 0)]
+#                     pybedtools.BedTool(list_no_intervals_d).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".light." + exp_phase + ".bed")
+#                     pybedtools.BedTool(list_no_intervals_l).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".dark." + exp_phase + ".bed")
+#                 else:
+#                     light_bed.map(exp_phase_events_bed, c=5, o=statistic, null=0).intersect(pybedtools.BedTool(exp_phase + ".bed")).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".light." + exp_phase + ".bed")
+#                     dark_bed.map(exp_phase_events_bed, c=5, o=statistic, null=0).intersect(pybedtools.BedTool(exp_phase + ".bed")).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".dark." + exp_phase + ".bed")
+
+# Generating sequence of days without light and dark phases
+mapping.write_period_seq (end = end_time, delta=86400, tag="day", name_file="days_seq", path_w=out_dir)
+
+days_bed_f = out_dir +  "days_seq.bed"
     
-light_bed = pybedtools.BedTool(light_ph_f)
-dark_bed = pybedtools.BedTool(dark_ph_f)
+days_bed = pybedtools.BedTool(days_bed_f)
 
 ## Reading experimental phases from csv file
 mapping_data_phases = mapping.MappingInfo("../../../data/f2g.txt")
@@ -158,10 +207,6 @@ d_exp_phases_bed2file = data_read_exp_phases.convert(mode="bed", data_types_acti
 d_exp_phases_bed2file[d_exp_phases_bed2file.keys()[0]].save_track(bed_label="True", path=base_dir + "/results/", name_file="exp_phases")
 
 d_exp_phases_bed = data_read_exp_phases.convert(mode="bed", data_types_actions='one_per_channel')
-
-# basal_bed = exp_phases_bed['1', 'Basal'].create_pybedtools()
-# nicotine_bed = exp_phases_bed['1', 'Nicotine_withdrawal'].create_pybedtools()
-# withdrawal_bed = exp_phases_bed['1', 'Nicotine_treatment'].create_pybedtools()
 
 for exp_group, dict_exp_gr in bed_dict.iteritems():
        
@@ -182,15 +227,11 @@ for exp_group, dict_exp_gr in bed_dict.iteritems():
                 # Generate mean value of the whole record after intersecting with phase
                 if exp_phase_events_bed.count() == 0: 
                     # When there is any interval we set the mean to zero
-                    list_no_intervals_d = [("chr1", 0, 1, "dark", 0, 0)]
-                    list_no_intervals_l = [("chr1", 0, 1, "light", 0, 0)]
-                    pybedtools.BedTool(list_no_intervals_d).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".light." + exp_phase + ".bed")
-                    pybedtools.BedTool(list_no_intervals_l).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".dark." + exp_phase + ".bed")
+                    list_no_intervals = [("chr1", 0, 1, "no_hits", 0, 0)]                    
+                    pybedtools.BedTool(list_no_intervals).saveas('tr_' + exp_group + '.' + '.'.join(tr) + ".day." + exp_phase + ".bed")                                        
                 else:
-                    light_bed.map(exp_phase_events_bed, c=5, o=statistic, null=0).intersect(pybedtools.BedTool(exp_phase + ".bed")).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".light." + exp_phase + ".bed")
-                    dark_bed.map(exp_phase_events_bed, c=5, o=statistic, null=0).intersect(pybedtools.BedTool(exp_phase + ".bed")).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".dark." + exp_phase + ".bed")
+                    days_bed.map(exp_phase_events_bed, c=5, o=statistic, null=0).intersect(pybedtools.BedTool(exp_phase + ".bed")).saveas ('tr_' + exp_group + '.' + '.'.join(tr) + ".day." + exp_phase + ".bed")                    
 
-# mapping.write_period_seq (end = end_time, delta=86400, tag="day", name_file="days_seq", path_w=out_dir)
            
 # Define command and arguments
 command = 'Rscript'
@@ -199,7 +240,7 @@ command = 'Rscript'
 # Rscript /Users/jespinosa/git/pergola/examples/CB1_mice/bin/stats_analysis_CB1_tt.R --path2files="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" 
 # --path2plot="/Users/jespinosa/git/pergola/examples/CB1_mice/results/" --tag="mean"
 
-script_path = base_dir + "/bin/plots_CB1_zeros.R"
+script_path = base_dir + "/bin/plots_CB1_by_day.R"
 
 args = [ '--stat=' + statistic, '--path2files=' + out_dir, '--path2plot=' + out_dir ] 
 cmd = [command, script_path] + args
