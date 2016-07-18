@@ -349,11 +349,16 @@ class Track(GenomicContainer):
             sel_tracks = map(str, kwargs.get("tracks",[]))
                    
         ### When any tracks are selected we consider that no track should be removed
-        if sel_tracks != []:
-            tracks2rm = self.list_tracks.difference(sel_tracks)           
+        if sel_tracks != []:            
+            ori_tracks = set(self.list_tracks)
+            tracks2rm = self.list_tracks.difference(sel_tracks)
+            tracks2rm = sel_tracks                           
             dict_split = self.remove (dict_split, tracks2rm)
             print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
-         
+            
+            # I have to keep the original list otherwise the original object is changed
+            self.list_tracks = ori_tracks
+            
         # Eventually I can eliminate tracks of not selected tracks
 #         self.data = [y for y in data_tuples if y[0] in self.list_tracks]
         
@@ -1125,3 +1130,50 @@ def assign_color (set_data_types, color_restrictions=None):
             d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
     
     return d_dataType_color
+
+def merge_tracks (tr_1, tr_2):
+    """
+    Merge two tracks objects.    
+    
+    :param tr_1: Object of class :py:class:`~pergola.tracks.Track`  
+    :param tr_2: Object of class :py:class:`~pergola.tracks.Track`  
+       
+    :returns:  dictionary with data_types as keys and color gradients
+        as values
+    """    
+    merge_track = tr_1
+    
+    if set(tr_1.fields) != set(tr_2.fields):        
+        raise ValueError ("Fields of the two tracks objects do not match" )
+    
+    if tr_1.format != tr_2.format:        
+        raise ValueError ("Format of the two tracks objects do not match" )
+    
+    merge_track.data_types = tr_1.data_types.union (tr_2.data_types)
+    merge_track.range_values = [min(tr_1.range_values[0], tr_2.range_values[0]), max(tr_1.range_values[1], tr_2.range_values[1])]
+    
+    merge_track.list_data_types = merge_track.data_types    
+    
+    merge_track.max = max (tr_1.max, tr_2.max)
+    merge_track.min = min (tr_1.min, tr_2.min)
+    
+    merge_track.list_tracks = tr_1.list_tracks.union (tr_2.list_tracks)
+    merge_track.data.extend (tr_2.data)                
+        
+    i_track_1 = tr_1.fields.index('track')
+    i_start_1 = tr_1.fields.index('start')
+    i_track_2 = tr_2.fields.index('track')
+    i_start_2 = tr_2.fields.index('start')
+    
+    if i_start_1 != i_start_2:
+        raise ValueError ("Start field does not match track object to append")
+    
+    if i_track_1 != i_track_2:
+        raise ValueError ("Track field does not match track object to append")
+
+    if all(row[i_track_1].isdigit() for row in merge_track.data):
+        merge_track.data = sorted(merge_track.data, key=lambda x: (int(x[i_track_1]), x[i_start_1]))
+    else:
+        merge_track.data = sorted(merge_track.data, key=itemgetter(i_track_1, idx_fields2int))
+                                                  
+    return merge_track

@@ -222,7 +222,7 @@ class IntData(object):
                             
                 fieldsB = fields
                 
-                print ("WARNING: As header=False you col names set by fields will be considered to have the order "
+                print >>stderr, ("WARNING: As header=False you col names set by fields will be considered to have the order "
                         "you provided: \"%s\"" 
                         %"\",\"".join(fields))                 
             else:                                
