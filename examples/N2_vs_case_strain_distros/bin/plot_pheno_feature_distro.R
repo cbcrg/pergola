@@ -24,15 +24,11 @@
 ### Using bed files raw data intercepted with the motion                  ### 
 #############################################################################
 
-# To use this script in ant first export this:
-# export R_LIBS="/software/R/packages"
-
 ##Getting HOME directory 
 home <- Sys.getenv("HOME")
 
 ### Execution example
-## Rscript plot_speed_motion_mean.R --bed_file="bed_file"
-
+## Rscript plot_speed_motion_mean.R --bed_file="bed_file" --bed_file_ctrl="bed_file_ctrl"
 library(ggplot2)
 
 # Loading params plot:
@@ -141,10 +137,12 @@ size_axis_ticks_y <- 14
 
 # From the maximun and minimun value I add a shift to set axes limits
 shift_axes <- 100
+tick_interval <- 400
 xmin <- round(min (df_bed$value) - shift_axes, digits = -2)
 xmax <- round(max (df_bed$value) + shift_axes, digits = -2)
-
-breaks_v <- c(-rev(seq(0,abs(xmin), by=400)[0:-1]), seq (0, xmax, by=400))
+# xmin <- -100
+# xmax <- 600
+breaks_v <- c(-rev(seq(0,abs(xmin), by=tick_interval)[0:-1]), seq (0, xmax, by=tick_interval))
 
 labs_plot <- as.vector(levels(df_bed$strain))
 
@@ -155,7 +153,7 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +
        scale_y_continuous(breaks=NULL) +
        labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
-       labs (x = paste(units, "\n", sep=""), 
+       labs (x = paste("\n", units, sep=""), 
              y = expression(paste("Probability (", Sigma, "P(x) = 1)", "\n", sep=""))) +       
        theme (axis.text.x = element_text(size=size_axis_ticks)) +
        theme (plot.title = element_text(size=size_titles)) + 
