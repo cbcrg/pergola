@@ -370,10 +370,12 @@ process plot_distro {
   	set file (intersect_feature_motion), strain, pheno_feature, direction, file (intersect_feature_motion_ctrl) from case_ctrl_bed_p
   
   	output:
-  	set '*.png', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
+  	//set '*.png', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
+    set '*.pdf', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
     
   	"""
-  	plot_pheno_feature_distro.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}  	
+  	# plot_pheno_feature_distro.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}
+  	plot_pheno_feature_distro_paper_version.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl} 
   	"""
 }
 
@@ -386,7 +388,8 @@ result_dir_distro_ctrl_case.with {
 }
 
 plots_pheno_feature_case_ctrl.subscribe {		
-	it[0].copyTo( result_dir_distro_ctrl_case.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )	   
+	/*it[0].copyTo( result_dir_distro_ctrl_case.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )*/
+	it[0].copyTo( result_dir_distro_ctrl_case.resolve ( it[1] + "." + it[2] + "." + it[3] + ".pdf" ) )	   
 }
 
 /*
