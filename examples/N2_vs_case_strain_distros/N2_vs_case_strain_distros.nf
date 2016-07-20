@@ -371,7 +371,9 @@ process plot_distro {
   
   	output:
   	//set '*.png', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
-    set '*.pdf', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
+  	
+  	// R creates a Rplots.pdf that is way I have to specify the tag "out" 
+    set '*out.pdf', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
     
   	"""
   	# plot_pheno_feature_distro.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}
@@ -389,7 +391,7 @@ result_dir_distro_ctrl_case.with {
 
 plots_pheno_feature_case_ctrl.subscribe {		
 	/*it[0].copyTo( result_dir_distro_ctrl_case.resolve ( it[1] + "." + it[2] + "." + it[3] + ".png" ) )*/
-	it[0].copyTo( result_dir_distro_ctrl_case.resolve ( it[1] + "." + it[2] + "." + it[3] + ".pdf" ) )	   
+	it[0].copyTo( result_dir_distro_ctrl_case.resolve ( it[1] + "." + it[2] + "." + it[3] + ".pdf" ) )   
 }
 
 /*

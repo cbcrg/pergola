@@ -108,9 +108,6 @@ read_bed <- function (bed_file) {
   return (df_bed)
 }
 
-# df_ctrl <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/21/519d333cfda5bf7018953632bceaed/N2.foraging_speed.forward.bed")
-# df_bed <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/61/9e73f12ffaee238babf1abb2f848fa/unc-16e109.foraging_speed.forward.bed")
-# bed_file <- "/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/61/9e73f12ffaee238babf1abb2f848fa/unc-16e109.foraging_speed.forward.bed"
 df_bed <- read_bed (bed_file)
 df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
@@ -140,8 +137,10 @@ plot_width <- 12
 plot_height <- 12 
 font <- "Arial"
 dpi <- 300
+name_file <- basename(bed_file)
+name_out <- paste(name_file, ".png", sep="")
 # file_format <- ".png"
-file_format <- ".pdf"
+file_format <- ".out.pdf"
 
 name_out <- paste(name_file, file_format, sep="")
 
@@ -181,4 +180,3 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        theme (legend.text = element_blank())
                 
 ggsave (file=name_out, width = plot_width, height=plot_height)
-# ggsave (file="Rplots.pdf", width = plot_width, height=plot_height)
