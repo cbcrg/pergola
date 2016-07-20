@@ -30,7 +30,6 @@ home <- Sys.getenv("HOME")
 ### Execution example
 ## Rscript plot_speed_motion_mean.R --bed_file="bed_file" --bed_file_ctrl="bed_file_ctrl"
 library(ggplot2)
-library('extrafont')
 
 # Loading params plot:
 source("https://raw.githubusercontent.com/cbcrg/mwm/master/lib/R/plot_param_public.R")
@@ -109,10 +108,12 @@ read_bed <- function (bed_file) {
   return (df_bed)
 }
 
+# df_ctrl <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/21/519d333cfda5bf7018953632bceaed/N2.foraging_speed.forward.bed")
+# df_bed <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/61/9e73f12ffaee238babf1abb2f848fa/unc-16e109.foraging_speed.forward.bed")
+# bed_file <- "/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/61/9e73f12ffaee238babf1abb2f848fa/unc-16e109.foraging_speed.forward.bed"
 df_bed <- read_bed (bed_file)
 df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
-df_bed <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/a0/5828f6e64bc99999df7cb54da1340f/N2.midbody.forward.bed")
 name_file <- basename(bed_file)
 
 name_split <- strsplit (name_file, "\\." )
@@ -123,17 +124,16 @@ name_split <- strsplit (name_file, "\\." )
 
 pheno_feature <- strsplit (name_file,  "\\.")[[1]][2]
 #units <- switch (pheno_feature, foraging_speed="Degrees/seconds", tail_motion="Degrees/seconds", crawling="Degrees", 'no units')
-units <-"Microns/seconds"
+# units <-"Microns/seconds"
 
-title_strain_pheno_dir <- gsub("_", " ", gsub ("\\.", " - ", gsub ("\\.bed", "", name_file)))
-# title_strain_pheno_dir <- gsub ("backward", "\nwhen reversing", title_strain_pheno_dir)
+# title_strain_pheno_dir <- gsub("_", " ", gsub ("\\.", " - ", gsub ("\\.bed", "", name_file)))
 
 ## color blind friendly palette
 cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-size_titles <- 5
-size_axis <- 5
-size_axis_ticks <- 4
-size_axis_ticks_y <- 4
+size_titles <- 11
+size_axis <- 11
+size_axis_ticks <- 12
+size_axis_ticks_y <- 12
 
 # aes and fonts for publications plot
 plot_width <- 12
@@ -150,8 +150,12 @@ shift_axes <- 100
 tick_interval <- 400
 xmin <- round(min (df_bed$value) - shift_axes, digits = -2)
 xmax <- round(max (df_bed$value) + shift_axes, digits = -2)
+# forward
 # xmin <- -100
 # xmax <- 600
+## backward
+# xmin <- -700
+# xmax <- 30
 breaks_v <- c(-rev(seq(0,abs(xmin), by=tick_interval)[0:-1]), seq (0, xmax, by=tick_interval))
 
 labs_plot <- as.vector(levels(df_bed$strain))
@@ -159,20 +163,22 @@ labs_plot <- as.vector(levels(df_bed$strain))
 labs_plot [!labs_plot %in% "N2"] <- "Exp"
 labs_plot [labs_plot %in% "N2"] <- "Ctrl"
 
+### version specifying the font type
 ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +
        scale_y_continuous(breaks=NULL) +
-       labs (title = paste(title_strain_pheno_dir, "\n", sep=" ")) +
-       labs (x = paste("\n", units, sep=""), 
-             y = expression(paste("Probability (", Sigma, "P(x) = 1)", "\n", sep=""))) +       
-       theme (axis.text.x = element_text(family=font, size=size_axis_ticks)) +
-       theme (plot.title = element_text(family=font, size=size_titles)) + 
-       theme (axis.title.x = element_text(family=font, size=size_axis)) +
-       theme (axis.title.y = element_text(family=font, size=size_axis)) +
-       theme (axis.text.x = element_text(family=font, size=size_axis_ticks)) +  
-       theme (axis.text.y = element_text(family=font, size=size_axis_ticks_y)) +       
+       labs (x = "", y = "") +       
+#        labs (title = "")) +
+#        labs (x = paste("\n", units, sep=""), 
+#        y = expression(paste("Probability (", Sigma, "P(x) = 1)", "\n", sep=""))) +         
+       theme (axis.text.x = element_text(size=size_axis_ticks)) +
+       theme (plot.title = element_text(size=size_titles)) + 
+       theme (axis.title.x = element_text(size=size_axis)) +
+       theme (axis.title.y = element_text(size=size_axis)) +
+       theme (axis.text.x = element_text(size=size_axis_ticks)) +  
+       theme (axis.text.y = element_text(size=size_axis_ticks_y)) +       
        scale_fill_manual(name='', labels = labs_plot, values = cbb_palette) +
-       theme (legend.text = element_text(family=font))
-#        scale_fill_manual( name='', values = cbb_palette) 
-
-ggsave (file=name_out, width = plot_width, height=plot_height))
+       theme (legend.text = element_blank())
+                
+ggsave (file=name_out, width = plot_width, height=plot_height)
+# ggsave (file="Rplots.pdf", width = plot_width, height=plot_height)
