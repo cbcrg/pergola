@@ -373,7 +373,8 @@ process plot_distro {
   	set '*.png', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
     
   	"""
-  	plot_pheno_feature_distro.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}  	
+  	# plot_pheno_feature_distro.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}
+  	plot_pheno_feature_distro_paper.R --bed_file=${intersect_feature_motion} --bed_file_ctrl=${intersect_feature_motion_ctrl}  	
   	"""
 }
 
