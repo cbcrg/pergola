@@ -113,6 +113,9 @@ df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
 name_file <- basename(bed_file)
 
+df_bed <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/95/665d1fd0d0c17ab5421ee23a9efc86/N2.tail_motion.forward.bed")
+df_ctrl <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/87/bc5bfb455ca7a584aadb35d7bf91e6/unc-16e109.tail_motion.forward.bed")
+df_bed <- rbind (df_bed, df_ctrl)
 name_split <- strsplit (name_file, "\\." )
 
 # body_part <- name_split[[1]][2]
@@ -127,6 +130,7 @@ pheno_feature <- strsplit (name_file,  "\\.")[[1]][2]
 
 ## color blind friendly palette
 cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbb_palette <- c("#009E73", "#F0E442")
 size_titles <- 11
 size_axis <- 11
 size_axis_ticks <- 12
