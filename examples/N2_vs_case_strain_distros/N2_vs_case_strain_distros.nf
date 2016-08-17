@@ -24,14 +24,12 @@
  * Jose Espinosa-Carrasco. CB/CSN-CRG. April 2016
  *
  * Wormbehavior DB (http://wormbehavior.mrc-lmb.cam.ac.uk/) processed by pergola for paper
- * Process mat files downloaded from the DB to extract new locomotion phenotypes characterized 
- * in the original publication for trp channels KO
+ * Process mat files downloaded from the DB to extract locomotion phenotypes characterized 
+ * as significantly different between a given strain and its N2 control subset
  * TODO  explain what pergola does
  */    
 
-params.path_files = "$baseDir/data/"
-
-log.info "C. elegans trp locomotion phenotypes - N F  ~  version 0.1"
+log.info "C. elegans locomotion phenotypes comparison - N F  ~  version 0.1"
 log.info "======================================================="
 log.info "c. elegans case data       : ${params.path_files}"
 log.info "c. elegans ctrl data       : ${params.ctrl_path_files}"
@@ -46,6 +44,8 @@ case_files = Channel.fromPath(case_files_path)
 
 params.tag_results = "strain"
 tag_res = "${params.tag_results}"
+
+data_path = "$baseDir/data"
 
 /*
  * Creates a channel with file content and name of input file without spaces
@@ -94,7 +94,7 @@ process get_feature {
  * Transform locomotion files into bed format files
  */ 
 
-map_speed_path = "$baseDir/data/worms_speed2p.txt" 
+map_speed_path = "$data_path/worms_speed2p.txt" 
 
 map_speed=file(map_speed_path)
 //body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip']
@@ -178,7 +178,7 @@ motion_files_flat_p = motion_files.map { name_mat, motion_f ->
 
 motion_files_flat_p.into { motion_files_flat; motion_files_flat_wr }
 
-map_motion_path = "$baseDir/data/worms_motion2p.txt"
+map_motion_path = "$data_path/worms_motion2p.txt"
 map_motion = file(map_motion_path)
 
 process motion_to_pergola {
@@ -199,7 +199,7 @@ process motion_to_pergola {
   	"""
 } 
 
-map_bed_path = "$baseDir/data/bed2pergola.txt"
+map_bed_path = "$data_path/bed2pergola.txt"
 map_bed_pergola = Channel.fromPath(map_bed_path)
 map_bed_pergola.into { map_bed_pergola_loc; map_bed_pergola_bG; map_bed_pergola_turn}
 
@@ -370,9 +370,8 @@ process plot_distro {
   	set file (intersect_feature_motion), strain, pheno_feature, direction, file (intersect_feature_motion_ctrl) from case_ctrl_bed_p
   
   	output:
-  	//set '*.png', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
-  	
-  	// R creates a Rplots.pdf that is way I have to specify the tag "out" 
+  	// R creates a Rplots.pdf that is way we have to specify the tag "out" 
+  	//set '*.png', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl  	  
     set '*out.pdf', strain, pheno_feature, direction into plots_pheno_feature_case_ctrl
     
   	"""
@@ -397,17 +396,17 @@ plots_pheno_feature_case_ctrl.subscribe {
 /*
  * Creating folder to keep bed files to visualize data
  */
-result_dir_GB = file("$baseDir/results_GB_$tag_res")
+result_dir_fasta = file("$baseDir/results_fasta_$tag_res")
 
-result_dir_GB.with {
+result_dir_fasta.with {
      if( !empty() ) { deleteDir() }
      mkdirs()
-     println "Created: $result_dir_GB"
+     println "Created: $result_dir_fasta"
 } 
 
 out_fasta.subscribe {  
   fasta_file = it[0]
-  fasta_file.copyTo( result_dir_GB.resolve ( it[2] + ".fa" ) )
+  fasta_file.copyTo( result_dir_fasta.resolve ( it[2] + ".fa" ) )
 }
 
 result_dir_bed = file("$baseDir/results_bed_$tag_res")
@@ -420,7 +419,7 @@ result_dir_bed.with {
 
 bed_loc_no_nas.subscribe {   
   bed_file = it[0]
-  bed_file.copyTo ( result_dir_bed.resolve ( it[1] + "." + it[2] + ".GB.bed" ) )
+  bed_file.copyTo ( result_dir_bed.resolve ( it[1] + "." + it[2] + ".bed" ) )
 }
 
 result_dir_bedGraph = file("$baseDir/results_bedGraph_$tag_res")
@@ -433,20 +432,36 @@ result_dir_bedGraph.with {
 
 bedGraph_loc_no_nas.subscribe {   
   bedGraph_file = it[0]
-  bedGraph_file.copyTo (result_dir_bedGraph.resolve ( it[1] + "." + it[2] + ".GB.bedGraph" ) )
+  bedGraph_file.copyTo (result_dir_bedGraph.resolve ( it[1] + "." + it[2] + ".bedGraph" ) )
 }
 
 bed_motion_wr.subscribe {
   bed_file = it[1]
-  bed_file.copyTo ( result_dir_bed.resolve ( it[0] + it[2] + ".GB.bed" ) )
+  bed_file.copyTo ( result_dir_bed.resolve ( it[0] + it[2] + ".bed" ) )
 }
+
+result_dir_bed_intersect = file("$result_dir_bed/motion_intersected")
+
+result_dir_bed_intersect.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_bed_intersect"
+} 
 
 bed_intersect_loc_motion.subscribe {   
   bed_file = it[0]
-  bed_file.copyTo ( result_dir_bed.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".GB.bed" ) )
+  bed_file.copyTo ( result_dir_bed_intersect.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".bed" ) )
 }
+
+result_dir_bedGraph_intersect = file("$result_dir_bedGraph/motion_intersected")
+
+result_dir_bedGraph_intersect.with {
+     if( !empty() ) { deleteDir() }
+     mkdirs()
+     println "Created: $result_dir_bedGraph_intersect"
+} 
 
 bedGraph_intersect_loc_motion.subscribe {
   bedGraph_file = it[0]
-  bedGraph_file.copyTo ( result_dir_bedGraph.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".bedGraph" ) )
+  bedGraph_file.copyTo ( result_dir_bedGraph_intersect.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".bedGraph" ) )
 }
