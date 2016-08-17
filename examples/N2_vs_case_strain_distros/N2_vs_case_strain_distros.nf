@@ -182,8 +182,9 @@ map_motion_path = "$data_path/worms_motion2p.txt"
 map_motion = file(map_motion_path)
 
 process motion_to_pergola {
-	container 'cbcrg/pergola:latest'  
-  
+	//container 'cbcrg/pergola:latest'  
+  	container 'joseespinosa/pergola:celegans'
+  	
   	input:
   	set file ('motion_file'), val (name_file), val (name_file_motion), val (motion) from motion_files_flat
   	set worms_motion_map from map_motion
