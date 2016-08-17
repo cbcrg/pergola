@@ -85,8 +85,8 @@ mapping_bed = mapping.MappingInfo("../../test/pybed2perg.txt")
 
 # base_dir = path.dirname(getcwd())
 base_dir = getcwd()
- 
-out_dir = base_dir + "/results/" + args.behavioral_type + "_by_phases/" +  statistic + "/"
+results_dir = "/results_by_day/"
+out_dir = base_dir + results_dir + args.behavioral_type + "_by_phases/" +  statistic + "/"
 
 if path.exists(out_dir):    
     rmtree(out_dir)
@@ -204,7 +204,7 @@ int_exp_phases = intervals.IntData ("../../../data/exp_phases.csv", map_dict=map
 data_read_exp_phases = int_exp_phases.read(relative_coord=True)
 
 d_exp_phases_bed2file = data_read_exp_phases.convert(mode="bed", data_types_actions="all")
-d_exp_phases_bed2file[d_exp_phases_bed2file.keys()[0]].save_track(bed_label="True", path=base_dir + "/results/", name_file="exp_phases")
+d_exp_phases_bed2file[d_exp_phases_bed2file.keys()[0]].save_track(bed_label="True", path=base_dir + results_dir, name_file="exp_phases")
 
 d_exp_phases_bed = data_read_exp_phases.convert(mode="bed", data_types_actions='one_per_channel')
 

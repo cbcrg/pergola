@@ -111,7 +111,7 @@ read_bed <- function (bed_file) {
 df_bed <- read_bed (bed_file)
 df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
-  
+
 name_file <- basename(bed_file)
 name_out <- paste(name_file, ".png", sep="")
 
@@ -161,7 +161,7 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        theme (axis.title.y = element_text(size=size_axis)) +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +  
        theme (axis.text.y = element_text(size=size_axis_ticks_y)) +
-       scale_fill_manual( name='', labels = labs_plot, values = cbb_palette) 
+       scale_fill_manual( name='', labels = labs_plot, values = cbb_palette)
 #        scale_fill_manual( name='', values = cbb_palette) 
 
 ggsave (file=name_out)

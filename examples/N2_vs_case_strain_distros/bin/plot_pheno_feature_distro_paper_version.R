@@ -113,6 +113,9 @@ df_ctrl <- read_bed (bed_file_ctrl)
 df_bed <- rbind (df_bed, df_ctrl)
 name_file <- basename(bed_file)
 
+df_bed <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/95/665d1fd0d0c17ab5421ee23a9efc86/N2.tail_motion.forward.bed")
+df_ctrl <- read_bed ("/Users/jespinosa/git/pergola/examples/N2_vs_case_strain_distros/work/87/bc5bfb455ca7a584aadb35d7bf91e6/unc-16e109.tail_motion.forward.bed")
+df_bed <- rbind (df_bed, df_ctrl)
 name_split <- strsplit (name_file, "\\." )
 
 # body_part <- name_split[[1]][2]
@@ -127,10 +130,11 @@ pheno_feature <- strsplit (name_file,  "\\.")[[1]][2]
 
 ## color blind friendly palette
 cbb_palette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-size_titles <- 18
-size_axis <- 16
-size_axis_ticks <- 16
-size_axis_ticks_y <- 16
+cbb_palette <- c("#009E73", "#F0E442")
+size_titles <- 11
+size_axis <- 11
+size_axis_ticks <- 12
+size_axis_ticks_y <- 12
 
 # aes and fonts for publications plot
 plot_width <- 12
@@ -153,13 +157,8 @@ xmax <- round(max (df_bed$value) + shift_axes, digits = -2)
 # xmin <- -100
 # xmax <- 600
 ## backward
-xmin <- -700
-xmax <- 30
-## paused
-# xmin <- -200
-# xmax <- 200
-# tick_interval <- 200
-
+# xmin <- -700
+# xmax <- 30
 breaks_v <- c(-rev(seq(0,abs(xmin), by=tick_interval)[0:-1]), seq (0, xmax, by=tick_interval))
 
 labs_plot <- as.vector(levels(df_bed$strain))
@@ -168,7 +167,7 @@ labs_plot [!labs_plot %in% "N2"] <- "Exp"
 labs_plot [labs_plot %in% "N2"] <- "Ctrl"
 
 ### version specifying the font type
-ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.50) +
+ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        scale_x_continuous (breaks=breaks_v, limits=c(xmin, xmax)) +
        scale_y_continuous(breaks=NULL) +
        labs (x = "", y = "") +       
@@ -181,7 +180,8 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.50) +
        theme (axis.title.y = element_text(size=size_axis)) +
        theme (axis.text.x = element_text(size=size_axis_ticks)) +  
        theme (axis.text.y = element_text(size=size_axis_ticks_y)) +       
-       scale_fill_manual(name='', labels = labs_plot, values = cbb_palette, guide=FALSE) +
-#       theme (legend.text = element_blank())
+       scale_fill_manual(name='', labels = labs_plot, values = cbb_palette) +
+       theme (legend.text = element_blank())
                 
 ggsave (file=name_out, width = plot_width, height=plot_height)
+
