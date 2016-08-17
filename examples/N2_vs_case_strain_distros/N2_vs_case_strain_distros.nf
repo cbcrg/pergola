@@ -396,7 +396,7 @@ plots_pheno_feature_case_ctrl.subscribe {
 /*
  * Creating folder to keep bed files to visualize data
  */
-result_dir_fasta = file("$baseDir/results_fasta_$tag_res")
+result_dir_fasta = file("results_fasta_$tag_res")
 
 result_dir_fasta.with {
      if( !empty() ) { deleteDir() }
@@ -409,7 +409,7 @@ out_fasta.subscribe {
   fasta_file.copyTo( result_dir_fasta.resolve ( it[2] + ".fa" ) )
 }
 
-result_dir_bed = file("$baseDir/results_bed_$tag_res")
+result_dir_bed = file("results_bed_$tag_res")
 
 result_dir_bed.with {
      if( !empty() ) { deleteDir() }
@@ -422,7 +422,7 @@ bed_loc_no_nas.subscribe {
   bed_file.copyTo ( result_dir_bed.resolve ( it[1] + "." + it[2] + ".bed" ) )
 }
 
-result_dir_bedGraph = file("$baseDir/results_bedGraph_$tag_res")
+result_dir_bedGraph = file("results_bedGraph_$tag_res")
 
 result_dir_bedGraph.with {
      if( !empty() ) { deleteDir() }
