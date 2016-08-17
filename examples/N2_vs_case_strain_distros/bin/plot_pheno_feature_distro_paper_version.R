@@ -184,3 +184,4 @@ ggplot(df_bed, aes(x=value, fill=strain)) + geom_density(alpha=0.25) +
        theme (legend.text = element_blank())
                 
 ggsave (file=name_out, width = plot_width, height=plot_height)
+
