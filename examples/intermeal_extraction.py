@@ -29,7 +29,7 @@ data_read = int_data.read(relative_coord=True)
 # Generate to BedTool objects containing light and dark phases
 
 # Write phases file
-mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark")
+mapping.write_cytoband(end = int_data.max - int_data.min, delta=43200, start_phase="dark")
 
 light_ph_f = out_dir +  "phases_light.bed"
 dark_ph_f = out_dir + "phases_dark.bed"
