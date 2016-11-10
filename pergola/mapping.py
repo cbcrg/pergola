@@ -355,3 +355,50 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
     phases_bed_file.close()
     phases_bed_light_f.close()
     phases_bed_dark_f.close()
+    
+def write_period_seq (end, start=0, delta=43200, tag="day", mode="w", path_w=None, name_file="period_seq", lab_bed=True, track_line=True):
+    """
+    Creates a cytoband-like and a bed file with phases of the experiment 
+    
+    :param end: :py:func:`int` last timepoint in the series
+    :param start: :py:func:`int` first timepoint in the series, by default 0
+    :param delta: :py:func:`int` delta between intervals, by default 43200 seconds, 12 hours
+    :param day tag: :py:func:`str` tag to use in the sequence of events
+    :param w mode: :py:func:`str` mode to use for file, by default write
+    :param None path_w: :py:func:`str` path to dump the files, by default None
+    :param period_seq name_file: :py:func:`str` output file name, by default period_seq    
+    :param True lab_bed: If true shows label corresponding to dataType in bed file otherwise 
+        shows "."
+    :param True track_line: If true includes track_line in the file 
+    """
+    t = 0
+    end_t = 0
+    path = ""
+    chr = "chr1"    
+    name_bed = name_file
+    index = 1
+     
+    if not path_w: 
+        path = getcwd()
+        print >>stderr, 'Bed files with period sequence will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (path)     
+    else:
+        path = path_w
+             
+    phases_bed_file = open(join(path, name_bed + _bed_file_ext), mode)  
+    
+    if track_line:
+        phases_bed_file.write("track name=\"phases\" description=\"Track annotating a sequence of periods of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")            
+            
+    for i in xrange(start, end, delta):
+        if lab_bed: phase_bed = tag + "_" + str(index)
+        else: phase_bed = "."
+    
+        if i + delta > end:
+            line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, i+1, end, phase_bed, '1000')
+        else:
+            line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, i+1, i+delta, phase_bed, '1000')
+
+        phases_bed_file.write(line_bed)        
+        index = index + 1
+    phases_bed_file.close()
