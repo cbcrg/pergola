@@ -352,9 +352,9 @@ class Track(GenomicContainer):
         if sel_tracks != []:            
             ori_tracks = set(self.list_tracks)
             tracks2rm = self.list_tracks.difference(sel_tracks)
-            tracks2rm = sel_tracks                           
+#             tracks2rm = sel_tracks                           
             dict_split = self.remove (dict_split, tracks2rm)
-            print >> stderr, "Removed tracks are:", ' '.join(tracks2rm)
+            print >> stderr, "Removed tracks are:", ' '.join(sorted(tracks2rm, key=int))
             
             # I have to keep the original list otherwise the original object is changed
             self.list_tracks = ori_tracks
