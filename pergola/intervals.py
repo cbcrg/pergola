@@ -103,7 +103,6 @@ class IntData(object):
         self.path = check_path(path)
         self._in_file = open(self.path, "rb")
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
-#         self.header = kwargs.get('header',True)
         self.header = header
         
         self._reader =  reader(self._in_file, delimiter=self.delimiter)
@@ -116,9 +115,6 @@ class IntData(object):
         self.range_values = 0
         self.data = self._simple_read()        
 #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
-        
-        # Default value for data type in case data_types does not exist is set to the name of the data_value field
-#         default_label = self.fieldsB [self.fieldsG_dict['data_value']]
         self.data_types = self.get_field_items(field ="data_types", data = self.data, default="a")
         self.tracks = self.get_field_items(field="track", data = self.data, default="1")#TODO maybe this function will be more general if instead of giving field name
         #i pass the index 
@@ -132,14 +128,13 @@ class IntData(object):
         
         :returns: delimiter
         
-        """                
-#         self.in_file  = open(path, "rb") #del eliminate path as an argument
-        
+        """                        
         for row in self._in_file:
             
             # Comments skipped
             if row.startswith("#"):                 
                 continue
+            
             #Delimiter set by user        
             if row.count(delimiter) >= 1: break
             else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(delimiter))
@@ -209,8 +204,7 @@ class IntData(object):
                 for f in ori_fieldsB:
                     if f in fields: fieldsB.append(f)
                     else: fieldsB.append("")      
-#                 print "============= fields B all fields of header", fieldsB#del
-#                 fieldsB = fields                     
+                                         
             else:       
                 fieldsB = [header[0].strip('# ')]+header[1:]        
         else:
@@ -623,17 +617,13 @@ class IntData(object):
 
         set_fields = set()
         
-        if field in self.fieldsG:
-#             i =  self.fieldsG.index(field)
-#             i = self.fieldsG_dict[field]
-#             print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field, i#del
-            
+        if field in self.fieldsG:            
             idx_field = self.fieldsG_dict[field]
             field = [field]    
-#             print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field, idx_field#del
             
             for row in self.data:
-                set_fields.add(row[idx_field])    
+                set_fields.add(row[idx_field])
+                    
         elif default:
             new_data = list()
             new_field = (default,)
@@ -648,10 +638,10 @@ class IntData(object):
             pos = len(self.fieldsG)
             self.fieldsG.append(str(field))
             self.fieldsG_dict[field]=pos
+            
         else:
             raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
-        
-#         print "intervals.py &&&&&&&&&&&&&&&&&&&&&&&&", field,set_fields#del 
+
         return set_fields
     
     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None,**kwargs):
@@ -753,9 +743,6 @@ class IntData(object):
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"
             
-            # If end is present ERROR
-#             _time_points = ["start"]#del
-#         _f_rel_mand#del
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
                         
@@ -771,10 +758,6 @@ class IntData(object):
  
         # Updated and order list of the fields        
         list_fields = [None] * len(self.fieldsG_dict)
-#         print "length of the dictionary",len(self.fieldsG_dict)#del
-        
-#         print "======================", self.fieldsG#del
-#         print "======================", self.fieldsG_dict#del
         
         for field, i in self.fieldsG_dict.iteritems():
             list_fields[i] = field
@@ -843,7 +826,7 @@ class IntData(object):
         """
         TODO Documentation
         """
-         # Min and maximun time points
+        # Min and maximun time points
         t_min = None
         t_max = None
         
