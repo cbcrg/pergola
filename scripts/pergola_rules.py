@@ -29,13 +29,8 @@ from pergola  import mapping
 # from pergola  import tracks
 from argparse import ArgumentParser
 from sys      import stderr, exit
-# from re       import match
 import os
 from pergola import parsers
-
-
-# _dt_act_options = ['all', 'one_per_channel']
-# _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even'] 
 
 def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
@@ -108,6 +103,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
+    # Setting whether input file has header or not
     header_sw = True
     
     if no_header:
@@ -120,15 +116,13 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     else:
         fields2read = None    
     
+    # When bining data setting the window of time used in seconds
     if window_size:
         print >>stderr, "@@@Pergola_rules.py: Window size set to: %d" % window_size
     else:
         window_size = 300
         print >>stderr, "@@@Pergola_rules.py: Window size set to default: %d" % window_size
-#         print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
-#                         'as it has not been set using path_w' % (pwd)
-    #Track line--> some genome browsers such as savant do not display correctly the file when the track line is in the file
-#     print "no_track_line set to........................................................: %s" % no_track_line #del
+
     if no_track_line:
         track_line=False
     else:
@@ -148,45 +142,13 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         print >>stderr, "@@@Pergola_rules.py: bed_label set to: %s" % bed_lab
     else:
         bed_lab = False
-        
-    ################
-    # Reading data
-#     intData = structures.IntData(path, map_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=1000)
-#     intData = structures.IntData(path, map_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, intervals=intervals_gen, multiply_t=multiply_f)
-#     intData = intervals.IntDamap_dict, map_dict=map_file_dict.correspondence, 
-#                                 fields_names=fields2read, intervals=intervals_gen, 
-#                                 multiply_t=multiply_f)
-    # Old version of IntData which was generating intervals and multiplying value, all this features now in read()
-#     intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, 
-#                                 fields_names=fields2read, intervals=intervals_gen, 
-#                                 multiply_t=multiply_f, header=header_sw, delimiter=separator)
+
     intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, 
                                 fields_names=fields2read,  
                                 header=header_sw, delimiter=separator)
     
-    
-#     print "type of intData is ::::::::::::::::::", type (intData) #del
-    # ADD TO READ:
-    # intervals=intervals_gen
-    # multiply_t=multiply_f
-    
-#     print "tracks before call are------------------------",intData.tracks#del
-#     sys.exit("Error message")#del
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
     
-#     print "tracks 2 merge .....................",tracks2merge
-    
-    # write_chr now only accepts Track objects
-#     mapping.write_chr (intData)#mantain
-        
-#    write_cytoband(self, end, mode="w", start=0, delta=43200, path_w=None):
-    
-    # Taking the relative_coord from the command options
-#     data_read = intData.read(relative_coord=True)
-    
-    ## Now read has the the options like multiply_t and intervals 
-#     data_read = intData.read(relative_coord=relative_coord)
     data_read = intData.read(relative_coord=relative_coord, intervals=intervals_gen, multiply_t=multiply_f)
     
     mapping.write_chr (data_read)#mantain 
@@ -201,66 +163,23 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     if relative_coord:
        start = 0
        end = intData.max - intData.min
-     
-#     print "min>>>>>>>>>>>>>>>>>>>", start
-#     print "max>>>>>>>>>>>>>>>>>>>", end
-    
-#     mapping.write_cytoband(intData, end=end, start=26953, delta=43200)
-    # I don't need anymore the start to be shift because files are trimmed
-#     mapping.write_cytoband(intData, end=end, track_line=track_line, lab_bed=False)
-    mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
-#     print ">>>>>>>>>>>>>>>>>>>>>>>>>>>data_read.data_types",data_read.data_types
 
-    # Save the data in a text file similar to the original read file
+    mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
+
     data_read.save_track(name_file="all_intervals")
-    
-#     for i in data_read.data:
-# #         print i
-#         pass
-    
-#     print "Selected tracks.....................", sel_tracks#del
-    
+        
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, data_types_actions=data_types_act, 
                                  window=window_size, color_restrictions=d_colors_data_types)
-    
-     
-#     ## Tracks in sel_tracks is just to set tracks to be kept and which ones to be remove
-#     ## Quiza en tracks tambien deberia permitir que se metieran list y ranges pero entonces lo que deberia hacer es poner una
-#     ## funcion comun para procesar esto en las dos opciones
-#     ## however tracks_merge are the trakcs to be join
 
     for key in bed_str:
-#         print "key.......: ",key#del
         bedSingle = bed_str[key]
-#         print "::::::::::::::",bedSingle.data_types
-#         print "::::::::::::::",bedSingle.track        
-        # TODO add an if checking whether it is a bedgraph or not to get the mean
-#         bedGraph_mean = bedSingle.win_mean()
-#         print "============="
-#         print bedGraph_mean
         bedSingle.save_track(track_line=track_line, bed_label=bed_lab)
-#         bedGraph_mean.save_track(track_line=track_line, bed_label=True)
-#         print "Tracks in the file", bedSingle.track
-        
-#         bedSingle.convert(mode=write_format, tracks=sel_tracks) 
-        
-#         for i in bedSingle:
-#             print i 
-#     print intData.fieldsG                                   
-#     iter=intData.read(intervals_gen=True)
-#buscar al manera de que si esta timepoint en el configuration file entonces crea de uno
-    
-#     for  i in iter:
-#         print i                                                                                                                                        
 
 if __name__ == '__main__':
         
     parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser])        
     
-    # Eventually adding arguments only for pergola_rules
-#     parser_pergola_rules.add_argument('-fo', '--foo', required=False, metavar="FOO", help='Foo is foo')
-
     args = parser_pergola_rules.parse_args()
     
     exit(main(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
