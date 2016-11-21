@@ -24,7 +24,8 @@ unittest for pergola functions
 import unittest
 from pergola import mapping
 from pergola import intervals
-from os import path
+from os      import path
+from sys     import stderr
 
 # Getting the path to test files
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
@@ -34,17 +35,17 @@ class TestTutorial(unittest.TestCase):
     Testing that everything in the tutorial run smoothly        
     """ 
         
-    def test_correspondence_info (self):
+    def test_01_correspondence_info (self):
         """
         Testing that ontology file is correctly read
         """
         global mappings_tutorial, exp2, exp3, exp4
-        mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/tutorial/b2g.txt")
+        mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/b2g.txt")
         
         msg_mappings = "Equivalences set in tutorial mapping file are not correct."
         self.assertEqual(mappings_tutorial.correspondence['EndT'], 'end', msg_mappings)
         
-    def test_read_int_data(self):
+    def test_02_read_int_data(self):
         """
         Testing the creation of intData object using tutorial data
         """ 
@@ -56,10 +57,30 @@ class TestTutorial(unittest.TestCase):
         msg_int_data_min= "Min value does not correspond to tutorial files."
         msg_int_data_max= "Max value does not correspond to tutorial files."
         
-        int_data_tutorial = intervals.IntData(PATH + "/feeding/tutorial/feedingBehavior_HF_mice.csv", map_dict=mappings_tutorial.correspondence)
+        int_data_tutorial = intervals.IntData(PATH + "/feeding/feeding_behavior_HF_mice.csv", map_dict=mappings_tutorial.correspondence)
+        
         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
-        self.assertEqual(int_data_tutorial.max, max, msg_int_data_max) 
-     
+        self.assertEqual(int_data_tutorial.max, max, msg_int_data_max)
+        
+    def test_03_bed(self):
+        """
+        Testing the creation of bed files
+        """ 
+        write_format='bed'
+        
+        data_read = int_data_tutorial.read(relative_coord='True', intervals=False, multiply_t=1)
+        bed_str =  data_read.convert(mode=write_format)
+         
+#         for key in bed_str:
+#             print key
+        bedSingle_1_food_fat = bed_str[('2','food_fat')]
+        bedSingle_1_food_sc = bed_str[('1','food_sc')]
+        bedSingle_1_water = bed_str[('3','water')]
+        
+        bedSingle_1_food_fat.save_track(track_line=True, bed_label=True)                
+        bedSingle_1_food_sc.save_track(track_line=True, bed_label=True)   
+        bedSingle_1_water.save_track(track_line=True, bed_label=True)   
+        
     def test_only_one_time_point(self):
         """
         Testing if files with just one coordinate for time are read correctly
@@ -90,12 +111,13 @@ class TestTutorial(unittest.TestCase):
         max = 300
         tracks_data_electro = int_data_electro.read(multiply_t=1000, intervals=True)
         self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
-         
+        
+        print >> stderr, "Test 4................." #del  
+        
         first_item = (0.0, '-30.98', 'a', '1', 9.0) 
         first_item_read = tracks_data_electro.data[0]
         self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
         self.assertEqual(first_item_read, first_item, msg_track_electro) 
-
 
 # mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
 # mapping_info_e.write()
@@ -114,10 +136,6 @@ class TestTutorial(unittest.TestCase):
 # print ("debugging_simple_read",int_data_e_int.data)
 # tracks_data_e = int_data_e_int.read(multiply_t=1000, intervals=True)
 # print "debugging_simple_read", tracks_data_e
-
-
-
         
-            
 if __name__ == '__main__':
     unittest.main()
