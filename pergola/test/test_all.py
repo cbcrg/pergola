@@ -49,7 +49,7 @@ class TestTutorial(unittest.TestCase):
         """
         Testing the creation of intData object using tutorial data
         """ 
-        global int_data_tutorial
+        global data_read
         
         # Min value from tutorial file
         min = 1335985200
@@ -62,13 +62,39 @@ class TestTutorial(unittest.TestCase):
         self.assertEqual(int_data_tutorial.min, min, msg_int_data_min) 
         self.assertEqual(int_data_tutorial.max, max, msg_int_data_max)
         
+        data_read = int_data_tutorial.read(relative_coord='False', intervals=False, multiply_t=1)
+        
     def test_03_bed(self):
         """
         Testing the creation of bed files
         """ 
         write_format='bed'
+         
+#         data_read = int_data_tutorial.read(relative_coord='False', intervals=False, multiply_t=1)
+        bed_str =  data_read.convert(mode=write_format)
+          
+#         for key in bed_str:
+#             print key
+        bedSingle_1_food_fat = bed_str[('2','food_fat')]
+        bedSingle_1_food_sc = bed_str[('1','food_sc')]
+        bedSingle_1_water = bed_str[('3','water')]
+         
+        # track containing minimum time value in order to check relative_coord   
+        bedSingle_16_food_sc = bed_str[('16','food_sc')]
+         
+        bedSingle_1_food_fat.save_track(track_line=True, bed_label=True)                
+        bedSingle_1_food_sc.save_track(track_line=True, bed_label=True)   
+        bedSingle_1_water.save_track(track_line=True, bed_label=True)
+         
+        bedSingle_16_food_sc.save_track(track_line=True, bed_label=True)
+             
+    def test_04_gff(self):
+        """
+        Testing the creation of gff files
+        """ 
+        write_format='gff'
         
-        data_read = int_data_tutorial.read(relative_coord='True', intervals=False, multiply_t=1)
+        
         bed_str =  data_read.convert(mode=write_format)
          
 #         for key in bed_str:
@@ -77,10 +103,15 @@ class TestTutorial(unittest.TestCase):
         bedSingle_1_food_sc = bed_str[('1','food_sc')]
         bedSingle_1_water = bed_str[('3','water')]
         
+        # track containing minimum time value in order to check relative_coord   
+        bedSingle_16_food_sc = bed_str[('16','food_sc')]
+        
         bedSingle_1_food_fat.save_track(track_line=True, bed_label=True)                
         bedSingle_1_food_sc.save_track(track_line=True, bed_label=True)   
-        bedSingle_1_water.save_track(track_line=True, bed_label=True)   
+        bedSingle_1_water.save_track(track_line=True, bed_label=True)
         
+        bedSingle_16_food_sc.save_track(track_line=True, bed_label=True)    
+            
     def test_only_one_time_point(self):
         """
         Testing if files with just one coordinate for time are read correctly

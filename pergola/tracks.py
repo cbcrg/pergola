@@ -724,8 +724,8 @@ class Track(GenomicContainer):
             temp_list.append(".") #"source"
 #             temp_list.append(row[i_types]) #"type"
             temp_list.append("exon") #"type"
-            temp_list.append(row[i_start+1]) #start
-            temp_list.append(row[i_end]) #end
+            temp_list.append(row[i_start] + 1) #start
+            temp_list.append(row[i_end] + 1) #end
             temp_list.append(row[i_score]) #"score"
             temp_list.append(".") #"strand"
             temp_list.append(".") #phase
