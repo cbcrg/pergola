@@ -129,7 +129,6 @@ class GenomicContainer(object):
         
         self.data = data
         self.fields = fields
-#         print "initiation of GenomicContainer*********************", self.fields#del
         self.data_types = data_types     
         self.format = kwargs.get("format",'txt')
         self.track = kwargs.get('track', "1")
@@ -208,12 +207,10 @@ class GenomicContainer(object):
         data_out = []
         
         if self.format == 'bed' and track_line:
-#             annotation_track = 'track type=' + self.format + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
             annotation_track = 'track ' + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"
             track_file.write (annotation_track + "\n")
             
         elif self.format == 'bedGraph' and track_line:
-#             annotation_track = 'track type=' + self.format + " " + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #             
             annotation_track = 'track ' + 'name=\"' + self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + "_" + self.data_types + '\"' + " " + 'visibility=full color=' + self.color_gradient[n_interval-1] + ' altColor=' + self.color_gradient[n_interval] + ' priority=20'        #                         
             track_file.write (annotation_track + "\n")        
         
@@ -221,9 +218,6 @@ class GenomicContainer(object):
             file_format_line = '##gff-version 3'
             track_file.write (file_format_line + "\n")
             track_file.write ('##sequence-region 1' + "\t" + "1"  "\t" + "1" + "\t" + "50" +  "\n")
-#             if track_line: #del           
-#                 annotation_track = '#track' + " " + 'name=\"' +  self.track + "_" + self.data_types + '\"' + " " + 'description=\"' + self.track + " " + self.data_types + '\"' + " " + "visibility=2 itemRgb=\"On\" priority=20"            
-#                 track_file.write (annotation_track + "\n")  
 
         data_out = sorted(self.data, key=itemgetter(self.fields.index('start')))
                 
