@@ -1,5 +1,5 @@
 ## Urgent
-- [ ] Read files from ctrax
+
 
 ## Pending
 - [ ] Clean all code annotations
@@ -9,5 +9,8 @@
 - [ ] Modify the name of pergola_rules by pergola_convert
 
 ## Currently working
-- [ ] Use file format conventions of bed and gff files (0, 1 etc)
+- [ ] Read files from ctrax
+- [ ] Filter by data type
 
+## Solved
+- [X] Use file format conventions of bed and gff files (0, 1 etc)
