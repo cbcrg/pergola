@@ -1,7 +1,7 @@
 ! Mapping of behavioural fields into pergola ontology terms
 !
 behavioural_file:animal > pergola:track
-behavioural_file:startTime > pergola:chromStart
-behavioural_file:endTime > pergola:chromEnd
-behavioural_file:value > pergola:dataValue
-behavioural_file:dataType > pergola:dataTypes
+behavioural_file:startTime > pergola:chrom_start
+behavioural_file:endTime > pergola:chrom_end
+behavioural_file:value > pergola:data_value
+behavioural_file:dataType > pergola:data_types
