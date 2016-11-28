@@ -199,7 +199,6 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     path = ""
     header = ["animal", "startTime", "endTime", "value", "dataType"]
     input_file = check_path(input_file)
-#     jaaba_data = io.loadmat(input_file)
     jaaba_data = loadmat(input_file)
         
     # Checking JAABA version
@@ -222,7 +221,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     scores_flat = hstack(hstack(hstack(scores)))
     score_norm = hstack(hstack(score_norm))[0][0]
     
-    temp = NamedTemporaryFile()
+    temp = NamedTemporaryFile(delete=True)
     temp.write(delimiter.join(header) + "\n")
     
     if norm:
