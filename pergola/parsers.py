@@ -32,17 +32,20 @@ from sys       import stderr
 from argparse  import ArgumentParser, ArgumentTypeError
 from re        import match
 from os        import makedirs
-from os.path   import join, exists
+from os.path   import join, exists, abspath, split, realpath
 from scipy.io  import loadmat
-from numpy     import hstack, mean, divide
+from numpy     import hstack, mean, divide, ndenumerate
 from tempfile  import NamedTemporaryFile
 from mapping   import MappingInfo, check_path
 from intervals import IntData
+from shutil    import copyfileobj
 
 _csv_file_ext = ".csv"
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
+
+PATH = abspath(split(realpath(__file__))[0])
 
 def parse_num_range(string):
     """ 
@@ -258,6 +261,77 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     
     return (int_data_jaaba)
 
+def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimiter="\t", feature="velmag", path_w=""):
+    """   
+    Creates a csv file or a IntData object from feature mat files dumped by JAABA and in matlab format
+    
+    :param dir_perframe: path to the JAABA directory where perframe features are dumped
+    :param "csv" output: :py:func:`str` sets whether data has to be extracted to a csv or an IntData object
+    :param map_jaaba: path to the mapping files between JAABA data and pergola ontology 
+    :param "\t" delimiter: :py:func:`str` Character use to separate values of 
+        the same record in file (default "\t").
+    :param "velmag" feature: :py:func:`str` data type (feature) to extract e.g. velmag (speed of the center of rotation)
+        More features can be found in http://ctrax.sourceforge.net/bmat.html
+    :param None path_w: :py:func:`str` path to dump the files
+    
+    returns: IntData object
+    """
+            
+#     dir_perframe = '/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/'
+    feature="velmag"    
+    input_path = join(dir_perframe, feature + ".mat")
+        
+    input_file = check_path(input_path)
+        
+    jaaba_feature = loadmat(input_file)
+    
+#     len_f = jaaba_feature['data'][0][1].size
+#     animal_n = jaaba_feature['data'][0].size
+# if track_action not in _tr_act_options:
+#         raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in _tr_act_options])))
+    output_option = ["csv", "IntData"]
+    
+    if output not in output_option:
+            raise ValueError("Option output \'%s\' not allowed. Possible values are %s"%(output_options, ', '.join(['{}'.format(m) for m in output_options])))
+    
+    temp = NamedTemporaryFile()
+    header = ["animal", "startTime", "endTime", "value", "dataType"]
+    temp.write(delimiter.join(header) + "\n")
+    
+    for id_animal, animal_jaaba_feature in enumerate (jaaba_feature['data'][0]):
+        animal_jaaba_feature= hstack(animal_jaaba_feature)
+        
+        for t, v in ndenumerate(animal_jaaba_feature):             
+            temp.write(delimiter.join('{}'.format(v) for v in [id_animal+1, t[0], t[0]+1, v, feature]) + "\n")
+    
+    # rewinds the file handle
+    temp.seek(0)
+    
+    if output == "csv":
+        if not path_w: 
+            path = getcwd()
+            print >>stderr, 'CSV file will be dump into \"%s\" ' \
+                           'as not path has been set in path_w' % (path)
+        else:
+            if exists(path_w):
+                path = path_w
+            else:
+                raise IOError('Provided path does not exists: %s' % path_w)
+                
+        feature_file = open(join(path, feature + "." + _csv_file_ext), "wb")
+                
+        copyfileobj(temp, feature_file)
+        temp.close()
+        
+    elif output == "IntData":                        
+        map_jaaba = check_path(map_jaaba)
+        map = MappingInfo(map_jaaba)
+        
+        int_data_jaaba = IntData(temp.name, map_dict = map.correspondence)     
+        temp.close()
+        
+        return (int_data_jaaba)
+   
 def read_colors (path_color_file):
     """     
     Reads user colors for each data_type  
