@@ -13,8 +13,9 @@
 - [ ] Upload C.elegans files
 
 ## Currently working
-- [ ] Read files from ctrax
 - [ ] Filter by data type
+- [ ] bedGraph window by default should by 1 or otherwise give an option just to transform bed to bedgraph without window
 
 ## Solved
 - [X] Use file format conventions of bed and gff files (0, 1 etc)
+- [X] Read files from ctrax

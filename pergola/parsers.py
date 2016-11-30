@@ -263,21 +263,19 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
 
 def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimiter="\t", feature="velmag", path_w=""):
     """   
-    Creates a csv file or a IntData object from feature mat files dumped by JAABA and in matlab format
+    Creates a csv file or a IntData object from feature mat files dumped by JAABA in perframe directory in matlab format
     
     :param dir_perframe: path to the JAABA directory where perframe features are dumped
     :param "csv" output: :py:func:`str` sets whether data has to be extracted to a csv or an IntData object
     :param map_jaaba: path to the mapping files between JAABA data and pergola ontology 
-    :param "\t" delimiter: :py:func:`str` Character use to separate values of 
-        the same record in file (default "\t").
+    :param "\t" delimiter: :py:func:`str` Character used in the csv output file to separate values of 
+        the same record (default "\t").
     :param "velmag" feature: :py:func:`str` data type (feature) to extract e.g. velmag (speed of the center of rotation)
         More features can be found in http://ctrax.sourceforge.net/bmat.html
     :param None path_w: :py:func:`str` path to dump the files
     
     returns: IntData object
     """
-            
-#     dir_perframe = '/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/'
     feature="velmag"    
     input_path = join(dir_perframe, feature + ".mat")
         
@@ -285,10 +283,6 @@ def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimit
         
     jaaba_feature = loadmat(input_file)
     
-#     len_f = jaaba_feature['data'][0][1].size
-#     animal_n = jaaba_feature['data'][0].size
-# if track_action not in _tr_act_options:
-#         raise ValueError("Track_action \'%s\' not allowed. Possible values are %s"%(track_action,', '.join(['{}'.format(m) for m in _tr_act_options])))
     output_option = ["csv", "IntData"]
     
     if output not in output_option:

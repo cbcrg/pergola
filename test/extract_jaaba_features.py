@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# 
+
 # from scipy.io  import loadmat
 # from numpy     import hstack, ndenumerate#, mean, divide
 # from os.path   import join, exists, abspath, split, realpath
@@ -9,7 +9,7 @@
 # from pergola.intervals import IntData #del
 from pergola  import parsers
 
-# parsers.jaaba_features_to_intData(input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
+# parsers.jaaba_features_to_intData(input_file='Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
 #                             path_w='/Users/jespinosa/git/pergola/test', norm=True, data_type="chase")
 
 # jaaba_features_to_intData(dir_perframe, map_jaaba,  delimiter="\t", feature="velmag", output="csv", path_w=""):
