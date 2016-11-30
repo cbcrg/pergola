@@ -111,7 +111,49 @@ class TestTutorial(unittest.TestCase):
         bedSingle_1_water.save_track(track_line=True, bed_label=True)
         
         bedSingle_16_food_sc.save_track(track_line=True, bed_label=True)    
-            
+    
+    def test_05_bedGraph_noBinning(self):
+        """
+        Testing the creation of bedGraph files without window binning
+        """ 
+        write_format='bedGraph'        
+        
+        bed_str =  data_read.convert(mode=write_format, window=False)
+         
+        bedSingle_1_food_fat = bed_str[('2','food_fat')]
+        bedSingle_1_food_sc = bed_str[('1','food_sc')]
+        bedSingle_1_water = bed_str[('3','water')]
+        
+        # track containing minimum time value in order to check relative_coord   
+        bedSingle_16_food_sc = bed_str[('16','food_sc')]
+        
+        bedSingle_1_food_fat.save_track(track_line=True)                
+        bedSingle_1_food_sc.save_track(track_line=True)   
+        bedSingle_1_water.save_track(track_line=True)
+        
+        bedSingle_16_food_sc.save_track(track_line=True)
+    
+    def test_06_bedGraph_Binning(self):
+        """
+        Testing the creation of bedGraph files without window binning
+        """ 
+        write_format='bedGraph'        
+        
+        bed_str =  data_read.convert(mode=write_format, window=300)
+         
+        bedSingle_1_food_fat = bed_str[('2','food_fat')]
+        bedSingle_1_food_sc = bed_str[('1','food_sc')]
+        bedSingle_1_water = bed_str[('3','water')]
+        
+        # track containing minimum time value in order to check relative_coord   
+        bedSingle_16_food_sc = bed_str[('16','food_sc')]
+        
+        bedSingle_1_food_fat.save_track(track_line=True)                
+        bedSingle_1_food_sc.save_track(track_line=True)   
+        bedSingle_1_water.save_track(track_line=True)
+        
+        bedSingle_16_food_sc.save_track(track_line=True)
+                        
     def test_only_one_time_point(self):
         """
         Testing if files with just one coordinate for time are read correctly

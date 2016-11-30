@@ -300,9 +300,7 @@ class Track(GenomicContainer):
         
             self.range_values = range_color
 
-#         dict_tracks = (self._convert2single_track(self._read(**kwargs), mode, **kwargs)) #TODO
         dict_tracks = (self._convert2single_track(self.data, mode, **kwargs)) 
-#         dict_tracks = (self._convert2single_track(self.data, mode, **kwargs)) #TODO
         
         return (dict_tracks)
         
@@ -329,7 +327,7 @@ class Track(GenomicContainer):
                 dict_split [key[0]] = {}
             dict_split [key[0]][key[1]] = tuple(group)
         
-        #Generate dictionary of original fields and color gradients
+        #Generates dictionary of original fields and color gradients
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = dict()
         
@@ -362,7 +360,8 @@ class Track(GenomicContainer):
         else:            
             sel_data_types = map(str, kwargs.get("data_types",[]))
         
-        new_dict_split = {}    
+        new_dict_split = {} 
+           
         ### When any data_types are selected we consider that no data_types should be removed
         if sel_data_types  != []:
             data_types2rm = self.list_data_types.difference(sel_data_types)
@@ -704,6 +703,7 @@ class Track(GenomicContainer):
         color_restrictions = kwargs.get('color_restrictions', None)
         _dict_col_grad = assign_color (self.data_types, color_restrictions)
         
+        # Step for the color gradient
         step = (float(self.range_values[1]) - float(self.range_values[0])) / n_interval
 
         if step == 0: 
@@ -777,125 +777,148 @@ class Track(GenomicContainer):
         #When the tracks have been join it is necessary to order by chr_start
         track = sorted(track, key=itemgetter(*[i_chr_start]))
         
-        # Ini_window has to be set to the initial value otherwise files with
-        # no relative coordinates contained tones of empty data
-#         ini_window = 0 #ojo
-#         ini_window = 1       
-        # I have to find the closest number multiple of the window size so that all 
-        # bedGraph have the same intervals
-        delta_window = window      
-        ini_window = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
-        end_window = ini_window + delta_window
-        partial_value = 0 
-        cross_interv_dict = {}
-        
-        last_point =  track[-1][i_chr_end]
-        r = last_point % delta_window
-        fake_end = last_point + delta_window - r
-        last_fake_line = list(track[-1])
-        last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
-        last_fake_line[i_chr_end] = fake_end
-        last_fake_line[i_data_value] = 0
-        track.append(tuple(last_fake_line)) 
-
-        if not r == 1 or r == 0:
-            fake_end = last_point + delta_window - r
-            sec_fake_line = last_fake_line
-            sec_fake_line[i_chr_start] = fake_end + delta_window + 1
-            sec_fake_line[i_chr_end] = fake_end + 2 * delta_window
-            sec_fake_line[i_data_value] = 0
-            track.append(tuple(sec_fake_line)) 
-            
-        for row in track:
+        if window == 0: #or false
+          for row in track:
             temp_list = []
-            chr_start = row[i_chr_start]        
-            chr_end = row[i_chr_end]
-            data_value = float(row[i_data_value])
-            self.fields.index(f) 
+            temp_list.append("chr1")
+            temp_list.append(row[i_chr_start])
+            temp_list.append(row[i_chr_end])
+#             temp_list.append(row[i_data_types])  
+            temp_list.append(row[i_data_value])   
+#             temp_list.append("+")
+#             temp_list.append(row[i_chr_start])
+#             temp_list.append(row[i_chr_end])
+                                        
+#             temp_list.append(color)          
             
-            #Intervals happening after the current window
-            #if there is a value accumulated it has to be dumped otherwise 0
-            if chr_start > end_window:               
-                while (end_window < chr_start):                                 
-                    partial_value = partial_value + cross_interv_dict.get(ini_window,0)
-                    temp_list.append("chr1")
-                    temp_list.append(ini_window)
-                    temp_list.append(end_window)
-                    temp_list.append(partial_value)
-                    partial_value = 0
-#                     ini_window += delta_window + 1 #ojo
-                    ini_window += delta_window
-#                     end_window += delta_window + 1 #ojo
-                    end_window += delta_window
-                                                     
-                    yield(tuple(temp_list))
-                    temp_list = []
-                     
-                #Value must to be weighted between intervals
-                if chr_end > end_window:                                   
-                    value2weight = data_value
-                    end_w = end_window
-                    start_new = chr_start
-                    end_new = chr_end
-                    
-                    for start_w in range (int(ini_window), int(chr_end), delta_window):
-                        weighted_value = 0.0
-                        
-                        if (end_w == start_w):
-                            weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
-                        else:                                                           
-                            weighted_value = float(end_w - start_new) / float(end_new - start_new)
-                            #print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new) #del
-#                             weighted_value= 9/2
-                            #print "weighted value",weighted_value #del  
-#                             print "value2weight..............", (chr_end, end_window, value2weight, weighted_value)
-                            
-                        weighted_value *= value2weight
-                        cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)                      
-                        start_new = end_w
-                        value2weight = value2weight - weighted_value                        
-    
-                        if ((end_w + delta_window) >= chr_end):
-                            new_start_w = start_w + delta_window
-                            cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
-                            break
-                        
-                        end_w = end_w + delta_window
-                else:
-                    partial_value = partial_value + data_value
-                            
-            elif (chr_start <= end_window and chr_start >= ini_window):
-                 
-                if chr_end <= end_window:
-                    partial_value = partial_value + data_value                 
+            yield(tuple(temp_list))
+            
+        else:
+            try: 
+                float(x) == int(x)
+            except:               
+                raise ValueError("Window option only accepts integers or False. Current value: %s" 
+                                % (type(window)))
                 
-                else:
-                    value2weight = data_value
-                    end_w = end_window
-                    start_new = chr_start
-                    end_new = chr_end
-                    
-                    for start_w in range (int(ini_window), int(chr_end), delta_window):                
-                        weighted_value = 0
+            # Ini_window has to be set to the initial value otherwise files with
+            # no relative coordinates contained tones of empty data
+    #         ini_window = 0 #ojo
+    #         ini_window = 1       
+            # I have to find the closest number multiple of the window size so that all 
+            # bedGraph have the same intervals
+            delta_window = window      
+            ini_window = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
+            end_window = ini_window + delta_window
+            partial_value = 0 
+            cross_interv_dict = {}
+            
+            last_point =  track[-1][i_chr_end]
+            r = last_point % delta_window
+            fake_end = last_point + delta_window - r
+            last_fake_line = list(track[-1])
+            last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
+            last_fake_line[i_chr_end] = fake_end
+            last_fake_line[i_data_value] = 0
+            track.append(tuple(last_fake_line)) 
+    
+            if not r == 1 or r == 0:
+                fake_end = last_point + delta_window - r
+                sec_fake_line = last_fake_line
+                sec_fake_line[i_chr_start] = fake_end + delta_window + 1
+                sec_fake_line[i_chr_end] = fake_end + 2 * delta_window
+                sec_fake_line[i_data_value] = 0
+                track.append(tuple(sec_fake_line)) 
+                
+            for row in track:
+                temp_list = []
+                chr_start = row[i_chr_start]        
+                chr_end = row[i_chr_end]
+                data_value = float(row[i_data_value])
+                self.fields.index(f) 
+                
+                #Intervals happening after the current window
+                #if there is a value accumulated it has to be dumped otherwise 0
+                if chr_start > end_window:               
+                    while (end_window < chr_start):                                 
+                        partial_value = partial_value + cross_interv_dict.get(ini_window,0)
+                        temp_list.append("chr1")
+                        temp_list.append(ini_window)
+                        temp_list.append(end_window)
+                        temp_list.append(partial_value)
+                        partial_value = 0
+    #                     ini_window += delta_window + 1 #ojo
+                        ini_window += delta_window
+    #                     end_window += delta_window + 1 #ojo
+                        end_window += delta_window
+                                                         
+                        yield(tuple(temp_list))
+                        temp_list = []
+                         
+                    #Value must to be weighted between intervals
+                    if chr_end > end_window:                                   
+                        value2weight = data_value
+                        end_w = end_window
+                        start_new = chr_start
+                        end_new = chr_end
                         
-                        if (end_w == start_w):
-                            weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
-                        else:    
-                            weighted_value = float(end_w - start_new) / float(end_new - start_new)
+                        for start_w in range (int(ini_window), int(chr_end), delta_window):
+                            weighted_value = 0.0
                             
-                        weighted_value *= value2weight
-                        cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)
-                        start_new = end_w
-                        value2weight = value2weight - weighted_value
+                            if (end_w == start_w):
+                                weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
+                            else:                                                           
+                                weighted_value = float(end_w - start_new) / float(end_new - start_new)
+                                #print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new) #del
+    #                             weighted_value= 9/2
+                                #print "weighted value",weighted_value #del  
+    #                             print "value2weight..............", (chr_end, end_window, value2weight, weighted_value)
+                                
+                            weighted_value *= value2weight
+                            cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)                      
+                            start_new = end_w
+                            value2weight = value2weight - weighted_value                        
+        
+                            if ((end_w + delta_window) >= chr_end):
+                                new_start_w = start_w + delta_window
+                                cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
+                                break
+                            
+                            end_w = end_w + delta_window
+                    else:
+                        partial_value = partial_value + data_value
+                                
+                elif (chr_start <= end_window and chr_start >= ini_window):
+                     
+                    if chr_end <= end_window:
+                        partial_value = partial_value + data_value                 
+                    
+                    else:
+                        value2weight = data_value
+                        end_w = end_window
+                        start_new = chr_start
+                        end_new = chr_end
                         
-                        if ((end_w + delta_window) >= chr_end):
-                            new_start_w = start_w + delta_window
-                            cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
-                            break
-                        
-                        end_w = end_w + delta_window    
-            else:            
-                print >> stderr,("FATAL ERROR: Something went wrong")
+                        for start_w in range (int(ini_window), int(chr_end), delta_window):                
+                            weighted_value = 0
+                            
+                            if (end_w == start_w):
+                                weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
+                            else:    
+                                weighted_value = float(end_w - start_new) / float(end_new - start_new)
+                                
+                            weighted_value *= value2weight
+                            cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)
+                            start_new = end_w
+                            value2weight = value2weight - weighted_value
+                            
+                            if ((end_w + delta_window) >= chr_end):
+                                new_start_w = start_w + delta_window
+                                cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
+                                break
+                            
+                            end_w = end_w + delta_window    
+                else:            
+                    print >> stderr,("FATAL ERROR: Something went wrong during bedGraph window conversion.")
                 
         #Last value just printed out
 #         temp_list.append("chr1")        
