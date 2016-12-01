@@ -14,6 +14,7 @@
 
 ## Currently working
 - [ ] Upload C.elegans files
+- [ ] Checkings of the code using travis or similar tools
 
 ## Solved
 - [X] Use file format conventions of bed and gff files (0, 1 etc)

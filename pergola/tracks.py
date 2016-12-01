@@ -794,9 +794,13 @@ class Track(GenomicContainer):
             yield(tuple(temp_list))
             
         else:
-            try: 
-                float(x) == int(x)
+            try:                
+                float(window)
             except:               
+                raise ValueError("Window option only accepts integers or False. Current value: %s" 
+                                % (type(window)))
+            
+            if float(window) != int(window):
                 raise ValueError("Window option only accepts integers or False. Current value: %s" 
                                 % (type(window)))
                 

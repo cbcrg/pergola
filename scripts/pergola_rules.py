@@ -48,7 +48,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     
     # Reading color dictionary to set data_types
     if color_dict:
-        print >> stderr, "@@@Pergola_rules.py: Color for data_types in file: %s" % color_dict
+        print >> stderr, "@@@Pergola_rules.py: Color for data_types in file............ %s" % color_dict
         d_colors_data_types = parsers.read_colors (color_dict)
     else:
         d_colors_data_types = None    
@@ -64,7 +64,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     else:
         tracks2merge = ""
     
-    if tracks2merge: print >> stderr, "@@@Pergola_rules.py: Tracks to join are: ", tracks2merge
+    if tracks2merge: print >> stderr, "@@@Pergola_rules.py: Tracks to join are............ ", tracks2merge
     
     # Handling argument track actions
     if tracks2merge and track_actions:
@@ -72,74 +72,76 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
                           "--track_actions -a, please change your options")
     
     track_act = track_actions
-    print >> stderr, "@@@Pergola_rules.py: Track actions are: ", track_act
+    print >> stderr, "@@@Pergola_rules.py: Track actions are.............................. ", track_act
     
     data_types_list = data_types_list
     print >> stderr, "@@@Pergola_rules.py: data_types list is: ", data_types_list
       
     # Handling argument data_types actions
     data_types_act = data_types_actions
-    print >> stderr, "@@@Pergola_rules.py: data_types actions are: ", data_types_act
+    print >> stderr, "@@@Pergola_rules.py: data_types actions are......................... ", data_types_act
     
     # Handling argument format    
     if write_format:
-        print >> stderr, "@@@Pergola_rules.py format to write files: ", write_format
+        print >> stderr, "@@@Pergola_rules.py format to write files....................... ", write_format
     else:
         write_format='bed' # TODO simplify code, give default to arparse is simpler
         print >>stderr, "@@@Pergola_rules.py format to write files has been set" \
                         " to default value:", write_format
      
     # Handling relative coordinates
-    print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to: %s" % relative_coord
+    print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to................. %s" % relative_coord
     
     # Handling intervals_gen
-    print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to: %s" % intervals_gen
+    print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to.................. %s" % intervals_gen
     
     # Handling multiply_intervals
     if multiply_f:
-        print >>stderr, "@@@Pergola_rules.py: Multiply intervals parameter set to: %s" % multiply_f                        
+        print >>stderr, "@@@Pergola_rules.py: Multiply intervals parameter set to...... %s" % multiply_f                        
     else:
         multiply_f = 1
     
-    print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
+    print >> stderr, "@@@Pergola_rules.py: Selected tracks are......................... ", sel_tracks
     
     # Setting whether input file has header or not
     header_sw = True
     
     if no_header:
         header_sw = False
-        print >> stderr, "@@@Pergola_rules.py: Data file has header set to: ", header_sw
+        print >> stderr, "@@@Pergola_rules.py: Data file has header set to............. ", header_sw
 
     # Handling fields to read
     if fields2read:
-        print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are: %s" % fields2read                        
+        print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are......... %s" % fields2read                        
     else:
         fields2read = None    
     
-    # When bining data setting the window of time used in seconds
+    # When binning data setting the window of time used in seconds
+    # if not size provided set to False
     if window_size:
-        print >>stderr, "@@@Pergola_rules.py: Window size set to: %d" % window_size
+        print >>stderr, "@@@Pergola_rules.py: Window size set to....................... %d" % window_size
     else:
-        window_size = 300
-        print >>stderr, "@@@Pergola_rules.py: Window size set to default: %d" % window_size
+#         window_size = 300        
+        window_size = False
+        print >>stderr, "@@@Pergola_rules.py: Window size set by default to............ %d" % window_size
 
     if no_track_line:
         track_line=False
     else:
         track_line=True
         
-    print >>stderr, "@@@Pergola_rules.py: track_line set to........................................................: %s" % track_line
+    print >>stderr, "@@@Pergola_rules.py: track_line set to............................ %s" % track_line
     
     # Handling input file field delimiter    
     if not separator:
         separator = "\t"
-        print >> stderr, "@@@Pergola_rules.py input file field separator set to \"\\t\" by default."
+        print >> stderr, "@@@Pergola_rules.py input file field separator set by default to...... \"\\t\"."
     else:        
-        print >>stderr, "@@@Pergola_rules.py input file field separator set to \"%s\"" % separator
+        print >>stderr, "@@@Pergola_rules.py input file field separator set to..... \"%s\"" % separator
     
     if bed_lab_sw:
         bed_lab = True
-        print >>stderr, "@@@Pergola_rules.py: bed_label set to: %s" % bed_lab
+        print >>stderr, "@@@Pergola_rules.py: bed_label set to......................... %s" % bed_lab
     else:
         bed_lab = False
 
@@ -171,7 +173,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, data_types_actions=data_types_act, 
                                  window=window_size, color_restrictions=d_colors_data_types)
-
+    
     for key in bed_str:
         bedSingle = bed_str[key]
         bedSingle.save_track(track_line=track_line, bed_label=bed_lab)
@@ -188,4 +190,5 @@ if __name__ == '__main__':
               write_format=args.format, relative_coord=args.relative_coord, 
               intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
               no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line, separator=args.field_separator, bed_lab_sw=args.bed_label, color_dict=args.color_file))
+              no_track_line=args.no_track_line, separator=args.field_separator, 
+              bed_lab_sw=args.bed_label, color_dict=args.color_file))
