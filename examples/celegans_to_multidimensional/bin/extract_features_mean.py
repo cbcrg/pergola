@@ -182,7 +182,7 @@ list_v.append(strain)
 list_v.append(unix_time)
 
 for idx, list_feature in enumerate([length_worm, path_range, eccentricity, wave_length_primary, kinks, track_length]):
-     list_v.append (np.nanmean(np.array(list_feature)))
+     list_v.append (np.nanmean(np.absolute(np.array(list_feature))))
 
 for body_part in f['worm']['locomotion']['velocity']:
        
@@ -193,7 +193,7 @@ for body_part in f['worm']['locomotion']['velocity']:
             raise KeyError ("Field %s is corrupted and can not be retrieved from hdf5 file"
                             % ("velocity_" + body_part + "_" + k))
         
-        list_v.append (np.nanmean(np.array(list_feature)))
+        list_v.append (np.nanmean(np.absolute(np.array(list_feature))))
           
 for body_part in f['worm']['locomotion']['bends']:
        
@@ -204,7 +204,7 @@ for body_part in f['worm']['locomotion']['bends']:
             raise KeyError ("Field %s is corrupted and can not be retrieved from hdf5 file"
                             % ("velocity_" + body_part + "_" + k))
         
-        list_v.append (np.nanmean(np.array(list_feature_b)))    
+        list_v.append (np.nanmean(np.absolute(np.array(list_feature_b))))    
 
 writer_out.writerows([list_v])
 
