@@ -41,10 +41,10 @@ log.info "\n"
 mat_files_path = "${params.path_files}*.mat"
 mat_files = Channel.fromPath(mat_files_path)
 params.tag_results = ""
-tag_res = "${params.tag_results}"
+itag_res = "${params.tag_results}"
 result_dir_csv="${params.output_dir}"
 
-if (result_dir_csv?.trim()) {
+if (result_dir_csv == null) {
 	result_dir_csv=baseDir
 	println "Results directory set to: ${result_dir_csv}"
 }
@@ -83,6 +83,7 @@ process get_variables {
   	"""
 }
 
+result_dir = file("${result_dir_csv}")
 outFile = file(output_file)
 outFile.text = 'strain\tunix_time\tframe_start\tframe_end\tlength\trange\teccentricity\twave_length_primary\tkinks\ttrack_length\n'
  
@@ -90,5 +91,5 @@ multivar_files
 	.collectFile (name: output_file)
 	.subscribe {
 		outFile << it.text
-		outFile.copyTo( result_dir_csv.resolve ( it.name  ) )
+		outFile.copyTo( result_dir.resolve ( it.name  ) )
 	}
