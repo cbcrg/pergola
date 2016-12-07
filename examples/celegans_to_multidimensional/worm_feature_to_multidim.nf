@@ -35,13 +35,20 @@ log.info "C. elegans features  - N F  ~  version 0.1"
 log.info "========================================="
 log.info "c. elegans data    : ${params.path_files}"
 log.info "c. elegans tag     : ${params.tag_results}"
+log.info "Output directory   : ${params.output_dir}"
 log.info "\n"
 
 mat_files_path = "${params.path_files}*.mat"
 mat_files = Channel.fromPath(mat_files_path)
 params.tag_results = ""
-params.out="var_to_multidim.csv"
 tag_res = "${params.tag_results}"
+result_dir_csv="${params.output_dir}"
+
+if (result_dir_csv?.trim()) {
+	result_dir_csv=baseDir
+	println "Results directory set to: ${result_dir_csv}"
+}
+
 output_file="var_to_multidim_${params.tag_results}.csv"
 
 /*
@@ -76,7 +83,6 @@ process get_variables {
   	"""
 }
 
-result_dir_csv = file("$baseDir/results_csv")
 outFile = file(output_file)
 outFile.text = 'strain\tunix_time\tframe_start\tframe_end\tlength\trange\teccentricity\twave_length_primary\tkinks\ttrack_length\n'
  
