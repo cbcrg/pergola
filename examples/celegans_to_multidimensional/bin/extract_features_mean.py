@@ -115,7 +115,10 @@ fh = open(hour + "." + file_name + "." + "multivar.csv",'wb')
 
 writer_out = writer(fh, dialect = 'excel-tab')
 
-list_header = ['strain','frame_start', 'frame_end', 'length', 'range', 'eccentricity', 'wave_length_primary', 'kinks', 'track_length']
+list_header = ['strain', 'unix_time', 'frame_start', 'frame_end', 'length', 'range', 
+               'eccentricity', 'wave_length_primary', 'kinks', 'track_length']
+
+# print >> stderr, "Unix time: %s" % unix_time
 
 ### rest of the header
 ## velocity
@@ -132,7 +135,7 @@ for body_part in f['worm']['locomotion']['bends']:
         
         list_header.append("bends_" + body_part + "_" + k)                           
          
-writer_out.writerow(list_header)
+# writer_out.writerow(list_header)
 
 ### Supplementary figure
 ### Phenotypic features N2
@@ -156,10 +159,6 @@ try:
 except KeyError:
     raise KeyError ("Eccentricity is corrupted and can not be retrieved from hdf5 file")
 
-# print np.array(eccentricity)
-# print "-------", np.nanmean(np.array(eccentricity))
-
-
 # Primary wave length
 try:
     wave_length_primary = f['worm']['posture']['wavelength']['primary']
@@ -180,9 +179,9 @@ except KeyError:
 
 list_v = list()
 list_v.append(strain)
+list_v.append(unix_time)
+
 for idx, list_feature in enumerate([length_worm, path_range, eccentricity, wave_length_primary, kinks, track_length]):
-#      print "****", idx
-#      print (np.nanmean(np.array(list_feature)))
      list_v.append (np.nanmean(np.array(list_feature)))
 
 for body_part in f['worm']['locomotion']['velocity']:
@@ -206,18 +205,9 @@ for body_part in f['worm']['locomotion']['bends']:
                             % ("velocity_" + body_part + "_" + k))
         
         list_v.append (np.nanmean(np.array(list_feature_b)))    
-   
-   
 
 writer_out.writerows([list_v])
 
 fh.close()
   
 # exit ("==============================culo")
-
-
-
-
-
-    
-
