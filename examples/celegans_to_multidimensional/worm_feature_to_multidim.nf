@@ -21,7 +21,7 @@
  */
 
 /*
- * Jose Espinosa-Carrasco. CB/CSN-CRG. April 2016
+ * Jose Espinosa-Carrasco. CB/CSN-CRG. November 2016
  *
  * Wormbehavior DB (http://wormbehavior.mrc-lmb.cam.ac.uk/) processed by pergola for paper
  * Process mat files downloaded from the DB to extract several variables of celegans motion 

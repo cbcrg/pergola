@@ -81,7 +81,9 @@ timestamp = str(''.join(unichr(c) for c in timestamp_r))
 # HH:MM:SS.mmmmmm
 my_date_object = strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
 unix_time = timegm(my_date_object) # utc based # correct!!!
-unix_time
+
+# print >> stderr, "Unix time: %s" % unix_time
+
 # Some phenotypic features show a variability inside control group that depends
 # on hourly measures, thus hour of the day is extracted (Yemini et al, 2013) 
 hour = str(my_date_object.tm_hour)
@@ -114,28 +116,6 @@ fh = open(hour + "." + file_name + "." + "multivar.csv",'wb')
 # fh.write("#annotations;%s\n" % annotations)
 
 writer_out = writer(fh, dialect = 'excel-tab')
-
-list_header = ['strain', 'unix_time', 'frame_start', 'frame_end', 'length', 'range', 
-               'eccentricity', 'wave_length_primary', 'kinks', 'track_length']
-
-# print >> stderr, "Unix time: %s" % unix_time
-
-### rest of the header
-## velocity
-for body_part in f['worm']['locomotion']['velocity']:
-       
-    for k in f['worm']['locomotion']['velocity'][body_part]:
-            
-        list_header.append("velocity_" + body_part + "_" + k)     
-    
-## locomotion bends
-for body_part in f['worm']['locomotion']['bends']:
-        
-    for k in f['worm']['locomotion']['bends'][body_part]:
-        
-        list_header.append("bends_" + body_part + "_" + k)                           
-         
-# writer_out.writerow(list_header)
 
 ### Supplementary figure
 ### Phenotypic features N2
@@ -205,6 +185,26 @@ for body_part in f['worm']['locomotion']['bends']:
                             % ("velocity_" + body_part + "_" + k))
         
         list_v.append (np.nanmean(np.absolute(np.array(list_feature_b))))    
+
+list_header = ['strain', 'unix_time', 'length', 'range', 
+               'eccentricity', 'wave_length_primary', 'kinks', 'track_length']
+
+### rest of the header
+## velocity
+for body_part in f['worm']['locomotion']['velocity']:
+       
+    for k in f['worm']['locomotion']['velocity'][body_part]:
+            
+        list_header.append("velocity_" + body_part + "_" + k)     
+    
+## locomotion bends
+for body_part in f['worm']['locomotion']['bends']:
+        
+    for k in f['worm']['locomotion']['bends'][body_part]:
+        
+        list_header.append("bends_" + body_part + "_" + k)                           
+         
+writer_out.writerow(list_header)
 
 writer_out.writerows([list_v])
 
