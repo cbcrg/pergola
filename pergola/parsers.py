@@ -312,7 +312,7 @@ def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimit
             else:
                 raise IOError('Provided path does not exists: %s' % path_w)
                 
-        feature_file = open(join(path, feature + "." + _csv_file_ext), "wb")
+        feature_file = open(join(path, feature + _csv_file_ext), "wb")
                 
         copyfileobj(temp, feature_file)
         temp.close()
