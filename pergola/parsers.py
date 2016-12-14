@@ -400,3 +400,53 @@ parent_parser.add_argument('-bl', '--bed_label', required=False, action='store_t
                     default=False, help='Show data_types as name field in bed file')
 parent_parser.add_argument('-c', '--color_file', required=False, metavar="PATH_COLOR_FILE", 
                            help='Dictionary assigning colors of data_types path')
+
+
+###############
+### Argument parsing jaaba_to_pergola.py
+# jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
+#                                        add_help=False, parents=[parent_parser])
+# # jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', add_help=False)
+# # jaaba_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
+# jaaba_parser.add_argument('-csv', '--csv', required=False, action='store_true', 
+#                           default=False, help='Transform jaaba into a csv format file')
+# jaaba_parser.add_argument('-pr', '--pergola_rules', required=False, action='store_true', 
+#                             default=False, help='Calls pergola_rules.py')
+
+
+
+jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
+                                       add_help=False)
+
+subparsers = jaaba_parser.add_subparsers(help='Calls pergola_rules.py', dest='command')
+jaaba_parser_pr = subparsers.add_parser('p', help="Converts Jaaba data and process it using pergola", parents=[parent_parser])
+jaaba_parser_pr = subparsers.add_parser('c', add_help='Converts Jaaba data into csv files')
+jaaba_parser_pr.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
+
+# jaaba_parser.add_argument('-pr', '--pergola_rules', required=False, action='store_true', 
+#                             default=False, help='Calls pergola_rules.py')
+
+
+
+
+
+# jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', add_help=False)
+# jaaba_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
+# jaaba_parser.add_argument('-csv', '--csv', required=False, action='store_true', 
+#                           default=False, help='Transform jaaba into a csv format file')
+# jaaba_parser.add_argument('-pr', '--pergola_rules', required=False, action='store_true', 
+#                             default=False, help='Calls pergola_rules.py')
+
+
+
+# subparsers = jaaba_parser.add_subparsers(help='Calls pergola_rules.py')
+# parser_a = subparsers.add_parser('p', add_help=False)
+# 
+# parser_a.add_argument('bar', type=int, help='bar help')
+# 
+# parser_a = subparsers.add_parser('a', help='a help')
+# parser_a.add_argument('bar', type=int, help='bar help')
+
+# parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
+#                     help='File to set the reciprocity between fields in behavioral file and terms used by Pergola' + \
+#                     ' and genome browser grammar')

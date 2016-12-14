@@ -34,7 +34,7 @@ setup(name='pergola',
       package_dir = {'pergola': PATH + '/pergola'},
       package_data={'mypkg': ['data/sample_data/*.csv']},
       packages=['pergola'],      
-      scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py'],
+      scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],
       zip_safe=False)
 
 # mandatory package to add are argparse
