@@ -11,12 +11,16 @@
 - [ ] Borrar archivos temporales
 - [ ] Create the first stable Pergola release
 - [ ] Make write chromosome an option (generate genome file)
+- [ ] Window and window mean only reachable with bedgraph set, control for this
+
 
 ## Currently working
 - [ ] Upload C.elegans files
 - [ ] Checkings of the code using travis or similar tools
+- [ ] Converting jaaba features folder
 
 ## Solved
+- [X] Implement mean of bedgraph window
 - [X] Use file format conventions of bed and gff files (0, 1 etc)
 - [X] Read files from ctrax
 - [X] Filter by data type
