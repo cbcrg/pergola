@@ -31,7 +31,7 @@ def main(option):
               intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
               no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
               no_track_line=args.no_track_line, separator=args.field_separator, 
-              bed_lab_sw=args.bed_label, color_dict=args.color_file)
+              bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
                                                        
     print  >> stderr, "Correct execution!"
     

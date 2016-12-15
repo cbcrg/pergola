@@ -406,7 +406,8 @@ class Track(GenomicContainer):
    
         ### Generating track dict (output)                         
         window = kwargs.get("window", 300)
-             
+        mean_win = kwargs.get("mean_win", False)
+        
         ### Assigning data to output dictionary    
         for k, d in d_data_types_merge.items():
             if not isinstance(d,dict):
@@ -417,7 +418,7 @@ class Track(GenomicContainer):
                     _dict_col_grad[k_2] = ""
 
                 range_val = self._get_range(d_2)
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, color_restrictions=color_restrictions), track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, mean_win=mean_win, color_restrictions=color_restrictions), track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
 
         return (track_dict)
     
@@ -742,7 +743,7 @@ class Track(GenomicContainer):
             
             yield(tuple(temp_list))
             
-    def track_convert2bedGraph(self, track, in_call=False, window=300, **kwargs):
+    def track_convert2bedGraph(self, track, in_call=False, window=300, mean_win=False,  **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
         an object of class BedGraph. The data is grouped in time windows.
@@ -848,7 +849,12 @@ class Track(GenomicContainer):
                         temp_list.append("chr1")
                         temp_list.append(ini_window)
                         temp_list.append(end_window)
-                        temp_list.append(partial_value)
+                        
+                        if mean_win:
+                            temp_list.append(partial_value/window)
+                        else:
+                            temp_list.append(partial_value)
+                                                    
                         partial_value = 0
     #                     ini_window += delta_window + 1 #ojo
                         ini_window += delta_window

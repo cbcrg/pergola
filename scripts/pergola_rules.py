@@ -35,7 +35,7 @@ from pergola import parsers
 def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
-         bed_lab_sw=False, color_dict=None):
+         bed_lab_sw=False, color_dict=None, window_mean=False):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -106,6 +106,8 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     # Setting whether input file has header or not
     header_sw = True
     
+    print no_header
+    print window_mean
     if no_header:
         header_sw = False
         print >> stderr, "@@@Pergola_rules.py: Data file has header set to............. ", header_sw
@@ -124,7 +126,12 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
 #         window_size = 300        
         window_size = False
         print >>stderr, "@@@Pergola_rules.py: Window size set by default to............ %d" % window_size
-
+    
+    if window_mean:
+        print >>stderr, "@@@Pergola_rules.py: Window mean set to....................... %d" % window_mean
+    else:      
+        window_mean = False
+        
     if no_track_line:
         track_line=False
     else:
@@ -169,10 +176,10 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
 
     data_read.save_track(name_file="all_intervals")
-        
+    print "****************===================", window_mean
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, data_types_actions=data_types_act, 
-                                 window=window_size, color_restrictions=d_colors_data_types)
+                                 window=window_size, mean_win=window_mean, color_restrictions=d_colors_data_types)
     
     for key in bed_str:
         bedSingle = bed_str[key]
@@ -191,4 +198,4 @@ if __name__ == '__main__':
               intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
               no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
               no_track_line=args.no_track_line, separator=args.field_separator, 
-              bed_lab_sw=args.bed_label, color_dict=args.color_file))
+              bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean))

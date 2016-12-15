@@ -400,9 +400,10 @@ parent_parser.add_argument('-bl', '--bed_label', required=False, action='store_t
                     default=False, help='Show data_types as name field in bed file')
 parent_parser.add_argument('-c', '--color_file', required=False, metavar="PATH_COLOR_FILE", 
                            help='Dictionary assigning colors of data_types path')
+parent_parser.add_argument('-wm', '--window_mean', required=False, action='store_true',
+                           default=False, help='Window values average by the window size')
 
-
-###############
+##############
 ### Argument parsing jaaba_to_pergola.py
 # jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
 #                                        add_help=False, parents=[parent_parser])
