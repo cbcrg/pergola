@@ -1,0 +1,48 @@
+!  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
+!  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+!
+!  This file is part of Pergola.
+!
+!  Pergola is free software: you can redistribute it and/or modify
+!  it under the terms of the GNU General Public License as published by
+!  the Free Software Foundation, either version 3 of the License, or
+!  (at your option) any later version.
+!
+!  Pergola is distributed in the hope that it will be useful,
+!  but WITHOUT ANY WARRANTY; without even the implied warranty of
+!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+!  GNU General Public License for more details.
+!
+!  You should have received a copy of the GNU General Public License
+!  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
+!
+! Mapping of file fields into pergola fields
+!
+behavioural_file:frame_start > pergola:start
+behavioural_file:frame_end > pergola:end
+behavioural_file:strain > pergola:dummy
+behavioural_file:unix_time > pergola:dummy
+behavioural_file:length > pergola:dummy
+behavioural_file:range > pergola:dummy
+behavioural_file:eccentricity > pergola:dummy
+behavioural_file:wave_length_primary > pergola:dummy
+behavioural_file:kinks > pergola:dummy
+behavioural_file:track_length > pergola:dummy
+behavioural_file:velocity_head_direction > pergola:dummy
+behavioural_file:velocity_head_speed > pergola:dummy
+behavioural_file:velocity_headTip_direction > pergola:dummy
+behavioural_file:velocity_headTip_speed > pergola:dummy
+behavioural_file:velocity_midbody_direction > pergola:dummy
+behavioural_file:velocity_midbody_speed > pergola:dummy
+behavioural_file:velocity_tail_direction > pergola:dummy
+behavioural_file:velocity_tail_speed > pergola:dummy
+behavioural_file:velocity_tailTip_direction > pergola:dummy
+behavioural_file:velocity_tailTip_speed > pergola:dummy
+behavioural_file:bends_foraging_amplitude > pergola:dummy
+behavioural_file:bends_foraging_angleSpeed > pergola:dummy
+behavioural_file:bends_head_amplitude > pergola:dummy
+behavioural_file:bends_head_frequency > pergola:dummy
+behavioural_file:bends_midbody_amplitude > pergola:dummy
+behavioural_file:bends_midbody_frequency > pergola:dummy
+behavioural_file:bends_tail_amplitude > pergola:dummy
+behavioural_file:bends_tail_frequency > pergola:dummy

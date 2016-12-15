@@ -119,7 +119,7 @@ result_dir = file("${result_dir_csv}")
 
 multivar_files.subscribe { 
 	file_var = it[0]
- 	file_var.copyTo( result_dir.resolve ( it[2] + "." + it[1] + ".bin"  ) )
+ 	file_var.copyTo( result_dir.resolve ( it[2] + "." + it[1] + ".bedGraph"  ) )
 }
 
 /*
