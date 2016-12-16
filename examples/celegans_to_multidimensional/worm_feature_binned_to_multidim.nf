@@ -98,8 +98,8 @@ variables = ['length','range','eccentricity','wave_length_primary',
 			 'bends_head_amplitude','bends_head_frequency','bends_midbody_amplitude',
 			 'bends_midbody_frequency','bends_tail_amplitude','bends_tail_frequency']
 			 
-process speed_to_pergola {
-	container 'joseespinosa/pergola:celegans'
+process var_pergola_binned {
+	container 'joseespinosa/pergola:latest'
   
   	input:
   	set file ('var_file'), val (name_file) from frame_files
