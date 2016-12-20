@@ -4,38 +4,84 @@ from pergola import parsers
 from argparse import ArgumentParser
 from sys      import stderr, exit
 import pergola_rules
-from os.path import dirname, abspath
+from os.path import dirname, abspath, basename, splitext
+from os import chdir
+from shutil import copy, rmtree
 
-# parsers.jaaba_scores_to_csv(input_file='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
-#                             path_w='/Users/jespinosa/git/pergola/test', norm=True, data_type="chase")
+from tempfile import NamedTemporaryFile, mkdtemp
 
-# '/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat'
-# "/Users/jespinosa/git/pergola/sample_data/jaaba_example/scores_chase.mat"
-# "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
 def main(option):
     """
     main function
     """
-    print >> stderr,     "@@@jaaba_to_pergola.py: Input file is %s" % args.input 
-
-    path_out = dirname(abspath(args.input))
-    parsers.jaaba_scores_to_csv(input_file=args.input, path_w=path_out, norm=True, data_type="chase")
-    output_file = path_out + '/' + 'JAABA_scores.csv'
         
-    # lo que tengo que hacer es coger el input de jaaba scores to csv
-    if option == "p":
-        pergola_rules.main(path=output_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
-              list=args.list, range=args.range, track_actions=args.track_actions, 
-              data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
-              write_format=args.format, relative_coord=args.relative_coord, 
-              intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
-              no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line, separator=args.field_separator, 
-              bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
+    if option == "sc" or option =="sp":
+        print >> stderr,     "@@@jaaba_to_pergola.py: Input file is %s" % args.input 
+                
+        tmp_track = NamedTemporaryFile(prefix='jaaba_csv.', suffix='.csv', delete=True)
+
+        name_tmp = splitext(basename(tmp_track.name))[0]
+        path_out = dirname(abspath(tmp_track.name))
+        
+        parsers.jaaba_scores_to_csv(input_file=args.input, path_w=path_out, name_file=name_tmp, norm=True, data_type="chase")
+                    
+        output_file = tmp_track.name
+
+        if option == "sc": 
+            path_w = dirname(abspath(args.input))            
+            f_out = path_w + '/' + 'JAABA_scores.csv'
+ 
+            copy (tmp_track.name, f_out)
+            
+        elif option == "sp":
+            pergola_rules.main(path=output_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+                  list=args.list, range=args.range, track_actions=args.track_actions, 
+                  data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
+                  write_format=args.format, relative_coord=args.relative_coord, 
+                  intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
+                  no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
+                  no_track_line=args.no_track_line, separator=args.field_separator, 
+                  bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
+    
+    elif option == "fc" or option == "fp":
+        print >> stderr,  "@@@jaaba_to_pergola.py: Extracting Jaaba features from %s" %args.dir_jaaba
+        print >> stderr,  "@@@jaaba_to_pergola.py: Selected feature/s %s" %args.feature
+        
+        
+        if not args.dumping_dir: 
+            dumping_dir = getcwd()
+            print >> stderr, "@@@jaaba_to_pergola.py: No path selected, files dump into path: ", dumping_dir
+        else:
+            dumping_dir = args.dumping_dir
+            print >> stderr, "@@@jaaba_to_pergola.py: Files dump into path: ", dumping_dir            
+        
+        path_tmp = mkdtemp()
+        
+        for f in args.feature:
+            parsers.extract_jaaba_features(dir_perframe=args.dir_jaaba, map_jaaba="", delimiter="\t", 
+                                           feature=f, output="csv", path_w=path_tmp)
+            
+            tmp_file = path_tmp + '/' + f + '.csv'
+                
+            if option == "fc":                 
+                f_out = dumping_dir + '/' + f +  '.csv'
+                                                
+                copy (tmp_file, f_out)
+            
+            elif option == "fp":
+                chdir(dumping_dir)
+                
+                pergola_rules.main(path=tmp_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+                  list=args.list, range=args.range, track_actions=args.track_actions, 
+                  data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
+                  write_format=args.format, relative_coord=args.relative_coord, 
+                  intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
+                  no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
+                  no_track_line=args.no_track_line, separator=args.field_separator, 
+                  bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
+                
+        rmtree(path_tmp)    
                                                        
-    print  >> stderr, "Correct execution!"
-    
-    
 if __name__ == '__main__':
         
     parser_jaaba_parser = ArgumentParser(parents=[parsers.jaaba_parser])        
@@ -43,18 +89,3 @@ if __name__ == '__main__':
     args = parser_jaaba_parser.parse_args()
     
     exit(main(option=args.command))
-    
-
-else:
-    print ("You correctly transform your JAABA scores into a csv file")
-    
-    input_jaaba_file = '/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat'
-    map_file_jaaba = "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
-    int_data_jaaba = parsers.jaaba_scores_to_intData(input_file = input_jaaba_file, map_jaaba = map_file_jaaba, norm=True, data_type="chase")
-    
-    print int_data_jaaba.min
-    print int_data_jaaba.max
-    print int_data_jaaba.tracks
-    print int_data_jaaba.data
-    
-    exit ("You correctly transform your JAABA scores into IntData")

@@ -276,7 +276,7 @@ def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimit
     
     returns: IntData object
     """
-    feature="velmag"    
+    
     input_path = join(dir_perframe, feature + ".mat")
         
     input_file = check_path(input_path)
@@ -356,7 +356,7 @@ def read_colors (path_color_file):
 
 ###############
 ### Argument parsing
-    
+### pergola_rules.py
 parent_parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
 parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
@@ -405,49 +405,23 @@ parent_parser.add_argument('-wm', '--window_mean', required=False, action='store
 
 ##############
 ### Argument parsing jaaba_to_pergola.py
-# jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
-#                                        add_help=False, parents=[parent_parser])
-# # jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', add_help=False)
-# # jaaba_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
-# jaaba_parser.add_argument('-csv', '--csv', required=False, action='store_true', 
-#                           default=False, help='Transform jaaba into a csv format file')
-# jaaba_parser.add_argument('-pr', '--pergola_rules', required=False, action='store_true', 
-#                             default=False, help='Calls pergola_rules.py')
-
-
-
 jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
                                        add_help=False)
 
 subparsers = jaaba_parser.add_subparsers(help='Calls pergola_rules.py', dest='command')
-jaaba_parser_pr = subparsers.add_parser('p', help="Converts Jaaba data and process it using pergola", parents=[parent_parser])
-jaaba_parser_pr = subparsers.add_parser('c', add_help='Converts Jaaba data into csv files')
-jaaba_parser_pr.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
+jaaba_parser_sp = subparsers.add_parser('sp', help="Converts Jaaba data and process it using pergola", parents=[parent_parser])
+jaaba_parser_sc = subparsers.add_parser('sc', add_help='Converts scores Jaaba files into csv files')
+jaaba_parser_fp = subparsers.add_parser('fp', add_help='Converts Jaaba features using pergola', parents=[parent_parser])
+jaaba_parser_fc = subparsers.add_parser('fc', add_help='Converts Jaaba features into csv files')
 
-# jaaba_parser.add_argument('-pr', '--pergola_rules', required=False, action='store_true', 
-#                             default=False, help='Calls pergola_rules.py')
+jaaba_parser_sc.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
 
-
-
-
-
-# jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', add_help=False)
-# jaaba_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
-# jaaba_parser.add_argument('-csv', '--csv', required=False, action='store_true', 
-#                           default=False, help='Transform jaaba into a csv format file')
-# jaaba_parser.add_argument('-pr', '--pergola_rules', required=False, action='store_true', 
-#                             default=False, help='Calls pergola_rules.py')
-
-
-
-# subparsers = jaaba_parser.add_subparsers(help='Calls pergola_rules.py')
-# parser_a = subparsers.add_parser('p', add_help=False)
-# 
-# parser_a.add_argument('bar', type=int, help='bar help')
-# 
-# parser_a = subparsers.add_parser('a', help='a help')
-# parser_a.add_argument('bar', type=int, help='bar help')
-
-# parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
-#                     help='File to set the reciprocity between fields in behavioral file and terms used by Pergola' + \
-#                     ' and genome browser grammar')
+jaaba_parser_fc.add_argument('-dj', '--dir_jaaba', required=True, metavar="PATH", help='Path to jaaba features')
+jaaba_parser_fc.add_argument('-jf', '--feature', required=True, metavar="LIST_OF_FEATURES", type=str, nargs='+',
+                            help='List of features to be extracted, e.g. velmag')
+jaaba_parser_fc.add_argument('-dd', '--dumping_dir', required=False, metavar="DUMPING_DIR", help='Input file path')
+# jaaba_parser_fp.add_argument('-i', '--input_jaaba_dir', required=True, metavar="PATH", help='Input file path')
+jaaba_parser_fp.add_argument('-dj', '--dir_jaaba', required=True, metavar="PATH", help='Path to jaaba features')
+jaaba_parser_fp.add_argument('-jf', '--feature', required=True, metavar="LIST_OF_FEATURES", type=str, nargs='+',
+                            help='List of features to be extracted, e.g. velmag')
+jaaba_parser_fp.add_argument('-dd', '--dumping_dir', required=False, metavar="DUMPING_DIR", help='Input file path')
