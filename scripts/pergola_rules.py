@@ -106,8 +106,6 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     # Setting whether input file has header or not
     header_sw = True
     
-    print no_header
-    print window_mean
     if no_header:
         header_sw = False
         print >> stderr, "@@@Pergola_rules.py: Data file has header set to............. ", header_sw
@@ -176,7 +174,7 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
     mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
 
     data_read.save_track(name_file="all_intervals")
-    print "****************===================", window_mean
+    
     bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
                                  data_types=data_types_list, data_types_actions=data_types_act, 
                                  window=window_size, mean_win=window_mean, color_restrictions=d_colors_data_types)
