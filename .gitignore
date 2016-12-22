@@ -1,5 +1,6 @@
 *~
 /build/*
+/work # ignore all directories called  anywhere below the current level
 *.pyc
 *.idea
 *.bedGraph
@@ -26,11 +27,26 @@
 /examples/N2_vs_KO_trp_channels/results*
 /examples/N2_vs_KO_trp_channels/work
 /examples/N2_vs_KO_trp_channels/plots*
+/examples/N2_vs_KO_trp_channels/.nextflow.log*
 /examples/N2_hourly_measures/work
 /examples/N2_hourly_measures/results*
 /examples/N2_hourly_measures/plots*
-/examples/N2_hourly_measures_means/work
-/examples/N2_hourly_measures_means/results*
-/examples/N2_hourly_measures_means/plots*
+/examples/N2_hourly_mean_measures/work
+/examples/N2_hourly_mean_measures/results*
+/examples/N2_hourly_mean_measures/plots*
+/examples/N2_hourly_mean_measures/.nextflow.log*
+/examples/N2_vs_case_strain_distros/.nextflow.log*
+/examples/N2_vs_case_strain_distros/plots*
+/examples/N2_vs_case_strain_distros/results*
+/examples/N2_vs_case_strain_distros/work/*
 .pydevproject
 .project
+# Compiled python modules.
+*.pyc
+
+# Setuptools distribution folder.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+
