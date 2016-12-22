@@ -24,6 +24,23 @@ from os import path
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
+# "Operating System :: Microsoft :: Windows",
+TAGS = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Other Audience",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering :: Bioinformatics",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    ]
+
 setup(name='pergola',
       version='0.0.1',
       description='A library to analyze and visualize behavioral data by unlocking genomic tools ',
@@ -34,9 +51,10 @@ setup(name='pergola',
       license='GNU General Public License 3.0',
       package_dir = {'pergola': PATH + '/pergola', 'scripts': PATH + '/scripts',},
       package_data={'mypkg': ['data/sample_data/*.csv']},
-      packages=['pergola', 'scripts'],      
+      packages=['pergola', 'scripts'], 
 #       scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],      
       zip_safe=False,
+      classifiers = TAGS,
       entry_points={
         'console_scripts': [
             'pergola = scripts.pergola_rules:main',
