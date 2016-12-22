@@ -84,7 +84,7 @@ def main():
 #         print "File name is::::::::::::::::::::::::::%s   \n" % file_path #del or #perm
         
 #         data_types_list=args.data_types_list #del
-        pergola_rules.main(path=file_path, map_file_path=args.mapping_file,
+        pergola_rules.pergola_rules(path=file_path, map_file_path=args.mapping_file,
                            sel_tracks=args.tracks, list=args.list, range=args.range,
                            track_actions=args.track_actions, data_types_list=args.data_types_list,
                            data_types_actions=args.data_types_actions, write_format=args.format,

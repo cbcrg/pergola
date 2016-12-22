@@ -35,16 +35,14 @@ setup(name='pergola',
       package_dir = {'pergola': PATH + '/pergola', 'scripts': PATH + '/scripts',},
       package_data={'mypkg': ['data/sample_data/*.csv']},
       packages=['pergola', 'scripts'],      
-#       scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],
-#       scripts = ['pergola/scripts/pergola_rules.py', 'pergola/scripts/pergola_isatab.py', 'pergola/scripts/jaaba_to_pergola.py'],      
+#       scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],      
       zip_safe=False,
-#       entry_points = { 'console_scripts': ['pergola_rules_test=pergola.pergola_rules_test.main:main'],}
       entry_points={
         'console_scripts': [
-#             'pergola_rules_test = pergola.pergola_rules_test:main',
-            'pergola_rules = scripts.pergola_rules:main',
-#             'jaaba_to_pergola = scripts.jaaba_to_pergola:main',            
-#             'script_test = bin.example_script:main',
+            'pergola = scripts.pergola_rules:main',
+            'pergola_rules.py = scripts.pergola_rules:main',            
+            'jaaba_to_pergola = scripts.jaaba_to_pergola:main',  
+            'pergola_isatab.py = scripts.pergola_isatab:main',            
         ]}
       )
 

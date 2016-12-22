@@ -37,7 +37,7 @@ def main(args=None):
     
     args = parser_pergola_rules.parse_args()
     
-    pergola_convert(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+    pergola_rules(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
               list=args.list, range=args.range, track_actions=args.track_actions, 
               data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
               write_format=args.format, relative_coord=args.relative_coord, 
@@ -46,7 +46,7 @@ def main(args=None):
               no_track_line=args.no_track_line, separator=args.field_separator, 
               bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
   
-def pergola_convert(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
+def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
          bed_lab_sw=False, color_dict=None, window_mean=False):

@@ -10,11 +10,23 @@ from shutil import copy, rmtree
 
 from tempfile import NamedTemporaryFile, mkdtemp
 
-def main(option):
+def main(args=None):
     """
     main function
     """
-        
+    parser_jaaba_parser = ArgumentParser(parents=[parsers.jaaba_parser])        
+    
+    args = parser_jaaba_parser.parse_args()
+    
+#     jaaba_to_pergola(option=args.command)
+    jaaba_to_pergola(option=args.command, args=args)
+    
+def jaaba_to_pergola(option, args):
+    """
+    main function
+    """
+    
+    
     if option == "sc" or option =="sp":
         print >> stderr,     "@@@jaaba_to_pergola.py: Input file is %s" % args.input 
                 
@@ -70,8 +82,8 @@ def main(option):
             
             elif option == "fp":
                 chdir(dumping_dir)
-                
-                pergola_rules.main(path=tmp_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+#                 pergola_rules.main(path=tmp_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+                pergola_rules.pergola_rules(path=tmp_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
                   list=args.list, range=args.range, track_actions=args.track_actions, 
                   data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
                   write_format=args.format, relative_coord=args.relative_coord, 
@@ -84,8 +96,8 @@ def main(option):
                                                        
 if __name__ == '__main__':
         
-    parser_jaaba_parser = ArgumentParser(parents=[parsers.jaaba_parser])        
+#     parser_jaaba_parser = ArgumentParser(parents=[parsers.jaaba_parser])        
     
-    args = parser_jaaba_parser.parse_args()
+#     args = parser_jaaba_parser.parse_args()
     
-    exit(main(option=args.command))
+    exit(main())
