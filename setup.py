@@ -18,7 +18,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
+# from distutils.core import setup
+from setuptools import setup
 from os import path
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
@@ -31,10 +32,20 @@ setup(name='pergola',
       author='Jose Espinosa-Carrasco',
       author_email='espinosacarrascoj@gmail.com',
       license='GNU General Public License 3.0',
-      package_dir = {'pergola': PATH + '/pergola'},
+      package_dir = {'pergola': PATH + '/pergola', 'scripts': PATH + '/scripts',},
       package_data={'mypkg': ['data/sample_data/*.csv']},
-      packages=['pergola'],      
-      scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],
-      zip_safe=False)
+      packages=['pergola', 'scripts'],      
+#       scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],
+#       scripts = ['pergola/scripts/pergola_rules.py', 'pergola/scripts/pergola_isatab.py', 'pergola/scripts/jaaba_to_pergola.py'],      
+      zip_safe=False,
+#       entry_points = { 'console_scripts': ['pergola_rules_test=pergola.pergola_rules_test.main:main'],}
+      entry_points={
+        'console_scripts': [
+#             'pergola_rules_test = pergola.pergola_rules_test:main',
+            'pergola_rules = scripts.pergola_rules:main',
+#             'jaaba_to_pergola = scripts.jaaba_to_pergola:main',            
+#             'script_test = bin.example_script:main',
+        ]}
+      )
 
 # mandatory package to add are argparse

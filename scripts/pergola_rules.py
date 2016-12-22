@@ -32,7 +32,21 @@ from sys      import stderr, exit
 import os
 from pergola import parsers
 
-def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
+def main(args=None):       
+    parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser]) 
+    
+    args = parser_pergola_rules.parse_args()
+    
+    pergola_convert(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+              list=args.list, range=args.range, track_actions=args.track_actions, 
+              data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
+              write_format=args.format, relative_coord=args.relative_coord, 
+              intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
+              no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
+              no_track_line=args.no_track_line, separator=args.field_separator, 
+              bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
+  
+def pergola_convert(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
          bed_lab_sw=False, color_dict=None, window_mean=False):
@@ -183,17 +197,19 @@ def main(path, map_file_path, sel_tracks=None, list=None, range=None, track_acti
         bedSingle = bed_str[key]
         bedSingle.save_track(track_line=track_line, bed_label=bed_lab)
 
+# if __name__ == '__main__':
+#         
+#     parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser])        
+#     
+#     args = parser_pergola_rules.parse_args()
+#     
+#     exit(main(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+#               list=args.list, range=args.range, track_actions=args.track_actions, 
+#               data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
+#               write_format=args.format, relative_coord=args.relative_coord, 
+#               intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
+#               no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
+#               no_track_line=args.no_track_line, separator=args.field_separator, 
+#               bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean))
 if __name__ == '__main__':
-        
-    parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser])        
-    
-    args = parser_pergola_rules.parse_args()
-    
-    exit(main(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
-              list=args.list, range=args.range, track_actions=args.track_actions, 
-              data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
-              write_format=args.format, relative_coord=args.relative_coord, 
-              intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
-              no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line, separator=args.field_separator, 
-              bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean))
+    exit(main())
