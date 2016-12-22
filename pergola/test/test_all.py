@@ -24,21 +24,30 @@ unittest for pergola functions
 import unittest
 from pergola import mapping
 from pergola import intervals
-from os      import path
+from scripts.pergola_rules import pergola_rules
+from os      import path, chdir, mkdir, rmdir
 from sys     import stderr
+from shutil  import rmtree
 
 # Getting the path to test files
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
+TEST = path.join(PATH, "uni_test", '' )
 
 class TestTutorial(unittest.TestCase):
     """
     Testing that everything in the tutorial run smoothly        
     """ 
+     
+    def setUp(self):
+        if not path.exists(TEST):
+            mkdir(TEST)
+        chdir(TEST)
         
     def test_01_correspondence_info (self):
         """
         Testing that ontology file is correctly read
         """
+#         print >> stderr,"====================== test 1"
         global mappings_tutorial, exp2, exp3, exp4
         mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/b2g.txt")
         
@@ -49,6 +58,7 @@ class TestTutorial(unittest.TestCase):
         """
         Testing the creation of intData object using tutorial data
         """ 
+#         print >> stderr,"====================== test 2"
         global data_read
         
         # Min value from tutorial file
@@ -68,6 +78,7 @@ class TestTutorial(unittest.TestCase):
         """
         Testing the creation of bed files
         """ 
+#         print >> stderr,"====================== test 3"
         write_format='bed'
          
 #         data_read = int_data_tutorial.read(relative_coord='False', intervals=False, multiply_t=1)
@@ -92,6 +103,7 @@ class TestTutorial(unittest.TestCase):
         """
         Testing the creation of gff files
         """ 
+#         print >> stderr,"====================== test 4"
         write_format='gff'
         
         
@@ -116,6 +128,7 @@ class TestTutorial(unittest.TestCase):
         """
         Testing the creation of bedGraph files without window binning
         """ 
+#         print >> stderr,"====================== test 5"
         write_format='bedGraph'        
         
         bed_str =  data_read.convert(mode=write_format, window=False)
@@ -137,6 +150,8 @@ class TestTutorial(unittest.TestCase):
         """
         Testing the creation of bedGraph files without window binning
         """ 
+#         print >> stderr,"====================== test 6"
+        
         write_format='bedGraph'        
         
         bed_str =  data_read.convert(mode=write_format, window=300)
@@ -153,11 +168,23 @@ class TestTutorial(unittest.TestCase):
         bedSingle_1_water.save_track(track_line=True)
         
         bedSingle_16_food_sc.save_track(track_line=True)
-                        
+    
+    def test_07_pergola_rules(self):
+        """
+        Testing pergola_rules script
+        """ 
+#         print >> stderr,"====================== test 7"
+        
+        data_in = PATH + "/feeding/feeding_behavior_HF_mice.csv"
+        map_in = PATH + "/feeding/b2g.txt"
+        pergola_rules(path=data_in, map_file_path=map_in, )
+                
     def test_only_one_time_point(self):
         """
         Testing if files with just one coordinate for time are read correctly
         """ 
+#         print >> stderr,"====================== test 8"
+        
         global int_data_electro, mappings_electro 
         msg_mappings = "Equivalences set in electrophysiology mapping file are not correct."
         
@@ -178,6 +205,8 @@ class TestTutorial(unittest.TestCase):
         self.assertEqual(int_data_electro.max, max, msg_int_data_max) 
         
     def test_track_electro(self):
+#         print >> stderr,"====================== test 9"
+
         global tracks_data_electro
         msg_track_electro = "Track electrophysiology not correctly read"
         
@@ -191,6 +220,9 @@ class TestTutorial(unittest.TestCase):
         first_item_read = tracks_data_electro.data[0]
         self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
         self.assertEqual(first_item_read, first_item, msg_track_electro) 
+    
+    def tearDown(self):
+        rmtree (TEST)
 
 # mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
 # mapping_info_e.write()
