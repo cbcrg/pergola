@@ -17,6 +17,7 @@
 
 ## Currently working
 - [ ] make the package available by pypi
+      [ ] add dependencies for pypi installation
 - [ ] Upload C.elegans files
 - [ ] Converting jaaba features folder
 
