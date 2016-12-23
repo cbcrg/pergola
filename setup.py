@@ -42,7 +42,7 @@ TAGS = [
     ]
 
 setup(name='pergola',
-      version='0.4',
+      version='0.1',
       description='A library to analyze and visualize behavioral data by unlocking genomic tools ',
       long_description= open('README.md').read(),
       url='http://github.com/cbcrg/pergola',
@@ -55,6 +55,7 @@ setup(name='pergola',
 #       scripts = ['scripts/pergola_rules.py', 'scripts/pergola_isatab.py', 'scripts/jaaba_to_pergola.py'],      
       zip_safe=False,
       classifiers = TAGS,
+#       install_requires=["scipy>=0.17", "pybedtools>=0.7", "numpy>=1.10"],           
       entry_points={
         'console_scripts': [
             'pergola = scripts.pergola_rules:main',

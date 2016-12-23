@@ -13,7 +13,7 @@
 - [ ] Make write chromosome an option (generate genome file)
 - [ ] Window and window mean only reachable with bedgraph set, control for this. should only be reachable?
 - [ ] Move jaaba files to examples folder or similar
-- [ ] Add to unitest the test of the scripts
+- [ ] Modify tracks create_pybedtools documentation
 
 ## Currently working
 - [ ] make the package available by pypi
@@ -22,6 +22,7 @@
 - [ ] Converting jaaba features folder
 
 ## Solved
+- [X] Add to unitest the test of the scripts
 - [X] Adding pergola_rules to test, for this transform scripts into console_scripts
 - [X] Checkings of the code using travis or similar tools
 - [X] Create a script for jaaba wrapping all jaaba options
