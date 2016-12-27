@@ -11,15 +11,16 @@
 - [ ] Borrar archivos temporales
 - [ ] Create the first stable Pergola release
 - [ ] Make write chromosome an option (generate genome file)
-- [ ] Window and window mean only reachable with bedgraph set, control for this. should only be reachable?
+- [ ] Window and window mean only reachable when bedgraph option is set, control for this. should only be reachable?
 - [ ] Move jaaba files to examples folder or similar
-- [ ] Modify tracks create_pybedtools documentation
+- [ ] Modify tracks create_pybedtools documentation it has the docs of a different class
 
 ## Currently working
 - [ ] make the package available by pypi
-      [ ] add dependencies for pypi installation
+- [ ] add dependencies for pypi installation
 - [ ] Upload C.elegans files
 - [ ] Converting jaaba features folder
+- [ ] loadmat function makes library scipy a dependency of the whole package by importing parsers, separate in a different  
 
 ## Solved
 - [X] Add to unitest the test of the scripts
