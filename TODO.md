@@ -21,6 +21,7 @@
 - [ ] Upload C.elegans files
 - [ ] Converting jaaba features folder
 - [ ] loadmat function makes library scipy a dependency of the whole package by importing parsers, separate in a different  
+- [ ] Add jaaba_to pergola test?
 
 ## Solved
 - [X] Add to unitest the test of the scripts
