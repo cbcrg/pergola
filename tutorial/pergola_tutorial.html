@@ -83,11 +83,9 @@
         
         
             <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing Pergola</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#download-and-installation">Download and installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#development-versions">Development versions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#testing-installation">Testing installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-from-github">Installation from Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola Docker container</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul class="current">
@@ -165,8 +163,8 @@ a experiment where mice were used to study feeding behavior *</p>
 <h1>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h1>
 <p>Pergola needs that you set the equivalences between the fields of the
 input data and a controled vocabular defined by Pergola ontology. The
-format of the mapping file is <a class="reference external" href="http://geneontology.org/page/external-mapping-file-format">the external mapping file
-format</a>
+format of the mapping file is <em>`the external mapping file
+format &lt;http://geneontology.org/page/external-mapping-file-format&gt;`__</em>
 from the Gene Ontology Consortium, you can see an example below:</p>
 <div class="highlight-python"><div class="highlight"><pre>! Mapping of behavioural fields into genome browser fields
 !
@@ -199,10 +197,10 @@ MappingInfo objects:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>EndT        chromEnd
-Nature      dataTypes
-Value       dataValue
-StartT      chromStart
+<div class="highlight-python"><div class="highlight"><pre>EndT        end
+Nature      data_types
+Value       data_value
+StartT      start
 Phase       chrom
 CAGE        track
 </pre></div>
@@ -227,22 +225,22 @@ accessed by data attribute:</p>
 <span class="n">int_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986261&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;1335986151&#39;</span><span class="p">,</span> <span class="s">&#39;0.06&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986330&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;1335986275&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986427&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;1335986341&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986451&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="s">&#39;1335986420&#39;</span><span class="p">,</span> <span class="s">&#39;0.08&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986553&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="s">&#39;1335986541&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986844&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="s">&#39;1335986832&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986947&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;1335986845&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987059&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="s">&#39;1335987044&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987223&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;1335987089&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987495&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;1335987424&#39;</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">)]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986261&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986151</span><span class="p">,</span> <span class="s">&#39;0.06&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986330&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986275</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986427&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986341</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986451&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986420</span><span class="p">,</span> <span class="s">&#39;0.08&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986553&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986541</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986844&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986832</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986947&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986845</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987059&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335987044</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987223&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335987089</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987495&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335987424</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 <p>IntData objects also provide some other attributes like the set of
 different tracks (term for IDs in pergola ontology) contained in the
 data:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">dataTypes</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">}</span>
@@ -289,7 +287,7 @@ in pergola ontology). In this case the different IDs for each mice:</p>
 </div>
 <p>And finally the dataTypes (term for different types of data in pergola
 ontology) that can be used to encode for example different behaviours:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">dataTypes</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">}</span>
@@ -298,10 +296,10 @@ ontology) that can be used to encode for example different behaviours:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>EndT        chromEnd
-Nature      dataTypes
-Value       dataValue
-StartT      chromStart
+<div class="highlight-python"><div class="highlight"><pre>EndT        end
+Nature      data_types
+Value       data_value
+StartT      start
 Phase       chrom
 CAGE        track
 </pre></div>
@@ -309,7 +307,7 @@ CAGE        track
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">[</span><span class="s">&#39;EndT&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;chromEnd&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;end&#39;</span>
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">path_intervals</span> <span class="o">=</span> <span class="s">&quot;../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv&quot;</span>
@@ -403,10 +401,10 @@ point as 0:</p>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bed</span><span class="p">:</span>
     <span class="k">print</span> <span class="s">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c">#del</span>
     <span class="n">bedSingle</span> <span class="o">=</span> <span class="n">dict_bed</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="k">print</span> <span class="s">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedSingle</span><span class="o">.</span><span class="n">dataTypes</span>
+    <span class="k">print</span> <span class="s">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedSingle</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>key.......:  (&#39;12&#39;, &#39;food_sc&#39;)
+<div class="highlight-python"><div class="highlight"><pre> key.......:  (&#39;12&#39;, &#39;food_sc&#39;)
 :::::::::::::: food_sc
 key.......:  (&#39;7&#39;, &#39;food_sc&#39;)
 :::::::::::::: food_sc
@@ -520,7 +518,7 @@ key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
 <span class="c">#    print row</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;generator object track_convert2bed at 0x1059968c0&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;generator object track_convert2bed at 0x109d92d70&gt;
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">dict_bedGraph</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;bedGraph&#39;</span><span class="p">)</span>
@@ -529,10 +527,10 @@ key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
 <div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bedGraph</span><span class="p">:</span>
     <span class="k">print</span> <span class="s">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c">#del</span>
     <span class="n">bedGraphSingle</span> <span class="o">=</span> <span class="n">dict_bedGraph</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="k">print</span> <span class="s">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedGraphSingle</span><span class="o">.</span><span class="n">dataTypes</span>
+    <span class="k">print</span> <span class="s">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedGraphSingle</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>key.......:  (&#39;12&#39;, &#39;food_sc&#39;)
+<div class="highlight-python"><div class="highlight"><pre> key.......:  (&#39;12&#39;, &#39;food_sc&#39;)
 :::::::::::::: food_sc
 key.......:  (&#39;7&#39;, &#39;food_sc&#39;)
 :::::::::::::: food_sc
@@ -637,7 +635,7 @@ key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
 <span class="c">#    print row</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;generator object track_convert2bedGraph at 0x1058dbbe0&gt;
+<div class="highlight-python"><div class="highlight"><pre>&lt;generator object track_convert2bedGraph at 0x10ab70140&gt;
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
@@ -689,7 +687,7 @@ key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
 </div>
 <p>Primero poner todo lo que se puede hacer con el intdata y luego ya poner
 el resto</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">dataTypes</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">}</span>
@@ -708,7 +706,7 @@ Genome fasta file created: /Users/jespinosa/git/pergola/doc/notebooks/chr1.fa
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Generate a cytoband file and a bed file with phases</span>
-<span class="n">mapping</span><span class="o">.</span><span class="n">write_cytoband</span><span class="p">(</span><span class="n">int_data</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s">&quot;dark&quot;</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mapping</span><span class="o">.</span><span class="n">write_cytoband</span><span class="p">(</span><span class="n">end</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s">&quot;dark&quot;</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>Cytoband like file will be dump into &quot;/Users/jespinosa/git/pergola/doc/notebooks&quot; as it has not been set using path_w
@@ -742,122 +740,59 @@ Bed files with phases will be dump into &quot;/Users/jespinosa/git/pergola/doc/n
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_8_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_7_dt_food_sc.bed generated
+File tr_12_dt_food_sc.bed generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_6_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_14_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_3_dt_food_sc.bed generated
+File tr_14_dt_food_fat.bed generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_2_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_5_dt_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_10_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
 File tr_1_dt_food_sc.bed generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_18_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_17_dt_food_sc.bed generated
+File tr_2_dt_food_sc.bed generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_16_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_9_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_4_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
-File tr_13_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_12_dt_food_fat_food_sc.bed generated
-No path selected, files dump into path:
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-Data type color gradient already set &#39;food_fat&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre> /Users/jespinosa/git/pergola/doc/notebooks
 File tr_15_dt_food_sc.bed generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_6_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_5_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_16_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_14_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
 File tr_11_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_3_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_2_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_10_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_4_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_17_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_9_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_12_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_16_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_10_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_8_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_7_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_18_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_6_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_18_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_4_dt_food_fat.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_13_dt_food_sc.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_8_dt_food_sc.bed generated
 </pre></div>
 </div>
 </div>
@@ -884,10 +819,6 @@ chr1    174 196 &quot;&quot;  0.08    +   174 196 25,115,25
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">bedGraph_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;bedGraph&quot;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col_bedGraph</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Data type color gradient already set &#39;food_fat_food_sc&#39;.
-Data type color gradient already set &#39;food_sc&#39;.
-</pre></div>
-</div>
 <div class="highlight-python"><div class="highlight"><pre>Removed data types are: water
 </pre></div>
 </div>
@@ -897,41 +828,59 @@ Data type color gradient already set &#39;food_sc&#39;.
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_8_dt_food_fat_food_sc.bedGraph generated
+File tr_12_dt_food_sc.bedGraph generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_7_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_6_dt_food_fat_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_14_dt_food_fat_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_3_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_2_dt_food_fat_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_5_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_10_dt_food_fat_food_sc.bedGraph generated
+File tr_14_dt_food_fat.bedGraph generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
 File tr_1_dt_food_sc.bedGraph generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_18_dt_food_fat_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_17_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_16_dt_food_fat_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_9_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_4_dt_food_fat_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_13_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_12_dt_food_fat_food_sc.bedGraph generated
+File tr_2_dt_food_sc.bedGraph generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
 File tr_15_dt_food_sc.bedGraph generated
 No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_6_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_5_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_16_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_14_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
 File tr_11_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_3_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_2_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_10_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_4_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_17_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_9_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_12_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_16_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_10_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_8_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_7_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_18_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_6_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_18_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_4_dt_food_fat.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_13_dt_food_sc.bedGraph generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File tr_8_dt_food_sc.bedGraph generated
 </pre></div>
 </div>
 </div>
@@ -959,11 +908,11 @@ chr1    210 240 0
 <div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Value       dataValue
-EndT        chromEnd
-StartT      chromStart
+<div class="highlight-python"><div class="highlight"><pre>Value       data_value
+EndT        end
+StartT      start
 File        track
-NameFile    dataTypes
+NameFile    data_types
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reading file info</span>
@@ -987,6 +936,22 @@ NameFile    dataTypes
 </div>
 <div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
 File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File files_data.bed generated
 </pre></div>
 </div>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reading phase info</span>
@@ -1009,6 +974,8 @@ File files_data.bed generated
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+File phase_exp.bed generated
+No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
 File phase_exp.bed generated
 </pre></div>
 </div>
@@ -1045,8 +1012,8 @@ chr1    502 924 &quot;&quot;  1000    +   502 924 0
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Jose Espinosa-Carrasco.
-      Last updated on Jan 21, 2016.
+        &copy; Copyright 2016, Jose Espinosa-Carrasco.
+      Last updated on Dec 28, 2016.
     </p>
   </div>
 
