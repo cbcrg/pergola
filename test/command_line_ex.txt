@@ -15,13 +15,13 @@ pergola_isatab.py -i "/users/cn/jespinosa/Dropbox/isaTabTools/ISAcreator-1.7.7/i
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -m "/Users/jespinosa/git/pergola/test/int2gene.txt"
 pergola_isatab.py -i "/Users/jespinosa/git/pergola/data/isatab_ex/" -m "/Users/jespinosa/git/pergola/test/int2gene.txt" -f bedGraph -e
 #pergola_rules
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/b2g.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/f2p.txt"
 
 # tabulated mapping file
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/test/b2g_TAB.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev.int" -m "/Users/jespinosa/git/pergola/test/b2p_TAB.txt"
 
 # pergola_rules with several phases (habituation, development,...)
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/b2g.txt"
+pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortDev_phases.int" -m "/Users/jespinosa/git/pergola/sample_data/feeding_behavior/b2p.txt"
 
 # electrophysiology
 #pergola_rules.py -i "/Users/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m "/Users/jespinosa/Dropbox/pergola/ontolElectro_2fields.txt" -n -f bedGraph  -mi 1000 -w 1
@@ -34,12 +34,12 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/electrophysiology
 
 # Files of the tutorial
 #pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/phecomp/lib/python/examples/b2g.txt" -e
-#pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/sample_data/b2g.txt" -e
-pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e
+#pergola_rules.py -i "/Users/jespinosa/git/pergola/data/sample_data/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/sample_data/f2p.txt" -e
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/f2p.txt" -e
 
 # Files for shiny pergola
-pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e -dl food_sc food_fat -d all -nt
-pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/b2g.txt" -e -dl food_sc food_fat -d all -f bedGraph -w 300 -nt
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/f2p.txt" -e -dl food_sc food_fat -d all -nt
+pergola_rules.py -i "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/feedingBehavior_HF_mice.csv" -m  "/Users/jespinosa/git/pergola/pergola/test/feeding/tutorial/f2p.txt" -e -dl food_sc food_fat -d all -f bedGraph -w 300 -nt
 
 # Files of the tutorial - file separation
 pergola_rules.py -i "/Users/jespinosa/git/pergola/sample_data/files.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all -nt
@@ -56,7 +56,6 @@ pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2a
 
 # without track_line
 pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n -f bedGraph -nt
-
 
 # ActiTrack position files already transform to bedgraph and now transformed to relative coordinates
 pergola_rules.py -i "/Users/jespinosa/git/pergola/test/shortPos.bedGraph" -m "/Users/jespinosa/git/pergola/test/bedGraph2pergola.txt" -f bedGraph -nh -s 'chrm' 'start' 'end' 'value' -e
@@ -88,7 +87,6 @@ pergola_rules.py -i "/users/cn/jespinosa/Dropbox/pergola/electroTest_2f.txt" -m"
 pergola_rules.py -i "/users/cn/jespinosa/pergola/pergolaDataThomas/test_j.txt" -m "/users/cn/jespinosa/pergola/pergolaDataThomas/ontologyThomas.txt" -n -mi 1000 -f bed -s "Time" "14 1CA1"
 pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt"
 pergola_rules.py -i "/users/cn/jespinosa/git/pergola_cbcrg/test/shortDevDecimals.int" -m "/users/cn/jespinosa/git/pergola_cbcrg/test/b2g.txt" -mi 10000
-
 
 # Count nucleotides in a fasta file
 grep -v ">" chr1.fa | wc | awk '{print $3-$1}'
