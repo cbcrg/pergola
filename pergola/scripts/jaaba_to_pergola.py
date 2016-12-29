@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from pergola import parsers
+from pergola import jaaba_parsers
 from argparse import ArgumentParser
 from sys      import stderr, exit
 import pergola_rules

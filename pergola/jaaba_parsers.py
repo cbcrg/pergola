@@ -29,7 +29,7 @@ This module provides the way to read scripts options provided by pergola library
 """
 
 from scipy.io  import loadmat
-from os.path   import join, exists#, abspath, split, realpath
+from os.path   import join, exists
 from mapping   import MappingInfo, check_path
 from tempfile  import NamedTemporaryFile
 
