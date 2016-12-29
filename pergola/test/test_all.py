@@ -25,6 +25,7 @@ import unittest
 from pergola import mapping
 from pergola import intervals
 from scripts.pergola_rules import pergola_rules
+from pergola.jaaba_parsers import jaaba_scores_to_csv, jaaba_scores_to_intData
 from os      import path, chdir, mkdir, rmdir
 from sys     import stderr
 from shutil  import rmtree
@@ -106,7 +107,6 @@ class TestTutorial(unittest.TestCase):
 #         print >> stderr,"====================== test 4"
         write_format='gff'
         
-        
         bed_str =  data_read.convert(mode=write_format)
          
 #         for key in bed_str:
@@ -178,12 +178,24 @@ class TestTutorial(unittest.TestCase):
         data_in = PATH + "/feeding/feeding_behavior_HF_mice.csv"
         map_in = PATH + "/feeding/b2g.txt"
         pergola_rules(path=data_in, map_file_path=map_in, )
-                
+        
+    def test_08_jaaba_to_pergola(self):
+        """
+        Testing jaaba_to_pergola script
+        """ 
+#         print >> stderr,"====================== test 8"
+        
+        data_in = PATH + "/jaaba_data/scores_chase.mat"  
+        jaaba_scores_to_csv(input_file=data_in, path_w=TEST, name_file="file_out", norm=True, data_type="chase")
+        map_j = PATH + "/jaaba_data/jaaba2pergola.txt"
+        int_data_j = jaaba_scores_to_intData(input_file=data_in, map_jaaba=map_j, name_file="JAABA_scores", delimiter="\t", norm=True, data_type="a")
+        print >> stderr, "Min value jaaba====== %d" % int_data_j.min
+        
     def test_only_one_time_point(self):
         """
         Testing if files with just one coordinate for time are read correctly
         """ 
-#         print >> stderr,"====================== test 8"
+#         print >> stderr,"====================== test 9"
         
         global int_data_electro, mappings_electro 
         msg_mappings = "Equivalences set in electrophysiology mapping file are not correct."
@@ -205,7 +217,7 @@ class TestTutorial(unittest.TestCase):
         self.assertEqual(int_data_electro.max, max, msg_int_data_max) 
         
     def test_track_electro(self):
-#         print >> stderr,"====================== test 9"
+#         print >> stderr,"====================== test 10"
 
         global tracks_data_electro
         msg_track_electro = "Track electrophysiology not correctly read"
@@ -213,8 +225,6 @@ class TestTutorial(unittest.TestCase):
         max = 300
         tracks_data_electro = int_data_electro.read(multiply_t=1000, intervals=True)
         self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
-        
-        print >> stderr, "Test 4................." #del  
         
         first_item = (0.0, '-30.98', 'a', '1', 9.0) 
         first_item_read = tracks_data_electro.data[0]
