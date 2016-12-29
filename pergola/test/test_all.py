@@ -50,7 +50,7 @@ class TestTutorial(unittest.TestCase):
         """
 #         print >> stderr,"====================== test 1"
         global mappings_tutorial, exp2, exp3, exp4
-        mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/b2g.txt")
+        mappings_tutorial = mapping.MappingInfo(PATH + "/feeding/f2p.txt")
         
         msg_mappings = "Equivalences set in tutorial mapping file are not correct."
         self.assertEqual(mappings_tutorial.correspondence['EndT'], 'end', msg_mappings)
@@ -176,7 +176,7 @@ class TestTutorial(unittest.TestCase):
 #         print >> stderr,"====================== test 7"
         
         data_in = PATH + "/feeding/feeding_behavior_HF_mice.csv"
-        map_in = PATH + "/feeding/b2g.txt"
+        map_in = PATH + "/feeding/f2p.txt"
         pergola_rules(path=data_in, map_file_path=map_in, )
         
     def test_08_jaaba_to_pergola(self):
@@ -233,24 +233,6 @@ class TestTutorial(unittest.TestCase):
     
     def tearDown(self):
         rmtree (TEST)
-
-# mapping_info_e = mapping.MappingInfo("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/e2p.txt")
-# mapping_info_e.write()
-#  
-# int_data_e = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
-# int_data_e_int = intervals.IntData("/Users/jespinosa/git/pergola/pergola/test/electrophysiology/electroTest_2f.txt", map_dict=mapping_info_e.correspondence, delimiter="\t")
-#   
-#   
-# print ("debugging_simple_read", int_data_e.data[:12])
-# print ("debugging_simple_read",int_data_e.fieldsB)
-# print ("debugging_simple_read",int_data_e.fieldsG_dict)
-# # print (int_data.fieldsG_dict.keys())
-# print ("debugging_simple_read",int_data_e.dataTypes)
-# print ("debugging_simple_read",int_data_e.tracks)
-# # int_data_e.read(multiply_t=1000, relative_coord=True)# este tiene que petar no endChrom
-# print ("debugging_simple_read",int_data_e_int.data)
-# tracks_data_e = int_data_e_int.read(multiply_t=1000, intervals=True)
-# print "debugging_simple_read", tracks_data_e
         
 if __name__ == '__main__':
     unittest.main()
