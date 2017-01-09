@@ -8,21 +8,23 @@
 # from tempfile  import NamedTemporaryFile #del
 # from pergola.intervals import IntData #del
 from pergola  import parsers
+from pergola import jaaba_parsers
 
+# from mapping   import MappingInfo
 # parsers.jaaba_features_to_intData(input_file='Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/scores_chase.mat', 
 #                             path_w='/Users/jespinosa/git/pergola/test', norm=True, data_type="chase")
 
 # jaaba_features_to_intData(dir_perframe, map_jaaba,  delimiter="\t", feature="velmag", output="csv", path_w=""):
 map_file_jaaba = "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
  
-parsers.extract_jaaba_features(dir_perframe='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/', map_jaaba="",
+jaaba_parsers.extract_jaaba_features(dir_perframe='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/', map_jaaba="",
                                delimiter="\t", feature="velmag", output="csv", path_w='/Users/jespinosa/git/pergola/test')
 
-map_file_jaaba = "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
-# int_data_jaaba = parsers.jaaba_scores_to_intData(input_file = input_jaaba_file, map_jaaba = map_file_jaaba, norm=True, data_type="chase")
-
-int_data_jaaba = parsers.extract_jaaba_features(dir_perframe='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/', 
-                                           feature="velmag", map_jaaba=map_file_jaaba, output="IntData")
+# map_file_jaaba = "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt"
+# # int_data_jaaba = parsers.jaaba_scores_to_intData(input_file = input_jaaba_file, map_jaaba = map_file_jaaba, norm=True, data_type="chase")
+# 
+int_data_jaaba = jaaba_parsers.extract_jaaba_features(dir_perframe='/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/', 
+                                            feature="velmag", map_jaaba=map_file_jaaba, output="IntData")
 # map_jaaba = map_file_jaaba,
 
 print int_data_jaaba.min
