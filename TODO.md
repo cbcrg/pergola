@@ -19,9 +19,9 @@
 - [ ] make the package available by pypi
 - [ ] add dependencies for pypi installation
 - [ ] Upload C.elegans files
-- [ ] Add jaaba_to_pergola to test_all.py?
 
 ## Solved
+- [X] Add jaaba_to_pergola to test_all.py
 - [X] loadmat function makes library scipy a dependency of the whole package by importing parsers, separate in a different
 - [X] Converting jaaba features folder to csv or pergola objects  
 - [X] Add to unitest the test of the scripts
