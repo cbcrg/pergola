@@ -27,14 +27,16 @@ data_read = int_data.read(relative_coord=True)
 
 ###################
 # Generate to BedTool objects containing light and dark phases
-
 # Write phases file
-mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark")
-
+total_time = int_data.max - int_data.min
+mapping.write_cytoband(end = total_time, delta=43200, start_phase="dark")
 light_ph_f = out_dir +  "phases_light.bed"
 dark_ph_f = out_dir + "phases_dark.bed"
+all_phases = out_dir + "phases.bed"
+
 light_bed = pybedtools.BedTool(light_ph_f)
 dark_bed = pybedtools.BedTool(dark_ph_f)
+all_phases_bed = pybedtools.BedTool(all_phases)
 
 # Generate a chr.size file in order to calculate complement of merged meals
 chr_file_n = "chrom"
@@ -59,6 +61,35 @@ exp_ph_bed = data_exp_ph_tr.convert(mode="bed", dataTypes_actions="all", tracks_
 hab_bed = exp_ph_bed [('1_2', 'Habituation phase')].create_pybedtools()
 dev_bed = exp_ph_bed [('1_2', 'Development phase')].create_pybedtools()
 
+# def comp_with_value (comp_int):    
+# #     int + (int[2]-int[1])
+# #     print int(comp_int[2]) - int(comp_int[1])
+#     score = int(comp_int[2]) - int(comp_int[1])
+#     comp_int.score = score
+#     return comp_int
+
+
+def comp_with_value(f):
+    """
+    adds 10 bp to the stop
+    """
+    score = int(f[2]) - int(f[1])
+    return (f, score)
+
+
+def gen(bed_comp):
+    for i in bed_comp:
+        score = int(i[2])-int(i[1])
+        new_i = (i[0], i[1], i[2], ".", score) 
+        
+        yield new_i
+
+def reorder(bed_comp_phases):
+    for i in bed_comp_phases:        
+        new_i = (i[0], i[1], i[2], i[5]) 
+        
+        yield new_i
+                
 # For each track merge feeding acts that are separated by less than 120 seconds (thus generating feeding bouts track)
 # Calculates the complement of feeding bouts (intermeal intervals) and intersect them with day and experimental phases
 # Dumping results into bed files
@@ -73,8 +104,45 @@ for tr, bed in bed_str.iteritems():
     
     ## Complement
     bed_merged_comp = pybedtools.BedTool(bed_merged_fn).complement(g=chr_file)
+    bed_merged_comp_to_map = pybedtools.BedTool(gen(bed_merged_comp))
+    
+#     print bed_merged_comp_to_map
 
-    hab_light_intermeals_bed = bed_merged_comp.intersect(hab_bed).intersect(light_bed).saveas('tr_' + '_'.join(tr) + "_compl_hab_light.bed")
-    hab_dark_intermeals_bed = bed_merged_comp.intersect(hab_bed).intersect(dark_bed).saveas('tr_' + '_'.join(tr) + "_compl_hab_dark.bed")
-    dev_light_intermeals_bed = bed_merged_comp.intersect(dev_bed).intersect(light_bed).saveas('tr_' + '_'.join(tr) + "_compl_dev_light.bed")
-    dev_dark_intermeals_bed = bed_merged_comp.intersect(dev_bed).intersect(dark_bed).saveas('tr_' + '_'.join(tr) + "_compl_dev_dark.bed")
+#     hab_light_intermeals_bed = bed_merged_comp.intersect(hab_bed).intersect(light_bed)#.saveas('tr_' + '_'.join(tr) + "_compl_hab_light.bed")
+#     hab_dark_intermeals_bed = bed_merged_comp.intersect(hab_bed).intersect(dark_bed)#.saveas('tr_' + '_'.join(tr) + "_compl_hab_dark.bed")
+#     dev_light_intermeals_bed = bed_merged_comp.intersect(dev_bed).intersect(light_bed)#.saveas('tr_' + '_'.join(tr) + "_compl_dev_light.bed")
+#     dev_dark_intermeals_bed = bed_merged_comp.intersect(dev_bed).intersect(dark_bed)#.saveas('tr_' + '_'.join(tr) + "_compl_dev_dark.bed")
+#     
+#     light_intermeals_bed = bed_merged_comp_to_map.map(light_bed, c=5, o="mean", null=0)
+    all_phases_tr = all_phases_bed.map(bed_merged_comp_to_map, c=5, o="mean", null=0)
+    pybedtools.BedTool(reorder(all_phases_tr)).saveas('tr_' + '_'.join(tr) + "_compl_phases.bedGraph")
+         
+        
+#     .saveas('tr_' + '_'.join(tr) + "_compl_phases.bed")
+#     all_phases_bed.map(bed_merged_comp_to_map, c=5, o="mean", null=0).saveas('tr_' + '_'.join(tr) + "_compl_phases.bed")
+    
+#     speed_means = motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0)
+    
+    #.saveas('tr_' + '_'.join(tr) + "_compl_light.bed")
+#     motion_BedTools.map(speed_BedTools, c=5, o="mean", null=0).saveas(out_dir + tag_file + ".mean.bed")
+    
+#     dark_intermeals_bed = bed_merged_comp_to_map.map(dark_bed, o="mean").saveas('tr_' + '_'.join(tr) + "_compl_dark.bed")
+    
+    
+    
+    
+    
+    
+    
+    
+#     light_intermeals_bed = bed_merged_comp.intersect(light_bed)#.saveas('tr_' + '_'.join(tr) + "_compl_light.bed")
+#     dark_intermeals_bed = bed_merged_comp.intersect(dark_bed)#.saveas('tr_' + '_'.join(tr) + "_compl_dark.bed")
+#     
+#     print light_intermeals_bed
+# #     print hab_light_intermeals_bed
+#     pybedtools.BedTool(gen(light_intermeals_bed)).saveas('tr_' + '_'.join(tr) +'_light_intermeals.bed')
+#     pybedtools.BedTool(gen(dark_intermeals_bed)).saveas('tr_' + '_'.join(tr) +'_dark_intermeals.bed')
+
+    
+    
+#     bed_full_length.map(phenotypic_feature_bt, c=5, o="mean", null=0).saveas (tag_file + ".mean_file.bed")
