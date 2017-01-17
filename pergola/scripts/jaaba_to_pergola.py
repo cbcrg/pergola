@@ -36,10 +36,10 @@ def jaaba_to_pergola(option, args):
         name_tmp = splitext(basename(tmp_track.name))[0]
         path_out = dirname(abspath(tmp_track.name))
         
-        parsers.jaaba_scores_to_csv(input_file=args.input, path_w=path_out, name_file=name_tmp, norm=True, data_type="chase")
+        jaaba_parsers.jaaba_scores_to_csv(input_file=args.input, path_w=path_out, name_file=name_tmp, norm=True, data_type="chase")
                     
         output_file = tmp_track.name
-
+        
         if option == "sc": 
             path_w = dirname(abspath(args.input))            
             f_out = path_w + '/' + 'JAABA_scores.csv'
@@ -47,7 +47,7 @@ def jaaba_to_pergola(option, args):
             copy (tmp_track.name, f_out)
             
         elif option == "sp":
-            pergola_rules.main(path=output_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
+            pergola_rules.pergola_rules(path=output_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
                   list=args.list, range=args.range, track_actions=args.track_actions, 
                   data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
                   write_format=args.format, relative_coord=args.relative_coord, 
