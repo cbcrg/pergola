@@ -46,10 +46,24 @@ pergola_rules.py -i "/Users/jespinosa/git/pergola/sample_data/files.csv" -m  "/U
 # Files of peaks for validation paper
 pergola_rules.py -i "/Users/jespinosa/phecomp/20140807_pergola/20150411_validationPaper/files_val_peaks.csv" -m  "/Users/jespinosa/git/pergola/test/f2g.txt" -f bed -e -a join_all -d all
 
-# JAABA jaaba example chase
-pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/sample_data/jaaba_example/jaaba2pergola.txt"
+### JAABA jaaba example chase
+## processing once scores are dumped into a csv file
+# pergola_rules.py -i "/Users/jespinosa/git/pergola/test/JAABA_scores.csv" -m "/Users/jespinosa/git/pergola/sample_data/jaaba_example/jaaba2pergola.txt"
+## New implementation of Jaaba functions and scripts, now it is possible not only to process annotations scores but also to read variables
+## extract scores to csv files
+jaaba_to_pergola sc -i "/Users/jespinosa/git/pergola/sample_data/jaaba_example/scores_chase.mat"
 
-# ActiTrack position files example bed file
+## extract scores to bed or bedGraph
+jaaba_to_pergola sp -i "/Users/jespinosa/git/pergola/sample_data/jaaba_example/scores_chase.mat" -m /Users/jespinosa/git/pergola/test/jaaba2pergola.txt -f bed
+## extract to csv file
+jaaba_to_pergola fc -dj "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/" -jf velmag dtheta -dd  ~/git/pergola/test
+
+## extract to pergola bed or bedgraph
+jaaba_to_pergola fp -dj "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/" -jf velmag dtheta -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt" -i jaaba -dd  ~/git/pergola/test
+jaaba_to_pergola fp -dj "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/" -jf velmag dtheta -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt" -i jaaba -dd  ~/git/pergola/test -f bedGraph
+
+
+## ActiTrack position files example bed file
 pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n
 
 pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n -f bedGraph
