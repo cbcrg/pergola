@@ -14,6 +14,7 @@
 - [ ] Window and window mean only reachable when bedgraph option is set, control for this. should only be reachable?
 - [ ] Move jaaba files to examples folder or similar
 - [ ] Modify tracks create_pybedtools documentation it has the docs of a different class
+- [ ] Create first release github
 
 ## Currently working
 - [ ] make the package available by pypi
