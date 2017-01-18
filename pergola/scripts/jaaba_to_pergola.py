@@ -45,6 +45,7 @@ def jaaba_to_pergola(option, args):
             f_out = path_w + '/' + 'JAABA_scores.csv'
  
             copy (tmp_track.name, f_out)
+            print >> stderr,  "@@@jaaba_to_pergola.py: Scores dumped in %s" % f_out
             
         elif option == "sp":
             pergola_rules.pergola_rules(path=output_file, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
@@ -71,7 +72,7 @@ def jaaba_to_pergola(option, args):
         path_tmp = mkdtemp()
         
         for f in args.feature:
-            parsers.extract_jaaba_features(dir_perframe=args.dir_jaaba, map_jaaba="", delimiter="\t", 
+            jaaba_parsers.extract_jaaba_features(dir_perframe=args.dir_jaaba, map_jaaba="", delimiter="\t", 
                                            feature=f, output="csv", path_w=path_tmp)
             
             tmp_file = path_tmp + '/' + f + '.csv'
