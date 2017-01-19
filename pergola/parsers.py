@@ -189,12 +189,12 @@ jaaba_parser_fc = subparsers.add_parser('fc', add_help='Converts Jaaba features 
 
 jaaba_parser_sc.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
 
-jaaba_parser_fc.add_argument('-jd', '--jaaba_dir', required=True, metavar="PATH", help='Path to jaaba features')
+jaaba_parser_fc.add_argument('-i', '--input', required=True, metavar="PATH", help='Path to jaaba features')
 jaaba_parser_fc.add_argument('-jf', '--feature', required=True, metavar="LIST_OF_FEATURES", type=str, nargs='+',
                             help='List of features to be extracted, e.g. velmag')
 jaaba_parser_fc.add_argument('-dd', '--dumping_dir', required=False, metavar="DUMPING_DIR", help='Input file path')
 # jaaba_parser_fp.add_argument('-i', '--input_jaaba_dir', required=True, metavar="PATH", help='Input file path')
-jaaba_parser_fp.add_argument('-jd', '--jaaba_dir', required=True, metavar="PATH", help='Path to jaaba features')
+# jaaba_parser_fp.add_argument('-jd', '--jaaba_dir', required=True, metavar="PATH", help='Path to jaaba features')
 jaaba_parser_fp.add_argument('-jf', '--feature', required=True, metavar="LIST_OF_FEATURES", type=str, nargs='+',
                             help='List of features to be extracted, e.g. velmag')
 jaaba_parser_fp.add_argument('-dd', '--dumping_dir', required=False, metavar="DUMPING_DIR", help='Input file path')

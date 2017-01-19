@@ -58,7 +58,7 @@ def jaaba_to_pergola(option, args):
                   bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
     
     elif option == "fc" or option == "fp":
-        print >> stderr,  "@@@jaaba_to_pergola.py: Extracting Jaaba features from %s" %args.jaaba_dir
+        print >> stderr,  "@@@jaaba_to_pergola.py: Extracting Jaaba features from %s" %args.input
         print >> stderr,  "@@@jaaba_to_pergola.py: Selected feature/s %s" %args.feature
         
         
@@ -72,7 +72,7 @@ def jaaba_to_pergola(option, args):
         path_tmp = mkdtemp()
         
         for f in args.feature:
-            jaaba_parsers.extract_jaaba_features(dir_perframe=args.jaaba_dir, map_jaaba="", delimiter="\t", 
+            jaaba_parsers.extract_jaaba_features(dir_perframe=args.input, map_jaaba="", delimiter="\t", 
                                            feature=f, output="csv", path_w=path_tmp)
             
             tmp_file = path_tmp + '/' + f + '.csv'
