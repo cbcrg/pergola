@@ -26,6 +26,8 @@ Documentation index:
   
      installation
      
+     ready_to_use_scripts
+     
      tutorial
   
      reference/index
