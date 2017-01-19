@@ -1,9 +1,6 @@
 .. \_Pergola\_Docker\_Container:
 ================================
 
-Pergola Docker Container
-========================
-
 .. pergola_container:
 
 `Docker`_ allows to sandbox an application with all the requirements it needs to 
@@ -19,7 +16,7 @@ the same version of Pergola using the tag of the image.
 .. contents::
 
 Docker installation
--------------------
+**************************
 
 Docker can be easily installed following the `official documentation`_ on `linux`_,
 `Mac OS X`_ and `Windows`_.
@@ -31,7 +28,7 @@ Docker can be easily installed following the `official documentation`_ on `linux
 
 
 Pull Pergola image 
-------------------
+*******************
 
 Docker images are tagged and thus at any time you will be able to retrieve the 
 exactly same version of the Pergola using the tag corresponding to the version. 
@@ -51,7 +48,7 @@ You can pull the latest Pergola image from `Docker Hub`_:
     
 
 Pergola Docker execution example
--------------------------------- 
+*********************************
 You can run Pergola on a container created from the downloaded image interatively
 with the following command:
 
