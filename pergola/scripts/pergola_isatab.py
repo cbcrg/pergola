@@ -82,8 +82,6 @@ def main():
         
         file_path = isatab_parser.check_assay_pointer(pointer_file, download_path=path_pergola) 
 #         print "File name is::::::::::::::::::::::::::%s   \n" % file_path #del or #perm
-        
-#         data_types_list=args.data_types_list #del
         pergola_rules.pergola_rules(path=file_path, map_file_path=args.mapping_file,
                            sel_tracks=args.tracks, list=args.list, range=args.range,
                            track_actions=args.track_actions, data_types_list=args.data_types_list,
@@ -91,9 +89,10 @@ def main():
                            relative_coord=args.relative_coord, intervals_gen=args.intervals_gen,                        
                            multiply_f=args.multiply_intervals, fields2read=args.fields_read, 
                            window_size=args.window_size)
-        
-        print >> stderr, "@@@Pergola_isatab.py: execution finished correctly" 
-#         exit ("Going out to see what do I have here")#del
+                
+        print >> stderr, "@@@Pergola_isatab.py: : File correctly processed:" % file_path
+    
+    print >> stderr, "@@@Pergola_isatab.py: execution finished correctly" 
 #It might be interesting to implement a append option
 
 if __name__ == '__main__':
