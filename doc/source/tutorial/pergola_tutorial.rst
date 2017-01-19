@@ -32,8 +32,8 @@ Mapping file
 
 Pergola needs that you set the equivalences between the fields of the
 input data and a controled vocabular defined by Pergola ontology. The
-format of the mapping file is `the external mapping file
-format <http://geneontology.org/page/external-mapping-file-format>`__
+format of the mapping file is `the external mapping file format
+<http://geneontology.org/page/external-mapping-file-format>`_
 from the Gene Ontology Consortium, you can see an example below:
 
 ::
@@ -76,10 +76,10 @@ To view the mappings MappingInfo objects provide the
 
 .. parsed-literal::
 
-    EndT 	chromEnd
-    Nature 	dataTypes
-    Value 	dataValue
-    StartT 	chromStart
+    EndT 	end
+    Nature 	data_types
+    Value 	data_value
+    StartT 	start
     Phase 	chrom
     CAGE 	track
 
@@ -115,16 +115,16 @@ accessed by data attribute:
 
 .. parsed-literal::
 
-    [('1', '1335986261', 'food_sc', '1335986151', '0.06'),
-     ('1', '1335986330', 'food_sc', '1335986275', '0.02'),
-     ('1', '1335986427', 'food_sc', '1335986341', '0.02'),
-     ('1', '1335986451', 'water', '1335986420', '0.08'),
-     ('1', '1335986553', 'water', '1335986541', '0.02'),
-     ('1', '1335986844', 'water', '1335986832', '0.02'),
-     ('1', '1335986947', 'food_sc', '1335986845', '0.02'),
-     ('1', '1335987059', 'water', '1335987044', '0.02'),
-     ('1', '1335987223', 'food_sc', '1335987089', '0.02'),
-     ('1', '1335987495', 'food_sc', '1335987424', '0.02')]
+    [('1', '1335986261', 'food_sc', 1335986151, '0.06'),
+     ('1', '1335986330', 'food_sc', 1335986275, '0.02'),
+     ('1', '1335986427', 'food_sc', 1335986341, '0.02'),
+     ('1', '1335986451', 'water', 1335986420, '0.08'),
+     ('1', '1335986553', 'water', 1335986541, '0.02'),
+     ('1', '1335986844', 'water', 1335986832, '0.02'),
+     ('1', '1335986947', 'food_sc', 1335986845, '0.02'),
+     ('1', '1335987059', 'water', 1335987044, '0.02'),
+     ('1', '1335987223', 'food_sc', 1335987089, '0.02'),
+     ('1', '1335987495', 'food_sc', 1335987424, '0.02')]
 
 
 
@@ -134,7 +134,7 @@ data:
 
 .. code:: python
 
-    int_data.dataTypes
+    int_data.data_types
 
 
 
@@ -213,7 +213,7 @@ ontology) that can be used to encode for example different behaviours:
 
 .. code:: python
 
-    int_data.dataTypes
+    int_data.data_types
 
 
 
@@ -231,10 +231,10 @@ ontology) that can be used to encode for example different behaviours:
 
 .. parsed-literal::
 
-    EndT 	chromEnd
-    Nature 	dataTypes
-    Value 	dataValue
-    StartT 	chromStart
+    EndT 	end
+    Nature 	data_types
+    Value 	data_value
+    StartT 	start
     Phase 	chrom
     CAGE 	track
 
@@ -248,7 +248,7 @@ ontology) that can be used to encode for example different behaviours:
 
 .. parsed-literal::
 
-    'chromEnd'
+    'end'
 
 
 
@@ -383,12 +383,12 @@ point as 0:
     for key in dict_bed:
         print "key.......: ",key#del
         bedSingle = dict_bed [key]
-        print "::::::::::::::",bedSingle.dataTypes
+        print "::::::::::::::",bedSingle.data_types
 
 
 .. parsed-literal::
 
-    key.......:  ('12', 'food_sc')
+     key.......:  ('12', 'food_sc')
     :::::::::::::: food_sc
     key.......:  ('7', 'food_sc')
     :::::::::::::: food_sc
@@ -523,7 +523,7 @@ point as 0:
 
 .. parsed-literal::
 
-    <generator object track_convert2bed at 0x1059968c0>
+    <generator object track_convert2bed at 0x109d92d70>
 
 
 
@@ -536,12 +536,12 @@ point as 0:
     for key in dict_bedGraph:
         print "key.......: ",key#del
         bedGraphSingle = dict_bedGraph [key]
-        print "::::::::::::::",bedGraphSingle.dataTypes
+        print "::::::::::::::",bedGraphSingle.data_types
 
 
 .. parsed-literal::
 
-    key.......:  ('12', 'food_sc')
+     key.......:  ('12', 'food_sc')
     :::::::::::::: food_sc
     key.......:  ('7', 'food_sc')
     :::::::::::::: food_sc
@@ -653,7 +653,7 @@ Track object
 
 .. parsed-literal::
 
-    <generator object track_convert2bedGraph at 0x1058dbbe0>
+    <generator object track_convert2bedGraph at 0x10ab70140>
 
 
 
@@ -744,7 +744,7 @@ el resto
 
 .. code:: python
 
-    int_data_read.dataTypes
+    int_data_read.data_types
 
 
 
@@ -775,7 +775,7 @@ el resto
 .. code:: python
 
     # Generate a cytoband file and a bed file with phases
-    mapping.write_cytoband(int_data, end = int_data.max - int_data.min, delta=43200, start_phase="dark", lab_bed=False)
+    mapping.write_cytoband(end = int_data.max - int_data.min, delta=43200, start_phase="dark", lab_bed=False)
 
 
 .. parsed-literal::
@@ -825,149 +825,59 @@ el resto
 .. parsed-literal::
 
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_8_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_7_dt_food_sc.bed generated
+    File tr_12_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_6_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_14_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_3_dt_food_sc.bed generated
+    File tr_14_dt_food_fat.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_2_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_5_dt_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_10_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_1_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_18_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_17_dt_food_sc.bed generated
+    File tr_2_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_16_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_9_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_4_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_13_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_12_dt_food_fat_food_sc.bed generated
-    No path selected, files dump into path: 
-
-.. parsed-literal::
-
-    
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-    Data type color gradient already set 'food_fat'.
-    Data type color gradient already set 'food_sc'.
-
-
-.. parsed-literal::
-
-     /Users/jespinosa/git/pergola/doc/notebooks
     File tr_15_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_6_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_5_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_16_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_14_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_11_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_3_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_2_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_10_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_4_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_17_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_9_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_12_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_16_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_10_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_8_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_7_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_18_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_6_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_18_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_4_dt_food_fat.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_13_dt_food_sc.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_8_dt_food_sc.bed generated
 
 
 Output data
@@ -1001,12 +911,6 @@ Bed file
 
 .. parsed-literal::
 
-    Data type color gradient already set 'food_fat_food_sc'.
-    Data type color gradient already set 'food_sc'.
-
-
-.. parsed-literal::
-
     Removed data types are: water
 
 
@@ -1020,41 +924,59 @@ Bed file
 .. parsed-literal::
 
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_8_dt_food_fat_food_sc.bedGraph generated
+    File tr_12_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_7_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_6_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_14_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_3_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_2_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_5_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_10_dt_food_fat_food_sc.bedGraph generated
+    File tr_14_dt_food_fat.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_1_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_18_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_17_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_16_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_9_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_4_dt_food_fat_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_13_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_12_dt_food_fat_food_sc.bedGraph generated
+    File tr_2_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_15_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_6_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_5_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_16_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_14_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_11_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_3_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_2_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_10_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_4_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_17_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_9_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_12_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_16_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_10_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_8_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_7_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_18_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_6_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_18_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_4_dt_food_fat.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_13_dt_food_sc.bedGraph generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File tr_8_dt_food_sc.bedGraph generated
 
 
 Output data
@@ -1088,11 +1010,11 @@ bedGraph files
 
 .. parsed-literal::
 
-    Value 	dataValue
-    EndT 	chromEnd
-    StartT 	chromStart
+    Value 	data_value
+    EndT 	end
+    StartT 	start
     File 	track
-    NameFile 	dataTypes
+    NameFile 	data_types
 
 
 .. code:: python
@@ -1127,6 +1049,22 @@ bedGraph files
 
 .. parsed-literal::
 
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File files_data.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File files_data.bed generated
 
@@ -1164,6 +1102,8 @@ bedGraph files
 
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File phase_exp.bed generated
+    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
+    File phase_exp.bed generated
 
 
 means bed file to delete
@@ -1182,3 +1122,4 @@ intermeal to delete
     chr1    1   30  ""  1000    +   1   30  0
     chr1    183 345 ""  1000    +   183 345 0
     chr1    502 924 ""  1000    +   502 924 0
+
