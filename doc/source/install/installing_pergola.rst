@@ -10,14 +10,15 @@ your system are also listed in this section.
 
 .. contents::
 
-.. note::
-
-    At the moment the installation has been tested only under Ubuntu-linux and MacOS.
-    
+|
 
 **Pergola requires python >= 2.6 as well as several dependencies that are
 listed below.**
 
+.. note::
+
+    At the moment the installation has been tested only under Ubuntu-linux and MacOS.
+    
 
 Required Python libraries
 **************************
@@ -59,7 +60,7 @@ Download Pergola tarball from github, unpack and install it:
 
 or, you can download the code as a ``.zip`` file from Github website and follow the three last instructions above.
 
-.. image:: images/github_zip_red.png
+.. image:: ../images/github_zip_red.png
 
 Development versions
 **********************
