@@ -5,34 +5,19 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pergola Docker Container &mdash; Pergola 0.1.0 documentation</title>
+  <title>Docker installation &mdash; Pergola  documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
-
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:'../',
-        VERSION:'0.1.0',
-        COLLAPSE_INDEX:false,
-        FILE_SUFFIX:'.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
     
 
   
@@ -40,25 +25,21 @@
   
   
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   
-  
-    <script type="text/javascript">
-        jQuery(function () {
-            SphinxRtdTheme.StickyNav.enable();
-        });
-    </script>
-  
 
   
-    <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pergola  documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="../installation.html"/>
-        <link rel="next" title="Tutorials" href="../tutorial.html"/>
-        <link rel="prev" title="Installation from Github" href="installing_pergola.html"/> 
+        <link rel="next" title="Ready-to-use scripts" href="../ready_to_use_scripts.html"/>
+        <link rel="prev" title="Required Python libraries" href="installing_pergola.html"/> 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -68,43 +49,58 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> Pergola</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../installation.html">Installation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-from-github">Installation from Github</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola Docker container</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola Docker container</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Docker installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pull-pergola-image">Pull Pergola image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pergola-docker-execution-example">Pergola Docker execution example</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#getting-started">Getting started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#ready-to-use-scripts">Ready-to-use scripts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#jaaba-data">Jaaba data</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../reference/ref-intervals.html">IntData class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/ref-mapping.html">Mapping class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/ref-index-tables.html">Indices and tables</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -119,26 +115,33 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
           <li><a href="../installation.html">Installation</a> &raquo;</li>
       
-    <li>Pergola Docker Container</li>
+    <li>Docker installation</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../_sources/install/pergola_container.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/install/pergola_container.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <hr class="docutils" />
-<div class="section" id="pergola-docker-container">
-<h1><a class="toc-backref" href="#id1">Pergola Docker Container</a><a class="headerlink" href="#pergola-docker-container" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://www.docker.com/">Docker</a> allows to sandbox an application with all the requirements it needs to
 run (operating system, software, libraries and dependencies) in a container.
 Besides avoiding the tedious process of installing all dependencies, the use of
@@ -149,25 +152,22 @@ the same version of Pergola using the tag of the image.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#pergola-docker-container" id="id1">Pergola Docker Container</a><ul>
-<li><a class="reference internal" href="#docker-installation" id="id2">Docker installation</a></li>
-<li><a class="reference internal" href="#pull-pergola-image" id="id3">Pull Pergola image</a></li>
-<li><a class="reference internal" href="#pergola-docker-execution-example" id="id4">Pergola Docker execution example</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#docker-installation" id="id1">Docker installation</a></li>
+<li><a class="reference internal" href="#pull-pergola-image" id="id2">Pull Pergola image</a></li>
+<li><a class="reference internal" href="#pergola-docker-execution-example" id="id3">Pergola Docker execution example</a></li>
 </ul>
 </div>
 <div class="section" id="docker-installation">
-<h2><a class="toc-backref" href="#id2">Docker installation</a><a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h2>
+<h1><a class="toc-backref" href="#id1">Docker installation</a><a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h1>
 <p>Docker can be easily installed following the <a class="reference external" href="https://docs.docker.com/">official documentation</a> on <a class="reference external" href="https://docs.docker.com/engine/installation/linux/">linux</a>,
 <a class="reference external" href="https://docs.docker.com/engine/installation/mac/">Mac OS X</a> and <a class="reference external" href="https://docs.docker.com/engine/installation/windows/">Windows</a>.</p>
 </div>
 <div class="section" id="pull-pergola-image">
-<h2><a class="toc-backref" href="#id3">Pull Pergola image</a><a class="headerlink" href="#pull-pergola-image" title="Permalink to this headline">¶</a></h2>
+<h1><a class="toc-backref" href="#id2">Pull Pergola image</a><a class="headerlink" href="#pull-pergola-image" title="Permalink to this headline">¶</a></h1>
 <p>Docker images are tagged and thus at any time you will be able to retrieve the
 exactly same version of the Pergola using the tag corresponding to the version.
 You can pull the latest Pergola image from <a class="reference external" href="https://hub.docker.com/">Docker Hub</a>:</p>
-<div class="highlight-bash"><div class="highlight"><pre>docker pull pergola/pergola:latest
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
 </pre></div>
 </div>
 <div class="admonition note">
@@ -176,30 +176,30 @@ You can pull the latest Pergola image from <a class="reference external" href="h
 </div>
 </div>
 <div class="section" id="pergola-docker-execution-example">
-<h2><a class="toc-backref" href="#id4">Pergola Docker execution example</a><a class="headerlink" href="#pergola-docker-execution-example" title="Permalink to this headline">¶</a></h2>
+<h1><a class="toc-backref" href="#id3">Pergola Docker execution example</a><a class="headerlink" href="#pergola-docker-execution-example" title="Permalink to this headline">¶</a></h1>
 <p>You can run Pergola on a container created from the downloaded image interatively
 with the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre>docker run -ti pergola/pergola bash
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run -ti pergola/pergola bash
 </pre></div>
 </div>
 <p>You can also mount your fields in the container as shown below:</p>
-<div class="highlight-bash"><div class="highlight"><pre>docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
 </pre></div>
 </div>
 <p>For a more complete example go to tutorials section.</p>
 </div>
-</div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../tutorial.html" class="btn btn-neutral float-right" title="Tutorials"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../ready_to_use_scripts.html" class="btn btn-neutral float-right" title="Ready-to-use scripts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installing_pergola.html" class="btn btn-neutral" title="Installation from Github"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installing_pergola.html" class="btn btn-neutral" title="Required Python libraries" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -208,13 +208,15 @@ with the following command:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Jose Espinosa-Carrasco.
-      Last updated on Jun 19, 2016.
+        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
+      Last updated on Jan 20, 2017.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -222,6 +224,39 @@ with the following command:</p>
 
   </div>
   
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
 
 </body>
 </html>

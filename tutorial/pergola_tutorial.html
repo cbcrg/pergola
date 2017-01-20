@@ -5,34 +5,19 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Code your own scripts &mdash; Pergola 0.1.0 documentation</title>
+  <title>Code your own scripts &mdash; Pergola  documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
-
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:'../',
-        VERSION:'0.1.0',
-        COLLAPSE_INDEX:false,
-        FILE_SUFFIX:'.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
     
 
   
@@ -40,25 +25,21 @@
   
   
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   
-  
-    <script type="text/javascript">
-        jQuery(function () {
-            SphinxRtdTheme.StickyNav.enable();
-        });
-    </script>
-  
 
   
-    <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pergola  documentation" href="../index.html"/>
         <link rel="up" title="Tutorials" href="../tutorial.html"/>
-        <link rel="next" title="Ready-to-use scripts" href="ready_to_use_scripts.html"/>
+        <link rel="next" title="Reference Guide" href="../reference/index.html"/>
         <link rel="prev" title="Tutorials" href="../tutorial.html"/> 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -68,43 +49,69 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> Pergola</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-from-github">Installation from Github</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola Docker container</a></li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#getting-started">Getting started</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Code your own scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-data">Input data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sequence-of-temporal-events">Sequence of temporal events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-file">Mapping file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mappinginfo-objects">MappingInfo objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intdata-objects">IntData objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-conversion">Data conversion:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#track-objects">Track objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#track-object">Track object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-data">Output data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bed-file">Bed file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Output data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bedgraph-files">bedGraph files</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#getting-started">Getting started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial.html#ready-to-use-scripts">Ready-to-use scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial.html#jaaba-data">Jaaba data</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../reference/ref-intervals.html">IntData class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/ref-mapping.html">Mapping class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../reference/ref-index-tables.html">Indices and tables</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -119,7 +126,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -128,13 +141,16 @@
     <li>Code your own scripts</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../_sources/tutorial/pergola_tutorial.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/tutorial/pergola_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <hr class="docutils" />
 <div class="section" id="code-your-own-scripts">
@@ -147,13 +163,13 @@
 <h1>Sequence of temporal events<a class="headerlink" href="#sequence-of-temporal-events" title="Permalink to this headline">¶</a></h1>
 <p>Pergola can process any sequence of temporal events contained in a
 character-separated file as in the example below:</p>
-<div class="highlight-python"><div class="highlight"><pre>Animal  StartT  EndT    Behavior    Value
-1   137 156 eat 0.06
-1   168 192 drink   0.02
-1   250 281 eat 0.07
-1   311 333 eat 0.08
-1   457 482 drink   0.02
-1   569 601 drink   0.03
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Animal</span>  <span class="n">StartT</span>  <span class="n">EndT</span>    <span class="n">Behavior</span>    <span class="n">Value</span>
+<span class="mi">1</span>   <span class="mi">137</span> <span class="mi">156</span> <span class="n">eat</span> <span class="mf">0.06</span>
+<span class="mi">1</span>   <span class="mi">168</span> <span class="mi">192</span> <span class="n">drink</span>   <span class="mf">0.02</span>
+<span class="mi">1</span>   <span class="mi">250</span> <span class="mi">281</span> <span class="n">eat</span> <span class="mf">0.07</span>
+<span class="mi">1</span>   <span class="mi">311</span> <span class="mi">333</span> <span class="n">eat</span> <span class="mf">0.08</span>
+<span class="mi">1</span>   <span class="mi">457</span> <span class="mi">482</span> <span class="n">drink</span>   <span class="mf">0.02</span>
+<span class="mi">1</span>   <span class="mi">569</span> <span class="mi">601</span> <span class="n">drink</span>   <span class="mf">0.03</span>
 </pre></div>
 </div>
 <p><a href="#id1"><span class="problematic" id="id2">*</span></a>(note: this example loads a sequence of eating and drinking events from
@@ -163,10 +179,9 @@ a experiment where mice were used to study feeding behavior *</p>
 <h1>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h1>
 <p>Pergola needs that you set the equivalences between the fields of the
 input data and a controled vocabular defined by Pergola ontology. The
-format of the mapping file is <em>`the external mapping file
-format &lt;http://geneontology.org/page/external-mapping-file-format&gt;`__</em>
+format of the mapping file is <a class="reference external" href="http://geneontology.org/page/external-mapping-file-format">the external mapping file format</a>
 from the Gene Ontology Consortium, you can see an example below:</p>
-<div class="highlight-python"><div class="highlight"><pre>! Mapping of behavioural fields into genome browser fields
+<div class="highlight-default"><div class="highlight"><pre><span></span>! Mapping of behavioural fields into genome browser fields
 !
 behavioural_file:Animal &gt; pergola:track
 behavioural_file:StartT &gt; pergola:chromStart
@@ -175,10 +190,10 @@ behavioural_file:Behavior &gt; pergola:dataTypes
 behavioural_file:Value &gt; pergola:dataValue
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># You might have to set the path to run this notebook directly from ipython notebook</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># You might have to set the path to run this notebook directly from ipython notebook</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="n">my_path_to_modules</span> <span class="o">=</span> <span class="s">&quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/&quot;</span>
+<span class="n">my_path_to_modules</span> <span class="o">=</span> <span class="s2">&quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/&quot;</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">my_path_to_modules</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -187,22 +202,22 @@ behavioural_file:Value &gt; pergola:dataValue
 <h1>MappingInfo objects<a class="headerlink" href="#mappinginfo-objects" title="Permalink to this headline">¶</a></h1>
 <p>Mappings between the input data and pergola ontology are loaded in
 MappingInfo objects:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pergola</span> <span class="kn">import</span> <span class="n">mapping</span>
-<span class="c"># load mapping file</span>
-<span class="n">mapping_info</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">MappingInfo</span><span class="p">(</span><span class="s">&quot;../../sample_data/feeding_behavior/b2g.txt&quot;</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">mapping</span>
+<span class="c1"># load mapping file</span>
+<span class="n">mapping_info</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">MappingInfo</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/b2g.txt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To view the mappings MappingInfo objects provide the
 :func:<code class="docutils literal"><span class="pre">pergola.mapping.Mapping.write</span></code> method</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>EndT        end
-Nature      data_types
-Value       data_value
-StartT      start
-Phase       chrom
-CAGE        track
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">EndT</span>        <span class="n">end</span>
+<span class="n">Nature</span>      <span class="n">data_types</span>
+<span class="n">Value</span>       <span class="n">data_value</span>
+<span class="n">StartT</span>      <span class="n">start</span>
+<span class="n">Phase</span>       <span class="n">chrom</span>
+<span class="n">CAGE</span>        <span class="n">track</span>
 </pre></div>
 </div>
 <p>MappingInfo objects are needed to load data into IntData objects as it
@@ -211,142 +226,142 @@ will be explained in the lines below.</p>
 <div class="section" id="intdata-objects">
 <h1>IntData objects<a class="headerlink" href="#intdata-objects" title="Permalink to this headline">¶</a></h1>
 <p>IntData objects load all the intervals of a file:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pergola</span> <span class="kn">import</span> <span class="n">parsers</span>
-<span class="kn">from</span> <span class="nn">pergola</span> <span class="kn">import</span> <span class="n">intervals</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">parsers</span>
+<span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">intervals</span>
 
 
-<span class="c"># load the data into an IntData object that will store the sequence of events</span>
-<span class="n">int_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s">&quot;../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
+<span class="c1"># load the data into an IntData object that will store the sequence of events</span>
+<span class="n">int_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Intervals when loaded are stored in a list of tuples that can be
 accessed by data attribute:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c">#Displays first 10 tuples of data list</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Displays first 10 tuples of data list</span>
 <span class="n">int_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986261&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986151</span><span class="p">,</span> <span class="s">&#39;0.06&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986330&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986275</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986427&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986341</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986451&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986420</span><span class="p">,</span> <span class="s">&#39;0.08&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986553&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986541</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986844&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986832</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335986947&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986845</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987059&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335987044</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987223&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335987089</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;1335987495&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335987424</span><span class="p">,</span> <span class="s">&#39;0.02&#39;</span><span class="p">)]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986261&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986151</span><span class="p">,</span> <span class="s1">&#39;0.06&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986330&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986275</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986427&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986341</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986451&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986420</span><span class="p">,</span> <span class="s1">&#39;0.08&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986553&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986541</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986844&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986832</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335986947&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986845</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335987059&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335987044</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335987223&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335987089</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+ <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1335987495&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335987424</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 <p>IntData objects also provide some other attributes like the set of
 different tracks (term for IDs in pergola ontology) contained in the
 data:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>The minimun value present in the data:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">min</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">min</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="mi">1335985200</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1335985200</span>
 </pre></div>
 </div>
 <p>The maximun value:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">max</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">max</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="mi">1337766069</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1337766069</span>
 </pre></div>
 </div>
 <p>The set of different tracks present in the data (term for different IDs
 in pergola ontology). In this case the different IDs for each mice:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">tracks</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">tracks</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">,</span>
- <span class="s">&#39;10&#39;</span><span class="p">,</span>
- <span class="s">&#39;11&#39;</span><span class="p">,</span>
- <span class="s">&#39;12&#39;</span><span class="p">,</span>
- <span class="s">&#39;13&#39;</span><span class="p">,</span>
- <span class="s">&#39;14&#39;</span><span class="p">,</span>
- <span class="s">&#39;15&#39;</span><span class="p">,</span>
- <span class="s">&#39;16&#39;</span><span class="p">,</span>
- <span class="s">&#39;17&#39;</span><span class="p">,</span>
- <span class="s">&#39;18&#39;</span><span class="p">,</span>
- <span class="s">&#39;2&#39;</span><span class="p">,</span>
- <span class="s">&#39;3&#39;</span><span class="p">,</span>
- <span class="s">&#39;4&#39;</span><span class="p">,</span>
- <span class="s">&#39;5&#39;</span><span class="p">,</span>
- <span class="s">&#39;6&#39;</span><span class="p">,</span>
- <span class="s">&#39;7&#39;</span><span class="p">,</span>
- <span class="s">&#39;8&#39;</span><span class="p">,</span>
- <span class="s">&#39;9&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;11&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;12&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;13&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;14&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;16&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;17&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;18&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;5&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;6&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;9&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>And finally the dataTypes (term for different types of data in pergola
 ontology) that can be used to encode for example different behaviours:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>EndT        end
-Nature      data_types
-Value       data_value
-StartT      start
-Phase       chrom
-CAGE        track
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">EndT</span>        <span class="n">end</span>
+<span class="n">Nature</span>      <span class="n">data_types</span>
+<span class="n">Value</span>       <span class="n">data_value</span>
+<span class="n">StartT</span>      <span class="n">start</span>
+<span class="n">Phase</span>       <span class="n">chrom</span>
+<span class="n">CAGE</span>        <span class="n">track</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">[</span><span class="s">&#39;EndT&#39;</span><span class="p">]</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">[</span><span class="s1">&#39;EndT&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;end&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;end&#39;</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">path_intervals</span> <span class="o">=</span> <span class="s">&quot;../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv&quot;</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">path_intervals</span> <span class="o">=</span> <span class="s2">&quot;../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv&quot;</span>
 <span class="n">int_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="n">path_intervals</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="mi">1335985200</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1335985200</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="mi">1337766069</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1337766069</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data</span><span class="o">.</span><span class="n">tracks</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">tracks</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">,</span>
- <span class="s">&#39;10&#39;</span><span class="p">,</span>
- <span class="s">&#39;11&#39;</span><span class="p">,</span>
- <span class="s">&#39;12&#39;</span><span class="p">,</span>
- <span class="s">&#39;13&#39;</span><span class="p">,</span>
- <span class="s">&#39;14&#39;</span><span class="p">,</span>
- <span class="s">&#39;15&#39;</span><span class="p">,</span>
- <span class="s">&#39;16&#39;</span><span class="p">,</span>
- <span class="s">&#39;17&#39;</span><span class="p">,</span>
- <span class="s">&#39;18&#39;</span><span class="p">,</span>
- <span class="s">&#39;2&#39;</span><span class="p">,</span>
- <span class="s">&#39;3&#39;</span><span class="p">,</span>
- <span class="s">&#39;4&#39;</span><span class="p">,</span>
- <span class="s">&#39;5&#39;</span><span class="p">,</span>
- <span class="s">&#39;6&#39;</span><span class="p">,</span>
- <span class="s">&#39;7&#39;</span><span class="p">,</span>
- <span class="s">&#39;8&#39;</span><span class="p">,</span>
- <span class="s">&#39;9&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;11&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;12&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;13&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;14&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;16&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;17&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;18&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;5&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;6&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;9&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -359,440 +374,440 @@ CAGE        track
 <p>Data can be loaded into a Track objects by read function. This function
 allows to convert the intervals to relative values using the first time
 point as 0:</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Relative coordinates set to: True
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">list_tracks</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">list_tracks</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">,</span>
- <span class="s">&#39;10&#39;</span><span class="p">,</span>
- <span class="s">&#39;11&#39;</span><span class="p">,</span>
- <span class="s">&#39;12&#39;</span><span class="p">,</span>
- <span class="s">&#39;13&#39;</span><span class="p">,</span>
- <span class="s">&#39;14&#39;</span><span class="p">,</span>
- <span class="s">&#39;15&#39;</span><span class="p">,</span>
- <span class="s">&#39;16&#39;</span><span class="p">,</span>
- <span class="s">&#39;17&#39;</span><span class="p">,</span>
- <span class="s">&#39;18&#39;</span><span class="p">,</span>
- <span class="s">&#39;2&#39;</span><span class="p">,</span>
- <span class="s">&#39;3&#39;</span><span class="p">,</span>
- <span class="s">&#39;4&#39;</span><span class="p">,</span>
- <span class="s">&#39;5&#39;</span><span class="p">,</span>
- <span class="s">&#39;6&#39;</span><span class="p">,</span>
- <span class="s">&#39;7&#39;</span><span class="p">,</span>
- <span class="s">&#39;8&#39;</span><span class="p">,</span>
- <span class="s">&#39;9&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;11&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;12&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;13&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;14&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;16&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;17&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;18&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;5&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;6&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;9&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">range_values</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">range_values</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">4.46</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">4.46</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">dict_bed</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;bed&#39;</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">dict_bed</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bed&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c">#dict_bed = data_read.convert(mode=&#39;bed&#39;)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">#dict_bed = data_read.convert(mode=&#39;bed&#39;)</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bed</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c">#del</span>
+    <span class="nb">print</span> <span class="s2">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c1">#del</span>
     <span class="n">bedSingle</span> <span class="o">=</span> <span class="n">dict_bed</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="k">print</span> <span class="s">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedSingle</span><span class="o">.</span><span class="n">data_types</span>
+    <span class="nb">print</span> <span class="s2">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedSingle</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre> key.......:  (&#39;12&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;7&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;14&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;1&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;12&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;2&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;10&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;15&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;17&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;6&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;14&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;5&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;18&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;2&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;11&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;16&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;16&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;14&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;11&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;4&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;3&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;2&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;10&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;9&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;4&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;8&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;7&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;17&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;9&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;12&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;6&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;16&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;5&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;10&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;13&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;8&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;1&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;3&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;18&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;6&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;15&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;18&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;4&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;13&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
+<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bed_12_food_sc</span> <span class="o">=</span> <span class="n">dict_bed</span><span class="p">[(</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">)]</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_12_food_sc</span> <span class="o">=</span> <span class="n">dict_bed</span><span class="p">[(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bed_12_food_sc</span><span class="o">.</span><span class="n">range_values</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_12_food_sc</span><span class="o">.</span><span class="n">range_values</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;0.02&#39;</span><span class="p">,</span> <span class="s">&#39;0.540000000000001&#39;</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;0.02&#39;</span><span class="p">,</span> <span class="s1">&#39;0.540000000000001&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="n">bed_12_food_sc</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">bed_12_food_sc</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Bed</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Bed</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bed_12_food_sc</span><span class="o">.</span><span class="n">data</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_12_food_sc</span><span class="o">.</span><span class="n">data</span>
 
-<span class="c"># Code to print the data inside a bed object (generator object)</span>
-<span class="c">#for row in bed_12_food_sc.data:</span>
-<span class="c">#    print row</span>
+<span class="c1"># Code to print the data inside a bed object (generator object)</span>
+<span class="c1">#for row in bed_12_food_sc.data:</span>
+<span class="c1">#    print row</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;generator object track_convert2bed at 0x109d92d70&gt;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">track_convert2bed</span> <span class="n">at</span> <span class="mh">0x109d92d70</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">dict_bedGraph</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;bedGraph&#39;</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">dict_bedGraph</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bedGraph&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bedGraph</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c">#del</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bedGraph</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s2">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c1">#del</span>
     <span class="n">bedGraphSingle</span> <span class="o">=</span> <span class="n">dict_bedGraph</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="k">print</span> <span class="s">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedGraphSingle</span><span class="o">.</span><span class="n">data_types</span>
+    <span class="nb">print</span> <span class="s2">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedGraphSingle</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre> key.......:  (&#39;12&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;7&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;14&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;1&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;12&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;2&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;10&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;15&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;17&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;6&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;14&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;5&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;18&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;2&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;11&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;16&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;16&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;14&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;11&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;4&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;3&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;2&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;10&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;9&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;4&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;8&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;7&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;17&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;9&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;12&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;6&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;16&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;5&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;10&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;13&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;8&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;1&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;3&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;18&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;6&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;15&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;18&#39;, &#39;water&#39;)
-:::::::::::::: water
-key.......:  (&#39;4&#39;, &#39;food_fat&#39;)
-:::::::::::::: food_fat
-key.......:  (&#39;13&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
-key.......:  (&#39;8&#39;, &#39;food_sc&#39;)
-:::::::::::::: food_sc
+<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">water</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_fat</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
+<span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<span class="p">::::::::::::::</span> <span class="n">food_sc</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bedG_8_food_sc</span> <span class="o">=</span> <span class="n">dict_bedGraph</span><span class="p">[(</span><span class="s">&#39;8&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">)]</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bedG_8_food_sc</span> <span class="o">=</span> <span class="n">dict_bedGraph</span><span class="p">[(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="track-object">
 <h1>Track object<a class="headerlink" href="#track-object" title="Permalink to this headline">¶</a></h1>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bedG_8_food_sc</span><span class="o">.</span><span class="n">data</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bedG_8_food_sc</span><span class="o">.</span><span class="n">data</span>
 
-<span class="c"># Code to print the data inside a bed object (generator object)</span>
-<span class="c">#for row in bedG_8_food_sc:</span>
-<span class="c">#    print row</span>
+<span class="c1"># Code to print the data inside a bed object (generator object)</span>
+<span class="c1">#for row in bedG_8_food_sc:</span>
+<span class="c1">#    print row</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&lt;generator object track_convert2bedGraph at 0x10ab70140&gt;
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">track_convert2bedGraph</span> <span class="n">at</span> <span class="mh">0x10ab70140</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Track</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Track</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="nb">list</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">list</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">range_values</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">range_values</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">4.46</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">4.46</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">list_tracks</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">list_tracks</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;1&#39;</span><span class="p">,</span>
- <span class="s">&#39;10&#39;</span><span class="p">,</span>
- <span class="s">&#39;11&#39;</span><span class="p">,</span>
- <span class="s">&#39;12&#39;</span><span class="p">,</span>
- <span class="s">&#39;13&#39;</span><span class="p">,</span>
- <span class="s">&#39;14&#39;</span><span class="p">,</span>
- <span class="s">&#39;15&#39;</span><span class="p">,</span>
- <span class="s">&#39;16&#39;</span><span class="p">,</span>
- <span class="s">&#39;17&#39;</span><span class="p">,</span>
- <span class="s">&#39;18&#39;</span><span class="p">,</span>
- <span class="s">&#39;2&#39;</span><span class="p">,</span>
- <span class="s">&#39;3&#39;</span><span class="p">,</span>
- <span class="s">&#39;4&#39;</span><span class="p">,</span>
- <span class="s">&#39;5&#39;</span><span class="p">,</span>
- <span class="s">&#39;6&#39;</span><span class="p">,</span>
- <span class="s">&#39;7&#39;</span><span class="p">,</span>
- <span class="s">&#39;8&#39;</span><span class="p">,</span>
- <span class="s">&#39;9&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;11&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;12&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;13&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;14&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;16&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;17&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;18&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;5&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;6&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;9&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="s">&#39;18&#39;</span><span class="p">,</span> <span class="mi">1778342</span><span class="p">,</span> <span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="mi">1778315</span><span class="p">,</span> <span class="s">&#39;0.0800000000000001&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="mi">1778342</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="mi">1778315</span><span class="p">,</span> <span class="s1">&#39;0.0800000000000001&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Primero poner todo lo que se puede hacer con el intdata y luego ya poner
 el resto</p>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">int_data_read</span><span class="o">.</span><span class="n">data_types</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s">&#39;water&#39;</span><span class="p">}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c">#data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge,</span>
-<span class="c">#                                 data_types=data_types_list, dataTypes_actions=dataTypes_act,</span>
-<span class="c">#                                 window=window_size)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">#data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge,</span>
+<span class="c1">#                                 data_types=data_types_list, dataTypes_actions=dataTypes_act,</span>
+<span class="c1">#                                 window=window_size)</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping</span><span class="o">.</span><span class="n">write_chr</span> <span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping</span><span class="o">.</span><span class="n">write_chr</span> <span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Chromosome fasta like file will be dump into &quot;/Users/jespinosa/git/pergola/doc/notebooks&quot; as it has not been set using path_w
-Genome fasta file created: /Users/jespinosa/git/pergola/doc/notebooks/chr1.fa
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Chromosome</span> <span class="n">fasta</span> <span class="n">like</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
+<span class="n">Genome</span> <span class="n">fasta</span> <span class="n">file</span> <span class="n">created</span><span class="p">:</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">chr1</span><span class="o">.</span><span class="n">fa</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Generate a cytoband file and a bed file with phases</span>
-<span class="n">mapping</span><span class="o">.</span><span class="n">write_cytoband</span><span class="p">(</span><span class="n">end</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s">&quot;dark&quot;</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Generate a cytoband file and a bed file with phases</span>
+<span class="n">mapping</span><span class="o">.</span><span class="n">write_cytoband</span><span class="p">(</span><span class="n">end</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s2">&quot;dark&quot;</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Cytoband like file will be dump into &quot;/Users/jespinosa/git/pergola/doc/notebooks&quot; as it has not been set using path_w
-Bed files with phases will be dump into &quot;/Users/jespinosa/git/pergola/doc/notebooks&quot; as it has not been set using path_w
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Cytoband</span> <span class="n">like</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
+<span class="n">Bed</span> <span class="n">files</span> <span class="k">with</span> <span class="n">phases</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c">#data_read = intData.read(relative_coord=True, multiply_t=1)</span>
-<span class="n">data_read</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">#data_read = intData.read(relative_coord=True, multiply_t=1)</span>
+<span class="n">data_read</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Relative coordinates set to: True
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c">#for i in data_read.data:</span>
-<span class="c">#        print i</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">#for i in data_read.data:</span>
+<span class="c1">#        print i</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data_type_col</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;food_sc&#39;</span><span class="p">:</span> <span class="s">&#39;orange&#39;</span><span class="p">,</span> <span class="s">&#39;food_fat&#39;</span><span class="p">:</span><span class="s">&#39;blue&#39;</span><span class="p">}</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">data_type_col</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;food_sc&#39;</span><span class="p">:</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">:</span><span class="s1">&#39;blue&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bed_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;bed&quot;</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s">&quot;all&quot;</span><span class="p">,</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s2">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
                             <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Removed data types are: water
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span> <span class="n">water</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_str</span><span class="p">:</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_str</span><span class="p">:</span>
     <span class="n">bedSingle</span> <span class="o">=</span> <span class="n">bed_str</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
     <span class="n">bedSingle</span><span class="o">.</span><span class="n">save_track</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_12_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_14_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_1_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_2_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_15_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_6_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_5_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_16_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_14_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_11_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_3_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_2_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_10_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_4_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_17_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_9_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_12_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_16_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_10_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_8_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_7_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_18_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_6_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_18_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_4_dt_food_fat.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_13_dt_food_sc.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_8_dt_food_sc.bed generated
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_12_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_14_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_1_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_2_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_15_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_6_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_5_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_16_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_14_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_11_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_3_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_2_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_10_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_4_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_17_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_9_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_12_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_16_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_10_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_8_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_7_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_18_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_6_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_18_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_4_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_13_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_8_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 </pre></div>
 </div>
 </div>
@@ -801,86 +816,86 @@ File tr_8_dt_food_sc.bed generated
 </div>
 <div class="section" id="bed-file">
 <h1>Bed file<a class="headerlink" href="#bed-file" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><div class="highlight"><pre>track type=bed name=&quot;1_eat&quot; description=&quot;1 eat&quot; visibility=2 itemRgb=&quot;On&quot; priority=20
-chr1    137.0   156.0   &quot;&quot;  0.06    +   137.0   156.0   51,254,51
-chr1    250.0   281.0   &quot;&quot;  0.07    +   250.0   281.0   0,254,0
-chr1    311.0   333.0   &quot;&quot;  0.08    +   311.0   333.0   25,115,25
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bed</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">chr1</span>    <span class="mf">137.0</span>   <span class="mf">156.0</span>   <span class="s2">&quot;&quot;</span>  <span class="mf">0.06</span>    <span class="o">+</span>   <span class="mf">137.0</span>   <span class="mf">156.0</span>   <span class="mi">51</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">51</span>
+<span class="n">chr1</span>    <span class="mf">250.0</span>   <span class="mf">281.0</span>   <span class="s2">&quot;&quot;</span>  <span class="mf">0.07</span>    <span class="o">+</span>   <span class="mf">250.0</span>   <span class="mf">281.0</span>   <span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mf">311.0</span>   <span class="mf">333.0</span>   <span class="s2">&quot;&quot;</span>  <span class="mf">0.08</span>    <span class="o">+</span>   <span class="mf">311.0</span>   <span class="mf">333.0</span>   <span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>track type=bed name=&quot;1_eat&quot; description=&quot;1 eat&quot; visibility=2 itemRgb=&quot;On&quot; priority=20
-chr1    0   19  &quot;&quot;  0.06    +   0   19  51,254,51
-chr1    113 144 &quot;&quot;  0.07    +   113 144 0,254,0
-chr1    174 196 &quot;&quot;  0.08    +   174 196 25,115,25
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bed</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">chr1</span>    <span class="mi">0</span>   <span class="mi">19</span>  <span class="s2">&quot;&quot;</span>  <span class="mf">0.06</span>    <span class="o">+</span>   <span class="mi">0</span>   <span class="mi">19</span>  <span class="mi">51</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">51</span>
+<span class="n">chr1</span>    <span class="mi">113</span> <span class="mi">144</span> <span class="s2">&quot;&quot;</span>  <span class="mf">0.07</span>    <span class="o">+</span>   <span class="mi">113</span> <span class="mi">144</span> <span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">174</span> <span class="mi">196</span> <span class="s2">&quot;&quot;</span>  <span class="mf">0.08</span>    <span class="o">+</span>   <span class="mi">174</span> <span class="mi">196</span> <span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">data_type_col_bedGraph</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;food_sc&#39;</span><span class="p">:</span><span class="s">&#39;orange&#39;</span><span class="p">,</span> <span class="s">&#39;food_fat_food_sc&#39;</span><span class="p">:</span><span class="s">&#39;blue&#39;</span><span class="p">}</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">data_type_col_bedGraph</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;food_sc&#39;</span><span class="p">:</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat_food_sc&#39;</span><span class="p">:</span><span class="s1">&#39;blue&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bedGraph_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;bedGraph&quot;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col_bedGraph</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bedGraph_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bedGraph&quot;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s2">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col_bedGraph</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Removed data types are: water
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span> <span class="n">water</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bedGraph_str</span><span class="p">:</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bedGraph_str</span><span class="p">:</span>
     <span class="n">bedGraph_single</span> <span class="o">=</span> <span class="n">bedGraph_str</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
     <span class="n">bedGraph_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_12_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_14_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_1_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_2_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_15_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_6_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_5_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_16_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_14_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_11_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_3_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_2_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_10_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_4_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_17_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_9_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_12_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_16_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_10_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_8_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_7_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_18_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_6_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_18_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_4_dt_food_fat.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_13_dt_food_sc.bedGraph generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File tr_8_dt_food_sc.bedGraph generated
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_12_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_14_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_1_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_2_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_15_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_6_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_5_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_16_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_14_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_11_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_3_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_2_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_10_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_4_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_17_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_9_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_12_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_16_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_10_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_8_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_7_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_18_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_6_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_18_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_4_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_13_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">tr_8_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
 </pre></div>
 </div>
 </div>
@@ -889,121 +904,122 @@ File tr_8_dt_food_sc.bedGraph generated
 </div>
 <div class="section" id="bedgraph-files">
 <h1>bedGraph files<a class="headerlink" href="#bedgraph-files" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><div class="highlight"><pre>track type=bedGraph name=&quot;1_eat&quot; description=&quot;1_eat&quot; visibility=full color=0,254,0 altColor=25,115,25 priority=20
-chr1    0   30  0.06
-chr1    30  60  0
-chr1    60  90  0
-chr1    90  120 0.0158064516129
-chr1    120 150 0.0541935483871
-chr1    150 180 0.0218181818182
-chr1    180 210 0.0581818181818
-chr1    210 240 0
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bedGraph</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="n">full</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span> <span class="n">altColor</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">chr1</span>    <span class="mi">0</span>   <span class="mi">30</span>  <span class="mf">0.06</span>
+<span class="n">chr1</span>    <span class="mi">30</span>  <span class="mi">60</span>  <span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">60</span>  <span class="mi">90</span>  <span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">90</span>  <span class="mi">120</span> <span class="mf">0.0158064516129</span>
+<span class="n">chr1</span>    <span class="mi">120</span> <span class="mi">150</span> <span class="mf">0.0541935483871</span>
+<span class="n">chr1</span>    <span class="mi">150</span> <span class="mi">180</span> <span class="mf">0.0218181818182</span>
+<span class="n">chr1</span>    <span class="mi">180</span> <span class="mi">210</span> <span class="mf">0.0581818181818</span>
+<span class="n">chr1</span>    <span class="mi">210</span> <span class="mi">240</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c">## Bed file showing the files (recordings)</span>
-<span class="c"># reading correspondence file</span>
-<span class="n">mapping_file_data</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">MappingInfo</span><span class="p">(</span><span class="s">&quot;../../sample_data/feeding_behavior/f2g.txt&quot;</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1">## Bed file showing the files (recordings)</span>
+<span class="c1"># reading correspondence file</span>
+<span class="n">mapping_file_data</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">MappingInfo</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/f2g.txt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Value       data_value
-EndT        end
-StartT      start
-File        track
-NameFile    data_types
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Value</span>       <span class="n">data_value</span>
+<span class="n">EndT</span>        <span class="n">end</span>
+<span class="n">StartT</span>      <span class="n">start</span>
+<span class="n">File</span>        <span class="n">track</span>
+<span class="n">NameFile</span>    <span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reading file info</span>
-<span class="n">files_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s">&quot;../../sample_data/feeding_behavior/files.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
-<span class="n">data_file_read</span> <span class="o">=</span> <span class="n">files_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Reading file info</span>
+<span class="n">files_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/files.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
+<span class="n">data_file_read</span> <span class="o">=</span> <span class="n">files_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Relative coordinates set to: True
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bed_file</span> <span class="o">=</span> <span class="n">data_file_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;bed&quot;</span><span class="p">,</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">tracks_merge</span><span class="o">=</span><span class="n">files_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_file</span> <span class="o">=</span> <span class="n">data_file_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">tracks_merge</span><span class="o">=</span><span class="n">files_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Tracks that will be merged are: 1 3 2 5 4 7 6 9 8
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Tracks</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">are</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">6</span> <span class="mi">9</span> <span class="mi">8</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_file</span><span class="p">:</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_file</span><span class="p">:</span>
     <span class="n">bed_file_single</span> <span class="o">=</span> <span class="n">bed_file</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">bed_file_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">name_file</span> <span class="o">=</span> <span class="s">&quot;files_data&quot;</span><span class="p">)</span>
+    <span class="n">bed_file_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">name_file</span> <span class="o">=</span> <span class="s2">&quot;files_data&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File files_data.bed generated
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reading phase info</span>
-<span class="n">phase_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s">&quot;../../sample_data/feeding_behavior/phases_exp.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
-<span class="n">data_phase_read</span> <span class="o">=</span> <span class="n">phase_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Reading phase info</span>
+<span class="n">phase_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/phases_exp.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
+<span class="n">data_phase_read</span> <span class="o">=</span> <span class="n">phase_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Relative coordinates set to: True
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">bed_file</span> <span class="o">=</span> <span class="n">data_phase_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;bed&quot;</span><span class="p">,</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s">&quot;all&quot;</span><span class="p">,</span> <span class="n">tracks_merge</span><span class="o">=</span><span class="n">phase_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_file</span> <span class="o">=</span> <span class="n">data_phase_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">tracks_merge</span><span class="o">=</span><span class="n">phase_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>Tracks that will be merged are: 1 2
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Tracks</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">are</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_file</span><span class="p">:</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_file</span><span class="p">:</span>
     <span class="n">bed_file_single</span> <span class="o">=</span> <span class="n">bed_file</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">bed_file_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">name_file</span> <span class="o">=</span> <span class="s">&quot;phase_exp&quot;</span><span class="p">)</span>
+    <span class="n">bed_file_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">name_file</span> <span class="o">=</span> <span class="s2">&quot;phase_exp&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File phase_exp.bed generated
-No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-File phase_exp.bed generated
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">phase_exp</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<span class="n">File</span> <span class="n">phase_exp</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 </pre></div>
 </div>
 <p>means bed file to delete</p>
-<div class="highlight-python"><div class="highlight"><pre>chr1    1   1801    &quot;&quot;  1000    +   0   1   0.06
-chr1    137171  138971  &quot;&quot;  1000    +   132936  137171  0
-chr1    397442  399242  &quot;&quot;  1000    +   391684  397442  0
-chr1    568633  570433  &quot;&quot;  1000    +   563646  568633  0.125714
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>    <span class="mi">1</span>   <span class="mi">1801</span>    <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mf">0.06</span>
+<span class="n">chr1</span>    <span class="mi">137171</span>  <span class="mi">138971</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">132936</span>  <span class="mi">137171</span>  <span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">397442</span>  <span class="mi">399242</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">391684</span>  <span class="mi">397442</span>  <span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">568633</span>  <span class="mi">570433</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">563646</span>  <span class="mi">568633</span>  <span class="mf">0.125714</span>
 </pre></div>
 </div>
 <p>intermeal to delete</p>
-<div class="highlight-python"><div class="highlight"><pre>chr1    1   30  &quot;&quot;  1000    +   1   30  0
-chr1    183 345 &quot;&quot;  1000    +   183 345 0
-chr1    502 924 &quot;&quot;  1000    +   502 924 0
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>    <span class="mi">1</span>   <span class="mi">30</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">1</span>   <span class="mi">30</span>  <span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">183</span> <span class="mi">345</span> <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">183</span> <span class="mi">345</span> <span class="mi">0</span>
+<span class="n">chr1</span>    <span class="mi">502</span> <span class="mi">924</span> <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">502</span> <span class="mi">924</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ready_to_use_scripts.html" class="btn btn-neutral float-right" title="Ready-to-use scripts"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../reference/index.html" class="btn btn-neutral float-right" title="Reference Guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../tutorial.html" class="btn btn-neutral" title="Tutorials"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../tutorial.html" class="btn btn-neutral" title="Tutorials" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1012,13 +1028,15 @@ chr1    502 924 &quot;&quot;  1000    +   502 924 0
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Jose Espinosa-Carrasco.
-      Last updated on Dec 28, 2016.
+        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
+      Last updated on Jan 20, 2017.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -1026,6 +1044,39 @@ chr1    502 924 &quot;&quot;  1000    +   502 924 0
 
   </div>
   
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
 
 </body>
 </html>

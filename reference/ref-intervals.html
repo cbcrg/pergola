@@ -5,34 +5,19 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IntData class &mdash; Pergola 0.1.0 documentation</title>
+  <title>IntData class &mdash; Pergola  documentation</title>
   
 
   
   
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   
   
-
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:'../',
-        VERSION:'0.1.0',
-        COLLAPSE_INDEX:false,
-        FILE_SUFFIX:'.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
     
 
   
@@ -40,25 +25,21 @@
   
   
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   
-  
-    <script type="text/javascript">
-        jQuery(function () {
-            SphinxRtdTheme.StickyNav.enable();
-        });
-    </script>
-  
 
   
-    <link rel="top" title="Pergola 0.1.0 documentation" href="../index.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pergola  documentation" href="../index.html"/>
         <link rel="up" title="Reference Guide" href="index.html"/>
         <link rel="next" title="Mapping class" href="ref-mapping.html"/>
         <link rel="prev" title="Reference Guide" href="index.html"/> 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -68,44 +49,58 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> Pergola</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing Pergola</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#download-and-installation">Download and installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#development-versions">Development versions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#testing-installation">Testing installation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#getting-started">Getting started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#jaaba-data">Jaaba data</a></li>
-</ul>
-</li>
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference Guide</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">IntData class</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">IntData class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#load-csv-file">Load csv file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checks-that-a-variable-contains-a-number">Checks that a variable contains a number</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="ref-mapping.html">Mapping class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ref-index-tables.html">Indices and tables</a></li>
 </ul>
 </li>
 </ul>
 
-        
+            
+          
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -120,7 +115,13 @@
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
@@ -129,13 +130,16 @@
     <li>IntData class</li>
       <li class="wy-breadcrumbs-aside">
         
-          <a href="../_sources/reference/ref-intervals.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/reference/ref-intervals.rst.txt" rel="nofollow"> View page source</a>
+          
         
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="intdata-class">
 <h1>IntData class<a class="headerlink" href="#intdata-class" title="Permalink to this headline">¶</a></h1>
@@ -179,19 +183,19 @@ ontology to describe behavioral data</p>
 <dl class="attribute">
 <dt id="intervals.IntData.min">
 <code class="descname">min</code><a class="headerlink" href="#intervals.IntData.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>First time value in the file. Read from field set as &#8220;chromStart&#8221;</p>
+<dd><p>First time value in the file. Read from field set as &#8220;start&#8221;</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="intervals.IntData.max">
 <code class="descname">max</code><a class="headerlink" href="#intervals.IntData.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Last timepoint in the file. Read from field set as &#8220;chromEnd&#8221;</p>
+<dd><p>Last timepoint in the file. Read from field set as &#8220;end&#8221;</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="intervals.IntData.range_values">
 <code class="descname">range_values</code><a class="headerlink" href="#intervals.IntData.range_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Range of values inside dataValue field</p>
+<dd><p>Range of values inside data_value field</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -201,10 +205,10 @@ ontology to describe behavioral data</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="intervals.IntData.dataTypes">
-<code class="descname">dataTypes</code><a class="headerlink" href="#intervals.IntData.dataTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>All different dataTypes that appear in the data read from &#8220;dataTypes&#8221; field.
-If dataTypes field not in file, all intervals are set as belonging to dataTypes &#8220;a&#8221;</p>
+<dt id="intervals.IntData.data_types">
+<code class="descname">data_types</code><a class="headerlink" href="#intervals.IntData.data_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>All different data_types that appear in the data read from &#8220;data_types&#8221; field.
+If data_types field not in file, all intervals are set as belonging to data_types &#8220;a&#8221;</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -236,13 +240,13 @@ If tracks field not in file, all intervals are set as belonging to track &#8220;
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>fields</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
-<li><strong>relative_coord</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in chromStart and chromEnd are
+<li><strong>relative_coord</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in start and end are
 make relative to the minimal value</li>
-<li><strong>intervals</strong> (<a class="reference external" href="http://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
-chromStart</li>
+<li><strong>intervals</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
+start</li>
 <li><strong>fields2rel</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
-<li><strong>multiply_t</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as chromStart and 
-chromEnd</li>
+<li><strong>multiply_t</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
+end</li>
 </ul>
 </td>
 </tr>
@@ -280,15 +284,16 @@ this way data is always the original one.</p>
 </div>
 
 
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ref-mapping.html" class="btn btn-neutral float-right" title="Mapping class"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="ref-mapping.html" class="btn btn-neutral float-right" title="Mapping class" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Reference Guide"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="Reference Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -297,13 +302,15 @@ this way data is always the original one.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2014, Jose Espinosa-Carrasco.
-      Last updated on Sep 02, 2015.
+        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
+      Last updated on Jan 20, 2017.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
 </footer>
+
         </div>
       </div>
 
@@ -311,6 +318,39 @@ this way data is always the original one.</p>
 
   </div>
   
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
 
 </body>
 </html>
