@@ -816,9 +816,9 @@ class Track(GenomicContainer):
                         
             delta_window = window    
             # To read files for instance in GRanges objects all tracks same number of intervals              
-#             ini_window = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
-            min_t = kwargs.get('min_t', None)
-            max_t = kwargs.get('max_t', None)
+            ini_window_def = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
+            min_t = kwargs.get('min_t', ini_window_def)
+            max_t = kwargs.get('max_t', ini_window_def)
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
             
