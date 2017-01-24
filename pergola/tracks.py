@@ -416,9 +416,9 @@ class Track(GenomicContainer):
             for k_2, d_2 in d.items():
                 if not k_2 in _dict_col_grad and mode == "bed" or mode == "gff":
                     _dict_col_grad[k_2] = ""
-
+                
                 range_val = self._get_range(d_2)
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, mean_win=mean_win, color_restrictions=color_restrictions), track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, mean_win=mean_win, color_restrictions=color_restrictions, min_t = self.min, max_t = self.max), track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
 
         return (track_dict)
     
@@ -778,6 +778,7 @@ class Track(GenomicContainer):
         #When the tracks have been join it is necessary to order by chr_start
         track = sorted(track, key=itemgetter(*[i_chr_start]))
         
+        # Dumping raw data as a bedGraph file, no binning
         if window == 0: #or false
           for row in track:
             temp_list = []
@@ -793,7 +794,8 @@ class Track(GenomicContainer):
 #             temp_list.append(color)          
             
             yield(tuple(temp_list))
-            
+        
+        # binning in windows of time     
         else:
             try:                
                 float(window)
@@ -805,19 +807,26 @@ class Track(GenomicContainer):
                 raise ValueError("Window option only accepts integers or False. Current value: %s" 
                                 % (type(window)))
                 
-            # Ini_window has to be set to the initial value otherwise files with
+            # Ini_window has to be set to the initial value otherwise files with            
             # no relative coordinates contained tones of empty data
     #         ini_window = 0 #ojo
     #         ini_window = 1       
             # I have to find the closest number multiple of the window size so that all 
             # bedGraph have the same intervals
-            delta_window = window      
-            ini_window = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
+                        
+            delta_window = window    
+            # To read files for instance in GRanges objects all tracks same number of intervals              
+#             ini_window = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
+            min_t = kwargs.get('min_t', None)
+            max_t = kwargs.get('max_t', None)
+            ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
+            
             partial_value = 0 
             cross_interv_dict = {}
             
-            last_point =  track[-1][i_chr_end]
+#             last_point =  track[-1][i_chr_end]
+            last_point = max_t 
             r = last_point % delta_window
             fake_end = last_point + delta_window - r
             last_fake_line = list(track[-1])

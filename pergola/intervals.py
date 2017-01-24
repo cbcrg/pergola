@@ -274,7 +274,7 @@ class IntData(object):
     def _simple_read(self):
         """
         This function just needs to read the raw data set min and maximum, data_types and this stuff
-        _read was too much complicated
+        _read was too complicated
         
         :returns: list with intervals contained in file, minimum and maximum values inside the file 
         """
