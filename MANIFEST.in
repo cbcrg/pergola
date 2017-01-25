@@ -1,7 +1,7 @@
 include LICENSE README.md
 recursive-include pergola *.py
 recursive-include pergola *.yml
-recursive-include test
+recursive-include test test_all.py
 prune test/debugging_simple_read.py
 prune build
 prune data 
