@@ -103,7 +103,7 @@ body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip', 'foraging_speed'
 locomotions_files.into { locomotions_files_ori; locomotions_files_gviz }
 
 process feature_to_pergola {
-	container 'joseespinosa/pergola:unc16_gviz'
+	container 'joseespinosa/pergola:unc16_gviz.v0.3'
   
   	input:
   	set file ('speed_file'), val (name_file), val (exp_group) from locomotions_files_ori 
@@ -147,7 +147,7 @@ process feature_to_pergola {
  * Transform locomotion files into bedGraph format files for Gviz representation
  */ 
 process feature_to_bedGraph {
-	container 'joseespinosa/pergola:unc16_gviz'
+	container 'joseespinosa/pergola:unc16_gviz.v0.3'
   
   	input:
   	set file ('speed_file'), val (name_file), val (exp_group) from locomotions_files_gviz 
