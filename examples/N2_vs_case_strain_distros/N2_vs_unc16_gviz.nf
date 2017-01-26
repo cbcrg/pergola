@@ -103,7 +103,7 @@ body_parts =  ['head', 'headTip', 'midbody', 'tail', 'tailTip', 'foraging_speed'
 locomotions_files.into { locomotions_files_ori; locomotions_files_gviz }
 
 process feature_to_pergola {
-	container 'joseespinosa/pergola:unc16_gviz.v0.3'
+	container 'joseespinosa/pergola:unc16_gviz.v0.4'
   
   	input:
   	set file ('speed_file'), val (name_file), val (exp_group) from locomotions_files_ori 
@@ -147,7 +147,7 @@ process feature_to_pergola {
  * Transform locomotion files into bedGraph format files for Gviz representation
  */ 
 process feature_to_bedGraph {
-	container 'joseespinosa/pergola:unc16_gviz.v0.3'
+	container 'joseespinosa/pergola:unc16_gviz.v0.4'
   
   	input:
   	set file ('speed_file'), val (name_file), val (exp_group) from locomotions_files_gviz 
@@ -178,33 +178,6 @@ process feature_to_bedGraph {
 /*
  * Creating folder to keep bed files to visualize data
  */
-/*
-result_dir_fasta = file("results_fasta_$tag_res")
-
-result_dir_fasta.with {
-     if( !empty() ) { deleteDir() }
-     mkdirs()
-     println "Created: $result_dir_fasta"
-} 
-
-out_fasta.subscribe {  
-  fasta_file = it[0]
-  fasta_file.copyTo( result_dir_fasta.resolve ( it[2] + ".fa" ) )
-}
-
-result_dir_bed = file("results_bed_$tag_res")
-
-result_dir_bed.with {
-     if( !empty() ) { deleteDir() }
-     mkdirs()
-     println "Created: $result_dir_bed"
-} 
-
-bed_loc_no_nas.subscribe {   
-  bed_file = it[0]
-  bed_file.copyTo ( result_dir_bed.resolve ( it[1] + "." + it[2] + ".bed" ) )
-}
-*/
 result_dir_bedGraph = file("results_bedGraph_$tag_res")
 
 result_dir_bedGraph.with {
@@ -222,39 +195,3 @@ bedGraph_GvizWin_no_track_line.subscribe {
   bedGraph_file = it[0]
   bedGraph_file.copyTo (result_dir_bedGraph.resolve ( it[1] + "." + it[2] + ".gviz.bedGraph" ) )
 }
-/*
-bed_motion_wr.subscribe {
-  bed_file = it[1]
-  bed_file.copyTo ( result_dir_bed.resolve ( it[0] + it[2] + ".bed" ) )
-}
-
-result_dir_bed_intersect = file("$result_dir_bed/motion_intersected")
-
-result_dir_bed_intersect.with {
-     if( !empty() ) { deleteDir() }
-     mkdirs()
-     println "Created: $result_dir_bed_intersect"
-} 
-
-bed_intersect_loc_motion.subscribe {   
-  bed_file = it[0]
-  bed_file.copyTo ( result_dir_bed_intersect.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".bed" ) )
-}
-
-result_dir_bedGraph_intersect = file("$result_dir_bedGraph/motion_intersected")
-
-result_dir_bedGraph_intersect.with {
-     if( !empty() ) { deleteDir() }
-     mkdirs()
-     println "Created: $result_dir_bedGraph_intersect"
-} 
-
-bedGraph_intersect_loc_motion.subscribe {
-  bedGraph_file = it[0]
-  bedGraph_file.copyTo ( result_dir_bedGraph_intersect.resolve ( "intersect." + it[1] + "." + it[3] + "." + it[4] + ".bedGraph" ) )
-}
-*/
-
-
-
-/s
