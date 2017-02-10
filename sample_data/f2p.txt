@@ -19,9 +19,9 @@
 ! Mapping of behavioural fields into genome browser fields
 !
 behavioural_file:CAGE > pergola:track
-behavioural_file:StartT > pergola:chromStart
-behavioural_file:EndT > pergola:chromEnd
-behavioural_file:Nature > pergola:dataTypes
-behavioural_file:Value > pergola:dataValue
+behavioural_file:StartT > pergola:chrom_start
+behavioural_file:EndT > pergola:chrom_end
+behavioural_file:Nature > pergola:data_types
+behavioural_file:Value > pergola:data_value
 behavioural_file:Phase > pergola:chrom
 
