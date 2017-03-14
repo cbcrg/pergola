@@ -22,7 +22,7 @@
 ############################################################
 
 # Set the base image to debian wheezy
-# wheezy is small only 30 m smaller than ubuntu
+# wheezy is small, only 30 mb smaller than ubuntu
 FROM debian:wheezy
 
 # R base already has the OS if I install it then comment wheezy
@@ -40,7 +40,8 @@ apt-get install -y python python-dev python-distribute python-pip gfortran bedto
 
 # Copying pergola
 COPY pergola /pergola/pergola
-COPY scripts /pergola/scripts
+# not needed anymore scripts are inside previous copied folder
+#COPY scripts /pergola/scripts
 COPY requirements.txt /pergola/
 COPY setup.py /pergola/	
 COPY README.md /pergola/ 
