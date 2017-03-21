@@ -42,7 +42,7 @@ class for BedGraph files.
 """
 
 from os  import getcwd
-from sys import stderr
+from sys import stderr, exit
 from os.path import join
 from operator import itemgetter
 from itertools import groupby
@@ -819,9 +819,12 @@ class Track(GenomicContainer):
             ini_window_def = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
             min_t = kwargs.get('min_t', ini_window_def)
             max_t = kwargs.get('max_t', ini_window_def)
+            #min_t = 0 #hardcode
+            #max_t = 29000 #hardcode     
+            
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
-            
+                        
             partial_value = 0 
             cross_interv_dict = {}
             
@@ -830,6 +833,10 @@ class Track(GenomicContainer):
             r = last_point % delta_window
             fake_end = last_point + delta_window - r
             last_fake_line = list(track[-1])
+            
+            if last_fake_line[i_chr_end] > max_t:
+                exit("FATAL ERROR: Something went wrong during bedGraph window conversion")
+                
             last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
             last_fake_line[i_chr_end] = fake_end
             last_fake_line[i_data_value] = 0
@@ -1065,7 +1072,7 @@ class BedGraph(BedToolConvertible):
         
     def win_mean (self):
 #         print "........................................" #del
-        print self.data #del
+#         print self.data #del
         n_tracks = len (self.track.split("_"))
 
         # TODO if number of trakcs is 1 exit returning self
