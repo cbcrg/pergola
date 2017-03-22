@@ -36,7 +36,7 @@ MAINTAINER Jose Espinosa-Carrasco <espinosacarrascoj@gmail.com>
 # Update always before download
 # single command save space, because each run generates a folder layer
 RUN apt-get update && \
-apt-get install -y python python-dev python-distribute python-pip gfortran bedtools
+apt-get install -y python python-dev python-distribute python-pip gfortran bedtools libhdf5-dev
 
 # Copying pergola
 COPY pergola /pergola/pergola
@@ -48,5 +48,7 @@ COPY README.md /pergola/
  
 # TODO add requirements.txt file to pergola
 RUN pip install -r /pergola/requirements.txt && \
+pip install cython && \
+pip install h5py && \
 apt-get install -y python-scipy && \
 cd pergola && python setup.py install
