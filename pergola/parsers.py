@@ -175,6 +175,10 @@ parent_parser.add_argument('-c', '--color_file', required=False, metavar="PATH_C
                            help='Dictionary assigning colors of data_types path')
 parent_parser.add_argument('-wm', '--window_mean', required=False, action='store_true',
                            default=False, help='Window values average by the window size')
+parent_parser.add_argument('-min', '--min_time', type=int, required=False,
+                           help='Initial time point to extract')
+parent_parser.add_argument('-max', '--max_time', type=int, required=False,
+                           help='Last time point to extract')
 
 ##############
 ### Argument parsing jaaba_to_pergola.py

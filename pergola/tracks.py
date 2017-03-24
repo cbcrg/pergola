@@ -418,7 +418,11 @@ class Track(GenomicContainer):
                     _dict_col_grad[k_2] = ""
                 
                 range_val = self._get_range(d_2)
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, mean_win=mean_win, color_restrictions=color_restrictions, min_t = self.min, max_t = self.max), track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
+                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2, True, window=window, mean_win=mean_win, 
+                                                                                                     color_restrictions=color_restrictions, min_t = self.min, 
+                                                                                                     max_t = self.max, min_t_trim=kwargs.get('min_t_trim', self.min), 
+                                                                                                     max_t_trim=kwargs.get('max_t_trim', self.max)), track=k, 
+                                                                                                     data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
 
         return (track_dict)
     
@@ -819,8 +823,20 @@ class Track(GenomicContainer):
             ini_window_def = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
             min_t = kwargs.get('min_t', ini_window_def)
             max_t = kwargs.get('max_t', ini_window_def)
-            #min_t = 0 #hardcode
-            #max_t = 29000 #hardcode     
+            
+            min_t_trim = kwargs.get('min_t_trim', min_t)
+            max_t_trim = kwargs.get('max_t_trim', max_t)
+            
+#             print >> stderr, ("FATAL ERROR: min_t_trim %d.") % min_t_trim
+            
+            if min_t_trim < min_t:
+                print >> stderr, ("WARNING: min_t_trim \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_t_trim, min_t))
+
+            if max_t_trim > max_t:
+                print >> stderr, ("WARNING: max_t_trim \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_t_trim, max_t))
+            
+            min_t = min_t_trim  
+            max_t = max_t_trim  
             
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
