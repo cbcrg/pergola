@@ -284,6 +284,7 @@ class IntData(object):
 #
         for row in self._reader:
             # Comments skipped
+            print "=======", row
             if row[0].startswith("#"):                 
                 continue
 

@@ -660,10 +660,7 @@ class Track(GenomicContainer):
 #         _gff_fields_mand = ['seqname','source','type','start','end','score', 'strand','frame','attribute']
         _gff_fields_mand = ["track", "data_types", "start","end", "data_value"] 
 #         _gff_fields_mand = ["seqname", "feature", "chrom_start", "chrom_end", "score"]
-        
-        
-    
-        
+            
         '''
         'seqname' track
         'source'  NA NOT MANDATORY "." (a period) in this field.
@@ -829,15 +826,16 @@ class Track(GenomicContainer):
             
 #             print >> stderr, ("FATAL ERROR: min_t_trim %d.") % min_t_trim
             
-            if min_t_trim < min_t:
-                print >> stderr, ("WARNING: min_t_trim \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_t_trim, min_t))
+            if min_t_trim != None:
+                min_t = min_t_trim  
+                if min_t_trim < min_t:
+                    print >> stderr, ("WARNING: min_t_trim \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_t_trim, min_t))
 
-            if max_t_trim > max_t:
-                print >> stderr, ("WARNING: max_t_trim \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_t_trim, max_t))
-            
-            min_t = min_t_trim  
-            max_t = max_t_trim  
-            
+            if max_t_trim != None:
+                max_t = max_t_trim  
+                if max_t_trim > max_t:
+                    print >> stderr, ("WARNING: max_t_trim \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_t_trim, max_t))
+                                            
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
                         
