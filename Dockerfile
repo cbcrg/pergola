@@ -21,32 +21,31 @@
 # Based on debian wheezy
 ############################################################
 
-# Set the base image to debian wheezy
-# wheezy is small, only 30 mb smaller than ubuntu
+## Set the base image to debian wheezy
+## wheezy is small, only 30 mb smaller than ubuntu
 FROM debian:wheezy
 
-# R base already has the OS if I install it then comment wheezy
+## R base already has the OS if I install it then comment wheezy
 # FROM rocker/r-base
 
 MAINTAINER Jose Espinosa-Carrasco <espinosacarrascoj@gmail.com>
 
-#
-# Install Python and Basic Python Tools
-#
-# Update always before download
+## Install Python and Basic Python Tools
+
+## Update always before download
 # single command save space, because each run generates a folder layer
 RUN apt-get update && \
-apt-get install -y python python-dev python-distribute python-pip gfortran bedtools libhdf5-dev
+apt-get install -y python python-dev python-distribute python-pip gfortran bedtools
 
-# Copying pergola
+## Copying pergola
 COPY pergola /pergola/pergola
-# not needed anymore scripts are inside previous copied folder
-#COPY scripts /pergola/scripts
+## not needed anymore scripts are inside previous copied folder
+# COPY scripts /pergola/scripts
 COPY requirements.txt /pergola/
 COPY setup.py /pergola/	
 COPY README.md /pergola/ 
  
-# TODO add requirements.txt file to pergola
+## TODO add requirements.txt file to pergola
 RUN pip install -r /pergola/requirements.txt && \
 pip install cython && \
 pip install h5py && \
