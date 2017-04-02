@@ -155,7 +155,7 @@ parent_parser.add_argument('-e', '--relative_coord', required=False, action='sto
                     default=False, help='Sets first timepoint' \
                     ' to 0 and make all the others relative to this timepoint')
 parent_parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
-                    default=False, help='Set startChrom and endChrom from just a timepoint in the file' \
+                    default=False, help='Set startChrom and endChrom from just a timepoint in the file ' \
                                         'using field set as startChrom')
 parent_parser.add_argument('-mi', '--multiply_intervals', metavar='N', type=int, required=False,
                     help='Multiplies value in data_value by the given factor')
