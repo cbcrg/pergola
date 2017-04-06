@@ -49,14 +49,13 @@ Pergola options allow the user to use the main features of Pergola library in a 
 .. note::
   
   All the command line examples can be reproduce using the files found in the C57BL6_mice_HF.tar.gz tarball file.
-   
 
 * `Data input`_
 * `File formats`_
 * `Filtering`_
 * `Filtering`_
 * `Temporal arguments`_
-* `File features`_ TODO change by data output of something similar
+* `Data output`_
 
 Data input
 ----------
@@ -65,32 +64,50 @@ The ``-i``, ``--input`` argument specifies the csv file the user wants to conver
 argument contains the mappings between the input file and the fields inside the pergola ontology terms.
 The ``-fs``, ``--field_separator`` sets the delimiter that separates fields inside the input data file. By default set to 
 tabs.
-
-======================= ======= ============================                    ============================
+TODO mention mapping file should have set to dummy any of the not used fiels from input file
+======================= ======= =============================================   =========================================
 Argument                short   Description                                     Example
-======================= ======= ============================                    ============================
+======================= ======= =============================================   =========================================
 ``--input``             ``-i``  Path of input data file                         -i /foo/feedingBehavior_HF_mice.csv.csv
 ``--mapping_file``      ``-m``  Path of mapping file                            -m /foo/my_mappings.txt
-``--field_separator``   ``-fs`` Field separator of mapping file                 -fs ' '
-======================= ======= ============================                    ============================
+``--field_separator``   ``-fs`` Field separator of mapping file                 -fs " "
+``--no_header``         ``-nh`` The input file has not header (column names)    -nh
+``--fields_read``       ``-s``  List of columns name (used in mappping file)    -s 'CAGE' 'EndT' 'Nature' 'Value'
+======================= ======= =============================================   =========================================
 
-TODO NO HEADER COMMAND
-AND FIELDS SET BY THE COMMAND LINE
+.. note::
+
+  The format of the mapping file consists in a text file containing in each line the correspondence between a field in the input data field
+  and the pergola ontology. TODO make a basic Concepts section with mapping files input etc
+	
+  .. code-block:: bash
+	
+    
+	   
                     
 The following examples shows how to convert the ``feedingBehavior_HF_mice.csv`` from C57BL6_mice_HF data set.
 
 .. code-block:: bash
 	
-  pergola_rules.py -i /data/feedingBehavior_HF_mice.csv -m /data/b2p.txt
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt
 
 .. note::
 
   Pergola converts data by default to BED file format.
 
-.. note:: 
-  If your input file is delimited by commas you can specify it as shown below:
+ 
+If your input file is delimited by commas you can specify it as shown below:
+
+.. code-block:: bash
   
-  ```pergola_rules.py -i /your_data/your_comma_separated_file.csv -m /your_data/b2p.txt -fs ',' ```
+  pergola_rules.py -i /your_data/your_comma_separated_file.csv -m /your_data/b2p.txt -fs ','
+
+Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
+list with the corresponding fields of your file as in the example below:
+
+.. code-block:: bash
+  
+  pergola_rules.py -i /your_data/your_comma_separated_file.csv -m /your_data/b2p.txt -nh -s 'CAGE' 'EndT' 'Nature' 'Value'
   
 File formats 
 ------------
@@ -115,8 +132,7 @@ Following our previous example the command line to convert our data to BedGraph 
 .. code-block:: bash
 	
   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m /data/b2p.txt -f bedGraph
-
-
+   
 Filtering
 ---------
 Filtering arguments allow you to select a part of your input data based on pergola assigned fields.
@@ -124,18 +140,24 @@ Filtering arguments allow you to select a part of your input data based on pergo
  -t --tracks  List of selected tracks  
  -dl --data_types_list List of selected data types
 
-======================= ======= ============================                    ===============================
-Argument                short   Description                                     Example
-======================= ======= ============================                    ===============================
-``--tracks``            ``-t``  List of tracks to keep                          /your_path/data/my_data.csv
-``--data_types_list``   ``-dl`` List of data types to keep                      /your_path/data/my_mappings.txt
-======================= ======= ============================                    ===============================
+======================== ======= ==========================================           =========================================
+Argument                 short   Description                                          Example
+======================== ======= ==========================================           =========================================
+``--tracks``             ``-t``  List of tracks to keep                               ``-t track_id_1 track_id_2``
+``--range``        		 ``-r``  Range of tracks to keep if id are numerical          ``-r 1 10``
+``--track_actions``      ``-a``  Action to perform on selected tracks              	  ``-t track_id_1 track_id_2 -a split_all``         
+``--data_types_list``    ``-dl`` List of data types to keep                           ``-dl data_type_one data_type_2``
+``--data_types_actions`` ``-d``  Action to perform on selected data types             ``-dl data_type_one data_type_2 -d``
+======================== ======= ========================================             =========================================
 
-The example below shows how to only get the data from animal 1 and 2 (tracks) and only from the food channels (data types):
+
+all,one_per_channel
+
+The example below shows how to get the data only from animal 1 and 2 (tracks) and only from the food channels (data types):
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m /data/b2p.txt -f bedGraph -t 1,2 -dl f
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -t 1 2 -dl food_sc food_fat
 
 
 Temporal arguments
@@ -167,8 +189,8 @@ Given the prominent temporal nature of longitudinal data, pergola provides sever
 
 The ``relative_coord`` option 
 
-File features
--------------
+Data output
+-----------
 There are several options related to optional fields inside the genomic file formats.
 
 +------------------------+----------+----------+--------------------------------------+----------------------------+
