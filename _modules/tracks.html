@@ -81,7 +81,9 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
 </ul>
@@ -173,7 +175,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">os</span>  <span class="k">import</span> <span class="n">getcwd</span>
-<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">stderr</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">exit</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">groupby</span>
@@ -256,7 +258,7 @@
             <span class="n">data</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify a &#39;fields&#39; attribute for </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__</span><span class="p">())</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must specify a &#39;fields&#39; attribute for </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">())</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span>
@@ -400,7 +402,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">min</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">max</span>
 <span class="c1">#         print &quot;initiation of track*********************&quot;, fields#del</span>
-        <span class="n">GenomicContainer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">data_types</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">GenomicContainer</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">data_types</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         
 <div class="viewcode-block" id="Track.convert"><a class="viewcode-back" href="../reference/pergola.html#tracks.Track.convert">[docs]</a>    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bed&#39;</span><span class="p">,</span> <span class="n">range_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -547,9 +549,13 @@
             <span class="k">for</span> <span class="n">k_2</span><span class="p">,</span> <span class="n">d_2</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">k_2</span> <span class="ow">in</span> <span class="n">_dict_col_grad</span> <span class="ow">and</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;bed&quot;</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;gff&quot;</span><span class="p">:</span>
                     <span class="n">_dict_col_grad</span><span class="p">[</span><span class="n">k_2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
+                
                 <span class="n">range_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_range</span><span class="p">(</span><span class="n">d_2</span><span class="p">)</span>
-                <span class="n">track_dict</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k_2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">0</span><span class="p">]](</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">1</span><span class="p">])(</span><span class="n">d_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">mean_win</span><span class="o">=</span><span class="n">mean_win</span><span class="p">,</span> <span class="n">color_restrictions</span><span class="o">=</span><span class="n">color_restrictions</span><span class="p">),</span> <span class="n">track</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="n">k_2</span><span class="p">,</span> <span class="n">range_values</span><span class="o">=</span><span class="n">range_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">_dict_col_grad</span><span class="p">[</span><span class="n">k_2</span><span class="p">])</span>
+                <span class="n">track_dict</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k_2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">0</span><span class="p">]](</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">1</span><span class="p">])(</span><span class="n">d_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">mean_win</span><span class="o">=</span><span class="n">mean_win</span><span class="p">,</span> 
+                                                                                                     <span class="n">color_restrictions</span><span class="o">=</span><span class="n">color_restrictions</span><span class="p">,</span> <span class="n">min_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> 
+                                                                                                     <span class="n">max_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">min_t_trim</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t_trim&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">),</span> 
+                                                                                                     <span class="n">max_t_trim</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t_trim&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)),</span> <span class="n">track</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> 
+                                                                                                     <span class="n">data_types</span><span class="o">=</span><span class="n">k_2</span><span class="p">,</span> <span class="n">range_values</span><span class="o">=</span><span class="n">range_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">_dict_col_grad</span><span class="p">[</span><span class="n">k_2</span><span class="p">])</span>
 
         <span class="k">return</span> <span class="p">(</span><span class="n">track_dict</span><span class="p">)</span>
     
@@ -787,10 +793,7 @@
 <span class="c1">#         _gff_fields_mand = [&#39;seqname&#39;,&#39;source&#39;,&#39;type&#39;,&#39;start&#39;,&#39;end&#39;,&#39;score&#39;, &#39;strand&#39;,&#39;frame&#39;,&#39;attribute&#39;]</span>
         <span class="n">_gff_fields_mand</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;track&quot;</span><span class="p">,</span> <span class="s2">&quot;data_types&quot;</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">,</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="s2">&quot;data_value&quot;</span><span class="p">]</span> 
 <span class="c1">#         _gff_fields_mand = [&quot;seqname&quot;, &quot;feature&quot;, &quot;chrom_start&quot;, &quot;chrom_end&quot;, &quot;score&quot;]</span>
-        
-        
-    
-        
+            
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        &#39;seqname&#39; track</span>
 <span class="sd">        &#39;source&#39;  NA NOT MANDATORY &quot;.&quot; (a period) in this field.</span>
@@ -909,6 +912,7 @@
         <span class="c1">#When the tracks have been join it is necessary to order by chr_start</span>
         <span class="n">track</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">track</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">]))</span>
         
+        <span class="c1"># Dumping raw data as a bedGraph file, no binning</span>
         <span class="k">if</span> <span class="n">window</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#or false</span>
           <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">track</span><span class="p">:</span>
             <span class="n">temp_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -924,7 +928,8 @@
 <span class="c1">#             temp_list.append(color)          </span>
             
             <span class="k">yield</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp_list</span><span class="p">))</span>
-            
+        
+        <span class="c1"># binning in windows of time     </span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>                
                 <span class="nb">float</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
@@ -936,22 +941,49 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Window option only accepts integers or False. Current value: </span><span class="si">%s</span><span class="s2">&quot;</span> 
                                 <span class="o">%</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">window</span><span class="p">)))</span>
                 
-            <span class="c1"># Ini_window has to be set to the initial value otherwise files with</span>
+            <span class="c1"># Ini_window has to be set to the initial value otherwise files with            </span>
             <span class="c1"># no relative coordinates contained tones of empty data</span>
     <span class="c1">#         ini_window = 0 #ojo</span>
     <span class="c1">#         ini_window = 1       </span>
             <span class="c1"># I have to find the closest number multiple of the window size so that all </span>
             <span class="c1"># bedGraph have the same intervals</span>
-            <span class="n">delta_window</span> <span class="o">=</span> <span class="n">window</span>      
-            <span class="n">ini_window</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i_chr_start</span><span class="p">]</span><span class="o">/</span><span class="n">delta_window</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta_window</span>
+                        
+            <span class="n">delta_window</span> <span class="o">=</span> <span class="n">window</span>    
+            <span class="c1"># To read files for instance in GRanges objects all tracks same number of intervals              </span>
+            <span class="n">ini_window_def</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i_chr_start</span><span class="p">]</span><span class="o">/</span><span class="n">delta_window</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta_window</span>
+            <span class="n">min_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t&#39;</span><span class="p">,</span> <span class="n">ini_window_def</span><span class="p">)</span>
+            <span class="n">max_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t&#39;</span><span class="p">,</span> <span class="n">ini_window_def</span><span class="p">)</span>
+            
+            <span class="n">min_t_trim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t_trim&#39;</span><span class="p">,</span> <span class="n">min_t</span><span class="p">)</span>
+            <span class="n">max_t_trim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t_trim&#39;</span><span class="p">,</span> <span class="n">max_t</span><span class="p">)</span>
+            
+<span class="c1">#             print &gt;&gt; stderr, (&quot;FATAL ERROR: min_t_trim %d.&quot;) % min_t_trim</span>
+            
+            <span class="k">if</span> <span class="n">min_t_trim</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">min_t</span> <span class="o">=</span> <span class="n">min_t_trim</span>  
+                <span class="k">if</span> <span class="n">min_t_trim</span> <span class="o">&lt;</span> <span class="n">min_t</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: min_t_trim </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> is smaller than minimun time point </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> inside the input file&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">min_t_trim</span><span class="p">,</span> <span class="n">min_t</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">max_t_trim</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">max_t</span> <span class="o">=</span> <span class="n">max_t_trim</span>  
+                <span class="k">if</span> <span class="n">max_t_trim</span> <span class="o">&gt;</span> <span class="n">max_t</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: max_t_trim </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> is bigger than minimun time point </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> inside the input file&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">max_t_trim</span><span class="p">,</span> <span class="n">max_t</span><span class="p">))</span>
+                                            
+            <span class="n">ini_window</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">min_t</span><span class="o">/</span><span class="n">delta_window</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta_window</span>
             <span class="n">end_window</span> <span class="o">=</span> <span class="n">ini_window</span> <span class="o">+</span> <span class="n">delta_window</span>
+                        
             <span class="n">partial_value</span> <span class="o">=</span> <span class="mi">0</span> 
             <span class="n">cross_interv_dict</span> <span class="o">=</span> <span class="p">{}</span>
             
-            <span class="n">last_point</span> <span class="o">=</span>  <span class="n">track</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i_chr_end</span><span class="p">]</span>
+<span class="c1">#             last_point =  track[-1][i_chr_end]</span>
+            <span class="n">last_point</span> <span class="o">=</span> <span class="n">max_t</span> 
             <span class="n">r</span> <span class="o">=</span> <span class="n">last_point</span> <span class="o">%</span> <span class="n">delta_window</span>
             <span class="n">fake_end</span> <span class="o">=</span> <span class="n">last_point</span> <span class="o">+</span> <span class="n">delta_window</span> <span class="o">-</span> <span class="n">r</span>
             <span class="n">last_fake_line</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            
+            <span class="k">if</span> <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_t</span><span class="p">:</span>
+                <span class="n">exit</span><span class="p">(</span><span class="s2">&quot;FATAL ERROR: Something went wrong during bedGraph window conversion&quot;</span><span class="p">)</span>
+                
             <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">]</span> <span class="o">=</span> <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">=</span> <span class="n">fake_end</span>
             <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_data_value</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1072,7 +1104,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="c1">#         GenomicContainer.__init__(self,data,**kwargs)</span>
 <span class="c1">#         GenomicContainer.__init__(self, data, fields, data_types, **kwargs)</span>
-        <span class="n">GenomicContainer</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">GenomicContainer</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     
 <div class="viewcode-block" id="BedToolConvertible.create_pybedtools"><a class="viewcode-back" href="../reference/pergola.html#tracks.BedToolConvertible.create_pybedtools">[docs]</a>    <span class="k">def</span> <span class="nf">create_pybedtools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1142,7 +1174,7 @@
                             <span class="s1">&#39;thick_start&#39;</span><span class="p">,</span><span class="s1">&#39;thick_end&#39;</span><span class="p">,</span><span class="s1">&#39;item_rgb&#39;</span><span class="p">]</span>
         
 <span class="c1">#         GenomicContainer.__init__(self,data,**kwargs)</span>
-        <span class="n">BedToolConvertible</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="n">BedToolConvertible</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
         
         
 <span class="c1">#     def _tmp_bed(self):</span>
@@ -1183,11 +1215,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">color_gradient</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span><span class="n">_blue_gradient</span><span class="p">)</span>
 <span class="c1">#         GenomicContainer.__init__(self,data,**kwargs)</span>
 <span class="c1">#         BedToolConvertible.__init__(self, **kwargs)</span>
-        <span class="n">BedToolConvertible</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">BedToolConvertible</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         
 <div class="viewcode-block" id="BedGraph.win_mean"><a class="viewcode-back" href="../reference/pergola.html#tracks.BedGraph.win_mean">[docs]</a>    <span class="k">def</span> <span class="nf">win_mean</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="c1">#         print &quot;........................................&quot; #del</span>
-        <span class="nb">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="c1">#del</span>
+<span class="c1">#         print self.data #del</span>
         <span class="n">n_tracks</span> <span class="o">=</span> <span class="nb">len</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">))</span>
 
         <span class="c1"># TODO if number of trakcs is 1 exit returning self</span>
@@ -1231,7 +1263,7 @@
 <span class="c1">#         [&#39;chr&#39;,&#39;chrom_start&#39;,&#39;chrom_end&#39;,&#39;name&#39;,&#39;score&#39;,&#39;strand&#39;,</span>
 <span class="c1">#                             &#39;thick_start&#39;,&#39;thick_end&#39;,&#39;item_rgb&#39;]</span>
 
-        <span class="n">BedToolConvertible</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="n">BedToolConvertible</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
                       
 <div class="viewcode-block" id="assign_color"><a class="viewcode-back" href="../reference/pergola.html#tracks.assign_color">[docs]</a><span class="k">def</span> <span class="nf">assign_color</span> <span class="p">(</span><span class="n">set_data_types</span><span class="p">,</span> <span class="n">color_restrictions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1347,7 +1379,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 20, 2017.
+      Last updated on Apr 07, 2017.
 
     </p>
   </div>

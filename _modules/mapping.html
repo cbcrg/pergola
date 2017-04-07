@@ -81,7 +81,9 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
 </ul>
@@ -202,7 +204,7 @@
     <span class="k">def</span> <span class="nf">_correspondence_from_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
             <span class="c1">#Eliminates possible empty lines at the end</span>
-            <span class="n">config_file_list</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="ow">not</span> <span class="n">match</span><span class="p">(</span><span class="s1">r&#39;^\s*$&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">config_file</span><span class="p">)</span>
+            <span class="n">config_file_list</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="ow">not</span> <span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\s*$&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">config_file</span><span class="p">)</span>
             
             <span class="k">if</span> <span class="n">config_file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">config_file_list</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -247,7 +249,7 @@
         <span class="c1">#comment_tag = (&quot;#&quot;, &quot;!&quot;)</span>
         <span class="n">comment_tag_m</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
 <span class="c1">#         p_mapping = compile(r&#39;^\w+\:\w+\s\&gt;\s\w+\:\w+&#39;) </span>
-        <span class="n">p_mapping</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="s2">r&quot;^\w+\:[</span><span class="se">\&quot;</span><span class="s2">\w</span><span class="se">\&quot;</span><span class="s2">]|[\w]+\s\&gt;\s\w+\:\w+] &quot;</span><span class="p">)</span> 
+        <span class="n">p_mapping</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\w+\:[</span><span class="se">\&quot;</span><span class="s2">\w</span><span class="se">\&quot;</span><span class="s2">]|[\w]+\s\&gt;\s\w+\:\w+] &quot;</span><span class="p">)</span> 
         
         <span class="n">dummy_ctr</span><span class="o">=</span><span class="mi">0</span>
         
@@ -545,7 +547,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 20, 2017.
+      Last updated on Apr 07, 2017.
 
     </p>
   </div>
