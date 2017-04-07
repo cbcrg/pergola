@@ -3,8 +3,8 @@
 Ready-to-use scripts
 ======================
 
-Pergola provides a series of scripts that are available in your system after you installed 
-pergola. 
+Pergola provides a series of scripts that are available in your system after its installation :ref:`installation`. 
+
 These scripts try to wrap up the most common functionalities of Pergola library.
 
 .. contents::
@@ -15,17 +15,19 @@ These scripts try to wrap up the most common functionalities of Pergola library.
 pergola_rules.py
 -----------------
 
-*pergola_rules.py* is available in your system after you installed pergola.
+*pergola_rules.py* enables the user to execute many of the main pergola functionalities.
 
+If you prefer to code your own scripts read :ref:`library` section.  
+ 
 
 .. tip:: 
-	To reproduce all the commands on this tutorial you can download the following data set:
+	To reproduce all ``pergola_rules.py`` commands shown in this section you can download the following data set:
 	
 	.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.439439.svg
 	    :target: https://doi.org/10.5281/zenodo.439439 
 	\
     
-	The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 fed either with a high-fat or a standard chow.
+	The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
 	To download and uncompress the data you can use the following commands:
 	
 	.. code-block:: bash
@@ -33,38 +35,33 @@ pergola_rules.py
 	  mkdir data
 	  wget -O- https://zenodo.org/record/439439/files/C57BL6_mice_HF.tar.gz | tar xz -C data
 
-
-***************
+*******************
 General usage:
-***************
- 
-
-
 *******************
-Script options :
-*******************
+.. Script options :
 
 Pergola options allow the user to use the main features of Pergola library in a ready-to-use script.
+
+
+* `Data input`_
+* `File formats`_
+* `Filtering`_
+* `Temporal arguments`_
+* `Data output`_
 
 .. note::
   
   All the command line examples can be reproduce using the files found in the C57BL6_mice_HF.tar.gz tarball file.
 
-* `Data input`_
-* `File formats`_
-* `Filtering`_
-* `Filtering`_
-* `Temporal arguments`_
-* `Data output`_
 
 Data input
 ----------
-Two of the data input arguments are the only two mandatory arguments of pergola_rules.py: 
+Only two of the data input arguments are mandatory to run pergola_rules.py: 
 The ``-i``, ``--input`` argument specifies the csv file the user wants to convert and `the `-m``, ``--mapping_file`` 
 argument contains the mappings between the input file and the fields inside the pergola ontology terms.
 The ``-fs``, ``--field_separator`` sets the delimiter that separates fields inside the input data file. By default set to 
 tabs.
-TODO mention mapping file should have set to dummy any of the not used fiels from input file
+
 ======================= ======= =============================================   =========================================
 Argument                short   Description                                     Example
 ======================= ======= =============================================   =========================================
@@ -78,13 +75,13 @@ Argument                short   Description                                     
 .. note::
 
   The format of the mapping file consists in a text file containing in each line the correspondence between a field in the input data field
-  and the pergola ontology. TODO make a basic Concepts section with mapping files input etc
-	
-  .. code-block:: bash
-	
-    
-	   
-                    
+  and the pergola ontology. For more details, refer to :ref:`pergola-ontology` and :ref:`mapping-file` for a mapping file example.
+
+.. tip::
+
+  Any field on the input data that should not be used by pergola must be set to ``dummy`` term in the mapping file. 
+
+
 The following examples shows how to convert the ``feedingBehavior_HF_mice.csv`` from C57BL6_mice_HF data set.
 
 .. code-block:: bash
@@ -93,7 +90,8 @@ The following examples shows how to convert the ``feedingBehavior_HF_mice.csv`` 
 
 .. note::
 
-  Pergola converts data by default to BED file format.
+  Pergola converts data by default to BED file format. Refer to :ref:`mapping-file` section 
+  to see pergola's adapted genomic formats.
 
  
 If your input file is delimited by commas you can specify it as shown below:

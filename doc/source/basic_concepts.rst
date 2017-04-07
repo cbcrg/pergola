@@ -12,6 +12,8 @@ Visualization and data processing mature genomic tools can be used.
 Input
 -------------------------
 
+.. _input-data:
+
 *****************
 Input data
 *****************
@@ -33,7 +35,9 @@ The minimal input file must contain at least two columns. One of these columns s
 correspond to time points and the second one to any value assigned to each of the time points.
 
 .. Mappings 
-  
+
+.. _pergola-ontology:
+
 *****************
 Pergola ontology
 *****************
@@ -73,13 +77,18 @@ dummy	    	All additional fields in the original input data not used by pergola
 To see how to create a mapping file using pergola ontology to set the equivalence between input terms in 
 the original data and Pergola output terms, read next section.
 
+.. _mapping-file:
+
 *************
 Mapping file
 *************
 
 The mapping file sets the correspondence between the input data and the terms used by pergola.
 It is thus the way pergola knows what is encoded in each of the fields of the input data.
-Provided we have an input file as the show in the `Data input`_ section, a mapping file looks like the following example:
+Provided we have an input file as the show in the :ref:`input-data`. section, a mapping file looks like the following example:
+
+
+.. :ref:`pergola-ontology`.
 
 ::
 
@@ -106,21 +115,6 @@ between the input data and the pergola ontology.
 .. comment
 .. `GFF <http://genome.ucsc.edu/FAQ/FAQformat.html#format3>`_
 
-Pergola can be download from `Github`_ and compiled (`Installation from github`_). 
-However, we strongly recommend to use pergola in its containerized version 
-(`Pergola docker container`_).
-
-.. _Github: https://www.github.com/
-
-In this section you will find the details of how to download Pergola source code
-from Github and how to compile. Prerequisites that pergola require installed in 
-your system are also listed in this section.
- 
-.. toctree::
-   :maxdepth: 2
-   
-   install/installing_pergola
-
 -------------------------
 Output
 -------------------------
@@ -130,6 +124,8 @@ encode longitudinal data. The idea is very simple, both types of data are sequen
 and thus, it is relatively easy to adapt the scaffold thought to encode genomic data to 
 encode a temporal sequence of events. In this section we present the formats we adapted and 
 for which purpose they can be used.
+
+.. _discrete-data:
 
 ****************
 Discrete data
@@ -144,6 +140,7 @@ formats. These two file formats designed to encode information such as genomic f
 genomic annotations can be adapted to encode discrete temporal events by regarding at chromosome
 positions in a genome as analogous to time points in a behavioral trajectory.
 
+.. _continuous-data:
 
 ****************
 Continuous data
@@ -154,6 +151,8 @@ measure over user-defined time windows. The `BedGraph <https://genome.ucsc.edu/F
 file format used in genomics to store continuous-valued data such as probability scores or transcriptome data, 
 provides a perfect structure for Pergola calculations or for whatever type of scores derived from the analysis 
 of your input data.
+
+.. _reference-data:
 
 ****************
 Reference data
@@ -192,3 +191,5 @@ File formats adapted as pergola output are summarized in the following table:
 .. -------------------------
 .. Operations
 .. -------------------------
+
+.. TODO Add point to the documentation explaining how to use visualization and exploration of genomic tools 

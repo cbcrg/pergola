@@ -1,6 +1,8 @@
 Tutorials
 =========
 
+.. _library:
+
 Getting started
 ---------------
 
