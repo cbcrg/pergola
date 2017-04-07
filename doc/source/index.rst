@@ -30,6 +30,8 @@ Documentation index:
       
      ready_to_use_scripts
      
+     data_analysis
+     
      tutorial
   
      reference/index
