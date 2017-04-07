@@ -1,0 +1,378 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Basic concepts &mdash; Pergola  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pergola  documentation" href="index.html"/>
+        <link rel="next" title="Ready-to-use scripts" href="ready_to_use_scripts.html"/>
+        <link rel="prev" title="Docker installation" href="install/pergola_container.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input">Input</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input-data">Input data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pergola-ontology">Pergola ontology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-file">Mapping file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#discrete-data">Discrete data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#continuous-data">Continuous data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reference-data">Reference data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Basic concepts</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/basic_concepts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basic-concepts">
+<h1>Basic concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h1>
+<p>Pergola allows to explore and process longitudinal data using genomic tools.</p>
+<p>Two main benefits derive from using pergola.</p>
+<p>Visualization and data processing mature genomic tools can be used.</p>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="input-data">
+<span id="id1"></span><h3>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h3>
+<p>Pergola can process any sequence of temporal events contained in a character-separated file as in the example below:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">id</span>    <span class="n">t_ini</span>   <span class="n">t_end</span> <span class="nb">type</span>      <span class="n">value</span>   <span class="n">description</span>
+<span class="mi">1</span>     <span class="mi">137</span>     <span class="mi">156</span>     <span class="n">type_x</span>  <span class="mf">0.06</span>    <span class="s2">&quot;type x event&quot;</span>
+<span class="mi">1</span>     <span class="mi">168</span>     <span class="mi">192</span>     <span class="n">type_y</span>  <span class="mf">0.02</span>    <span class="s2">&quot;type y event&quot;</span>
+<span class="mi">1</span>     <span class="mi">250</span>     <span class="mi">281</span>     <span class="n">type_x</span>  <span class="mf">0.07</span>    <span class="s2">&quot;type x event&quot;</span>
+<span class="mi">2</span>     <span class="mi">311</span>     <span class="mi">333</span>     <span class="n">type_x</span>  <span class="mf">0.08</span>    <span class="s2">&quot;type x event&quot;</span>
+<span class="mi">2</span>     <span class="mi">457</span>     <span class="mi">482</span>     <span class="n">type_y</span>  <span class="mf">0.02</span>    <span class="s2">&quot;type y event&quot;</span>
+<span class="mi">2</span>     <span class="mi">569</span>     <span class="mi">601</span>     <span class="n">type_z</span>  <span class="mf">0.03</span>    <span class="s2">&quot;type z event&quot;</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>The minimal input file must contain at least two columns. One of these columns should
+correspond to time points and the second one to any value assigned to each of the time points.</p>
+</div>
+<div class="section" id="pergola-ontology">
+<span id="id2"></span><h3>Pergola ontology<a class="headerlink" href="#pergola-ontology" title="Permalink to this headline">¶</a></h3>
+<p>In order to specify to pergola the content of each of the fields of the input data,
+user has to map the input fields to a set of defined terms or pergola ontology.</p>
+<p>The <strong>pergola ontology</strong> consists on a set of controlled terms or vocabulary to define
+the content of each of the input fields inside the input data.</p>
+<p>Pergola ontology terms are shown in the table below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="93%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Term</th>
+<th class="head">Definition</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>start</td>
+<td>Refers to start time points of each interval of the original data. If “chrom_end” is not set all “chrom_start” should be equidistant and intervals will be set to the delta between time points (<strong>mandatory</strong>).</td>
+</tr>
+<tr class="row-odd"><td>data_value</td>
+<td>Refers to associated values consider for the representation of data (<strong>mandatory</strong>).</td>
+</tr>
+<tr class="row-even"><td>end</td>
+<td>Refers to the end of each time interval.</td>
+</tr>
+<tr class="row-odd"><td>track</td>
+<td>Refers to each of the experimental entities present in the file.</td>
+</tr>
+<tr class="row-even"><td>data_types</td>
+<td>Refers to each of the different features annotated in the file.</td>
+</tr>
+<tr class="row-odd"><td>chrom</td>
+<td>Refers to different phases of the experiment.</td>
+</tr>
+<tr class="row-even"><td>dummy</td>
+<td>All additional fields in the original input data not used by pergola</td>
+</tr>
+</tbody>
+</table>
+<p>To see how to create a mapping file using pergola ontology to set the equivalence between input terms in
+the original data and Pergola output terms, read next section.</p>
+</div>
+<div class="section" id="mapping-file">
+<span id="id3"></span><h3>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h3>
+<p>The mapping file sets the correspondence between the input data and the terms used by pergola.
+It is thus the way pergola knows what is encoded in each of the fields of the input data.
+Provided we have an input file as the show in the <a class="reference internal" href="#input-data"><span class="std std-ref">Input data</span></a>. section, a mapping file looks like the following example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>! Mapping of behavioural fields into pergola ontology terms
+!
+! Any test starting with an exclamation mark is a comment
+
+input_file:id &gt; pergola:track
+input_file:t_ini &gt; pergola:start
+input_file:t_end &gt; pergola:end
+input_file:type &gt; pergola:data_types
+input_file:value &gt; pergola:data_value
+input_file:description &gt; pergola:dummy
+</pre></div>
+</div>
+<p>Mapping file uses <a class="reference external" href="http://geneontology.org/page/external-mapping-file-format">the external mapping file format</a>
+from the <a class="reference external" href="http://geneontology.org/">Gene Ontology Consortium</a> to set the correspondence
+between the input data and the pergola ontology.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The reserved term input_file is arbitrary and just to follow the convention of the external mapping
+file format. You can use whatever you want provided it is follow by a colon sign.
+This might be changed in following pergola versions.</p>
+</div>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Pergola adapted several of the more commonly used formats of the genomics community to
+encode longitudinal data. The idea is very simple, both types of data are sequential
+and thus, it is relatively easy to adapt the scaffold thought to encode genomic data to
+encode a temporal sequence of events. In this section we present the formats we adapted and
+for which purpose they can be used.</p>
+<div class="section" id="discrete-data">
+<span id="id4"></span><h3>Discrete data<a class="headerlink" href="#discrete-data" title="Permalink to this headline">¶</a></h3>
+<p>Longitudinal data many times presents the form of a sequence of irregular discrete events or time
+intervals with a series of associated data such as the type of event or the magnitude.
+Genomics provides formats that are specially suitable to encode this type of data such as
+the <a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">BED</a> (Browser Extensible Format)
+or the <a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format3">GFF</a> (General Feature Format)
+formats. These two file formats designed to encode information such as genomic features or
+genomic annotations can be adapted to encode discrete temporal events by regarding at chromosome
+positions in a genome as analogous to time points in a behavioral trajectory.</p>
+</div>
+<div class="section" id="continuous-data">
+<span id="id5"></span><h3>Continuous data<a class="headerlink" href="#continuous-data" title="Permalink to this headline">¶</a></h3>
+<p>Pergola enables the calculation of parameters such as accumulated or mean values of a quantifiable
+measure over user-defined time windows. The <a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1.8">BedGraph</a>
+file format used in genomics to store continuous-valued data such as probability scores or transcriptome data,
+provides a perfect structure for Pergola calculations or for whatever type of scores derived from the analysis
+of your input data.</p>
+</div>
+<div class="section" id="reference-data">
+<span id="id6"></span><h3>Reference data<a class="headerlink" href="#reference-data" title="Permalink to this headline">¶</a></h3>
+<p>Some types of genomics tools, such as several genome browsers, need a reference sequence in order to align the
+data sequences to this reference (genome).
+For this reason we adapted the <a class="reference external" href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&amp;PAGE_TYPE=BlastDocs&amp;DOC_TYPE=BlastHelp">FASTA</a> file format
+to enable the use of these type of tools with pergola processed data.</p>
+<p>File formats adapted as pergola output are summarized in the following table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Type of data</th>
+<th class="head">Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2">Discrete</td>
+<td><a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1">BED</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format3">GFF</a></td>
+</tr>
+<tr class="row-even"><td>Continuous</td>
+<td><a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1.8">BedGraph</a></td>
+</tr>
+<tr class="row-odd"><td>Reference</td>
+<td><a class="reference external" href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&amp;PAGE_TYPE=BlastDocs&amp;DOC_TYPE=BlastHelp">FASTA</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can go to the specifications of each of these data file formats clicking on the file names in the table.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ready_to_use_scripts.html" class="btn btn-neutral float-right" title="Ready-to-use scripts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install/pergola_container.html" class="btn btn-neutral" title="Docker installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
+      Last updated on Apr 07, 2017.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
