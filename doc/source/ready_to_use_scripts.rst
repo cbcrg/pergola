@@ -177,7 +177,44 @@ If you want to get all tracks from 1 to 4 you can then use the ``-r`` option pro
   By default tracks selected by ``-r`` option are joined together in a single output track. You can use ``-a`` option 
   to change this behavior.
 
+The ``-a`` option allows to join together tracks in the same file. Available ``-a`` options are:
 
+======================= ============================================= 
+track_actions           Description                                     
+======================= ============================================= 
+split_all               Split all ``tracks`` into different files
+join_all                Join all ``tracks`` in single file
+join_odd                Join only odd ``tracks`` in a single file
+join_even               Join only even ``tracks`` in a single file
+======================= ============================================= 
+
+An example of how to join all tracks in the same file would be:
+
+.. code-block:: bash
+	
+   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -a join_all
+   
+.. tip::
+  You can combine ``-t`` or ``-r`` options with ``-a`` in order to filter tracks and join them as you prefer
+  .. code-block:: bash
+    
+In the same way, it is possible to filter the field assigned to ``data_type`` pergola ontology term using ``-dl`` argument.
+In the code below only events assigned to "food_fat" ``data_type`` term are kept:
+
+.. code-block:: bash
+
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
+
+.. Besides data types can be join etc 
+
+======================= ============================================= 
+track_actions           Description                                     
+======================= ============================================= 
+split_all               Split all ``tracks`` into different files
+join_all                Join all ``tracks`` in single file
+join_odd                Join only odd ``tracks`` in a single file
+join_even               Join only even ``tracks`` in a single file
+======================= ============================================= 
 
 and only from the food channels (data types):
 
