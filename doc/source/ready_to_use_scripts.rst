@@ -243,11 +243,11 @@ Given the prominent temporal nature of longitudinal data, pergola provides sever
 | ``--max_time``           | ``-max`` | integer  | Max time point from which data    | ``-max 1000``              |
 |                          |          |          | will be processed                 |                            |
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
-| ``--intervals_gen``      | ``-n``   |	integer	 | Multiple time points by the       | ``-n``                     | 
-|                          |          |          | selected value                    |                            |
-+--------------------------+----------+----------+-----------------------------------+----------------------------+
-| ``--multiply_intervals`` | ``-mi``  |	integer	 | Creates two time points from an   | ``-mi 1000``               | 
+| ``--intervals_gen``      | ``-n``   |	         | Creates two time points from an   | ``-n``                     | 
 |                          |          |          | original input with a single one  |                            |
++--------------------------+----------+----------+-----------------------------------+----------------------------+
+| ``--multiply_intervals`` | ``-mi``  |	integer	 | Multiple time points by the       | ``-mi 1000``               | 
+|                          |          |          | selected value                    |                            |
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
 
 It is possible that input files do not start at time 0. The ``relative_coord`` transforms the time points relative to the first
@@ -260,17 +260,17 @@ below:
 
   CAGE	StartT	    EndT        Value Nature
   1     1335986151  1335986261  0.06  food_sc
-  1	    1335986275  1335986330	0.02  food_fat
-  1	    1335986341  1335986427	0.02  water	
+  1     1335986275  1335986330	0.02  food_fat
+  1     1335986341  1335986427	0.02  water	
 
 
 Applying the ``-e`` it will result into the time coordinates below:
 
 ::
 
-  	0	110	
-    124	179
-    190	276
+  0	110	
+  124	179
+  190	276
 
 Pergola enables the user to bin the data using equidistant time windows when formatting data to BedGraph files. The ``-w`` arguments sets the size of these windows.
 
@@ -297,21 +297,70 @@ file_1.csv
 
 ::
     
-    CAGE	StartT	    EndT        Value Nature
-    1       20          30          0.02  food_sc
-    1	    50          60  	    0.02  food_fat
+    CAGE    StartT  EndT    Value Nature
+    1       20      30      0.02  food_sc
+    1	    50      60      0.02  food_fat
 
 .. code-block:: bash
 
   pergola_rules.py -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w 10 -min 0 
 
 .. note::
-  The time points inserted at the beginning of the file using ``-min`` and ``-max`` will be set to zero value
+  The time points inserted at the beginning of the file using ``-min`` and ``-max`` will be set to zero value. In the example above
+  the beginning of the output file will then look as follows:
   ::
      chr1	0	10	0
      chr1	10	20	0.0
      chr1	20	30	0.02
+
+If the input file has only a single time point, pergola can process it using the ``-n`` argument. This situation is common
+in files encoding data that are in equidistant time points, as the following one:
+
+::
+
+  id	time value
+  1     1    8
+  1     2    13  
+  1     3    21
+
+In this case the ``-n`` argument generates a interval for each of the items of the file:
+
+.. code-block:: bash
+
+  pergola_rules.py -i ./data/file_2.csv -m ./data/file2_to_p.txt -f bedGraph -n
   
+.. This command will result in the following output file:
+
+In the case were the input file encodes time as decimal values (for instance tenth of seconds). 
+
+::
+
+    time    value
+    0       -30.98
+    0.01    -5.19
+    0.02    23.96
+    0.03    -2.75
+
+It is possible to multiply the time stamp inside this input file by a given factor using the ``-mi`` argument 
+and for instance getting the time stamps in milliseconds:
+.. in the following way:
+
+.. code-block:: bash
+
+  pergola_rules.py -i ./data/file_3.csv -m ./data/file3_to_p.txt -n -mi 1000 -f bedGraph
+
+As a result two time point intervals will be returned in output file:
+
+::
+
+    chr1	0	9	-30.98
+    chr1	10	19	-5.19
+    chr1	20	29	23.96
+    chr1	30	31	-2.75
+    
+.. note::
+  This last argument is useful because provided that genomic tools are always expressed as integer values, if our time points are 
+  expressed as decimals sometimes it will be necessary to convert them to integer values.
 
 Data output
 -----------
@@ -364,19 +413,6 @@ How to use it is shown in the following example:
 .. code-block:: bash
 	
   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
-
-
-
-Path to file setting color to disa
-
--nt, --no_track_line  Track line no included in the bed file
--bl, --bed_label      Show data_types as name field in bed file
--c PATH_COLOR_FILE, --color_file PATH_COLOR_FILE
-current path  /Users/jespinosa/2017_tests_pergola_paper/test_documentation/data/color_code.txt
-
-                        Dictionary assigning colors of data_types path
-
-
                         
 .. note::
 
