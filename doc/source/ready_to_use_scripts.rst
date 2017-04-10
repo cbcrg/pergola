@@ -147,15 +147,15 @@ Filtering
 
 Filtering arguments allow you to select a part of your input data based on pergola assigned fields.
 
-======================== ======= ==========================================           =========================================
+======================== ======= ==========================================           ====================================================
 Argument                 short   Description                                          Example
-======================== ======= ==========================================           =========================================
+======================== ======= ==========================================           ====================================================
 ``--tracks``             ``-t``  List of tracks to keep                               ``-t track_id_1 track_id_2``
 ``--range``        		 ``-r``  Range of tracks to keep if id are numerical          ``-r 1 10``
 ``--track_actions``      ``-a``  Action to perform on selected tracks              	  ``-t track_id_1 track_id_2 -a split_all``         
 ``--data_types_list``    ``-dl`` List of data types to keep                           ``-dl data_type_one data_type_2``
-``--data_types_actions`` ``-d``  Action to perform on selected data types             ``-dl data_type_one data_type_2 -d``
-======================== ======= ========================================             =========================================
+``--data_types_actions`` ``-d``  Action to perform on selected data types             ``-dl data_type_one data_type_2 -d one_per_channel``
+======================== ======= ========================================             ====================================================
 
 .. TODO primero como se hace para elegir solo tracks luego ademas data types
 
@@ -183,7 +183,7 @@ The ``-a`` option allows to join together tracks in the same file. Available ``-
 track_actions           Description                                     
 ======================= ============================================= 
 split_all               Split all ``tracks`` into different files
-join_all                Join all ``tracks`` in single file
+join_all                Join all ``tracks`` in a single file
 join_odd                Join only odd ``tracks`` in a single file
 join_even               Join only even ``tracks`` in a single file
 ======================= ============================================= 
@@ -196,31 +196,31 @@ An example of how to join all tracks in the same file would be:
    
 .. tip::
   You can combine ``-t`` or ``-r`` options with ``-a`` in order to filter tracks and join them as you prefer
+  
   .. code-block:: bash
+    pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t 1 2 3 -a join_all
     
-In the same way, it is possible to filter the field assigned to ``data_type`` pergola ontology term using ``-dl`` argument.
-In the code below only events assigned to "food_fat" ``data_type`` term are kept:
+It is possible to provide pergola with a list of the field assigned to ``data_type`` pergola ontology term to be kept using ``-dl`` argument.
+For instance, in the code below only events assigned to "food_fat" ``data_type`` term are kept:
 
 .. code-block:: bash
 
   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
 
-.. Besides data types can be join etc 
+Besides ``-d`` option allows to combine all data types into a single output file or split them in different files:
 
 ======================= ============================================= 
 track_actions           Description                                     
 ======================= ============================================= 
-split_all               Split all ``tracks`` into different files
-join_all                Join all ``tracks`` in single file
-join_odd                Join only odd ``tracks`` in a single file
-join_even               Join only even ``tracks`` in a single file
+all                     Join all ``data_type`` into a single file
+one_per_channel         Split each ``data_type`` into different files
 ======================= ============================================= 
 
-and only from the food channels (data types):
+Both ``-dl`` and ``-d`` options can be combine into a single command:
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -t 1 2 -dl food_sc food_fat
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_sc food_fat -d one_per_channel
 
 
 Temporal arguments
@@ -250,24 +250,122 @@ Given the prominent temporal nature of longitudinal data, pergola provides sever
 |                          |          |          | original input with a single one  |                            |
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
 
-The ``relative_coord`` option 
+It is possible that input files do not start at time 0. The ``relative_coord`` transforms the time points relative to the first
+time point inside the file.
+
+For instance, if time inside the file is expressed as `epoch time <https://en.wikipedia.org/wiki/Unix_time/>`_ as in the example 
+below:
+
+::
+
+  CAGE	StartT	    EndT        Value Nature
+  1     1335986151  1335986261  0.06  food_sc
+  1	    1335986275  1335986330	0.02  food_fat
+  1	    1335986341  1335986427	0.02  water	
+
+
+Applying the ``-e`` it will result into the time coordinates below:
+
+::
+
+  	0	110	
+    124	179
+    190	276
+
+Pergola enables the user to bin the data using equidistant time windows when formatting data to BedGraph files. The ``-w`` arguments sets the size of these windows.
+
+For example:
+
+.. code-block:: bash
+	
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w 300
+
+.. note::
+
+  The ``-w`` argument can be only used together with ``-f bedGraph`` option
+
+The ``-wm`` argument calculates the mean value inside each of the window of time. 
+
+.. code-block:: bash
+	
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w 300 -wm
+
+The ``-min`` and ``-max`` arguments set which is the first and the last time point to be present in pergola output file.
+This can be used for instance to unify the beginning (example below) or end of files:
+
+file_1.csv
+
+::
+    
+    CAGE	StartT	    EndT        Value Nature
+    1       20          30          0.02  food_sc
+    1	    50          60  	    0.02  food_fat
+
+.. code-block:: bash
+
+  pergola_rules.py -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w 10 -min 0 
+
+.. note::
+  The time points inserted at the beginning of the file using ``-min`` and ``-max`` will be set to zero value
+  ::
+     chr1	0	10	0
+     chr1	10	20	0.0
+     chr1	20	30	0.02
+  
 
 Data output
 -----------
-There are several options related to optional fields inside the genomic file formats.
+There are several arguments related to optional fields inside the genomic file formats. These arguments
+are related to the data visualization in genomic tools.
 
-+------------------------+----------+----------+--------------------------------------+----------------------------+
-| Argument               | short    | Options  | Description                          | Example                    |
-+========================+==========+==========+======================================+============================+
-| ``--no_track_line``    | ``-nt``  |          | When set bed file does not include   | ``-nt``                    |
-|                        |          |          | a track line (Browser configuration) |                            |        
-+------------------------+----------+----------+--------------------------------------+----------------------------+
-| ``--bed_label``        | ``-bl``  |          | BED files include labels describing  | ``-bl``                    |    
-|                        |          |          | each interval (data type)            |                            |
-+------------------------+----------+----------+--------------------------------------+----------------------------+
-| ``--color_file``       | ``-c``   |          | Path to file setting color of the    | ``-c /your_path/color.txt``|
-|                        |          |          | different data types to be displayed |                            |
-+------------------------+----------+----------+--------------------------------------+----------------------------+
++------------------------+----------+----------+------------------------------------------+----------------------------+
+| Argument               | short    | Options  | Description                              | Example                    |
++========================+==========+==========+==========================================+============================+
+| ``--no_track_line``    | ``-nt``  |          | When set bed file does not include       | ``-nt``                    |
+|                        |          |          | a track line (Browser configuration)     |                            |        
++------------------------+----------+----------+------------------------------------------+----------------------------+
+| ``--bed_label``        | ``-bl``  |          | BED files include labels describing      | ``-bl``                    |    
+|                        |          |          | each interval (data type)                |                            |
++------------------------+----------+----------+------------------------------------------+----------------------------+
+| ``--color_file``       | ``-c``   |          | Path to a file setting a color for       | ``-c /your_path/color.txt``|
+|                        |          |          | the different data types to be displayed |                            |
++------------------------+----------+----------+------------------------------------------+----------------------------+
+
+Some genomic software as for example genome browsers use the track line to get parameters about the visualization of 
+the data. To avoid the track line you can use the ``-nt`` option.
+
+.. code-block:: bash
+	
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -nt
+
+The name field of the BED file enables to display a label for each record encoded inside the file. Pergola uses this field 
+to display the data_type of each file line when the option is set:
+
+.. code-block:: bash
+	
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -bl
+
+::
+
+    track name="1_food_sc" description="1 food_sc" visibility=2 itemRgb="On" priority=20
+    chr1	1335986151	1335986261	food_sc	0.06	+	1335986151	1335986261	113,113,113
+    chr1	1335986275	1335986330	food_sc	0.02	+	1335986275	1335986330	170,170,170
+
+To choose which color will be use to display each of the data types inside the file, it is possible to provide 
+pergola with a file coding the colors to be used. The file will consists:
+
+::
+
+    food_sc	orange
+    food_fat	blue
+
+How to use it is shown in the following example:
+
+.. code-block:: bash
+	
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
+
+
 
 Path to file setting color to disa
 
