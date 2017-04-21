@@ -62,6 +62,11 @@ jaaba_to_pergola fc -dj "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1
 jaaba_to_pergola fp -dj "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/" -jf velmag dtheta -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt" -i jaaba -dd  ~/git/pergola/test
 jaaba_to_pergola fp -dj "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/" -jf velmag dtheta -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt" -i jaaba -dd  ~/git/pergola/test -f bedGraph
 
+## example of tracks of drosophila chasing use for paper
+# bed scores chasing
+jaaba_to_pergola sp -i "/Users/jespinosa/git/pergola/sample_data/jaaba_example/scores_chase.mat" -m /Users/jespinosa/git/pergola/test/jaaba2pergola.txt -f bed -bl -nt
+# velmag and angle bedgraphs
+jaaba_to_pergola fp -i "/Users/jespinosa/JAABA_MAC_0.5.1/sampledata_v0.5/Chase1_TrpA_Rig1Plate15BowlA_20120404T141155/perframe/" -jf velmag dtheta  -m "/Users/jespinosa/git/pergola/test/jaaba2pergola.txt" -dd /Users/jespinosa/2017_sushi_pergola/data/ -f bedGraph -nt 
 
 ## ActiTrack position files example bed file
 pergola_rules.py -i "/Users/jespinosa/phecomp/processedData/201205_FDF_CRG/tac2activity/20120502_FDF_CRG_c6.tac.pos" -m "/Users/jespinosa/git/pergola/test/position2pergola.txt" -fs ";" -n
