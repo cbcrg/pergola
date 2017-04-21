@@ -31,7 +31,7 @@ def jaaba_to_pergola(option, args):
     if option == "sc" or option =="sp":
         print >> stderr,     "@@@jaaba_to_pergola.py: Input file is %s" % args.input 
                 
-        tmp_track = NamedTemporaryFile(prefix='jaaba_csv.', suffix='.csv', delete=True)
+        tmp_track = NamedTemporaryFile(prefix='jaaba_csv', suffix='.csv', delete=True)
 
         name_tmp = splitext(basename(tmp_track.name))[0]
         path_out = dirname(abspath(tmp_track.name))
