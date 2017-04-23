@@ -293,12 +293,15 @@ class IntData(object):
             
             if isinstance((row[self.fieldsG_dict["start"]]), basestring):                
                 row[self.fieldsG_dict["start"]] = num(row[self.fieldsG_dict["start"]])
-                
+            
+            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), basestring):                
+                    row[self.fieldsG_dict["end"]] = num(row[self.fieldsG_dict["end"]])
+                    
             list_data.append(tuple(row)) #TODO what is better tuple or list 
         
         #Initialize min, max
         self.min, self.max = self._min_max(list_data)
-        
+
         #Initialize range_values
         self.range_values = list(self._min_max(list_data, t_start="data_value", t_end="data_value"))
         
@@ -763,7 +766,7 @@ class IntData(object):
             list_fields[i] = field
             
         self.fieldsG = list_fields
-        
+        print ("intervals self.max",self.max) #del
         return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
        
 #     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=1,**kwargs):
@@ -837,8 +840,11 @@ class IntData(object):
         if t_end in self.fieldsG_dict.keys():
             i_time = self.fieldsG_dict[t_end]
         
-        t_max = float(max(list_data, key=itemgetter(i_time))[i_time])
-        
+#         t_max = float(max(list_data, key=itemgetter(i_time))[i_time])
+        line_max = max(list_data, key=lambda line: float(line[i_time]))
+#         print (".............................", line_max[i_time])#del
+        t_max = float((line_max[i_time]))
+                      
         if t_min.is_integer(): 
             t_min = int(t_min)
         else:
