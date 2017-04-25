@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from sys      import stderr, exit
 import pergola_rules
 from os.path import dirname, abspath, basename, splitext
-from os import chdir
+from os import chdir, getcwd
 from shutil import copy, rmtree
 
 from tempfile import NamedTemporaryFile, mkdtemp
