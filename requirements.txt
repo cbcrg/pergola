@@ -3,4 +3,5 @@ pybedtools>=0.7
 argparse>=1.0
 biopy-isatab>=0.1
 pandas>=0.7 # indirect pybedtools
-scipy>=0.17
+# better not to install using pip
+# scipy>=0.17
