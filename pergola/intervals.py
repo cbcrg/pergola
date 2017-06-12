@@ -37,7 +37,6 @@ from csv   import reader
 from os import getcwd
 from os.path import join
 from sys import stderr
-# from operator import itemgetter
 # from itertools import groupby 
 from tracks import Track 
 from operator import itemgetter
@@ -97,8 +96,10 @@ class IntData(object):
         Set of tracks in the file. Read from "tracks" field.
         If tracks field not in file, all intervals are set as belonging to track "1" 
         
-    :returns: IntData object 
+    :returns: IntData object
+    
     """
+
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
         self._in_file = open(self.path, "rb")
@@ -123,23 +124,23 @@ class IntData(object):
         """ 
         Check whether the set delimiter works, if delimiter not set then tries ' ', '\t' and ';'
          
-        :param path: :py:func:`str` name of path to a behavioral file in the form of a csv file
+        :param path: :py:func:`str` path to a behavioral file in the form of a csv file
         :param delimiter: :py:func:`str` delimiter used in the file ("tab", ";", "space") 
         
         :returns: delimiter
         
-        """                        
+        """
         for row in self._in_file:
             
             # Comments skipped
             if row.startswith("#"):                 
                 continue
             
-            #Delimiter set by user        
+            # Delimiter set by user
             if row.count(delimiter) >= 1: break
             else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(delimiter))
             
-            #Delimiter guess by function       
+            # Delimiter guess by function
             if row.count(" ") >= 1:
                 self.delimiter = " "
                 break
@@ -166,7 +167,7 @@ class IntData(object):
         
         :returns: list with the behavioral fields
             
-        """ 
+        """
                 
         fieldsB = []
         first_l = []
@@ -235,6 +236,7 @@ class IntData(object):
         :returns: list with the corresponding genomics names of the fields inside behavioral (input) data
          
         """
+
         dict_fields_g = {}
         i_field_b=0
         
@@ -268,7 +270,8 @@ class IntData(object):
         This function just needs to read the raw data set min and maximum, data_types and this stuff
         _read was too complicated
         
-        :returns: list with intervals contained in file, minimum and maximum values inside the file 
+        :returns: list with intervals contained in file, minimum and maximum values inside the file
+         
         """
         
         list_data = list()
@@ -295,8 +298,8 @@ class IntData(object):
         self.min, self.max = self._min_max(list_data)
 
         #Initialize range_values
-        self.range_values = list(self._min_max(list_data, t_start="data_value", t_end="data_value"))
-        
+        self.range_values = list(self._min_max(list_data, f_start="data_value", f_end="data_value"))
+
         # Back to file beginning
         self._in_file.seek(0)
         
@@ -347,17 +350,17 @@ class IntData(object):
 
         return set_fields
     
-    def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None,**kwargs):
+    def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None, **kwargs):
         """        
         Reads the data and converts it depending on selected options
         
-        :param fields: :py:func:`list` with data columns to read
+        :param None fields: :py:func:`list` with data columns to read
         :param False relative_coord: If true all coordinates in start and end are
             make relative to the minimal value
         :param False intervals: if set to true intervals will be inferred from timepoints in
             start 
-        :param fields2rel: :py:func:`list` with data columns to make relative
-        :param multiply_t: :py:func:`int` multiplies the values of the field set as start and 
+        :param None fields2rel: :py:func:`list` with data columns to make relative
+        :param None multiply_t: :py:func:`int` multiplies the values of the field set as start and 
             end
         
         :returns: Track object
@@ -366,7 +369,9 @@ class IntData(object):
         separated function
         Eventually do not change self.data but a list inside read and return the Track object with the modifications
         this way data is always the original one.
+        
         """
+
         _f_rel_mand = "start"
         _f_int_end = "end"
         _f2rel = ["start","end"]
@@ -466,27 +471,35 @@ class IntData(object):
             list_fields[i] = field
             
         self.fieldsG = list_fields
-        print ("intervals self.max",self.max) #del
+
         return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
     
-    def _min_max(self, list_data, t_start="start", t_end="end"):
+    def _min_max(self, list_data, f_start="start", f_end="end"):
         """
-        TODO Documentation
+        Obtains minimum and maximum values from fields set by function parameters 
+        
+        :param list_data: :py:func:`list` with data columns from which to extract the minimum and
+            maximum value
+        :param f_start: :py:func:`str`           
+        :param "start" f_start: :py:func:`str` Field from the list_data to extract minimum value        
+        :param "end" f_end: :py:func:`str` Field from the list_data to extract minimum value
+                
+        :returns: minimum and maximum values
+        
         """
+
         # Min and maximun time points
         t_min = None
         t_max = None
         
-        i_time = self.fieldsG_dict[t_start]
+        i_time = self.fieldsG_dict[f_start]
         
         t_min = float(min(list_data, key=itemgetter(i_time))[i_time])
         
-        if t_end in self.fieldsG_dict.keys():
-            i_time = self.fieldsG_dict[t_end]
-        
-#         t_max = float(max(list_data, key=itemgetter(i_time))[i_time])
+        if f_end in self.fieldsG_dict.keys():
+            i_time = self.fieldsG_dict[f_end]
+
         line_max = max(list_data, key=lambda line: float(line[i_time]))
-#         print (".............................", line_max[i_time])#del
         t_max = float((line_max[i_time]))
                       
         if t_min.is_integer(): 
@@ -499,7 +512,7 @@ class IntData(object):
         else:
             t_max = t_max
         
-        return (t_min, t_max)
+        return t_min, t_max
     
     def _time2rel_time(self, i_fields):
         """
@@ -517,6 +530,7 @@ class IntData(object):
         In principal this should be always in start that is why I have the terms in the ontology!!!!!
         
         """
+
         data_rel = list()
     
         for row in self.data:
@@ -599,13 +613,13 @@ class IntData(object):
         data_int = list()
         _f_int_end = "end"
         
-        #Field is add as supplementary column
+        # Field is add as supplementary column
         end_int = len(self.fieldsG)      
         self.fieldsG_dict[_f_int_end] = end_int
         self.fieldsG.append(_f_int_end)
         
-        #I have to check whther track field exist
-        #if exist then bw tracks I have a last row 
+        # I have to check whther track field exist
+        # if exist then bw tracks I have a last row
         _f_track = "track"
         i_track = None
         track_sw = False
@@ -618,7 +632,7 @@ class IntData(object):
 #         if tr != p_tr:
 #             lfl
             
-        #All items except last
+        # All items except last
         for i in range(len(self.data[:-1])):
 #             if p_track and p_track == self.data[i][i_track]:
             
@@ -652,7 +666,9 @@ def is_number(var):
     :param factor: :py:func:`str` :py:func:`int` :py:func:`float` variable to check
     
     :returns: :py:func:`boolean` True when input variable is a number otherwise False
+    
     """
+
     try:
         float(var)
         return True
@@ -661,6 +677,15 @@ def is_number(var):
 
 
 def num(s):
+    """
+    Returns integer or float from string
+
+    :param s: :py:func:`str` string to be transformed to numeric
+
+    :returns: numeric type
+    
+    """
+
     try:
         return int(s)
     except ValueError:

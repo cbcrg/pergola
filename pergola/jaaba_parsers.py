@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -69,7 +69,6 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
             raise IOError('Provided path does not exists: %s' % path_w)
     
     input_file = check_path(input_file)
-#     jaaba_data = io.loadmat(input_file)
     jaaba_data = loadmat(input_file)
     
     # Checking JAABA version
@@ -97,7 +96,7 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     scoreFile.write(delimiter.join(header) + "\n")
     
     if norm:
-        #Dirty way of solving problem with ipython notebook, division was not working there        
+        # Dirty way of solving problem with ipython notebook, division was not working there
         score_norm = float(score_norm)
         scores_flat = divide(scores_flat, score_norm)
     
@@ -133,8 +132,9 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     :param data_type: :py:func:`str` data type in the file "behavior" e.g. chase
     
     :returns: IntData object
-    """
     
+    """
+
     path = ""
     header = ["animal", "startTime", "endTime", "value", "dataType"]
     input_file = check_path(input_file)
@@ -164,7 +164,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     temp.write(delimiter.join(header) + "\n")
     
     if norm:
-        #Dirty way of solving problem with ipython notebook, division was not working there
+        # Dirty way of solving problem with ipython notebook, division was not working there
         score_norm = float(score_norm)
         scores_flat = divide(scores_flat, score_norm)
          
@@ -211,6 +211,7 @@ def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimit
     :param None path_w: :py:func:`str` path to dump the files
     
     returns: IntData object
+    
     """
     
     input_path = join(dir_perframe, feature + ".mat")

@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -41,8 +41,10 @@ def parse_isatab_assays(isatab_dir):
     
     :return: :py:func:`dict` of files to be processed by pergola
      
-    TODO: This functions needs that the assays to be process are tag some way
+    TODO: This function needs that the assays to be processed are tagged some way
+    
     """
+
     dict_files = dict()
     
 #     if not path.isdir(isatab_dir):
@@ -51,22 +53,14 @@ def parse_isatab_assays(isatab_dir):
     
     rec = isatab.parse(isatab_dir) 
     
-    #Sample name are the key shared by both study and assay
+    # Sample name are the key shared by both study and assay
     for i in rec.studies:
-#         print "studies are", i
-#         print "..................",i.assays
-#         print i.assays.node['metadata']
         for j in i.assays:
-#             print "assays are:", j
-#             print "-----------", j.nodes
             for file in j.nodes.keys():
-#                 print j.nodes[file].metadata['Sample Name'][0]
                 key = j.nodes[file].metadata['Sample Name'][0]
-#                 print "key.................", key
-#                 print "---------------type", type (dict_files)
-#                 print "-------------------------",type (key)
+
                 dict_files[key] = file
-#                 print "file to process is ------------------",file
+
     return dict_files
 
 def check_assay_pointer(pointer, download_path):
@@ -77,13 +71,15 @@ def check_assay_pointer(pointer, download_path):
     :param pointer: :py:func:`str` path to a file or URL
     :param download_path: :py:func:`str` path to download files if they are specified as an URL  
     
-    :returns: path of file to be processed        
+    :returns: path of file to be processed 
+           
     """
+
     # We check that the files has not been previously downloaded 
     file_name = pointer.split('/')[-1]
     path_file = join(download_path, file_name)
     
-    #Checking if pointer is a file
+    # Checking if pointer is a file
     if isfile(pointer):
        print >>stderr, "\nPointer in isatab assays \"%s\" is a file in the system" % pointer
        return (pointer)   
@@ -98,7 +94,7 @@ def check_assay_pointer(pointer, download_path):
             local_file = open(path_file, "w")
             local_file.write(url_file.read())
             print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)
-            return (path_file)
+            return path_file
         except (HTTPError, ValueError):
             raise ValueError("Pointer inside isatab assays table is either a file in your system nor a valid URL %s: " %
                              pointer)
@@ -108,7 +104,9 @@ def internet_on():
     Checks whether there is an available internet connection
     
     :returns: :py:func:`boolean` True when internet connection is available otherwise False
+    
     """
+
     try:
         response=urlopen('http://www.google.com', timeout=1)
         return True
