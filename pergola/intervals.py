@@ -38,12 +38,12 @@ from os import getcwd
 from os.path import join
 from sys import stderr
 # from itertools import groupby 
-from tracks import Track 
+from tracks import Track
 from operator import itemgetter
 from re import split, search
 from math import pow
 
-class IntData(object): 
+class IntData(object):
     """
     Generic class for input data
     
@@ -105,21 +105,21 @@ class IntData(object):
         self._in_file = open(self.path, "rb")
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = header
-        
+
         self._reader =  reader(self._in_file, delimiter=self.delimiter)
-        
+
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
         self.fieldsG = self.fieldsG_dict.keys() #here before I added the new fields
 
         self.min = self.max = 0
         self.range_values = 0
-        self.data = self._simple_read()        
+        self.data = self._simple_read()
 #         self.data = self._read(multiply_t = kwargs.get('multiply_t', 1), intervals=kwargs.get('intervals', False))
         self.data_types = self.get_field_items(field ="data_types", data = self.data, default="a")
         self.tracks = self.get_field_items(field="track", data = self.data, default="1")#TODO maybe this function will be more general if instead of giving field name
-        #i pass the index 
-        
+        #i pass the index
+
     def _check_delimiter (self, path, delimiter):
         """ 
         Check whether the set delimiter works, if delimiter not set then tries ' ', '\t' and ';'
@@ -131,15 +131,15 @@ class IntData(object):
         
         """
         for row in self._in_file:
-            
+
             # Comments skipped
-            if row.startswith("#"):                 
+            if row.startswith("#"):
                 continue
-            
+
             # Delimiter set by user
             if row.count(delimiter) >= 1: break
             else: raise ValueError("Input delimiter does not correspond to delimiter found in file \'%s\'"%(delimiter))
-            
+
             # Delimiter guess by function
             if row.count(" ") >= 1:
                 self.delimiter = " "
@@ -149,15 +149,15 @@ class IntData(object):
                 break
             if row.count(";") >= 1:
                 self.delimiter = ";"
-                break      
-        
-        if delimiter is None: 
+                break
+
+        if delimiter is None:
             raise ValueError("Delimiter must be set \'%s\'"%(delimiter))
-        
+
         self._in_file.seek(0)
-           
+
         return delimiter
-    
+
     def _set_fields_b(self, fields=None):
         """
         Reading the behavioral fields from the header file or otherwise setting  
@@ -168,65 +168,65 @@ class IntData(object):
         :returns: list with the behavioral fields
             
         """
-                
+
         fieldsB = []
         first_l = []
-        
-        for row in self._reader:            
+
+        for row in self._reader:
             if row[0].startswith("#"):
                 continue
             else:
-                first_l = row                
+                first_l = row
                 break
-            
-        if self.header:            
+
+        if self.header:
             header = first_l
             first_r = self._reader.next()
-                                    
+
             if len(header) != len(first_r):
-                raise ValueError("Number of fields in header '%d' does not match number of fields in first row '%d'" 
+                raise ValueError("Number of fields in header '%d' does not match number of fields in first row '%d'"
                                  % (len(header), len(first_r)))
-            
+
             if fields:
                 if len(fields) > len(first_r):
-                    raise ValueError("Input field list \"%s\" is longer than totals fields available in file \'%s\'" 
+                    raise ValueError("Input field list \"%s\" is longer than totals fields available in file \'%s\'"
                                      % ("\",\"".join(fields), len(first_r)))
-                
+
                 if not all(field in header for field in fields):
                     raise ValueError("Input field list \"%s\" has items not present in file header \'%s " 
                                      '\n'
                                      "Also make sure you don't need to set header=False"
                                      % ("\",\"".join(fields), "\",\"".join(header)))
-                
+
                 ori_fieldsB = [header[0].strip('# ')]+header[1:]  #del
-                                
+
                 for f in ori_fieldsB:
                     if f in fields: fieldsB.append(f)
-                    else: fieldsB.append("")      
-                                         
-            else:       
-                fieldsB = [header[0].strip('# ')]+header[1:]        
+                    else: fieldsB.append("")
+
+            else:
+                fieldsB = [header[0].strip('# ')]+header[1:]
         else:
             first_r = first_l
-            
+
             if fields:
                 if len(fields) > len(first_r):
-                    raise ValueError("Input field list \"%s\" is longer than totals fields available in file \'%s\'" % ("\",\"".join(fields), len(first_r)))            
-                            
+                    raise ValueError("Input field list \"%s\" is longer than totals fields available in file \'%s\'" % ("\",\"".join(fields), len(first_r)))
+
                 fieldsB = fields
-                
+
                 print >>stderr, ("WARNING: As header=False you col names set by fields will be considered to have the order "
-                        "you provided: \"%s\"" 
-                        %"\",\"".join(fields))                 
-            else:                                
+                        "you provided: \"%s\""
+                        %"\",\"".join(fields))
+            else:
                 raise ValueError ('File should have a header, otherwise you should set ' 
-                                  'an ordered list of columns names using fields')     
-                
+                                  'an ordered list of columns names using fields')
+
 #         self.in_file.close()
-        self._in_file.seek(0)        
-        
+        self._in_file.seek(0)
+
         return fieldsB
-    
+
     def _set_fields_g (self, map_dict):
         """
         Extracts the correspondence of fields in genomic grammar of the behavioral file.
@@ -239,7 +239,7 @@ class IntData(object):
 
         dict_fields_g = {}
         i_field_b=0
-        
+
         for field_B in self.fieldsB:
             if field_B:
                 try:
@@ -247,24 +247,24 @@ class IntData(object):
                 except KeyError:
                     raise KeyError ("Field %s is not mapped in your ontology mapping. " \
                                     "TIP: Fields that are not use from the input data have to be set to dummy " \
-                                    "in the ontology mapping. Example: behavioral_file:%s > pergola:dummy"                               
-                                    % (field_B, field_B))                                                                                                                        
+                                    "in the ontology mapping. Example: behavioral_file:%s > pergola:dummy"
+                                    % (field_B, field_B))
                 dict_fields_g[map_dict [field_B]] = i_field_b
-            i_field_b = i_field_b + 1                    
-        
-        name_fields_g = [map_dict[k] for k in self.fieldsB if k]   
-        
+            i_field_b = i_field_b + 1
+
+        name_fields_g = [map_dict[k] for k in self.fieldsB if k]
+
         #Input file at least should have two fields that correspond to:
         mandatory_fields = ["start", "data_value"]
-        
+
         if not all(f in dict_fields_g.keys() for f in mandatory_fields):
             raise ValueError("Input file mandatory fields  are \"start\" and \"data_value\" \n" \
                              "Your current assigned fields are \"%s\"\n" \
-                             "TIP: Check your ontology_file"                               
-                             % ("\",\"".join(name_fields_g)))            
+                             "TIP: Check your ontology_file"
+                             % ("\",\"".join(name_fields_g)))
 
         return dict_fields_g
-    
+
     def _simple_read(self):
         """
         This function just needs to read the raw data set min and maximum, data_types and this stuff
@@ -273,27 +273,27 @@ class IntData(object):
         :returns: list with intervals contained in file, minimum and maximum values inside the file
          
         """
-        
+
         list_data = list()
         header_check = False
 #
         for row in self._reader:
             # Comments skipped
-            if row[0].startswith("#"):                 
+            if row[0].startswith("#"):
                 continue
 
-            if self.header and not header_check: 
-                header_check = True 
+            if self.header and not header_check:
+                header_check = True
                 continue
-            
-            if isinstance((row[self.fieldsG_dict["start"]]), basestring):                
+
+            if isinstance((row[self.fieldsG_dict["start"]]), basestring):
                 row[self.fieldsG_dict["start"]] = num(row[self.fieldsG_dict["start"]])
-            
-            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), basestring):                
+
+            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), basestring):
                     row[self.fieldsG_dict["end"]] = num(row[self.fieldsG_dict["end"]])
-                    
-            list_data.append(tuple(row)) #TODO what is better tuple or list 
-        
+
+            list_data.append(tuple(row)) #TODO what is better tuple or list
+
         #Initialize min, max
         self.min, self.max = self._min_max(list_data)
 
@@ -302,10 +302,10 @@ class IntData(object):
 
         # Back to file beginning
         self._in_file.seek(0)
-        
+
         return (list_data)
-    
-    def get_field_items(self, data, field="data_types", default=None): 
+
+    def get_field_items(self, data, field="data_types", default=None):
         """
         Reads the unique values inside a field and returns them as a set
         If default is set and field does not exist in the data then the field is
@@ -322,34 +322,34 @@ class IntData(object):
         """
 
         set_fields = set()
-        
-        if field in self.fieldsG:            
+
+        if field in self.fieldsG:
             idx_field = self.fieldsG_dict[field]
-            field = [field]    
-            
+            field = [field]
+
             for row in self.data:
                 set_fields.add(row[idx_field])
-                    
+
         elif default:
             new_data = list()
             new_field = (default,)
-            
+
             set_fields.add(default)
-            
+
             for row in self.data:
                 row = row + new_field
-                new_data.append(row)    
-            
+                new_data.append(row)
+
             self.data = new_data
             pos = len(self.fieldsG)
             self.fieldsG.append(str(field))
             self.fieldsG_dict[field]=pos
-            
+
         else:
-            raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default)) 
+            raise ValueError("Data has not field \'%s\' and no default value has been set \'%s\'"%(field, default))
 
         return set_fields
-    
+
     def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None, **kwargs):
         """        
         Reads the data and converts it depending on selected options
@@ -377,103 +377,104 @@ class IntData(object):
         _f2rel = ["start","end"]
         _f2mult = ["start","end"]
         i_time_f = [10000000000000]
-        
-        #If fields is not set then all the data columns are read
+
+        # If fields is not set then all the data columns are read
         if fields is None:
             fields = self.fieldsG
             indexL = range(len(self.fieldsG))
         else:
             try:
-                indexL = [self.fieldsG.index(f) for f in fields] 
-                 
+                indexL = [self.fieldsG.index(f) for f in fields]
+
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
-        
+
         # If start not present out     
         try:
- 
-            idx_fields2int = self.fieldsG_dict[_f_rel_mand] 
+
+            idx_fields2int = self.fieldsG_dict[_f_rel_mand]
         except ValueError:
-            raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s." 
+            raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s."
                              % (_f_rel_mand, self.path))
-                                            
+
         ##################################
         # If there are several tracks we order by track
         # Control for interval change bw tracks        
         _f_track = "track"
         i_track = None
-        
+
         if _f_track in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_f_track]
-            
-            if all(row[i_track].isdigit() for row in self.data):                
+
+            if all(row[i_track].isdigit() for row in self.data):
                 self.data = sorted(self.data, key=lambda x: (int(x[i_track]), x[idx_fields2int]))
             else:
                 self.data = sorted(self.data, key=itemgetter(i_track, idx_fields2int))
-                            
+
         # Coordinates multiplied by a given factor set by the user
         if multiply_t:
-            print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t 
-                        
-            try:            
+            print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t
+
+            try:
                 f=""
-                name_fields2mult = [f for f in _f2mult if f in self.fieldsG_dict] 
-                idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]                
+                name_fields2mult = [f for f in _f2mult if f in self.fieldsG_dict]
+                idx_fields2mult = [self.fieldsG_dict[f] for f in name_fields2mult]
             except ValueError:
                 raise ValueError("Field '%s' not in file %s." % (f, self.path))
-            
+
             self.data = self._multiply_values(i_fields=idx_fields2mult, factor=multiply_t)
-            
+
         # Coordinates transformed into relative to the minimun time point
         print >>stderr, "Relative coordinates set to:", relative_coord
-                
+
         if relative_coord:
             if fields2rel is None:
                 # Do I have intervals or single points
                 f2rel = list(set(_f2rel) & set(self.fieldsG))
-                if f2rel is None: 
+                if f2rel is None:
                     raise ValueError("You need at least a field containing time points when relative_coord=T. %s" % (self.fieldsG))
-                
+
             else:
                 # Are the provided fields present in data and are numeric #TODO en realidad si no es numerico ya petara
                 if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
                 f2rel = [f for f in fields2rel if f in self.fieldsG]
-            
+
             # Getting indexes of fields to relativize
             try:
-                i_time_f = [self.fieldsG_dict[f] for f in f2rel]                
+                i_time_f = [self.fieldsG_dict[f] for f in f2rel]
             except ValueError:
                 raise ValueError("Field '%s' not in file %s mandatory when option relative_coord=T." % (f, self.path))
 
             self.data = self._time2rel_time(i_time_f)
-            
+
         # From only start value for each time point we generate intervals
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"
-            
+
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
-                        
+
             self.data = self._create_int(idx_fields2int)
-        
+            # self.data = self._create_int_add_integ(idx_fields2int)
+
         # To continue intervals are mandatory
         try:
-            i_max = self.fieldsG_dict[_f_int_end]              
+            i_max = self.fieldsG_dict[_f_int_end]
         except KeyError:
             raise KeyError("Field '%s' for max interval calculation time not in file %s. " \
-                           "TIP: You can transform timepoints to intervals setting intervals=True"                         
+                           "TIP: You can transform timepoints to intervals setting intervals=True"
                            % (_f_int_end, self.path))
- 
+
         # Updated and order list of the fields        
         list_fields = [None] * len(self.fieldsG_dict)
-        
+
         for field, i in self.fieldsG_dict.iteritems():
             list_fields[i] = field
-            
+
         self.fieldsG = list_fields
 
-        return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max) 
-    
+        return Track(self.data, self.fieldsG, data_types=self.data_types, list_tracks=self.tracks, range_values=self.range_values, min=self.min, max=self.max)
+
     def _min_max(self, list_data, f_start="start", f_end="end"):
         """
         Obtains minimum and maximum values from fields set by function parameters 
@@ -491,29 +492,29 @@ class IntData(object):
         # Min and maximun time points
         t_min = None
         t_max = None
-        
+
         i_time = self.fieldsG_dict[f_start]
-        
+
         t_min = float(min(list_data, key=itemgetter(i_time))[i_time])
-        
+
         if f_end in self.fieldsG_dict.keys():
             i_time = self.fieldsG_dict[f_end]
 
         line_max = max(list_data, key=lambda line: float(line[i_time]))
         t_max = float((line_max[i_time]))
-                      
-        if t_min.is_integer(): 
+
+        if t_min.is_integer():
             t_min = int(t_min)
         else:
             t_min = t_min
-        
-        if t_max.is_integer(): 
+
+        if t_max.is_integer():
             t_max = int(t_max)
         else:
             t_max = t_max
-        
+
         return t_min, t_max
-    
+
     def _time2rel_time(self, i_fields):
         """
         Calculates relative values of selected data columns 
@@ -532,29 +533,29 @@ class IntData(object):
         """
 
         data_rel = list()
-    
+
         for row in self.data:
             temp = []
             for i in range(len(row)):
-                
+
                 if i in i_fields:
-                    
+
                     if is_number(row[i]):
                         n = float(row[i])
-                        
-                        if n % 1 == 0:                        
-#                             temp.append(int(row[i])- self.min + 1)
+
+                        if n % 1 == 0:
+                            # temp.append(int(row[i])- self.min + 1)
                             temp.append(int(row[i]) - self.min)
-                        else: 
+                        else:
                             raise ValueError("Value can not be relativize because is not an integer \'%.16f\'" \
                                             ". Use option -mi,--multiply_intervals n"%(row[i]))  #correct this is only true for pergola_rules
                 else:
                     temp.append(row[i])
-    
-            data_rel.append((tuple(temp)))   
-        
-        self.min, self.max = self._min_max(data_rel)    
-        
+
+            data_rel.append((tuple(temp)))
+
+        self.min, self.max = self._min_max(data_rel)
+
         return (data_rel)
 
     def _multiply_values(self, i_fields, factor=1):
@@ -570,18 +571,19 @@ class IntData(object):
         TODO change min and max of the data to new values
         The simpler way is multiply this values as well
         I don't need to generate a temporal list do I?
-        For this think maybe is better to have a list of list than a list of tupple
+        For this think maybe is better to have a list of list than a list of tuple
+        
         """
         data_mult = list()
-                
+
         for row in self.data:
             temp = []
             for i in range(len(row)):
-                
+
                 if i in i_fields:
                     value = row[i]
 #                     value = row[i].replace(" ", "")
-                                        
+
                     if is_number(value):
                         v_m = round (float(row[i]) * factor, 6)
                         v_i = int(v_m)
@@ -589,20 +591,81 @@ class IntData(object):
                             raise ValueError ("Intervals values (start and end) can not be decimal\nPlease use a bigger factor " \
                                               "with -m,--multiply_intervals flag to multiply your values, current value is %s"%factor)
                         temp.append(v_i)
-                        
-                    else: 
+
+                    else:
                         raise ValueError("Value can not be multiplied because is not a number \'%s\'" \
-                                            "\nCheck mapping of fields in your input file n"%(row[i]))  #corregir    
+                                            "\nCheck mapping of fields in your input file n"%(row[i]))  #corregir
                 else:
                     temp.append(row[i])
-    
-            data_mult.append((tuple(temp)))             
-        
+
+            data_mult.append((tuple(temp)))
+
         self.min, self.max = self._min_max(data_mult)
-        
-        return (data_mult) #Correct eventually self.data in a list of list directly modificable
+
+        return (data_mult) # Correct eventually self.data in a list of list directly modificable
 
     def _create_int(self, start_int):
+        """
+        From single time points generates intervals of time
+
+        :param start_int: :py:func:`int` with index containing time points 
+
+        :returns: list of tuples (self.data-like)
+        """
+        data_int = list()
+        _f_int_end = "end"
+
+        # Field is add as supplementary column
+        end_int = len(self.fieldsG)
+        self.fieldsG_dict[_f_int_end] = end_int
+        self.fieldsG.append(_f_int_end)
+
+        # I have to check whether track field exists
+        # if exists then bw tracks I have a last row
+        _f_track = "track"
+        i_track = None
+        track_sw = False
+
+        if _f_track in self.fieldsG_dict:
+            i_track = self.fieldsG_dict[_f_track]
+            #             p_track = self.data[0][i_track]
+            track_sw = True
+
+            #         if tr != p_tr:
+            #             lfl
+
+        # All items except last
+        for i in range(len(self.data[:-1])):
+            # if p_track and p_track == self.data[i][i_track]:
+
+            row = self.data[i]
+
+            # If the track is still the same
+            if track_sw:
+                if row[i_track] == self.data[i + 1][i_track]:
+                    if (self.data[i][start_int],) == (self.data[i + 1][start_int],):
+                        value_end = (self.data[i + 1][start_int] + 1,)
+                    else:
+                        value_end = (self.data[i + 1][start_int] - 1,)
+                else:
+                    value_end = (row[start_int] + 1,)
+
+            else:
+                value_end = (self.data[i + 1][start_int] - 1,)
+
+            temp = row + value_end
+            data_int.append((tuple(temp)))
+
+        # Last item
+        last_row = self.data[-1]
+        value_end = (last_row[start_int] + 1,)
+        temp = last_row + value_end
+
+        data_int.append((tuple(temp)))
+
+        return (data_int)
+
+    def _create_int_add_integ(self, start_int, integer=1):
         """
         From single time points generates intervals of time
         
@@ -612,53 +675,26 @@ class IntData(object):
         """
         data_int = list()
         _f_int_end = "end"
-        
+
         # Field is add as supplementary column
-        end_int = len(self.fieldsG)      
+        end_int = len(self.fieldsG)
         self.fieldsG_dict[_f_int_end] = end_int
         self.fieldsG.append(_f_int_end)
-        
-        # I have to check whther track field exist
-        # if exist then bw tracks I have a last row
-        _f_track = "track"
-        i_track = None
-        track_sw = False
-        
-        if _f_track in self.fieldsG_dict:
-            i_track = self.fieldsG_dict[_f_track]
-#             p_track = self.data[0][i_track]
-            track_sw = True
-        
-#         if tr != p_tr:
-#             lfl
-            
+
         # All items except last
-        for i in range(len(self.data[:-1])):
-#             if p_track and p_track == self.data[i][i_track]:
-            
+        for i in range(len(self.data)):
+
             row = self.data[i]
-            
-            if track_sw:
-                if row[i_track] == self.data[i+1][i_track]:
-                    value_end = (self.data[i+1][start_int]-1,)                    
-                else:
-                    value_end = (row[start_int] + 1,)
-                                    
-            else:
-                value_end = (self.data[i+1][start_int]-1,)
-            
-            temp = row + value_end 
+            value_end = (row[start_int] + integer,)
+
+            temp = row + value_end
             data_int.append((tuple(temp)))
-                
-        #Last item
-        last_row = self.data[-1]
-        value_end = (last_row[start_int] + 1,)
-        temp = last_row + value_end
-        
-        data_int.append((tuple(temp)))
-            
-        return (data_int)  
-       
+
+        # data_int.append((tuple(temp)))
+
+        return (data_int)
+
+
 def is_number(var):
     """
     Checks whether an string is a number, if is already an integer or float it also returns True
