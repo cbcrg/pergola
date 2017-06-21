@@ -31,11 +31,11 @@ This module provides the way to read scripts options provided by pergola library
 from sys       import stderr
 from argparse  import ArgumentParser, ArgumentTypeError
 from re        import match
-from os        import makedirs
+# from os        import makedirs
 from os.path   import join, exists, abspath, split, realpath
-from scipy.io  import loadmat
+# from scipy.io  import loadmat
 from mapping   import check_path
-from intervals import IntData
+# from intervals import IntData
 
 _csv_file_ext = ".csv"
 
@@ -43,6 +43,7 @@ _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
 
 PATH = abspath(split(realpath(__file__))[0])
+
 
 def parse_num_range(string):
     """ 
@@ -66,6 +67,7 @@ def parse_num_range(string):
     set_range=set(['{0}'.format(t) for t in list_range]) #str because track can be set in the form of track_1 for instance
     
     return set_range
+
 
 def read_track_actions (tracks, track_action = "split_all"):
     """ 
@@ -98,7 +100,8 @@ def read_track_actions (tracks, track_action = "split_all"):
         print >> stderr,("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks)))
         
     return (tracks2merge)
-   
+
+
 def read_colors (path_color_file):
     """     
     Reads user colors for each data_type  
@@ -106,8 +109,9 @@ def read_colors (path_color_file):
     :param None path_color_file: :py:func:`str` path to read user color for data_types     
        
     :returns: d_user_color dictionary {'data_type_1': 'orange', 'data_type_2':'blue'}
+    
     """
-        
+
     check_path(path_color_file)
     comment_tag_t = "#"    
     d_user_color = {}                            
@@ -127,10 +131,13 @@ def read_colors (path_color_file):
     
     return d_user_color
 
-###############
-### Argument parsing
-### pergola_rules.py
+""""   
+Parsers arguments of pergola_rules.py script (aka pergola)
+
+"""
+
 parent_parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
+
 parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
 parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
                     help='File to set the reciprocity between fields in behavioral file and terms used by Pergola' + \
@@ -180,10 +187,13 @@ parent_parser.add_argument('-min', '--min_time', type=int, required=False,
 parent_parser.add_argument('-max', '--max_time', type=int, required=False,
                            help='Last time point to extract')
 
-##############
-### Argument parsing jaaba_to_pergola.py
+""""   
+Parsers argument of jaaba_to_pergola.py script
+
+"""
+
 jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
-                                       add_help=False)
+                              add_help=False)
 
 subparsers = jaaba_parser.add_subparsers(help='Calls pergola_rules.py', dest='command')
 jaaba_parser_sp = subparsers.add_parser('sp', help="Converts Jaaba data and process it using pergola", parents=[parent_parser])

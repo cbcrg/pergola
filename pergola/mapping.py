@@ -1,6 +1,6 @@
 #
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -33,9 +33,9 @@ from a mapping file.
 """
 from re      import compile, match
 from os      import getcwd
-from sys     import stderr, exit
+from sys     import stderr
 from os.path import join
-from tracks import Track
+from tracks  import Track
 
 _genome_file_ext = ".fa"
 _generic_nt = "N"
@@ -44,7 +44,8 @@ _bed_file_ext = ".bed"
 _chrm_size_ext = ".sizes"
 
 _p_ontology_terms = ["start", "data_value", "end", "data_types", "track", "chrom", "dummy"]
-                    
+
+
 class MappingInfo():
     """
     Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields
@@ -66,39 +67,56 @@ class MappingInfo():
     def __init__(self, path, **kwargs):
         self.path = check_path(path)
         self.correspondence = self._correspondence_from_config(self.path)
-    
-    #TODO documentation
+
     def _correspondence_from_config(self, path):
+        """
+        Recognizes the type of mapping file tab separated or the External Mapping File Format
+        from the Gene Ontology Consortium. Deletes comments        
+
+        :param path: :py:func:`str` path to the mapping file aka configuration file
+
+        :returns: dictionary with mappings
+
+        """
+
         with open(path) as config_file:
-            #Eliminates possible empty lines at the end
+            # Eliminates possible empty lines at the end
             config_file_list = filter(lambda x:  not match(r'^\s*$', x), config_file)
             
             if config_file_list[0][0] == '#':
-                del config_file_list [0]
-                return(self._tab_config(config_file_list))
+                del config_file_list[0]
+                return self._tab_config(config_file_list)
 
             elif config_file_list[0][0] == '!':
                 del config_file_list[:1]
-                return(self._mapping_config(config_file_list))
+                return self._mapping_config(config_file_list)
             else:
                 raise TypeError("Mapping file format is not recognized: \"%s\"." % (path))
-                
-    #TODO documentation            
+
     def _tab_config(self, file_tab):
+        """
+        Reads mappings from a tab separated files        
+       
+        :param file_tab: :py:func:`list` with the content of mapping file 
+        
+        :returns: dictionary with mappings
+
+        """
+
         dict_correspondence = {}
         comment_tag_t = "#"
         
         dummy_ctr=0
         
         for row in file_tab:
-            if(row.startswith(comment_tag_t)):               
+            if(row.startswith(comment_tag_t)):
                 continue
                                     
             row_split = row.rstrip('\n').split('\t')
             file_term = row_split[0]
             pergola_term = row_split[1]
             
-            #Validation of the ontology term
+            # Validation of the ontology term
             if pergola_term not in _p_ontology_terms:
                 raise ValueError("Term %s is not a valid pergola term." % (pergola_term))
             
@@ -107,13 +125,23 @@ class MappingInfo():
                     dummy_ctr = dummy_ctr + 1
             
             dict_correspondence[file_term] = pergola_term
+
         return (dict_correspondence)    
-    
-    #TODO documentation
+
     def _mapping_config(self, file_map):
+        """
+        Reads mappings from a file formatted following the External Mapping File Format
+        from the Gene Ontology Consortium      
+
+        :param file_map: :py:func:`list` with the content of mapping file 
+
+        :returns: dictionary with mappings
+
+        """
+
         dict_correspondence = {}
         mapping_l_ex = "tag_file:field_input_file > pergola:pergola_ontology_term"
-        #comment_tag = ("#", "!")
+        # comment_tag = ("#", "!")
         comment_tag_m = "!"
 #         p_mapping = compile(r'^\w+\:\w+\s\>\s\w+\:\w+') 
         p_mapping = compile(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ") 
@@ -127,7 +155,7 @@ class MappingInfo():
                 file_term = l[0].split(":")[1].rstrip()
                 pergola_term = l[1].split(":")[1].rstrip('\t\n')
                 
-                #Validation of the ontology term
+                # Validation of the ontology term
                 if pergola_term not in _p_ontology_terms:
                     raise ValueError("Term %s is not a valid pergola term." % (pergola_term))
                 
@@ -153,6 +181,7 @@ class MappingInfo():
         :param 0 indent: :py:func:`int` set indent to be used when writing 
         
         """
+
         for key, value in self.correspondence.iteritems():
             print '\t' * indent + str(key),
             
@@ -161,18 +190,24 @@ class MappingInfo():
             else:
                 print '\t' * (indent+1) + str(value)
 
+
 def check_path(path):
     """ 
     Check whether the input file exists and is accessible and if OK returns path
+    
     :param path: path to the intervals file
     
+    :returns: the path assessed
+    
     """
+
     assert isinstance(path, basestring), "Expected string or unicode, found %s." % type(path)
     try:
         open(path, "r")
     except IOError:
         raise IOError('File does not exist: %s' % path)
     return path      
+
 
 def write_chr(self, mode="w", path_w=None):
     """
@@ -183,6 +218,7 @@ def write_chr(self, mode="w", path_w=None):
     :param None path_w: :py:func:`str` path to dump the files, by default None 
     
     """
+
     assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
     
     chrom = 'chr1'
@@ -201,6 +237,7 @@ def write_chr(self, mode="w", path_w=None):
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 
+
 def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     """    
     Creates a text file of the length of the "chromomosomes" that is needed to 
@@ -210,6 +247,7 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     :param None path_w: :py:func:`str` path to dump the files, by default None 
     
     """
+
     assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
     
     chrom = 'chr1'
@@ -235,6 +273,7 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     chrom_size_f.close()
     print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
 
+
 def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True, track_line=True):
     """
     Creates a cytoband-like and a bed file with phases of the experiment 
@@ -249,8 +288,10 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
         shows "."
     :param True track_line: If true includes track_line in the file 
     TODO: extend light and dark to other possible values using variables
-          Eventually separate into two different functions write_cytoband and write_bed 
+          Eventually separate into two different functions write_cytoband and write_bed
+    
     """
+
     t = 0
     end_t = 0
     path = ""
@@ -355,7 +396,8 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
     phases_bed_file.close()
     phases_bed_light_f.close()
     phases_bed_dark_f.close()
-    
+
+
 def write_period_seq (end, start=0, delta=43200, tag="day", mode="w", path_w=None, name_file="period_seq", lab_bed=True, track_line=True):
     """
     Creates a cytoband-like and a bed file with phases of the experiment 
@@ -370,7 +412,9 @@ def write_period_seq (end, start=0, delta=43200, tag="day", mode="w", path_w=Non
     :param True lab_bed: If true shows label corresponding to dataType in bed file otherwise 
         shows "."
     :param True track_line: If true includes track_line in the file 
+    
     """
+
     t = 0
     end_t = 0
     path = ""

@@ -33,15 +33,15 @@ to map tracks that are genereted by the application
 """
 
 from mapping import check_path
-from csv   import reader
-from os import getcwd
-from os.path import join
-from sys import stderr
+from csv      import reader
+# from os import getcwd
+# from os.path import join
+from sys      import stderr
 # from itertools import groupby 
-from tracks import Track
+from tracks   import Track
 from operator import itemgetter
-from re import split, search
-from math import pow
+# from re import split, search
+# from math import pow
 
 class IntData(object):
     """
@@ -294,10 +294,10 @@ class IntData(object):
 
             list_data.append(tuple(row)) #TODO what is better tuple or list
 
-        #Initialize min, max
+        # Initialize min, max
         self.min, self.max = self._min_max(list_data)
 
-        #Initialize range_values
+        # Initialize range_values
         self.range_values = list(self._min_max(list_data, f_start="data_value", f_end="data_value"))
 
         # Back to file beginning
@@ -611,6 +611,7 @@ class IntData(object):
         :param start_int: :py:func:`int` with index containing time points 
 
         :returns: list of tuples (self.data-like)
+        
         """
         data_int = list()
         _f_int_end = "end"
@@ -672,6 +673,7 @@ class IntData(object):
         :param start_int: :py:func:`int` with index containing time points 
         
         :returns: list of tuples (self.data-like)
+        
         """
         data_int = list()
         _f_int_end = "end"

@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -41,17 +41,17 @@ class for BedGraph files.
 
 """
 
-from os  import getcwd
-from sys import stderr, exit
-from os.path import join
-from operator import itemgetter
-from itertools import groupby
-from numpy import arange 
+from os         import getcwd
+from sys        import stderr, exit
+from os.path    import join
+from operator   import itemgetter
+from itertools  import groupby
+from numpy      import arange
 import tempfile
 from pybedtools import BedTool
 from ntpath import split as path_split
 
-#Contains class and file extension
+## Contains class and file extension
 _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),              
               'bedGraph': ('BedGraph', 'track_convert2bedGraph', '.bedGraph'),
               'gff': ('Gff', 'track_convert2gff', '.gff'),
@@ -68,7 +68,7 @@ _dict_file = {'bed' : ('Bed', 'track_convert2bed', '.bed'),
 
 n_interval = 4
 
-# short gradients
+## short gradients
 _black_gradient = ["170,170,170", "113,113,113", "85,85,85", "56,56,56", "28,28,28", "0,0,0"]
 _blue_gradient = ["135,206,250", "65,105,225", "0,0,255", "0,0,205", "0,0,139", "0,0,128"] 
 _red_gradient = ["254,134,142", "254,96,101", "254,77,81", "254,57,61", "254,38,40", "254,19,20"]
@@ -85,6 +85,7 @@ _dict_colors = {
 # _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000] #del
 
 _max_file_name_len = 100
+
 
 class GenomicContainer(object):
     """
@@ -120,6 +121,7 @@ class GenomicContainer(object):
     :returns: GenomicContainer object
         
     """
+
     def __init__(self, data, fields=None, data_types=None, **kwargs):
         if isinstance(data,(tuple)):            
             data = iter(data)
@@ -138,11 +140,11 @@ class GenomicContainer(object):
         return self.data
 
     def next(self):
-        """
-        
+        """        
         :returns: next item in iterator
          
         """
+
         return self.data.next()
     
     def save_track(self, mode="w", path=None, name_file=None, track_line=True, bed_label=False, gff_label=False):
@@ -202,7 +204,7 @@ class GenomicContainer(object):
 
         track_file = open(join(pwd, name_file), mode)
                 
-        #Annotation track to set the genome browser interface
+        ## Annotation track to set the genome browser interface
         annotation_track = ''
         data_out = []
         
@@ -258,17 +260,44 @@ class GenomicContainer(object):
     
 class Track(GenomicContainer):
     """
-    This class is not commented
+    This class contains all the methods to operate and convert the data list into the 
+    different possible classes
     
-    inherits from :py:class:`GenomicContainer`
+    .. attribute:: data
+
+       Iterator yielding record of the genomic data
+
+    .. attribute:: fields
+
+       List of name of each of the fields contained in records of data
+
+    .. attribute:: data_types
+
+       List of data types contained in the data 
+
+    .. attribute:: list_tracks
+
+       List of tracks contained in the data 
+
+    .. attribute:: min
+
+       Minimum value contained in the data
+    
+    .. attribute:: max
+
+       Maximum value contained in the data
+    
+    :returns: Dictionary of Bed or BedGraph objects
+    
     """
+
     def __init__(self, data, fields=None, data_types=None, list_tracks=None, min=0, max=0, **kwargs):
         self.list_tracks = list_tracks
         self.list_tracks_filt = []
         self.list_data_types = data_types
         self.min = min
         self.max = max
-#         print "initiation of track*********************", fields#del
+
         GenomicContainer.__init__(self, data, fields, data_types, **kwargs)
         
     def convert(self, mode='bed', range_color=None, **kwargs):
@@ -287,7 +316,8 @@ class Track(GenomicContainer):
         :returns: dictionary containing object/s of the class set by mode 
         
         """
-        kwargs['relative_coord'] = kwargs.get("relative_coord",False)     
+
+        kwargs['relative_coord'] = kwargs.get("relative_coord", False)
         
         if mode not in _dict_file: 
             raise ValueError("Mode \'%s\' not available. Possible convert() modes are %s"%(mode,', '.join(['{}'.format(m) for m in _dict_file.keys()])))
@@ -434,7 +464,8 @@ class Track(GenomicContainer):
                 
         :returns: range_list list with minimum and maximum value in data
 
-        """        
+        """
+
         try:
             i_data_value = self.fields.index("data_value")
         except KeyError:
@@ -469,7 +500,9 @@ class Track(GenomicContainer):
         
         #TODO I can make this function more general as remove from dictionary it can be use outside
         # in fact I am using now it to remove data_types and not only tracks
+        
         """
+
         for key in tracks2remove:
             key = str(key)
     
@@ -554,8 +587,8 @@ class Track(GenomicContainer):
                     d_data_types_merge[key]['_'.join(nest_dict.keys())] = d_data_types_merge[key]['_'.join(nest_dict.keys())] + data
                     new_data_types.add('_'.join(nest_dict.keys()))          
         
-        #New data_types only set if objects is bedGraph. Bed objects needs to 
-        #know all original data_types to display them with different colors
+        # New data_types only set if objects is bedGraph. Bed objects needs to
+        # know all original data_types to display them with different colors
         if mode == 'bedGraph':
             self.data_types = new_data_types
             
@@ -689,7 +722,7 @@ class Track(GenomicContainer):
         i_data_value = self.fields.index("data_value")
         i_data_types = self.fields.index("data_types")
         """
-#         print "......................", self.fields #del
+
 #         i_seqname = self.fields.index("seqname")
 #         i_types = self.fields.index("feature")        
 #         i_start = self.fields.index("chrom_start")
@@ -715,16 +748,16 @@ class Track(GenomicContainer):
         
         for row in track:
             temp_list = []
-#             temp_list.append(row[i_seqname]) #"seqid"
-            temp_list.append(1) #"seqid"
-            temp_list.append(".") #"source"
+#             temp_list.append(row[i_seqname]) # "seqid"
+            temp_list.append(1)  # "seqid"
+            temp_list.append(".")  # "source"
 #             temp_list.append(row[i_types]) #"type"
-            temp_list.append("exon") #"type"
-            temp_list.append(row[i_start] + 1) #start
-            temp_list.append(row[i_end] + 1) #end
-            temp_list.append(row[i_score]) #"score"
-            temp_list.append(".") #"strand"
-            temp_list.append(".") #phase
+            temp_list.append("exon")  # "type"
+            temp_list.append(row[i_start] + 1)  # start
+            temp_list.append(row[i_end] + 1)  # end
+            temp_list.append(row[i_score])  # "score"
+            temp_list.append(".")  # "strand"
+            temp_list.append(".")  # phase
             
             if step != 0:
                 for i,v in enumerate(_intervals):    
@@ -871,8 +904,8 @@ class Track(GenomicContainer):
                 data_value = float(row[i_data_value])
                 self.fields.index(f) 
                 
-                #Intervals happening after the current window
-                #if there is a value accumulated it has to be dumped otherwise 0
+                # Intervals happening after the current window
+                # if there is a value accumulated it has to be dumped otherwise 0
                 if chr_start > end_window:               
                     while (end_window < chr_start):                                 
                         partial_value = partial_value + cross_interv_dict.get(ini_window,0)
@@ -894,7 +927,7 @@ class Track(GenomicContainer):
                         yield(tuple(temp_list))
                         temp_list = []
                          
-                    #Value must to be weighted between intervals
+                    ## Value must to be weighted between intervals
                     if chr_end > end_window:                                   
                         value2weight = data_value
                         end_w = end_window
@@ -908,10 +941,7 @@ class Track(GenomicContainer):
                                 weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
                             else:                                                           
                                 weighted_value = float(end_w - start_new) / float(end_new - start_new)
-                                #print "end_w - start_new) / (end_new - start_new)", (end_w, start_new, end_new, start_new) #del
     #                             weighted_value= 9/2
-                                #print "weighted value",weighted_value #del  
-    #                             print "value2weight..............", (chr_end, end_window, value2weight, weighted_value)
                                 
                             weighted_value *= value2weight
                             cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)                      
@@ -958,9 +988,9 @@ class Track(GenomicContainer):
                             
                             end_w = end_w + delta_window    
                 else:            
-                    print >> stderr,("FATAL ERROR: Something went wrong during bedGraph window conversion.")
+                    print >> stderr, ("FATAL ERROR: Something went wrong during bedGraph window conversion.")
                 
-        #Last value just printed out
+        # Last value just printed out
 #         temp_list.append("chr1")        
 #         temp_list.append(ini_window)
 #         temp_list.append(end_window)
@@ -969,8 +999,8 @@ class Track(GenomicContainer):
 
 class BedToolConvertible(GenomicContainer):
     def __init__(self, data, **kwargs):
-#         GenomicContainer.__init__(self,data,**kwargs)
-#         GenomicContainer.__init__(self, data, fields, data_types, **kwargs)
+        # GenomicContainer.__init__(self,data,**kwargs)
+        # GenomicContainer.__init__(self, data, fields, data_types, **kwargs)
         GenomicContainer.__init__(self, data, **kwargs)
     
     def create_pybedtools(self):
@@ -1076,6 +1106,7 @@ class BedGraph(BedToolConvertible):
     :returns: BedGraph object  
           
     """
+
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'bedGraph'
         kwargs['fields'] = ['chr','start','end','score']        
@@ -1085,27 +1116,26 @@ class BedGraph(BedToolConvertible):
         BedToolConvertible.__init__(self,data, **kwargs)
         
     def win_mean (self):
-#         print "........................................" #del
-#         print self.data #del
         n_tracks = len (self.track.split("_"))
 
-        # TODO if number of trakcs is 1 exit returning self
+        # TODO if number of tracks is 1 exit returning self
         self.data = self._win_mean(self.data, n_tracks)
         return (self)
     
     def _win_mean (self, data, n_tracks):     
         for row in data:
-           temp_list = []
-           for i, v in enumerate(row):            
+            temp_list = []
+            for i, v in enumerate(row):
                 
                 if i == 3:
-                     temp_list.append (v/n_tracks)
+                    temp_list.append (v/n_tracks)
                 else:
                     
                     temp_list.append (v)
                 
-           yield (tuple(temp_list))
-           
+            yield (tuple(temp_list))
+
+
 class Gff(BedToolConvertible):
     """
     A :class:`~pergola.tracks.GenomicContainer.BedToolConvertible` object designed 
@@ -1122,8 +1152,7 @@ class Gff(BedToolConvertible):
     """
     def __init__(self, data, **kwargs):
         kwargs['format'] = 'gff'
-        
-        # 
+
         kwargs['fields'] = ['seqname','source','feature','start','end','score',
                             'strand','frame','attribute'] 
         
@@ -1131,8 +1160,9 @@ class Gff(BedToolConvertible):
 #                             'thick_start','thick_end','item_rgb']
 
         BedToolConvertible.__init__(self,data,**kwargs)
-                      
-def assign_color (set_data_types, color_restrictions=None):
+
+
+def assign_color(set_data_types, color_restrictions=None):
     """
     Assign colors to fields randomly. It is optional to set given color to given 
     data_types,  a restricted color will no be used for the remaining data_types.
@@ -1160,11 +1190,11 @@ def assign_color (set_data_types, color_restrictions=None):
     if color_restrictions is not None:
         rest_colors = (list (color_restrictions.values()))
 
-        #If there are restricted colors they should be on the default colors list
+        ## If there are restricted colors they should be on the default colors list
         if not all(colors in _dict_colors for colors in rest_colors):
             raise ValueError("Not all restricted colors are available") 
              
-        #If there are fields link to related colors they also must be in the data type list 
+        ## If there are fields link to related colors they also must be in the data type list
 #         if not all(key in set_data_types for key in color_restrictions):                                  
 #             raise ValueError("Some values of data types provided as color restriction are not present in the file", (set_data_types, color_restrictions))
             
@@ -1179,14 +1209,12 @@ def assign_color (set_data_types, color_restrictions=None):
             colors_not_used = _dict_colors.keys() 
         
         if dataType in d_dataType_color:
-#             print ("Data type color gradient already set '%s'."%(dataType))
             continue
-#             print >> stderr, ("Data type color gradient already set '%s'." % (dataType))
-#             print >> stderr, "No path selected, files dump into path: ", pwd
         else:
             d_dataType_color[dataType] = _dict_colors[colors_not_used.pop(0)]    
     
     return d_dataType_color
+
 
 def merge_tracks (tr_1, tr_2):
     """
