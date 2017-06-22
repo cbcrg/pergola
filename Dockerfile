@@ -22,9 +22,10 @@
 ############################################################
 
 ## Set the base image to debian wheezy
-## wheezy is small, only 30 mb smaller than ubuntu
-FROM debian:wheezy
-
+# FROM debian:wheezy
+# 7 corresponds to wheezy, this way I controlled the exact release
+FROM debian:7.11
+
 ## R base already has the OS if I install it then comment wheezy
 # FROM rocker/r-base
 
@@ -44,7 +45,7 @@ COPY pergola /pergola/pergola
 COPY requirements.txt /pergola/
 COPY setup.py /pergola/	
 COPY README.md /pergola/ 
- 
+
 ## TODO add requirements.txt file to pergola
 RUN pip install -r /pergola/requirements.txt && \
 pip install cython && \
