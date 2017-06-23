@@ -32,6 +32,7 @@ from sys      import stderr, exit
 import os
 from pergola import parsers
 
+
 def main(args=None):       
     parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser]) 
     
@@ -46,7 +47,8 @@ def main(args=None):
               no_track_line=args.no_track_line, separator=args.field_separator, 
               bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
               min_t=args.min_time, max_t=args.max_time)
-  
+
+
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
@@ -55,10 +57,10 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
     
-    #Tracks selected by user
+    # Tracks selected by user
     print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
     
-    #Configuration file
+    # Configuration file
     map_file_dict = mapping.MappingInfo(map_file_path)
     
     # Reading color dictionary to set data_types

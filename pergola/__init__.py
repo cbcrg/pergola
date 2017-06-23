@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -34,6 +34,9 @@ pergola requires:
 * numpy (http://numpy.scipy.org/)
 * argparse (http://code.google.com/p/argparse/)
 * csv (http://www.object-craft.com.au/projects/csv/)
+* biopy-isatab (https://github.com/ISA-tools/biopy-isatab)
+* scipy (https://www.scipy.org/)
+* pybedtools (https://daler.github.io/pybedtools/)
 
 Latest source code is available from GitHub::
 

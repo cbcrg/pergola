@@ -23,7 +23,7 @@
 
 ## Set the base image to debian wheezy
 # FROM debian:wheezy
-# 7 corresponds to wheezy, this way I controlled the exact release
+# 7 corresponds to wheezy, this way I control the exact release
 FROM debian:7.11
 
 ## R base already has the OS if I install it then comment wheezy
