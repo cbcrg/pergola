@@ -132,8 +132,8 @@
             
   <h1>Source code for mapping</h1><div class="highlight"><pre>
 <span></span><span class="c1">#</span>
-<span class="c1">#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).</span>
-<span class="c1">#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.</span>
+<span class="c1">#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).</span>
+<span class="c1">#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.</span>
 <span class="c1">#</span>
 <span class="c1">#  This file is part of Pergola.</span>
 <span class="c1">#</span>
@@ -166,9 +166,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">re</span>      <span class="k">import</span> <span class="nb">compile</span><span class="p">,</span> <span class="n">match</span>
 <span class="kn">from</span> <span class="nn">os</span>      <span class="k">import</span> <span class="n">getcwd</span>
-<span class="kn">from</span> <span class="nn">sys</span>     <span class="k">import</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">exit</span>
+<span class="kn">from</span> <span class="nn">sys</span>     <span class="k">import</span> <span class="n">stderr</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
-<span class="kn">from</span> <span class="nn">tracks</span> <span class="k">import</span> <span class="n">Track</span>
+<span class="kn">from</span> <span class="nn">tracks</span>  <span class="k">import</span> <span class="n">Track</span>
 
 <span class="n">_genome_file_ext</span> <span class="o">=</span> <span class="s2">&quot;.fa&quot;</span>
 <span class="n">_generic_nt</span> <span class="o">=</span> <span class="s2">&quot;N&quot;</span>
@@ -177,7 +177,8 @@
 <span class="n">_chrm_size_ext</span> <span class="o">=</span> <span class="s2">&quot;.sizes&quot;</span>
 
 <span class="n">_p_ontology_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;data_value&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="s2">&quot;data_types&quot;</span><span class="p">,</span> <span class="s2">&quot;track&quot;</span><span class="p">,</span> <span class="s2">&quot;chrom&quot;</span><span class="p">,</span> <span class="s2">&quot;dummy&quot;</span><span class="p">]</span>
-                    
+
+
 <div class="viewcode-block" id="MappingInfo"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.MappingInfo">[docs]</a><span class="k">class</span> <span class="nc">MappingInfo</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields</span>
@@ -199,39 +200,56 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">check_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">correspondence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_correspondence_from_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-    
-    <span class="c1">#TODO documentation</span>
+
     <span class="k">def</span> <span class="nf">_correspondence_from_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recognizes the type of mapping file tab separated or the External Mapping File Format</span>
+<span class="sd">        from the Gene Ontology Consortium. Deletes comments        </span>
+
+<span class="sd">        :param path: :py:func:`str` path to the mapping file aka configuration file</span>
+
+<span class="sd">        :returns: dictionary with mappings</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
-            <span class="c1">#Eliminates possible empty lines at the end</span>
+            <span class="c1"># Eliminates possible empty lines at the end</span>
             <span class="n">config_file_list</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="ow">not</span> <span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\s*$&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">config_file</span><span class="p">)</span>
             
             <span class="k">if</span> <span class="n">config_file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
-                <span class="k">del</span> <span class="n">config_file_list</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tab_config</span><span class="p">(</span><span class="n">config_file_list</span><span class="p">))</span>
+                <span class="k">del</span> <span class="n">config_file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tab_config</span><span class="p">(</span><span class="n">config_file_list</span><span class="p">)</span>
 
             <span class="k">elif</span> <span class="n">config_file_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;!&#39;</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">config_file_list</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
-                <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mapping_config</span><span class="p">(</span><span class="n">config_file_list</span><span class="p">))</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapping_config</span><span class="p">(</span><span class="n">config_file_list</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Mapping file format is not recognized: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">))</span>
-                
-    <span class="c1">#TODO documentation            </span>
+
     <span class="k">def</span> <span class="nf">_tab_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_tab</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads mappings from a tab separated files        </span>
+<span class="sd">       </span>
+<span class="sd">        :param file_tab: :py:func:`list` with the content of mapping file </span>
+<span class="sd">        </span>
+<span class="sd">        :returns: dictionary with mappings</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">dict_correspondence</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">comment_tag_t</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span>
         
         <span class="n">dummy_ctr</span><span class="o">=</span><span class="mi">0</span>
         
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">file_tab</span><span class="p">:</span>
-            <span class="k">if</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comment_tag_t</span><span class="p">)):</span>               
+            <span class="k">if</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">comment_tag_t</span><span class="p">)):</span>
                 <span class="k">continue</span>
                                     
             <span class="n">row_split</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">file_term</span> <span class="o">=</span> <span class="n">row_split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">row_split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             
-            <span class="c1">#Validation of the ontology term</span>
+            <span class="c1"># Validation of the ontology term</span>
             <span class="k">if</span> <span class="n">pergola_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_p_ontology_terms</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Term </span><span class="si">%s</span><span class="s2"> is not a valid pergola term.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pergola_term</span><span class="p">))</span>
             
@@ -240,13 +258,23 @@
                     <span class="n">dummy_ctr</span> <span class="o">=</span> <span class="n">dummy_ctr</span> <span class="o">+</span> <span class="mi">1</span>
             
             <span class="n">dict_correspondence</span><span class="p">[</span><span class="n">file_term</span><span class="p">]</span> <span class="o">=</span> <span class="n">pergola_term</span>
+
         <span class="k">return</span> <span class="p">(</span><span class="n">dict_correspondence</span><span class="p">)</span>    
-    
-    <span class="c1">#TODO documentation</span>
+
     <span class="k">def</span> <span class="nf">_mapping_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_map</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads mappings from a file formatted following the External Mapping File Format</span>
+<span class="sd">        from the Gene Ontology Consortium      </span>
+
+<span class="sd">        :param file_map: :py:func:`list` with the content of mapping file </span>
+
+<span class="sd">        :returns: dictionary with mappings</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">dict_correspondence</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">mapping_l_ex</span> <span class="o">=</span> <span class="s2">&quot;tag_file:field_input_file &gt; pergola:pergola_ontology_term&quot;</span>
-        <span class="c1">#comment_tag = (&quot;#&quot;, &quot;!&quot;)</span>
+        <span class="c1"># comment_tag = (&quot;#&quot;, &quot;!&quot;)</span>
         <span class="n">comment_tag_m</span> <span class="o">=</span> <span class="s2">&quot;!&quot;</span>
 <span class="c1">#         p_mapping = compile(r&#39;^\w+\:\w+\s\&gt;\s\w+\:\w+&#39;) </span>
         <span class="n">p_mapping</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\w+\:[</span><span class="se">\&quot;</span><span class="s2">\w</span><span class="se">\&quot;</span><span class="s2">]|[\w]+\s\&gt;\s\w+\:\w+] &quot;</span><span class="p">)</span> 
@@ -260,7 +288,7 @@
                 <span class="n">file_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
                 <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\n</span><span class="s1">&#39;</span><span class="p">)</span>
                 
-                <span class="c1">#Validation of the ontology term</span>
+                <span class="c1"># Validation of the ontology term</span>
                 <span class="k">if</span> <span class="n">pergola_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_p_ontology_terms</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Term </span><span class="si">%s</span><span class="s2"> is not a valid pergola term.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">pergola_term</span><span class="p">))</span>
                 
@@ -286,6 +314,7 @@
 <span class="sd">        :param 0 indent: :py:func:`int` set indent to be used when writing </span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">correspondence</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="n">indent</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span>
             
@@ -294,18 +323,24 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">print</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="n">indent</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div></div>
 
+
 <div class="viewcode-block" id="check_path"><a class="viewcode-back" href="../reference/pergola.html#mapping.check_path">[docs]</a><span class="k">def</span> <span class="nf">check_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">    Check whether the input file exists and is accessible and if OK returns path</span>
+<span class="sd">    </span>
 <span class="sd">    :param path: path to the intervals file</span>
 <span class="sd">    </span>
+<span class="sd">    :returns: the path assessed</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">basestring</span><span class="p">),</span> <span class="s2">&quot;Expected string or unicode, found </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;File does not exist: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">path</span>      </div>
+
 
 <div class="viewcode-block" id="write_chr"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.write_chr">[docs]</a><span class="k">def</span> <span class="nf">write_chr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -316,6 +351,7 @@
 <span class="sd">    :param None path_w: :py:func:`str` path to dump the files, by default None </span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Track</span><span class="p">),</span> <span class="s2">&quot;Expected Track object, found </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     
     <span class="n">chrom</span> <span class="o">=</span> <span class="s1">&#39;chr1&#39;</span>
@@ -334,6 +370,7 @@
     <span class="n">genomeFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;Genome fasta file created: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">chrom</span> <span class="o">+</span> <span class="n">_genome_file_ext</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="write_chr_sizes"><a class="viewcode-back" href="../reference/pergola.html#mapping.write_chr_sizes">[docs]</a><span class="k">def</span> <span class="nf">write_chr_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;    </span>
 <span class="sd">    Creates a text file of the length of the &quot;chromomosomes&quot; that is needed to </span>
@@ -343,6 +380,7 @@
 <span class="sd">    :param None path_w: :py:func:`str` path to dump the files, by default None </span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Track</span><span class="p">),</span> <span class="s2">&quot;Expected Track object, found </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     
     <span class="n">chrom</span> <span class="o">=</span> <span class="s1">&#39;chr1&#39;</span>
@@ -368,6 +406,7 @@
     <span class="n">chrom_size_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;File containing chrom sizes created: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_sizes_n</span> <span class="o">+</span> <span class="n">_chrm_size_ext</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="write_cytoband"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.write_cytoband">[docs]</a><span class="k">def</span> <span class="nf">write_cytoband</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">track_line</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a cytoband-like and a bed file with phases of the experiment </span>
@@ -382,8 +421,10 @@
 <span class="sd">        shows &quot;.&quot;</span>
 <span class="sd">    :param True track_line: If true includes track_line in the file </span>
 <span class="sd">    TODO: extend light and dark to other possible values using variables</span>
-<span class="sd">          Eventually separate into two different functions write_cytoband and write_bed </span>
+<span class="sd">          Eventually separate into two different functions write_cytoband and write_bed</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">end_t</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -488,7 +529,8 @@
     <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
-    
+
+
 <div class="viewcode-block" id="write_period_seq"><a class="viewcode-back" href="../reference/pergola.html#mapping.write_period_seq">[docs]</a><span class="k">def</span> <span class="nf">write_period_seq</span> <span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name_file</span><span class="o">=</span><span class="s2">&quot;period_seq&quot;</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">track_line</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a cytoband-like and a bed file with phases of the experiment </span>
@@ -503,7 +545,9 @@
 <span class="sd">    :param True lab_bed: If true shows label corresponding to dataType in bed file otherwise </span>
 <span class="sd">        shows &quot;.&quot;</span>
 <span class="sd">    :param True track_line: If true includes track_line in the file </span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">end_t</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -547,7 +591,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Apr 07, 2017.
+      Last updated on Jun 26, 2017.
 
     </p>
   </div>

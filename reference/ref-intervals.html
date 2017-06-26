@@ -241,13 +241,13 @@ If tracks field not in file, all intervals are set as belonging to track &#8220;
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fields</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
+<li><strong>fields</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
 <li><strong>relative_coord</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in start and end are
 make relative to the minimal value</li>
 <li><strong>intervals</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
 start</li>
-<li><strong>fields2rel</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
-<li><strong>multiply_t</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
+<li><strong>fields2rel</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
+<li><strong>multiply_t</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
 end</li>
 </ul>
 </td>
@@ -257,7 +257,7 @@ end</li>
 </tr>
 </tbody>
 </table>
-<p>TODO: By the moment I make this function as a method of the closs eventually I would make this a
+<p>TODO: By the moment I make this function as a method of the class eventually I would make this a
 separated function
 Eventually do not change self.data but a list inside read and return the Track object with the modifications
 this way data is always the original one.</p>
@@ -305,7 +305,7 @@ this way data is always the original one.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Apr 07, 2017.
+      Last updated on Jun 26, 2017.
 
     </p>
   </div>
