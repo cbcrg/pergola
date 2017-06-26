@@ -67,7 +67,7 @@ list_full_length = [(phenotypic_feature_bt[0]["chrom"], phenotypic_feature_bt[0]
 bed_full_length = pybedtools.BedTool(list_full_length)
 
 ###################
-# Generate mean value of the whol
+# Generate mean value of the whole period
 if phenotypic_feature_bt.count() == 0: 
     print >> stderr, "No intervals inside the bed file\n"
     # When there is any interval we set the mean to zero

@@ -74,7 +74,7 @@ elif args.behavioral_type == 'drinking':
 else:
     print >> stderr, "Behavioral data type not available in script, please try again with \"drinking\" or \"feeding\""
 
-mapping_data = mapping.MappingInfo("../../sample_data/feeding_behavior/b2g.txt")
+mapping_data = mapping.MappingInfo("../../sample_data/feeding_behavior/b2p.txt")
  
 int_data_b1 = intervals.IntData ("../../sample_data/feeding_beh_CB1_mice/intake_CB1_B1.csv", map_dict=mapping_data.correspondence)
 int_data_b2 = intervals.IntData ("../../sample_data/feeding_beh_CB1_mice/intake_CB1_B2.csv", map_dict=mapping_data.correspondence)

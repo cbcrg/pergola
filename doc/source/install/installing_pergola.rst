@@ -29,9 +29,9 @@ Pergola requires the following Python libraries installed in your system:
 
   $ pip install numpy
   $ pip install argparse
-  $ pip install csv
   $ pip install biopy-isatab
   $ pip install scipy
+  $ pip install pandas
 
 
 .. note:: **You might need to install** first `pip`_  if your python version is not 2.7.9 or later
@@ -40,7 +40,7 @@ Pergola requires the following Python libraries installed in your system:
 
 .. note:: Under Ubuntu **you might need to install** `python-dev`_  in order to be able to install packages belonging
 			to the `SciPy Stack`_ such as numpy and scipy using pip.  Alternatively you can also use:
-			sudo apt-get install python-numpy python-scipy
+			``sudo apt-get install python-numpy python-scipy``.
 
 .. _python-dev:  http://packages.ubuntu.com/precise/python-dev
 .. _SciPy Stack: http://www.scipy.org/install.html

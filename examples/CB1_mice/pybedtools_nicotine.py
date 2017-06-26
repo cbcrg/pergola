@@ -26,6 +26,8 @@
 ### intersect them with day phases (light/dark).             ###
 ### Generates a bed file for each track with the result of   ###
 ### the above described operations.                          ###
+### Simplest analysis does not take into account either the  ###
+### dark light cycles nor the experimental phases            ###
 ################################################################
 
 from argparse import ArgumentParser

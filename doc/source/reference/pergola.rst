@@ -28,6 +28,14 @@ parsers module
     :undoc-members:
     :show-inheritance:
 
+isatab_parser module
+----------------------
+
+.. automodule:: isatab_parser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 test module
 -------------------
 
