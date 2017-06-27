@@ -1,0 +1,10 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+    only:
+      - master
+
+machine:
+  python:
+    version: 2.7.9
