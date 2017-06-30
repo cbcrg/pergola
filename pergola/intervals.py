@@ -447,6 +447,11 @@ class IntData(object):
 
             self.data = self._time2rel_time(i_time_f)
 
+        # If min and max set by argument take them after converting to relative coordinates
+        # set by max_t_trim or min_t_trim argument
+        self.min = kwargs.get('min_t_trim', self.min)
+        self.max = kwargs.get('max_t_trim', self.max)
+
         # From only start value for each time point we generate intervals
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"

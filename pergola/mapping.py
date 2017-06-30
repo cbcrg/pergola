@@ -269,7 +269,8 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
     chrom_size_f = open(join(path, file_sizes_n + _chrm_size_ext), mode)        
     chrom_size_f.write('%s\t' % chrom)
 #     chrom_size_f.write ('%d\n' % (self.max - self.min))
-    chrom_size_f.write ('%d\n' % (self.max - 0))
+#     chrom_size_f.write ('%d\n' % (self.max - 0))
+    chrom_size_f.write('%d\n' % (self.max + 2))
     chrom_size_f.close()
     print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
 

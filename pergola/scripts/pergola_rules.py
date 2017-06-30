@@ -138,7 +138,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     if window_size:
         print >>stderr, "@@@Pergola_rules.py: Window size set to....................... %d" % window_size
     else:
-#         window_size = 300        
+#         window_size = 300
         window_size = False
         print >>stderr, "@@@Pergola_rules.py: Window size set by default to............ %d" % window_size
     
@@ -167,44 +167,53 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     else:
         bed_lab = False
 
-    intData = intervals.IntData(path, map_dict=map_file_dict.correspondence, 
-                                fields_names=fields2read,  
+    intData = intervals.IntData(path, map_dict=map_file_dict.correspondence,
+                                fields_names=fields2read,
                                 header=header_sw, delimiter=separator)
-    
-    if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
-    
-    data_read = intData.read(relative_coord=relative_coord, intervals=intervals_gen, multiply_t=multiply_f)
-    
-    mapping.write_chr (data_read)#mantain 
-    mapping.write_chr_sizes (data_read)
-       
+
     start = intData.min
     end = intData.max
-    
-    print >>stderr, "@@@Pergola_rules.py: min time: %d" % start
-    print >>stderr, "@@@Pergola_rules.py: max time: %d" % end
-     
+
     if relative_coord:
-       start = 0
-       end = intData.max - intData.min
-    
-    # Handling time range of data to extract
-    if min_t:
-        print >>stderr, "@@@Pergola_rules.py: Min time to trim...... %d" % min_t                        
-    
+        start = 0
+        end = intData.max - intData.min
+
+    print >> stderr, "@@@Pergola_rules.py: min time in file: %d" % start
+    print >> stderr, "@@@Pergola_rules.py: max time in file: %d" % end
+
+    if min_t or min_t == 0:
+        min_time = min_t
+        "@@@Pergola_rules.py: min_time set by user to......................... %d" % min_t
+    else:
+        min_time = start
+
     if max_t:
-        print >>stderr, "@@@Pergola_rules.py: Max time to trim...... %d" % max_t                        
-            
+        max_time = max_t
+        "@@@Pergola_rules.py: max_time set by user to......................... %d" % max_t
+    else:
+        max_time = end
+
+    if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
+
+    data_read = intData.read(relative_coord=relative_coord,
+                             intervals=intervals_gen,
+                             multiply_t=multiply_f,
+                             min_t_trim=min_time, max_t_trim=max_time)
+
+    mapping.write_chr(data_read)#mantain
+    mapping.write_chr_sizes(data_read)
+
     # writes cytoband and light, dark and light_dark bed files
     mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
 #     mapping.write_period_seq(start=0, end=intData.max, delta=43200, name_file="phases_dark", track_line=False) 
     
     data_read.save_track(name_file="all_intervals")
     
-    bed_str =  data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-                                 data_types=data_types_list, data_types_actions=data_types_act, 
-                                 window=window_size, mean_win=window_mean, color_restrictions=d_colors_data_types,
-                                 min_t_trim=min_t, max_t_trim=max_t)
+    bed_str = data_read.convert(mode=write_format, tracks=sel_tracks,
+                                tracks_merge=tracks2merge, data_types=data_types_list,
+                                data_types_actions=data_types_act, window=window_size,
+                                mean_win=window_mean, color_restrictions=d_colors_data_types)
+                                #min_t_trim=min_t, max_t_trim=max_t)
     
     for key in bed_str:
         bedSingle = bed_str[key]
