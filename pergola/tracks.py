@@ -864,12 +864,12 @@ class Track(GenomicContainer):
             min_t_trim = kwargs.get('min_t_trim', min_t)
             max_t_trim = kwargs.get('max_t_trim', max_t)
             
-            if min_t_trim not None:
+            if min_t_trim is not None:
                 min_t = min_t_trim
                 if min_t_trim < min_t:
                     print >> stderr, ("WARNING: min_t_trim \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_t_trim, min_t))
 
-            if max_t_trim not None:
+            if max_t_trim is not None:
                 max_t = max_t_trim
                 if max_t_trim > max_t:
                     print >> stderr, ("WARNING: max_t_trim \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_t_trim, max_t))
