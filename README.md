@@ -9,5 +9,3 @@ compatible formats.
 For more info, installation info and tutorials please visit:
 
 [Pergola website](http://cbcrg.github.io/pergola/) 
-
-Test CK
