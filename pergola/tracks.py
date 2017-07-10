@@ -886,7 +886,7 @@ class Track(GenomicContainer):
             fake_end = last_point + delta_window - r
             last_fake_line = list(track[-1])
             
-            if last_fake_line[i_chr_end] > max_t:
+            if last_fake_line[i_chr_end] > max_t + 1:
                 exit("FATAL ERROR: Something went wrong during bedGraph window conversion")
                 
             last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
