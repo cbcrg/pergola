@@ -447,11 +447,6 @@ class IntData(object):
 
             self.data = self._time2rel_time(i_time_f)
 
-        # If min and max set by argument take them after converting to relative coordinates
-        # set by max_t_trim or min_t_trim argument
-        self.min = kwargs.get('min_t_trim', self.min)
-        self.max = kwargs.get('max_t_trim', self.max)
-
         # From only start value for each time point we generate intervals
         if intervals:
             print >>stderr, "Intervals will be inferred from timepoints"
@@ -461,6 +456,14 @@ class IntData(object):
 
             self.data = self._create_int(idx_fields2int)
             # self.data = self._create_int_add_integ(idx_fields2int)
+
+        # If min and max set by argument take them after converting to relative coordinates
+        # set by max_time or min_time argument #TODO
+        self.min = kwargs.get('min_time', self.min)
+        self.max = kwargs.get('max_time', self.max)
+
+        if intervals:
+            self.max = self.max + 1
 
         # To continue intervals are mandatory
         try:
@@ -665,6 +668,8 @@ class IntData(object):
         # Last item
         last_row = self.data[-1]
         value_end = (last_row[start_int] + 1,)
+        self.max = value_end[0]
+
         temp = last_row + value_end
 
         data_int.append((tuple(temp)))

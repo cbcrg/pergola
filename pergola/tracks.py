@@ -449,6 +449,18 @@ class Track(GenomicContainer):
                 
                 range_val = self._get_range(d_2)
 
+                i_chr_start = self.fields.index("start")
+                i_chr_end = self.fields.index("end")
+                min_time = kwargs.get('min_time', self.min)
+                max_time = kwargs.get('max_time', self.max)
+
+                # for r in d_2: #del
+                    # print "++++++", r[i_chr_start], min_time, r[i_chr_end], max_time #del
+                    # print "=====", r #del
+
+                d_2 = [r for r in d_2 if r[i_chr_start] >= min_time and r[i_chr_end] <= max_time]
+
+
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2,
                                                                                                      True,
                                                                                                      window=window,
@@ -456,8 +468,8 @@ class Track(GenomicContainer):
                                                                                                      color_restrictions=color_restrictions,
                                                                                                      min_t = self.min,
                                                                                                      max_t = self.max,
-                                                                                                     min_t_trim=kwargs.get('min_t_trim', self.min),
-                                                                                                     max_t_trim=kwargs.get('max_t_trim', self.max)),
+                                                                                                     min_time=kwargs.get('min_time', self.min),
+                                                                                                     max_time=kwargs.get('max_time', self.max)),
                                                                    track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
 
         return (track_dict)
@@ -614,10 +626,10 @@ class Track(GenomicContainer):
         
         """        
 
-        #This fields are mandatory in objects of class Bed
+        # This fields are mandatory in objects of class Bed
         _bed_fields = ["track","start","end","data_types", "data_value"]        
         
-        #Check whether these fields are in the original otherwise raise exception
+        # Check whether these fields are in the original otherwise raise exception
         try:
             [self.fields.index(f) for f in _bed_fields]
         except ValueError:
@@ -817,23 +829,29 @@ class Track(GenomicContainer):
         
         #When the tracks have been join it is necessary to order by chr_start
         track = sorted(track, key=itemgetter(*[i_chr_start]))
-        
+
+        # min_time = kwargs.get('min_time', self.min)
+        # max_time = kwargs.get('max_time', self.max)
+
+        # track = [row for row in track if row[i_chr_start] >= min_time and row[i_chr_end] <= max_time]
+
         # Dumping raw data as a bedGraph file, no binning
         if window == 0: #or false
-          for row in track:
-            temp_list = []
-            temp_list.append("chr1")
-            temp_list.append(row[i_chr_start])
-            temp_list.append(row[i_chr_end])
-#             temp_list.append(row[i_data_types])  
-            temp_list.append(row[i_data_value])   
-#             temp_list.append("+")
-#             temp_list.append(row[i_chr_start])
-#             temp_list.append(row[i_chr_end])
-                                        
-#             temp_list.append(color)          
-            
-            yield(tuple(temp_list))
+
+            for row in track:
+                temp_list = []
+                temp_list.append("chr1")
+                temp_list.append(row[i_chr_start])
+                temp_list.append(row[i_chr_end])
+    #             temp_list.append(row[i_data_types])
+                temp_list.append(row[i_data_value])
+    #             temp_list.append("+")
+    #             temp_list.append(row[i_chr_start])
+    #             temp_list.append(row[i_chr_end])
+
+    #             temp_list.append(color)
+
+                yield(tuple(temp_list))
         
         # binning in windows of time     
         else:
@@ -854,26 +872,26 @@ class Track(GenomicContainer):
             # I have to find the closest number multiple of the window size so that all 
             # bedGraph have the same intervals
                         
-            delta_window = window    
+            delta_window = window
+
             # To read files for instance in GRanges objects all tracks same number of intervals              
-            ini_window_def = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
+            # ini_window_def = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window
+            min_t = kwargs.get('min_t', self.min)
+            max_t = kwargs.get('max_t', self.max)
 
-            min_t = kwargs.get('min_t', ini_window_def)
-            max_t = kwargs.get('max_t', ini_window_def)
+            min_time = kwargs.get('min_time', min_t)
+            max_time = kwargs.get('max_time', max_t)
 
-            min_t_trim = kwargs.get('min_t_trim', min_t)
-            max_t_trim = kwargs.get('max_t_trim', max_t)
-            
-            if min_t_trim is not None:
-                min_t = min_t_trim
-                if min_t_trim < min_t:
-                    print >> stderr, ("WARNING: min_t_trim \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_t_trim, min_t))
+            if min_time is not None:
+                min_t = min_time
+                if min_time < min_t:
+                    print >> stderr, ("WARNING: min_time \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_time, min_t))
 
-            if max_t_trim is not None:
-                max_t = max_t_trim
-                if max_t_trim > max_t:
-                    print >> stderr, ("WARNING: max_t_trim \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_t_trim, max_t))
-                                            
+            if max_time is not None:
+                max_t = max_time
+                if max_time > max_t:
+                    print >> stderr, ("WARNING: max_time \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_time, max_t))
+
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
                         
@@ -885,7 +903,7 @@ class Track(GenomicContainer):
             r = last_point % delta_window
             fake_end = last_point + delta_window - r
             last_fake_line = list(track[-1])
-            
+
             if last_fake_line[i_chr_end] > max_t + 1:
                 exit("FATAL ERROR: Something went wrong during bedGraph window conversion")
                 

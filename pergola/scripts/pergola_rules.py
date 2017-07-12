@@ -178,27 +178,27 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         start = 0
         end = intData.max - intData.min
 
-    print >> stderr, "@@@Pergola_rules.py: min time in file: %d" % start
-    print >> stderr, "@@@Pergola_rules.py: max time in file: %d" % end
+    print >> stderr, "@@@Pergola_rules.py: min time in file......................... %d" % start
+    print >> stderr, "@@@Pergola_rules.py: max time in file......................... %d" % end
 
     if min_t or min_t == 0:
         min_time = min_t
-        "@@@Pergola_rules.py: min_time set by user to......................... %d" % min_t
+        print >> stderr, "@@@Pergola_rules.py: min_time set by user to.............. %d" % min_t
     else:
         min_time = start
 
     if max_t:
         max_time = max_t
-        "@@@Pergola_rules.py: max_time set by user to......................... %d" % max_t
+        print >> stderr, "@@@Pergola_rules.py: max_time set by user to............... %d" % max_t
     else:
-        max_time = end
+        max_time = end + 1
 
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
 
     data_read = intData.read(relative_coord=relative_coord,
                              intervals=intervals_gen,
                              multiply_t=multiply_f,
-                             min_t_trim=min_time, max_t_trim=max_time)
+                             min_time=min_time, max_time=max_time)
 
     mapping.write_chr(data_read)#mantain
     mapping.write_chr_sizes(data_read)
