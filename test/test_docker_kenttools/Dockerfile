@@ -1,4 +1,4 @@
-FROM pergola/pergola:paper
+FROM pergola/pergola:paper_2
 
 MAINTAINER Jose Espinosa-Carrasco <espinosacarrascoj@gmail.com>
 
