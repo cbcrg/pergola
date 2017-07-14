@@ -222,7 +222,7 @@ class TestTutorial(unittest.TestCase):
         global tracks_data_electro
         msg_track_electro = "Track electrophysiology not correctly read"
         
-        max = 300
+        max = 302
         tracks_data_electro = int_data_electro.read(multiply_t=1000, intervals=True)
         self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
         
