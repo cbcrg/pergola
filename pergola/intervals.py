@@ -350,7 +350,8 @@ class IntData(object):
 
         return set_fields
 
-    def read(self, fields=None, relative_coord=False, intervals=False, fields2rel=None, multiply_t=None, **kwargs):
+    def read(self, fields=None, relative_coord=False, intervals=False, int_step=None, fields2rel=None, multiply_t=None,
+             **kwargs):
         """        
         Reads the data and converts it depending on selected options
         
@@ -358,10 +359,12 @@ class IntData(object):
         :param False relative_coord: If true all coordinates in start and end are
             make relative to the minimal value
         :param False intervals: if set to true intervals will be inferred from timepoints in
-            start 
+            start
+        :param None int_step: :py:func:`int` :param None int_step: :py:func:`int` time step value to create 
+            the end of intervals
         :param None fields2rel: :py:func:`list` with data columns to make relative
         :param None multiply_t: :py:func:`int` multiplies the values of the field set as start and 
-            end
+            end        
         
         :returns: Track object
         
@@ -454,7 +457,7 @@ class IntData(object):
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
 
-            self.data = self._create_int(idx_fields2int)
+            self.data = self._create_int(idx_fields2int, int_step)
             # self.data = self._create_int_add_integ(idx_fields2int)
 
         # If min and max set by argument take them after converting to relative coordinates
@@ -612,12 +615,14 @@ class IntData(object):
 
         return (data_mult) # Correct eventually self.data in a list of list directly modificable
 
-    def _create_int(self, start_int):
+    def _create_int(self, start_int, int_step=None):
         """
         From single time points generates intervals of time
 
-        :param start_int: :py:func:`int` with index containing time points 
-
+        :param start_int: :py:func:`int` with index containing time points
+        
+        :param None int_step: :py:func:`int` time step value to create the end of intervals
+        
         :returns: list of tuples (self.data-like)
         
         """
@@ -649,25 +654,45 @@ class IntData(object):
 
             row = self.data[i]
 
-            # If the track is still the same
-            if track_sw:
-                if row[i_track] == self.data[i + 1][i_track]:
-                    if (self.data[i][start_int],) == (self.data[i + 1][start_int],):
-                        value_end = (self.data[i + 1][start_int] + 1,)
-                    else:
-                        value_end = (self.data[i + 1][start_int] - 1,)
-                else:
-                    value_end = (row[start_int] + 1,)
+            if int_step:
+                value_end = (self.data[i][start_int] + int_step,)
 
             else:
-                value_end = (self.data[i + 1][start_int] - 1,)
+                # If the track is still the same
+                if track_sw:
+                    # same track
+                    if row[i_track] == self.data[i + 1][i_track]:
+                        # if the following interval starts with the same start point then we can not use it
+                        # and we just add one to the start of the interval
+                        if (self.data[i][start_int],) == (self.data[i + 1][start_int],):
+                            value_end = (self.data[i + 1][start_int] + 1,)
+                        # otherwise we substract one to the next start point
+                        else:
+                            value_end = (self.data[i + 1][start_int] - 1,)
+                    # different track
+                    # we add one to the start point
+                    else:
+                        value_end = (row[start_int] + 1,)
+
+                else:
+                    if (self.data[i][start_int],) == (self.data[i + 1][start_int],):
+                        value_end = (self.data[i + 1][start_int] + 1,)
+
+                    else:
+                        value_end = (self.data[i + 1][start_int] - 1,)
 
             temp = row + value_end
             data_int.append((tuple(temp)))
 
         # Last item
         last_row = self.data[-1]
-        value_end = (last_row[start_int] + 1,)
+
+        if int_step:
+            value_end = (last_row[start_int] + int_step,)
+        else:
+            value_end = (last_row[start_int] + 1,)
+
+
         self.max = value_end[0]
 
         temp = last_row + value_end

@@ -42,7 +42,7 @@ def main(args=None):
               list=args.list, range=args.range, track_actions=args.track_actions, 
               data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
               write_format=args.format, relative_coord=args.relative_coord, 
-              intervals_gen=args.intervals_gen, multiply_f=args.multiply_intervals, 
+              intervals_gen=args.intervals_gen, interval_step=args.interval_step, multiply_f=args.multiply_intervals,
               no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
               no_track_line=args.no_track_line, separator=args.field_separator, 
               bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
@@ -52,7 +52,7 @@ def main(args=None):
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
-         bed_lab_sw=False, color_dict=None, window_mean=False, min_t=None, max_t=None):
+         bed_lab_sw=False, color_dict=None, window_mean=False, min_t=None, max_t=None, interval_step=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -72,7 +72,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         
     # Handling list or range of tracks to join if set
     if list and range:
-        raise ValueError("Argument -l/--list and -r/--range are not compatible. " \
+        raise ValueError("@@@Pergola_rules.py: Argument -l/--list and -r/--range are not compatible. " \
                          "As both arguments set tracks to be joined.")    
     elif (list):
         tracks2merge = list
@@ -102,16 +102,23 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     if write_format:
         print >> stderr, "@@@Pergola_rules.py format to write files....................... ", write_format
     else:
-        write_format='bed' # TODO simplify code, give default to arparse is simpler
+        write_format = 'bed'
         print >>stderr, "@@@Pergola_rules.py format to write files has been set" \
                         " to default value:", write_format
-     
+
     # Handling relative coordinates
     print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to................. %s" % relative_coord
     
     # Handling intervals_gen
     print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to.................. %s" % intervals_gen
-    
+
+    # Handling interval_step
+    if interval_step:
+        if intervals_gen:
+            print >> stderr, "@@@Pergola_rules.py: Interval step set to........................ %s" % interval_step
+        else:
+            raise ValueError("Interval step needs intervals paramater to be set -n/--intervals_gen")
+
     # Handling multiply_intervals
     if multiply_f:
         print >>stderr, "@@@Pergola_rules.py: Multiply intervals parameter set to...... %s" % multiply_f                        
@@ -198,7 +205,8 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     data_read = intData.read(relative_coord=relative_coord,
                              intervals=intervals_gen,
                              multiply_t=multiply_f,
-                             min_time=min_time, max_time=max_time)
+                             min_time=min_time, max_time=max_time,
+                             int_step=interval_step)
 
     mapping.write_chr(data_read)#mantain
     mapping.write_chr_sizes(data_read)
