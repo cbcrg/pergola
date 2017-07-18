@@ -399,8 +399,7 @@ class Track(GenomicContainer):
                 dict_data_type = self.remove (track_dict, data_types2rm)        
                 new_dict_split [track] = dict_data_type
             print >> stderr, "Removed data types are:", ' '.join(data_types2rm)        
-            
-        
+
         if new_dict_split: 
             dict_split = new_dict_split
                 
@@ -437,8 +436,9 @@ class Track(GenomicContainer):
         ### Generating track dict (output)                         
         window = kwargs.get("window", 300)
         mean_win = kwargs.get("mean_win", False)
-        
-        ### Assigning data to output dictionary    
+        mean_value = kwargs.get("mean_value", False)
+
+        ### Assigning data to output dictionary
         for k, d in d_data_types_merge.items():
             if not isinstance(d,dict):
                 raise ValueError ("The structure that holds the tracks should be a dictionary of dictionaries")
@@ -454,17 +454,13 @@ class Track(GenomicContainer):
                 min_time = kwargs.get('min_time', self.min)
                 max_time = kwargs.get('max_time', self.max)
 
-                # for r in d_2: #del
-                    # print "++++++", r[i_chr_start], min_time, r[i_chr_end], max_time #del
-                    # print "=====", r #del
-
                 d_2 = [r for r in d_2 if r[i_chr_start] >= min_time and r[i_chr_end] <= max_time]
-
 
                 track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2,
                                                                                                      True,
                                                                                                      window=window,
                                                                                                      mean_win=mean_win,
+                                                                                                     mean_value=mean_value,
                                                                                                      color_restrictions=color_restrictions,
                                                                                                      min_t = self.min,
                                                                                                      max_t = self.max,
@@ -472,7 +468,7 @@ class Track(GenomicContainer):
                                                                                                      max_time=kwargs.get('max_time', self.max)),
                                                                    track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
 
-        return (track_dict)
+        return track_dict
     
     def _get_range (self, data_tr):
         """
@@ -795,7 +791,7 @@ class Track(GenomicContainer):
             
             yield(tuple(temp_list))
             
-    def track_convert2bedGraph(self, track, in_call=False, window=300, mean_win=False,  **kwargs):
+    def track_convert2bedGraph(self, track, in_call=False, window=300, mean_win=False, mean_value=False,  **kwargs):
         """
         Converts a single data belonging to a single track in a list of tuples in
         an object of class BedGraph. The data is grouped in time windows.
@@ -804,10 +800,12 @@ class Track(GenomicContainer):
         :param False in_call: If False the call to the function is from the user otherwise
             is from inside :py:func: `convert2single_track()`
         :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)
-                 
+        :param False mean_win: Calculates average value over the time interval set by window (sum values/length window)
+        :param False mean_value: Calculates average value (sum values/count)
+        
         :returns: BedGraph object
         """
-        
+
         #This fields are mandatory in objects of class BedGraph
         _bed_fields = ["track","start","end","data_value"] 
         
@@ -827,16 +825,16 @@ class Track(GenomicContainer):
         i_chr_end = self.fields.index("end")
         i_data_value = self.fields.index("data_value")
         
-        #When the tracks have been join it is necessary to order by chr_start
+        ## When the tracks have been join it is necessary to order by chr_start
         track = sorted(track, key=itemgetter(*[i_chr_start]))
-
         # min_time = kwargs.get('min_time', self.min)
         # max_time = kwargs.get('max_time', self.max)
 
+        ## Filtering by min and max time points
         # track = [row for row in track if row[i_chr_start] >= min_time and row[i_chr_end] <= max_time]
 
         # Dumping raw data as a bedGraph file, no binning
-        if window == 0: #or false
+        if not window or window == 0:  # or false
 
             for row in track:
                 temp_list = []
@@ -895,7 +893,9 @@ class Track(GenomicContainer):
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
                         
-            partial_value = 0 
+            partial_value = 0
+            counts = 0
+            mean_value_l = []
             cross_interv_dict = {}
             
 #             last_point =  track[-1][i_chr_end]
@@ -925,23 +925,37 @@ class Track(GenomicContainer):
                 chr_start = row[i_chr_start]        
                 chr_end = row[i_chr_end]
                 data_value = float(row[i_data_value])
-                self.fields.index(f) 
-                
+                self.fields.index(f)
+
                 # Intervals happening after the current window
                 # if there is a value accumulated it has to be dumped otherwise 0
                 if chr_start > end_window:               
-                    while (end_window < chr_start):                                 
-                        partial_value = partial_value + cross_interv_dict.get(ini_window,0)
+                    while end_window < chr_start:
+                        partial_value = partial_value + cross_interv_dict.get(ini_window, 0)
+
+                        if mean_value and cross_interv_dict.get(ini_window):
+                            mean_value_l.append(cross_interv_dict.get(ini_window, 0))
+
                         temp_list.append("chr1")
                         temp_list.append(ini_window)
                         temp_list.append(end_window)
                         
                         if mean_win:
                             temp_list.append(partial_value/window)
+                        elif mean_value and counts:
+                            temp_list.append(float(sum(mean_value_l)) / float(len(mean_value_l)))
+
+                            # print "list values.........", mean_value_l  #del
+                            # print "mean values.........", float(sum(mean_value_l)) / float(len(mean_value_l))
+
+                            # else:
+                            #     temp_list.append(partial_value)
                         else:
                             temp_list.append(partial_value)
                                                     
                         partial_value = 0
+                        counts = 0
+                        mean_value_l = []
     #                     ini_window += delta_window + 1 #ojo
                         ini_window += delta_window
     #                     end_window += delta_window + 1 #ojo
@@ -959,32 +973,41 @@ class Track(GenomicContainer):
                         
                         for start_w in range (int(ini_window), int(chr_end), delta_window):
                             weighted_value = 0.0
-                            
-                            if (end_w == start_w):
+                            counts += 1
+
+                            if end_w == start_w:
                                 weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
                             else:                                                           
                                 weighted_value = float(end_w - start_new) / float(end_new - start_new)
-    #                             weighted_value= 9/2
-                                
+                                # weighted_value= 9/2
+
                             weighted_value *= value2weight
-                            cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)                      
+                            cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w, 0)) + float(weighted_value)
                             start_new = end_w
                             value2weight = value2weight - weighted_value                        
-        
-                            if ((end_w + delta_window) >= chr_end):
+
+                            if (end_w + delta_window) >= chr_end:
                                 new_start_w = start_w + delta_window
-                                cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
+                                cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w, 0) + value2weight
                                 break
                             
                             end_w = end_w + delta_window
                     else:
                         partial_value = partial_value + data_value
-                                
-                elif (chr_start <= end_window and chr_start >= ini_window):
-                     
+
+                        if mean_value:
+                            counts += 1
+                            mean_value_l.append(data_value)
+
+                # elif chr_start <= end_window and chr_start >= ini_window:
+                elif end_window > chr_start >= ini_window:
                     if chr_end <= end_window:
-                        partial_value = partial_value + data_value                 
-                    
+                        partial_value = partial_value + data_value
+
+                        if mean_value and data_value:
+                            mean_value_l.append(data_value)
+                            counts += 1
+
                     else:
                         value2weight = data_value
                         end_w = end_window
@@ -993,8 +1016,9 @@ class Track(GenomicContainer):
                         
                         for start_w in range (int(ini_window), int(chr_end), delta_window):                
                             weighted_value = 0
-                            
-                            if (end_w == start_w):
+                            counts += 1
+
+                            if end_w == start_w:
                                 weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
                             else:    
                                 weighted_value = float(end_w - start_new) / float(end_new - start_new)
@@ -1004,14 +1028,14 @@ class Track(GenomicContainer):
                             start_new = end_w
                             value2weight = value2weight - weighted_value
                             
-                            if ((end_w + delta_window) >= chr_end):
+                            if end_w + delta_window >= chr_end:
                                 new_start_w = start_w + delta_window
                                 cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
                                 break
                             
                             end_w = end_w + delta_window
 
-                elif (chr_start < ini_window):
+                elif chr_start < ini_window:
                     print >> stderr, ("WARNING: Value %d deleted because you set first time point " \
                                       "to a higher value %d") % (chr_start, end_window)
                 else:

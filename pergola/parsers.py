@@ -145,45 +145,47 @@ parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPI
 parent_parser.add_argument('-t', '--tracks', required=False, metavar="TRACKS", type=int, nargs='+', 
                     help='List of selected tracks')
 parent_parser.add_argument('-l','--list', required=False, metavar="LIST_OF_TRACKS", type=str, nargs='+',
-                    help='Numeric list of tracks to be joined in a single genomic like file')### string allowed as some tracks could be named as: track_1, track2....
+                           help='Numeric list of tracks to be joined in a single genomic like file')### string allowed as some tracks could be named as: track_1, track2....
 parent_parser.add_argument('-r', '--range', required=False, type=parse_num_range,
-                    help='Numeric range of tracks to be joined in a single genomic like file')
+                           help='Numeric range of tracks to be joined in a single genomic like file')
 parent_parser.add_argument('-a', '--track_actions', required=False, choices=_tr_act_options,
-                    help='Option of action with tracks selected, split_all, join_all,' + \
-                         ' join_odd, join_even, join_range or join_list')
+                           help='Option of action with tracks selected, split_all, join_all,' + \
+                           ' join_odd, join_even, join_range or join_list')
 parent_parser.add_argument('-dl', '--data_types_list', required=False, metavar="LIST_OF_DATA_TYPES", type=str, nargs='+',
-                    help='List of data_types to be joined')
+                           help='List of data_types to be joined')
 parent_parser.add_argument('-d', '--data_types_actions', required=False, choices=_dt_act_options,
-                    help='Unique values of data_types field should be dumped on' + \
-                         ' different data structures or not')
+                           help='Unique values of data_types field should be dumped on' + \
+                           ' different data structures or not')
 parent_parser.add_argument('-f', '--format', required=False, type=str, default='bed',
-                    help='Write file output format (bed or bedGraph)')
+                           help='Write file output format (bed or bedGraph)')
 parent_parser.add_argument('-e', '--relative_coord', required=False, action='store_true', 
-                    default=False, help='Sets first timepoint' \
-                    ' to 0 and make all the others relative to this timepoint')
+                           default=False, help='Sets first timepoint' \
+                           ' to 0 and make all the others relative to this timepoint')
 parent_parser.add_argument('-n', '--intervals_gen', required=False, action='store_true', 
-                    default=None, help='Set startChrom and endChrom from just a timepoint in the file ' \
-                                        'using field set as startChrom')
+                           default=None, help='Set startChrom and endChrom from just a timepoint in the file ' \
+                           'using field set as startChrom')
 parent_parser.add_argument('-ns', '--interval_step', required=False, metavar="INTERVAL_STEP", type=int,
-                    default=False, help='Set step to generate intervals from a single time point')
+                           default=False, help='Set step to generate intervals from a single time point')
 parent_parser.add_argument('-mi', '--multiply_intervals', metavar='N', type=int, required=False,
-                    help='Multiplies value in data_value by the given factor')
+                           help='Multiplies value in data_value by the given factor')
 parent_parser.add_argument('-nh', '--no_header', required=False, action='store_true', 
-                    default=False, help='Data file contains no header')
+                           default=False, help='Data file contains no header')
 parent_parser.add_argument('-s', '--fields_read', metavar='FIELDS2READ', type=str, nargs='+',
-                    help='List of fields to read from input file')
+                           help='List of fields to read from input file')
 parent_parser.add_argument('-w', '--window_size', required=False, metavar="WINDOW_SIZE", type=int, 
-                    help='Window size for bedGraph intervals, default value 300')
+                           help='Window size for bedGraph intervals, default value 300')
 parent_parser.add_argument('-nt', '--no_track_line', required=False, action='store_true',
-                    default=False, help='Track line no included in the bed file')
+                           default=False, help='Track line no included in the bed file')
 parent_parser.add_argument('-fs', '--field_separator', required=False, type=str,
-                    default=False, help='Input file field separator')
+                           default=False, help='Input file field separator')
 parent_parser.add_argument('-bl', '--bed_label', required=False, action='store_true',
-                    default=False, help='Show data_types as name field in bed file')
+                           default=False, help='Show data_types as name field in bed file')
 parent_parser.add_argument('-c', '--color_file', required=False, metavar="PATH_COLOR_FILE", 
                            help='Dictionary assigning colors of data_types path')
 parent_parser.add_argument('-wm', '--window_mean', required=False, action='store_true',
                            default=False, help='Window values average by the window size')
+parent_parser.add_argument('-vm', '--value_mean', required=False, action='store_true',
+                           help='Window values average by number of items within window')
 parent_parser.add_argument('-min', '--min_time', type=int, required=False,
                            help='Initial time point to extract')
 parent_parser.add_argument('-max', '--max_time', type=int, required=False,

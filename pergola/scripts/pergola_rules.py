@@ -46,13 +46,13 @@ def main(args=None):
               no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
               no_track_line=args.no_track_line, separator=args.field_separator, 
               bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
-              min_t=args.min_time, max_t=args.max_time)
+              value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time)
 
 
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,
          multiply_f=None, no_header=False, fields2read=None, window_size=None, no_track_line=False, separator=None,
-         bed_lab_sw=False, color_dict=None, window_mean=False, min_t=None, max_t=None, interval_step=None):
+         bed_lab_sw=False, color_dict=None, window_mean=False, value_mean=False, min_t=None, max_t=None, interval_step=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -153,7 +153,12 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         print >>stderr, "@@@Pergola_rules.py: Window mean set to....................... %d" % window_mean
     else:      
         window_mean = False
-        
+
+    if value_mean:
+        print >> stderr, "@@@Pergola_rules.py: Value mean set to....................... %d" % value_mean
+    else:
+        value_mean = False
+
     if no_track_line:
         track_line=False
     else:
@@ -223,7 +228,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     bed_str = data_read.convert(mode=write_format, tracks=sel_tracks,
                                 tracks_merge=tracks2merge, data_types=data_types_list,
                                 data_types_actions=data_types_act, window=window_size,
-                                mean_win=window_mean, color_restrictions=d_colors_data_types)
+                                mean_win=window_mean, mean_value=value_mean, color_restrictions=d_colors_data_types)
                                 #min_t_trim=min_t, max_t_trim=max_t)
     
     for key in bed_str:
