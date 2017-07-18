@@ -198,7 +198,10 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         max_time = max_t
         print >> stderr, "@@@Pergola_rules.py: max_time set by user to............... %d" % max_t
     else:
-        max_time = end + 1
+        if interval_step:
+            max_time = end + interval_step
+        else:
+            max_time = end + 1
 
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
 
@@ -216,7 +219,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
 #     mapping.write_period_seq(start=0, end=intData.max, delta=43200, name_file="phases_dark", track_line=False) 
     
     data_read.save_track(name_file="all_intervals")
-    
+
     bed_str = data_read.convert(mode=write_format, tracks=sel_tracks,
                                 tracks_merge=tracks2merge, data_types=data_types_list,
                                 data_types_actions=data_types_act, window=window_size,
