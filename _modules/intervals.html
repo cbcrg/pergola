@@ -483,7 +483,8 @@
 
         <span class="k">return</span> <span class="n">set_fields</span></div>
 
-<div class="viewcode-block" id="IntData.read"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.IntData.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_coord</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fields2rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiply_t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="IntData.read"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.IntData.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_coord</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">int_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields2rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiply_t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;        </span>
 <span class="sd">        Reads the data and converts it depending on selected options</span>
 <span class="sd">        </span>
@@ -491,10 +492,12 @@
 <span class="sd">        :param False relative_coord: If true all coordinates in start and end are</span>
 <span class="sd">            make relative to the minimal value</span>
 <span class="sd">        :param False intervals: if set to true intervals will be inferred from timepoints in</span>
-<span class="sd">            start </span>
+<span class="sd">            start</span>
+<span class="sd">        :param None int_step: :py:func:`int` :param None int_step: :py:func:`int` time step value to create </span>
+<span class="sd">            the end of intervals</span>
 <span class="sd">        :param None fields2rel: :py:func:`list` with data columns to make relative</span>
 <span class="sd">        :param None multiply_t: :py:func:`int` multiplies the values of the field set as start and </span>
-<span class="sd">            end</span>
+<span class="sd">            end        </span>
 <span class="sd">        </span>
 <span class="sd">        :returns: Track object</span>
 <span class="sd">        </span>
@@ -587,8 +590,16 @@
             <span class="k">if</span> <span class="n">_f_int_end</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG_dict</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Intervals can not be generated as &#39;</span><span class="si">%s</span><span class="s2">&#39; already exists in file </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">_f_int_end</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_int</span><span class="p">(</span><span class="n">idx_fields2int</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_int</span><span class="p">(</span><span class="n">idx_fields2int</span><span class="p">,</span> <span class="n">int_step</span><span class="p">)</span>
             <span class="c1"># self.data = self._create_int_add_integ(idx_fields2int)</span>
+
+        <span class="c1"># If min and max set by argument take them after converting to relative coordinates</span>
+        <span class="c1"># set by max_time or min_time argument #TODO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">intervals</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">+</span> <span class="mi">1</span>
 
         <span class="c1"># To continue intervals are mandatory</span>
         <span class="k">try</span><span class="p">:</span>
@@ -737,12 +748,14 @@
 
         <span class="k">return</span> <span class="p">(</span><span class="n">data_mult</span><span class="p">)</span> <span class="c1"># Correct eventually self.data in a list of list directly modificable</span>
 
-    <span class="k">def</span> <span class="nf">_create_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_int</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_create_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_int</span><span class="p">,</span> <span class="n">int_step</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        From single time points generates intervals of time</span>
 
-<span class="sd">        :param start_int: :py:func:`int` with index containing time points </span>
-
+<span class="sd">        :param start_int: :py:func:`int` with index containing time points</span>
+<span class="sd">        </span>
+<span class="sd">        :param None int_step: :py:func:`int` time step value to create the end of intervals</span>
+<span class="sd">        </span>
 <span class="sd">        :returns: list of tuples (self.data-like)</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -774,25 +787,47 @@
 
             <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-            <span class="c1"># If the track is still the same</span>
-            <span class="k">if</span> <span class="n">track_sw</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">i_track</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i_track</span><span class="p">]:</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">start_int</span><span class="p">],)</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">],):</span>
-                        <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+            <span class="k">if</span> <span class="n">int_step</span><span class="p">:</span>
+                <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="n">int_step</span><span class="p">,)</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,)</span>
+                <span class="c1"># If the track is still the same</span>
+                <span class="k">if</span> <span class="n">track_sw</span><span class="p">:</span>
+                    <span class="c1"># same track</span>
+                    <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">i_track</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i_track</span><span class="p">]:</span>
+                        <span class="c1"># if the following interval starts with the same start point then we can not use it</span>
+                        <span class="c1"># and we just add one to the start of the interval</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">start_int</span><span class="p">],)</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">],):</span>
+                            <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+                        <span class="c1"># otherwise we substract one to the next start point</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,)</span>
+                    <span class="c1"># different track</span>
+                    <span class="c1"># we add one to the start point</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">start_int</span><span class="p">],)</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">],):</span>
+                        <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">start_int</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,)</span>
 
             <span class="n">temp</span> <span class="o">=</span> <span class="n">row</span> <span class="o">+</span> <span class="n">value_end</span>
             <span class="n">data_int</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp</span><span class="p">)))</span>
 
         <span class="c1"># Last item</span>
         <span class="n">last_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_row</span><span class="p">[</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+
+        <span class="k">if</span> <span class="n">int_step</span><span class="p">:</span>
+            <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_row</span><span class="p">[</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="n">int_step</span><span class="p">,)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_row</span><span class="p">[</span><span class="n">start_int</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">value_end</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
         <span class="n">temp</span> <span class="o">=</span> <span class="n">last_row</span> <span class="o">+</span> <span class="n">value_end</span>
 
         <span class="n">data_int</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp</span><span class="p">)))</span>
@@ -874,7 +909,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jun 26, 2017.
+      Last updated on Jul 19, 2017.
 
     </p>
   </div>

@@ -532,8 +532,8 @@
                 <span class="n">dict_data_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove</span> <span class="p">(</span><span class="n">track_dict</span><span class="p">,</span> <span class="n">data_types2rm</span><span class="p">)</span>        
                 <span class="n">new_dict_split</span> <span class="p">[</span><span class="n">track</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_data_type</span>
             <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;Removed data types are:&quot;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_types2rm</span><span class="p">)</span>        
-            
-        
+
+
         <span class="k">if</span> <span class="n">new_dict_split</span><span class="p">:</span> 
             <span class="n">dict_split</span> <span class="o">=</span> <span class="n">new_dict_split</span>
                 
@@ -570,8 +570,9 @@
         <span class="c1">### Generating track dict (output)                         </span>
         <span class="n">window</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;window&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
         <span class="n">mean_win</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mean_win&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        
-        <span class="c1">### Assigning data to output dictionary    </span>
+        <span class="n">mean_value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mean_value&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1">### Assigning data to output dictionary</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">d_data_types_merge</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span> <span class="p">(</span><span class="s2">&quot;The structure that holds the tracks should be a dictionary of dictionaries&quot;</span><span class="p">)</span>
@@ -581,13 +582,27 @@
                     <span class="n">_dict_col_grad</span><span class="p">[</span><span class="n">k_2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                 
                 <span class="n">range_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_range</span><span class="p">(</span><span class="n">d_2</span><span class="p">)</span>
-                <span class="n">track_dict</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k_2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">0</span><span class="p">]](</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">1</span><span class="p">])(</span><span class="n">d_2</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span> <span class="n">mean_win</span><span class="o">=</span><span class="n">mean_win</span><span class="p">,</span> 
-                                                                                                     <span class="n">color_restrictions</span><span class="o">=</span><span class="n">color_restrictions</span><span class="p">,</span> <span class="n">min_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> 
-                                                                                                     <span class="n">max_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">min_t_trim</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t_trim&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">),</span> 
-                                                                                                     <span class="n">max_t_trim</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t_trim&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)),</span> <span class="n">track</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> 
-                                                                                                     <span class="n">data_types</span><span class="o">=</span><span class="n">k_2</span><span class="p">,</span> <span class="n">range_values</span><span class="o">=</span><span class="n">range_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">_dict_col_grad</span><span class="p">[</span><span class="n">k_2</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="n">track_dict</span><span class="p">)</span>
+                <span class="n">i_chr_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+                <span class="n">i_chr_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">)</span>
+                <span class="n">min_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+                <span class="n">max_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+                <span class="n">d_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">d_2</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_time</span> <span class="ow">and</span> <span class="n">r</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_time</span><span class="p">]</span>
+
+                <span class="n">track_dict</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">k_2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">0</span><span class="p">]](</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">_dict_file</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="mi">1</span><span class="p">])(</span><span class="n">d_2</span><span class="p">,</span>
+                                                                                                     <span class="kc">True</span><span class="p">,</span>
+                                                                                                     <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span>
+                                                                                                     <span class="n">mean_win</span><span class="o">=</span><span class="n">mean_win</span><span class="p">,</span>
+                                                                                                     <span class="n">mean_value</span><span class="o">=</span><span class="n">mean_value</span><span class="p">,</span>
+                                                                                                     <span class="n">color_restrictions</span><span class="o">=</span><span class="n">color_restrictions</span><span class="p">,</span>
+                                                                                                     <span class="n">min_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span>
+                                                                                                     <span class="n">max_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                                                                                                     <span class="n">min_time</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">),</span>
+                                                                                                     <span class="n">max_time</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_time&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)),</span>
+                                                                   <span class="n">track</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="n">k_2</span><span class="p">,</span> <span class="n">range_values</span><span class="o">=</span><span class="n">range_val</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">_dict_col_grad</span><span class="p">[</span><span class="n">k_2</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">track_dict</span>
     
     <span class="k">def</span> <span class="nf">_get_range</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_tr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -741,10 +756,10 @@
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>        
 
-        <span class="c1">#This fields are mandatory in objects of class Bed</span>
+        <span class="c1"># This fields are mandatory in objects of class Bed</span>
         <span class="n">_bed_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;track&quot;</span><span class="p">,</span><span class="s2">&quot;start&quot;</span><span class="p">,</span><span class="s2">&quot;end&quot;</span><span class="p">,</span><span class="s2">&quot;data_types&quot;</span><span class="p">,</span> <span class="s2">&quot;data_value&quot;</span><span class="p">]</span>        
         
-        <span class="c1">#Check whether these fields are in the original otherwise raise exception</span>
+        <span class="c1"># Check whether these fields are in the original otherwise raise exception</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">_bed_fields</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
@@ -910,7 +925,7 @@
             
             <span class="k">yield</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp_list</span><span class="p">))</span></div>
             
-<div class="viewcode-block" id="Track.track_convert2bedGraph"><a class="viewcode-back" href="../reference/pergola.html#tracks.Track.track_convert2bedGraph">[docs]</a>    <span class="k">def</span> <span class="nf">track_convert2bedGraph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">in_call</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">mean_win</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.track_convert2bedGraph"><a class="viewcode-back" href="../reference/pergola.html#tracks.Track.track_convert2bedGraph">[docs]</a>    <span class="k">def</span> <span class="nf">track_convert2bedGraph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">in_call</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">mean_win</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mean_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts a single data belonging to a single track in a list of tuples in</span>
 <span class="sd">        an object of class BedGraph. The data is grouped in time windows.</span>
@@ -919,10 +934,12 @@
 <span class="sd">        :param False in_call: If False the call to the function is from the user otherwise</span>
 <span class="sd">            is from inside :py:func: `convert2single_track()`</span>
 <span class="sd">        :param window: :py:func:`int` length of windows inside bedGraph file in seconds (default 300)</span>
-<span class="sd">                 </span>
+<span class="sd">        :param False mean_win: Calculates average value over the time interval set by window (sum values/length window)</span>
+<span class="sd">        :param False mean_value: Calculates average value (sum values/count)</span>
+<span class="sd">        </span>
 <span class="sd">        :returns: BedGraph object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="c1">#This fields are mandatory in objects of class BedGraph</span>
         <span class="n">_bed_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;track&quot;</span><span class="p">,</span><span class="s2">&quot;start&quot;</span><span class="p">,</span><span class="s2">&quot;end&quot;</span><span class="p">,</span><span class="s2">&quot;data_value&quot;</span><span class="p">]</span> 
         
@@ -942,25 +959,31 @@
         <span class="n">i_chr_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">)</span>
         <span class="n">i_data_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;data_value&quot;</span><span class="p">)</span>
         
-        <span class="c1">#When the tracks have been join it is necessary to order by chr_start</span>
+        <span class="c1">## When the tracks have been join it is necessary to order by chr_start</span>
         <span class="n">track</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">track</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">]))</span>
-        
+        <span class="c1"># min_time = kwargs.get(&#39;min_time&#39;, self.min)</span>
+        <span class="c1"># max_time = kwargs.get(&#39;max_time&#39;, self.max)</span>
+
+        <span class="c1">## Filtering by min and max time points</span>
+        <span class="c1"># track = [row for row in track if row[i_chr_start] &gt;= min_time and row[i_chr_end] &lt;= max_time]</span>
+
         <span class="c1"># Dumping raw data as a bedGraph file, no binning</span>
-        <span class="k">if</span> <span class="n">window</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1">#or false</span>
-          <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">track</span><span class="p">:</span>
-            <span class="n">temp_list</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">)</span>
-            <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">])</span>
-            <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">])</span>
-<span class="c1">#             temp_list.append(row[i_data_types])  </span>
-            <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_data_value</span><span class="p">])</span>   
-<span class="c1">#             temp_list.append(&quot;+&quot;)</span>
-<span class="c1">#             temp_list.append(row[i_chr_start])</span>
-<span class="c1">#             temp_list.append(row[i_chr_end])</span>
-                                        
-<span class="c1">#             temp_list.append(color)          </span>
-            
-            <span class="k">yield</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp_list</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span> <span class="ow">or</span> <span class="n">window</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># or false</span>
+
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">track</span><span class="p">:</span>
+                <span class="n">temp_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">)</span>
+                <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">])</span>
+                <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">])</span>
+    <span class="c1">#             temp_list.append(row[i_data_types])</span>
+                <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_data_value</span><span class="p">])</span>
+    <span class="c1">#             temp_list.append(&quot;+&quot;)</span>
+    <span class="c1">#             temp_list.append(row[i_chr_start])</span>
+    <span class="c1">#             temp_list.append(row[i_chr_end])</span>
+
+    <span class="c1">#             temp_list.append(color)</span>
+
+                <span class="k">yield</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp_list</span><span class="p">))</span>
         
         <span class="c1"># binning in windows of time     </span>
         <span class="k">else</span><span class="p">:</span>
@@ -981,31 +1004,32 @@
             <span class="c1"># I have to find the closest number multiple of the window size so that all </span>
             <span class="c1"># bedGraph have the same intervals</span>
                         
-            <span class="n">delta_window</span> <span class="o">=</span> <span class="n">window</span>    
-            <span class="c1"># To read files for instance in GRanges objects all tracks same number of intervals              </span>
-            <span class="n">ini_window_def</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i_chr_start</span><span class="p">]</span><span class="o">/</span><span class="n">delta_window</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta_window</span>
-            <span class="n">min_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t&#39;</span><span class="p">,</span> <span class="n">ini_window_def</span><span class="p">)</span>
-            <span class="n">max_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t&#39;</span><span class="p">,</span> <span class="n">ini_window_def</span><span class="p">)</span>
-            
-            <span class="n">min_t_trim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t_trim&#39;</span><span class="p">,</span> <span class="n">min_t</span><span class="p">)</span>
-            <span class="n">max_t_trim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t_trim&#39;</span><span class="p">,</span> <span class="n">max_t</span><span class="p">)</span>
-            
-<span class="c1">#             print &gt;&gt; stderr, (&quot;FATAL ERROR: min_t_trim %d.&quot;) % min_t_trim</span>
-            
-            <span class="k">if</span> <span class="n">min_t_trim</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">min_t</span> <span class="o">=</span> <span class="n">min_t_trim</span>  
-                <span class="k">if</span> <span class="n">min_t_trim</span> <span class="o">&lt;</span> <span class="n">min_t</span><span class="p">:</span>
-                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: min_t_trim </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> is smaller than minimun time point </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> inside the input file&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">min_t_trim</span><span class="p">,</span> <span class="n">min_t</span><span class="p">))</span>
+            <span class="n">delta_window</span> <span class="o">=</span> <span class="n">window</span>
 
-            <span class="k">if</span> <span class="n">max_t_trim</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">max_t</span> <span class="o">=</span> <span class="n">max_t_trim</span>  
-                <span class="k">if</span> <span class="n">max_t_trim</span> <span class="o">&gt;</span> <span class="n">max_t</span><span class="p">:</span>
-                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: max_t_trim </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> is bigger than minimun time point </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> inside the input file&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">max_t_trim</span><span class="p">,</span> <span class="n">max_t</span><span class="p">))</span>
-                                            
+            <span class="c1"># To read files for instance in GRanges objects all tracks same number of intervals              </span>
+            <span class="c1"># ini_window_def = divmod(track[0][i_chr_start]/delta_window, 1)[0] * delta_window</span>
+            <span class="n">min_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_t&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+            <span class="n">max_t</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_t&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+            <span class="n">min_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_time&#39;</span><span class="p">,</span> <span class="n">min_t</span><span class="p">)</span>
+            <span class="n">max_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_time&#39;</span><span class="p">,</span> <span class="n">max_t</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">min_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">min_t</span> <span class="o">=</span> <span class="n">min_time</span>
+                <span class="k">if</span> <span class="n">min_time</span> <span class="o">&lt;</span> <span class="n">min_t</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: min_time </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> is smaller than minimun time point </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> inside the input file&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">min_t</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">max_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">max_t</span> <span class="o">=</span> <span class="n">max_time</span>
+                <span class="k">if</span> <span class="n">max_time</span> <span class="o">&gt;</span> <span class="n">max_t</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: max_time </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> is bigger than minimun time point </span><span class="se">\&#39;</span><span class="si">%d</span><span class="se">\&#39;</span><span class="s2"> inside the input file&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">max_time</span><span class="p">,</span> <span class="n">max_t</span><span class="p">))</span>
+
             <span class="n">ini_window</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">min_t</span><span class="o">/</span><span class="n">delta_window</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">delta_window</span>
             <span class="n">end_window</span> <span class="o">=</span> <span class="n">ini_window</span> <span class="o">+</span> <span class="n">delta_window</span>
                         
-            <span class="n">partial_value</span> <span class="o">=</span> <span class="mi">0</span> 
+            <span class="n">partial_value</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">mean_value_l</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">cross_interv_dict</span> <span class="o">=</span> <span class="p">{}</span>
             
 <span class="c1">#             last_point =  track[-1][i_chr_end]</span>
@@ -1013,8 +1037,8 @@
             <span class="n">r</span> <span class="o">=</span> <span class="n">last_point</span> <span class="o">%</span> <span class="n">delta_window</span>
             <span class="n">fake_end</span> <span class="o">=</span> <span class="n">last_point</span> <span class="o">+</span> <span class="n">delta_window</span> <span class="o">-</span> <span class="n">r</span>
             <span class="n">last_fake_line</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">track</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-            
-            <span class="k">if</span> <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_t</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">exit</span><span class="p">(</span><span class="s2">&quot;FATAL ERROR: Something went wrong during bedGraph window conversion&quot;</span><span class="p">)</span>
                 
             <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">]</span> <span class="o">=</span> <span class="n">last_fake_line</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1035,23 +1059,37 @@
                 <span class="n">chr_start</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">i_chr_start</span><span class="p">]</span>        
                 <span class="n">chr_end</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">i_chr_end</span><span class="p">]</span>
                 <span class="n">data_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i_data_value</span><span class="p">])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> 
-                
+                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
                 <span class="c1"># Intervals happening after the current window</span>
                 <span class="c1"># if there is a value accumulated it has to be dumped otherwise 0</span>
                 <span class="k">if</span> <span class="n">chr_start</span> <span class="o">&gt;</span> <span class="n">end_window</span><span class="p">:</span>               
-                    <span class="k">while</span> <span class="p">(</span><span class="n">end_window</span> <span class="o">&lt;</span> <span class="n">chr_start</span><span class="p">):</span>                                 
-                        <span class="n">partial_value</span> <span class="o">=</span> <span class="n">partial_value</span> <span class="o">+</span> <span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ini_window</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">while</span> <span class="n">end_window</span> <span class="o">&lt;</span> <span class="n">chr_start</span><span class="p">:</span>
+                        <span class="n">partial_value</span> <span class="o">=</span> <span class="n">partial_value</span> <span class="o">+</span> <span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ini_window</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="n">mean_value</span> <span class="ow">and</span> <span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ini_window</span><span class="p">):</span>
+                            <span class="n">mean_value_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ini_window</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
                         <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">)</span>
                         <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ini_window</span><span class="p">)</span>
                         <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_window</span><span class="p">)</span>
                         
                         <span class="k">if</span> <span class="n">mean_win</span><span class="p">:</span>
                             <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">partial_value</span><span class="o">/</span><span class="n">window</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">mean_value</span> <span class="ow">and</span> <span class="n">counts</span><span class="p">:</span>
+                            <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">mean_value_l</span><span class="p">))</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mean_value_l</span><span class="p">)))</span>
+
+                            <span class="c1"># print &quot;list values.........&quot;, mean_value_l  #del</span>
+                            <span class="c1"># print &quot;mean values.........&quot;, float(sum(mean_value_l)) / float(len(mean_value_l))</span>
+
+                            <span class="c1"># else:</span>
+                            <span class="c1">#     temp_list.append(partial_value)</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">partial_value</span><span class="p">)</span>
                                                     
                         <span class="n">partial_value</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">counts</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">mean_value_l</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1">#                     ini_window += delta_window + 1 #ojo</span>
                         <span class="n">ini_window</span> <span class="o">+=</span> <span class="n">delta_window</span>
     <span class="c1">#                     end_window += delta_window + 1 #ojo</span>
@@ -1069,32 +1107,41 @@
                         
                         <span class="k">for</span> <span class="n">start_w</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ini_window</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">chr_end</span><span class="p">),</span> <span class="n">delta_window</span><span class="p">):</span>
                             <span class="n">weighted_value</span> <span class="o">=</span> <span class="mf">0.0</span>
-                            
-                            <span class="k">if</span> <span class="p">(</span><span class="n">end_w</span> <span class="o">==</span> <span class="n">start_w</span><span class="p">):</span>
+                            <span class="n">counts</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                            <span class="k">if</span> <span class="n">end_w</span> <span class="o">==</span> <span class="n">start_w</span><span class="p">:</span>
                                 <span class="n">weighted_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_w</span> <span class="o">-</span> <span class="n">start_new</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_new</span> <span class="o">-</span> <span class="n">start_new</span><span class="p">)</span>
                             <span class="k">else</span><span class="p">:</span>                                                           
                                 <span class="n">weighted_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_w</span> <span class="o">-</span> <span class="n">start_new</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_new</span> <span class="o">-</span> <span class="n">start_new</span><span class="p">)</span>
-    <span class="c1">#                             weighted_value= 9/2</span>
-                                
+                                <span class="c1"># weighted_value= 9/2</span>
+
                             <span class="n">weighted_value</span> <span class="o">*=</span> <span class="n">value2weight</span>
-                            <span class="n">cross_interv_dict</span><span class="p">[</span><span class="n">start_w</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_w</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">weighted_value</span><span class="p">)</span>                      
+                            <span class="n">cross_interv_dict</span><span class="p">[</span><span class="n">start_w</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">start_w</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">weighted_value</span><span class="p">)</span>
                             <span class="n">start_new</span> <span class="o">=</span> <span class="n">end_w</span>
                             <span class="n">value2weight</span> <span class="o">=</span> <span class="n">value2weight</span> <span class="o">-</span> <span class="n">weighted_value</span>                        
-        
-                            <span class="k">if</span> <span class="p">((</span><span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">chr_end</span><span class="p">):</span>
+
+                            <span class="k">if</span> <span class="p">(</span><span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">chr_end</span><span class="p">:</span>
                                 <span class="n">new_start_w</span> <span class="o">=</span> <span class="n">start_w</span> <span class="o">+</span> <span class="n">delta_window</span>
-                                <span class="n">cross_interv_dict</span><span class="p">[</span><span class="n">new_start_w</span><span class="p">]</span> <span class="o">=</span> <span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new_start_w</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">value2weight</span>
+                                <span class="n">cross_interv_dict</span><span class="p">[</span><span class="n">new_start_w</span><span class="p">]</span> <span class="o">=</span> <span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new_start_w</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">value2weight</span>
                                 <span class="k">break</span>
                             
                             <span class="n">end_w</span> <span class="o">=</span> <span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">partial_value</span> <span class="o">=</span> <span class="n">partial_value</span> <span class="o">+</span> <span class="n">data_value</span>
-                                
-                <span class="k">elif</span> <span class="p">(</span><span class="n">chr_start</span> <span class="o">&lt;=</span> <span class="n">end_window</span> <span class="ow">and</span> <span class="n">chr_start</span> <span class="o">&gt;=</span> <span class="n">ini_window</span><span class="p">):</span>
-                     
+
+                        <span class="k">if</span> <span class="n">mean_value</span><span class="p">:</span>
+                            <span class="n">counts</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="n">mean_value_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_value</span><span class="p">)</span>
+
+                <span class="c1"># elif chr_start &lt;= end_window and chr_start &gt;= ini_window:</span>
+                <span class="k">elif</span> <span class="n">end_window</span> <span class="o">&gt;</span> <span class="n">chr_start</span> <span class="o">&gt;=</span> <span class="n">ini_window</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">chr_end</span> <span class="o">&lt;=</span> <span class="n">end_window</span><span class="p">:</span>
-                        <span class="n">partial_value</span> <span class="o">=</span> <span class="n">partial_value</span> <span class="o">+</span> <span class="n">data_value</span>                 
-                    
+                        <span class="n">partial_value</span> <span class="o">=</span> <span class="n">partial_value</span> <span class="o">+</span> <span class="n">data_value</span>
+
+                        <span class="k">if</span> <span class="n">mean_value</span> <span class="ow">and</span> <span class="n">data_value</span><span class="p">:</span>
+                            <span class="n">mean_value_l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_value</span><span class="p">)</span>
+                            <span class="n">counts</span> <span class="o">+=</span> <span class="mi">1</span>
+
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">value2weight</span> <span class="o">=</span> <span class="n">data_value</span>
                         <span class="n">end_w</span> <span class="o">=</span> <span class="n">end_window</span>
@@ -1103,8 +1150,9 @@
                         
                         <span class="k">for</span> <span class="n">start_w</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ini_window</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">chr_end</span><span class="p">),</span> <span class="n">delta_window</span><span class="p">):</span>                
                             <span class="n">weighted_value</span> <span class="o">=</span> <span class="mi">0</span>
-                            
-                            <span class="k">if</span> <span class="p">(</span><span class="n">end_w</span> <span class="o">==</span> <span class="n">start_w</span><span class="p">):</span>
+                            <span class="n">counts</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                            <span class="k">if</span> <span class="n">end_w</span> <span class="o">==</span> <span class="n">start_w</span><span class="p">:</span>
                                 <span class="n">weighted_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_w</span> <span class="o">-</span> <span class="n">start_new</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_new</span> <span class="o">-</span> <span class="n">start_new</span><span class="p">)</span>
                             <span class="k">else</span><span class="p">:</span>    
                                 <span class="n">weighted_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_w</span> <span class="o">-</span> <span class="n">start_new</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_new</span> <span class="o">-</span> <span class="n">start_new</span><span class="p">)</span>
@@ -1114,15 +1162,20 @@
                             <span class="n">start_new</span> <span class="o">=</span> <span class="n">end_w</span>
                             <span class="n">value2weight</span> <span class="o">=</span> <span class="n">value2weight</span> <span class="o">-</span> <span class="n">weighted_value</span>
                             
-                            <span class="k">if</span> <span class="p">((</span><span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">chr_end</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span> <span class="o">&gt;=</span> <span class="n">chr_end</span><span class="p">:</span>
                                 <span class="n">new_start_w</span> <span class="o">=</span> <span class="n">start_w</span> <span class="o">+</span> <span class="n">delta_window</span>
                                 <span class="n">cross_interv_dict</span><span class="p">[</span><span class="n">new_start_w</span><span class="p">]</span> <span class="o">=</span> <span class="n">cross_interv_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new_start_w</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">value2weight</span>
                                 <span class="k">break</span>
                             
-                            <span class="n">end_w</span> <span class="o">=</span> <span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span>    
-                <span class="k">else</span><span class="p">:</span>            
-                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;FATAL ERROR: Something went wrong during bedGraph window conversion.&quot;</span><span class="p">)</span></div></div>
-                
+                            <span class="n">end_w</span> <span class="o">=</span> <span class="n">end_w</span> <span class="o">+</span> <span class="n">delta_window</span>
+
+                <span class="k">elif</span> <span class="n">chr_start</span> <span class="o">&lt;</span> <span class="n">ini_window</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: Value </span><span class="si">%d</span><span class="s2"> deleted because you set first time point &quot;</span> \
+                                      <span class="s2">&quot;to a higher value </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">chr_start</span><span class="p">,</span> <span class="n">end_window</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;FATAL ERROR: Something went wrong during bedGraph window &quot;</span> \
+                                      <span class="s2">&quot;conversion.&quot;</span><span class="p">)</span></div></div>
+
         <span class="c1"># Last value just printed out</span>
 <span class="c1">#         temp_list.append(&quot;chr1&quot;)        </span>
 <span class="c1">#         temp_list.append(ini_window)</span>
@@ -1407,7 +1460,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jun 26, 2017.
+      Last updated on Jul 19, 2017.
 
     </p>
   </div>

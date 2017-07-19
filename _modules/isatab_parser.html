@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>isatab_parser &mdash; Pergola  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pergola  documentation" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>isatab_parser</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for isatab_parser</h1><div class="highlight"><pre>
+<span></span><span class="c1">#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).</span>
+<span class="c1">#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.</span>
+<span class="c1">#</span>
+<span class="c1">#  This file is part of Pergola.</span>
+<span class="c1">#</span>
+<span class="c1">#  Pergola is free software: you can redistribute it and/or modify</span>
+<span class="c1">#  it under the terms of the GNU General Public License as published by</span>
+<span class="c1">#  the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1">#  (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1">#  Pergola is distributed in the hope that it will be useful,</span>
+<span class="c1">#  but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1">#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1">#  GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1">#  You should have received a copy of the GNU General Public License</span>
+<span class="c1">#  along with Pergola.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">=========================</span>
+<span class="sd">Module: pergola.parsers</span>
+<span class="sd">=========================</span>
+
+<span class="sd">.. module:: parsers</span>
+
+<span class="sd">This module provides the way to read ISA-tab format.</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">sys</span>       <span class="k">import</span> <span class="n">stderr</span>
+<span class="kn">from</span> <span class="nn">bcbio</span>     <span class="k">import</span> <span class="n">isatab</span> 
+<span class="kn">from</span> <span class="nn">os.path</span>   <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">urllib2</span>   <span class="k">import</span> <span class="n">urlopen</span><span class="p">,</span> <span class="n">HTTPError</span><span class="p">,</span> <span class="n">URLError</span>
+
+<div class="viewcode-block" id="parse_isatab_assays"><a class="viewcode-back" href="../reference/pergola.html#isatab_parser.parse_isatab_assays">[docs]</a><span class="k">def</span> <span class="nf">parse_isatab_assays</span><span class="p">(</span><span class="n">isatab_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Read all files contained in isatab format to be processed by pergola</span>
+<span class="sd">    </span>
+<span class="sd">    :param isatab_dir: :py:func:`str` containing the path to isatab data folder</span>
+<span class="sd">    </span>
+<span class="sd">    :return: :py:func:`dict` of files to be processed by pergola</span>
+<span class="sd">     </span>
+<span class="sd">    TODO: This function needs that the assays to be processed are tagged some way</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dict_files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    
+<span class="c1">#     if not path.isdir(isatab_dir):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">(</span><span class="n">isatab_dir</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span> <span class="p">(</span><span class="s2">&quot;Argument input must be a folder containning data in isatab format&quot;</span><span class="p">)</span>
+    
+    <span class="n">rec</span> <span class="o">=</span> <span class="n">isatab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">isatab_dir</span><span class="p">)</span> 
+    
+    <span class="c1"># Sample name are the key shared by both study and assay</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rec</span><span class="o">.</span><span class="n">studies</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">assays</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">j</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">j</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">file</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;Sample Name&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">dict_files</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">file</span>
+
+    <span class="k">return</span> <span class="n">dict_files</span></div>
+
+<div class="viewcode-block" id="check_assay_pointer"><a class="viewcode-back" href="../reference/pergola.html#isatab_parser.check_assay_pointer">[docs]</a><span class="k">def</span> <span class="nf">check_assay_pointer</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="n">download_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks whether the argument pointer is the path to a local file or it is a URL</span>
+<span class="sd">    If it is a URL it downloads the file to $HOME/.pergola if it has not been previously downloaded </span>
+<span class="sd">        </span>
+<span class="sd">    :param pointer: :py:func:`str` path to a file or URL</span>
+<span class="sd">    :param download_path: :py:func:`str` path to download files if they are specified as an URL  </span>
+<span class="sd">    </span>
+<span class="sd">    :returns: path of file to be processed </span>
+<span class="sd">           </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># We check that the files has not been previously downloaded </span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">pointer</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">path_file</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">download_path</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+    
+    <span class="c1"># Checking if pointer is a file</span>
+    <span class="k">if</span> <span class="n">isfile</span><span class="p">(</span><span class="n">pointer</span><span class="p">):</span>
+       <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Pointer in isatab assays </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is a file in the system&quot;</span> <span class="o">%</span> <span class="n">pointer</span>
+       <span class="k">return</span> <span class="p">(</span><span class="n">pointer</span><span class="p">)</span>   
+    <span class="k">elif</span> <span class="n">exists</span><span class="p">(</span><span class="n">path_file</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;File has already been downloaded before: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">path_file</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">path_file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">internet_on</span><span class="p">():</span>  <span class="k">raise</span> <span class="n">URLError</span><span class="p">(</span><span class="s2">&quot;Check your network connection&quot;</span><span class="p">)</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">url_file</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">pointer</span><span class="p">)</span>
+            <span class="n">local_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+            <span class="n">local_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">url_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+            <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">File </span><span class="si">%s</span><span class="s2"> has been correctly downloaded to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">download_path</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">path_file</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">HTTPError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Pointer inside isatab assays table is either a file in your system nor a valid URL </span><span class="si">%s</span><span class="s2">: &quot;</span> <span class="o">%</span>
+                             <span class="n">pointer</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="internet_on"><a class="viewcode-back" href="../reference/pergola.html#isatab_parser.internet_on">[docs]</a><span class="k">def</span> <span class="nf">internet_on</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks whether there is an available internet connection</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: :py:func:`boolean` True when internet connection is available otherwise False</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span><span class="o">=</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;http://www.google.com&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="n">URLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span> <span class="k">pass</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
+      Last updated on Jul 19, 2017.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
