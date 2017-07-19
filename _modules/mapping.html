@@ -402,7 +402,8 @@
     <span class="n">chrom_size_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file_sizes_n</span> <span class="o">+</span> <span class="n">_chrm_size_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>        
     <span class="n">chrom_size_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">chrom</span><span class="p">)</span>
 <span class="c1">#     chrom_size_f.write (&#39;%d\n&#39; % (self.max - self.min))</span>
-    <span class="n">chrom_size_f</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="mi">0</span><span class="p">))</span>
+<span class="c1">#     chrom_size_f.write (&#39;%d\n&#39; % (self.max - 0))</span>
+    <span class="n">chrom_size_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">chrom_size_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;File containing chrom sizes created: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_sizes_n</span> <span class="o">+</span> <span class="n">_chrm_size_ext</span><span class="p">)</span></div>
 
@@ -591,7 +592,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jun 26, 2017.
+      Last updated on Jul 19, 2017.
 
     </p>
   </div>
