@@ -366,7 +366,7 @@
                             
     <span class="n">genomeFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">chrom</span> <span class="o">+</span> <span class="n">_genome_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>        
     <span class="n">genomeFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span> <span class="o">+</span> <span class="n">chrom</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">genomeFile</span><span class="o">.</span><span class="n">write</span> <span class="p">(</span><span class="n">_generic_nt</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">genomeFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">_generic_nt</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">genomeFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;Genome fasta file created: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">chrom</span> <span class="o">+</span> <span class="n">_genome_file_ext</span><span class="p">)</span></div>
 
@@ -592,7 +592,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jul 19, 2017.
+      Last updated on Aug 02, 2017.
 
     </p>
   </div>

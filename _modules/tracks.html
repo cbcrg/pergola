@@ -467,7 +467,7 @@
         
         <span class="k">return</span> <span class="p">(</span><span class="n">dict_tracks</span><span class="p">)</span></div>
         
-    <span class="k">def</span> <span class="nf">_convert2single_track</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_tuples</span><span class="p">,</span>  <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_convert2single_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_tuples</span><span class="p">,</span>  <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Split data (as a list of tuples) into one or several objects depending on options </span>
 <span class="sd">        selected. Each object will correspond to a track in the genome browser</span>
@@ -603,7 +603,7 @@
 
         <span class="k">return</span> <span class="n">track_dict</span>
     
-    <span class="k">def</span> <span class="nf">_get_range</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_tr</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_tr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the range of values in data_value field </span>
 <span class="sd">        </span>
@@ -634,7 +634,7 @@
            
         <span class="k">return</span> <span class="n">range_list</span>
     
-<div class="viewcode-block" id="Track.remove"><a class="viewcode-back" href="../reference/pergola.html#tracks.Track.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_t</span><span class="p">,</span> <span class="n">tracks2remove</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.remove"><a class="viewcode-back" href="../reference/pergola.html#tracks.Track.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dict_t</span><span class="p">,</span> <span class="n">tracks2remove</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes selected tracks from a dictionary of tracks that is the input of the function those that are </span>
 <span class="sd">        set by tracks2remove</span>
@@ -1459,7 +1459,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jul 19, 2017.
+      Last updated on Aug 02, 2017.
 
     </p>
   </div>

@@ -316,9 +316,9 @@
 <span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--color_file&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;PATH_COLOR_FILE&quot;</span><span class="p">,</span> 
                            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Dictionary assigning colors of data_types path&#39;</span><span class="p">)</span>
 <span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-wm&#39;</span><span class="p">,</span> <span class="s1">&#39;--window_mean&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-                           <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Window values average by the window size&#39;</span><span class="p">)</span>
+                           <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Window values averaged by the window size&#39;</span><span class="p">)</span>
 <span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-vm&#39;</span><span class="p">,</span> <span class="s1">&#39;--value_mean&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Window values average by number of items within window&#39;</span><span class="p">)</span>
+                           <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Window values averaged by number of items within window&#39;</span><span class="p">)</span>
 <span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-min&#39;</span><span class="p">,</span> <span class="s1">&#39;--min_time&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                            <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Initial time point to extract&#39;</span><span class="p">)</span>
 <span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-max&#39;</span><span class="p">,</span> <span class="s1">&#39;--max_time&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -361,7 +361,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jul 19, 2017.
+      Last updated on Aug 02, 2017.
 
     </p>
   </div>

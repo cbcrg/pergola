@@ -179,11 +179,11 @@
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>To reproduce all <code class="docutils literal"><span class="pre">pergola_rules.py</span></code> commands shown in this section you can download the following data set:</p>
-<a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.439439"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.439439.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.439439.svg" /></a>
+<a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.838237"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg" /></a>
 <p>The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
 To download and uncompress the data you can use the following commands:</p>
 <div class="last highlight-bash"><div class="highlight"><pre><span></span>mkdir data
-wget -O- https://zenodo.org/record/439439/files/C57BL6_mice_HF.tar.gz <span class="p">|</span> tar xz -C data
+wget -O- https://zenodo.org/record/838237/files/C57BL6_mice_HF.tar.gz <span class="p">|</span> tar xz -C data
 </pre></div>
 </div>
 </div>
@@ -271,14 +271,9 @@ tabs. For instance if you field is delimited by <code class="docutils literal"><
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice_commas.csv -m ./data/b2p.txt -fs <span class="s2">&quot;,&quot;</span>
 </pre></div>
 </div>
-<p>If your file has not header, the <code class="docutils literal"><span class="pre">-nh</span></code> argument together with the <code class="docutils literal"><span class="pre">-s</span></code> enables you to set a name of each of
-the fields inside the input file in order to be able to set the mappings using the mapping file.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;StartT&#39;</span> <span class="s1">&#39;Value&#39;</span>
-</pre></div>
-</div>
 <p>Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
-list with the corresponding fields of your file as in the example below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i /your_data/your_comma_separated_file.csv -m /your_data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;Value&#39;</span>
+list with the corresponding fields of your file as in the example below, using the <code class="docutils literal"><span class="pre">-nh</span></code>, <code class="docutils literal"><span class="pre">--no_header</span></code> argument together with the <code class="docutils literal"><span class="pre">-s</span></code>, <code class="docutils literal"><span class="pre">--fields_read</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;StartT&#39;</span> <span class="s1">&#39;Value&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -323,7 +318,7 @@ provides a perfect structure to store continuous data such as for instance any b
 </tbody>
 </table>
 <p>Following our previous example the command line to convert our data to BedGraph format will be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m /data/b2p.txt -f bedGraph
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
 </pre></div>
 </div>
 <div class="admonition note">
@@ -452,26 +447,40 @@ the selected size</td>
 <td>Averages by the window size</td>
 <td><code class="docutils literal"><span class="pre">-wm</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--min_time</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--value_mean</span></code></td>
+<td><code class="docutils literal"><span class="pre">-vm</span></code></td>
+<td>&nbsp;</td>
+<td>Averages by the data items within
+the window</td>
+<td><code class="docutils literal"><span class="pre">-vm</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--min_time</span></code></td>
 <td><code class="docutils literal"><span class="pre">-min</span></code></td>
 <td>integer</td>
 <td>Min time point from which data
 will be processed</td>
 <td><code class="docutils literal"><span class="pre">-min</span> <span class="pre">10</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--max_time</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--max_time</span></code></td>
 <td><code class="docutils literal"><span class="pre">-max</span></code></td>
 <td>integer</td>
 <td>Max time point from which data
 will be processed</td>
 <td><code class="docutils literal"><span class="pre">-max</span> <span class="pre">1000</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--intervals_gen</span></code></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--intervals_gen</span></code></td>
 <td><code class="docutils literal"><span class="pre">-n</span></code></td>
 <td>&nbsp;</td>
 <td>Creates two time points from an
 original input with a single one</td>
 <td><code class="docutils literal"><span class="pre">-n</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--interval_step</span></code></td>
+<td><code class="docutils literal"><span class="pre">-ns</span></code></td>
+<td>&nbsp;</td>
+<td>Sets the step to create end time
+points when -n option is set</td>
+<td><code class="docutils literal"><span class="pre">-ns</span> <span class="pre">100</span></code></td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">--multiply_intervals</span></code></td>
 <td><code class="docutils literal"><span class="pre">-mi</span></code></td>
@@ -540,22 +549,22 @@ in files encoding data that are in equidistant time points, as the following one
 <span class="mi">1</span>     <span class="mi">3</span>    <span class="mi">21</span>
 </pre></div>
 </div>
-<p>In this case the <code class="docutils literal"><span class="pre">-n</span></code> argument generates a interval for each of the items of the file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_2.csv -m ./data/file2_to_p.txt -f bedGraph -n
+<p>In this case the <code class="docutils literal"><span class="pre">-n</span></code> argument generates an interval for each of the items of the file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
 </pre></div>
 </div>
 <p>In the case were the input file encodes time as decimal values (for instance tenth of seconds).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">time</span>    <span class="n">value</span>
-<span class="mi">0</span>       <span class="o">-</span><span class="mf">30.98</span>
-<span class="mf">0.01</span>    <span class="o">-</span><span class="mf">5.19</span>
-<span class="mf">0.02</span>    <span class="mf">23.96</span>
-<span class="mf">0.03</span>    <span class="o">-</span><span class="mf">2.75</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">time</span>  <span class="n">value</span>
+<span class="mi">1</span>     <span class="o">-</span><span class="mf">30.98</span>
+<span class="mi">2</span>     <span class="o">-</span><span class="mf">5.19</span>
+<span class="mi">3</span>     <span class="mf">23.96</span>
+<span class="mi">4</span>     <span class="o">-</span><span class="mf">2.75</span>
 </pre></div>
 </div>
 <p>It is possible to multiply the time stamp inside this input file by a given factor using the <code class="docutils literal"><span class="pre">-mi</span></code> argument
 and for instance getting the time stamps in milliseconds:
 .. in the following way:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_3.csv -m ./data/file3_to_p.txt -n -mi <span class="m">1000</span> -f bedGraph
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_3.csv -m ./data/file_3_to_p.txt -n -mi <span class="m">1000</span> -f bedGraph
 </pre></div>
 </div>
 <p>As a result two time point intervals will be returned in output file:</p>
@@ -787,7 +796,7 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jul 19, 2017.
+      Last updated on Aug 02, 2017.
 
     </p>
   </div>
