@@ -183,9 +183,9 @@ parent_parser.add_argument('-bl', '--bed_label', required=False, action='store_t
 parent_parser.add_argument('-c', '--color_file', required=False, metavar="PATH_COLOR_FILE", 
                            help='Dictionary assigning colors of data_types path')
 parent_parser.add_argument('-wm', '--window_mean', required=False, action='store_true',
-                           default=False, help='Window values average by the window size')
+                           default=False, help='Window values averaged by the window size')
 parent_parser.add_argument('-vm', '--value_mean', required=False, action='store_true',
-                           help='Window values average by number of items within window')
+                           help='Window values averaged by number of items within window')
 parent_parser.add_argument('-min', '--min_time', type=int, required=False,
                            help='Initial time point to extract')
 parent_parser.add_argument('-max', '--max_time', type=int, required=False,

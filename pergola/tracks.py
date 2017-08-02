@@ -334,7 +334,7 @@ class Track(GenomicContainer):
         
         return (dict_tracks)
         
-    def _convert2single_track (self, data_tuples,  mode=None, **kwargs):
+    def _convert2single_track(self, data_tuples,  mode=None, **kwargs):
         """
         Split data (as a list of tuples) into one or several objects depending on options 
         selected. Each object will correspond to a track in the genome browser
@@ -470,7 +470,7 @@ class Track(GenomicContainer):
 
         return track_dict
     
-    def _get_range (self, data_tr):
+    def _get_range(self, data_tr):
         """
         Calculates the range of values in data_value field 
         
@@ -501,7 +501,7 @@ class Track(GenomicContainer):
            
         return range_list
     
-    def remove (self, dict_t, tracks2remove):
+    def remove(self, dict_t, tracks2remove):
         """
         Removes selected tracks from a dictionary of tracks that is the input of the function those that are 
         set by tracks2remove

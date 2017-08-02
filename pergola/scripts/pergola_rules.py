@@ -208,6 +208,10 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         else:
             max_time = end + 1
 
+    if multiply_f:
+        min_time = min_time * multiply_f
+        max_time = max_time * multiply_f
+
     if track_act: tracks2merge = parsers.read_track_actions(tracks=intData.tracks, track_action=track_act)
 
     data_read = intData.read(relative_coord=relative_coord,
