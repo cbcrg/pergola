@@ -83,7 +83,11 @@ _dict_colors = {
                 'blue' : _blue_gradient,
                 'red' : _red_gradient,
                 'green' : _green_gradient,
-                'orange' : _orange_gradient}
+                'orange' : _orange_gradient
+                'yellow' : _yellow_gradient,
+                'pink' : _pink_gradient,
+                'cyan': _cyan_gradient
+                }
 
 # _intervals = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 1, 1000] #del
 
