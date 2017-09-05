@@ -83,7 +83,7 @@ _dict_colors = {
                 'blue' : _blue_gradient,
                 'red' : _red_gradient,
                 'green' : _green_gradient,
-                'orange' : _orange_gradient
+                'orange' : _orange_gradient,
                 'yellow' : _yellow_gradient,
                 'pink' : _pink_gradient,
                 'cyan': _cyan_gradient
