@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -138,7 +138,7 @@ Parsers arguments of pergola_rules.py script (aka pergola)
 
 parent_parser = ArgumentParser(description = 'Script to transform behavioral data into GB readable data', add_help=False)
 
-parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", help='Input file path')
+parent_parser.add_argument('-i', '--input', required=True, metavar="PATH", nargs='+', help='Input file path')
 parent_parser.add_argument('-m', '--mapping_file', required=True, metavar="MAPPING_FILE",
                     help='File to set the reciprocity between fields in behavioral file and terms used by Pergola' + \
                     ' and genome browser grammar')

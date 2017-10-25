@@ -37,17 +37,18 @@ def main(args=None):
     parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser]) 
     
     args = parser_pergola_rules.parse_args()
-    
-    pergola_rules(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks, 
-              list=args.list, range=args.range, track_actions=args.track_actions, 
-              data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
-              write_format=args.format, relative_coord=args.relative_coord, 
-              intervals_gen=args.intervals_gen, interval_step=args.interval_step, multiply_f=args.multiply_intervals,
-              no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size, 
-              no_track_line=args.no_track_line, separator=args.field_separator, 
-              bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
-              value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time)
 
+    for input_file in args.input:
+        pergola_rules(path=input_file, map_file_path=args.mapping_file, sel_tracks=args.tracks,
+        # pergola_rules(path=args.input, map_file_path=args.mapping_file, sel_tracks=args.tracks,
+                      list=args.list, range=args.range, track_actions=args.track_actions,
+                      data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
+                      write_format=args.format, relative_coord=args.relative_coord,
+                      intervals_gen=args.intervals_gen, interval_step=args.interval_step, multiply_f=args.multiply_intervals,
+                      no_header=args.no_header, fields2read=args.fields_read, window_size=args.window_size,
+                      no_track_line=args.no_track_line, separator=args.field_separator,
+                      bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
+                      value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time)
 
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
          data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False, intervals_gen=False,

@@ -1045,9 +1045,9 @@ class Track(GenomicContainer):
                 elif chr_start < ini_window:
                     print >> stderr, ("WARNING: Value %d deleted because you set first time point " \
                                       "to a higher value %d") % (chr_start, end_window)
-                else:
-                    print >> stderr, ("FATAL ERROR: Something went wrong during bedGraph window " \
-                                      "conversion.")
+                # else:
+                    # print >> stderr, ("FATAL ERROR: Something went wrong during bedGraph window " \
+                    #                   "conversion.")
 
         # Last value just printed out
 #         temp_list.append("chr1")        
