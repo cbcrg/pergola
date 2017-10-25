@@ -80,6 +80,7 @@
             
             
                 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
@@ -131,8 +132,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for parsers</h1><div class="highlight"><pre>
-<span></span><span class="c1">#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).</span>
-<span class="c1">#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.</span>
+<span></span><span class="c1">#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).</span>
+<span class="c1">#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.</span>
 <span class="c1">#</span>
 <span class="c1">#  This file is part of Pergola.</span>
 <span class="c1">#</span>
@@ -271,7 +272,7 @@
 
 <span class="n">parent_parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;Script to transform behavioral data into GB readable data&#39;</span><span class="p">,</span> <span class="n">add_help</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;--input&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Input file path&#39;</span><span class="p">)</span>
+<span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;--input&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Input file path&#39;</span><span class="p">)</span>
 <span class="n">parent_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;--mapping_file&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;MAPPING_FILE&quot;</span><span class="p">,</span>
                     <span class="n">help</span><span class="o">=</span><span class="s1">&#39;File to set the reciprocity between fields in behavioral file and terms used by Pergola&#39;</span> <span class="o">+</span> \
                     <span class="s1">&#39; and genome browser grammar&#39;</span><span class="p">)</span>
@@ -361,7 +362,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Aug 02, 2017.
+      Last updated on Oct 25, 2017.
 
     </p>
   </div>

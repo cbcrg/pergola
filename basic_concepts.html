@@ -81,6 +81,7 @@
             
             
                 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Basic concepts</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#input">Input</a><ul>
@@ -146,14 +147,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="basic-concepts">
-<h1>Basic concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Basic concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h1>
 <p>Pergola allows to explore and process longitudinal data using genomic tools.</p>
 <p>Two main benefits derive from using pergola.</p>
 <p>Visualization and data processing mature genomic tools can be used.</p>
 <div class="section" id="input">
 <h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="input-data">
-<span id="id1"></span><h3>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h3>
+<span id="id2"></span><h3>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h3>
 <p>Pergola can process any sequence of temporal events contained in a character-separated file as in the example below:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">id</span>    <span class="n">t_ini</span>   <span class="n">t_end</span> <span class="nb">type</span>      <span class="n">value</span>   <span class="n">description</span>
 <span class="mi">1</span>     <span class="mi">137</span>     <span class="mi">156</span>     <span class="n">type_x</span>  <span class="mf">0.06</span>    <span class="s2">&quot;type x event&quot;</span>
@@ -169,7 +170,7 @@
 correspond to time points and the second one to any value assigned to each of the time points.</p>
 </div>
 <div class="section" id="pergola-ontology">
-<span id="id2"></span><h3>Pergola ontology<a class="headerlink" href="#pergola-ontology" title="Permalink to this headline">¶</a></h3>
+<span id="id3"></span><h3>Pergola ontology<a class="headerlink" href="#pergola-ontology" title="Permalink to this headline">¶</a></h3>
 <p>In order to specify to pergola the content of each of the fields of the input data,
 user has to map the input fields to a set of defined terms or pergola ontology.</p>
 <p>The <strong>pergola ontology</strong> consists on a set of controlled terms or vocabulary to define
@@ -213,7 +214,7 @@ the content of each of the input fields inside the input data.</p>
 the original data and Pergola output terms, read next section.</p>
 </div>
 <div class="section" id="mapping-file">
-<span id="id3"></span><h3>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h3>
+<span id="id4"></span><h3>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h3>
 <p>The mapping file sets the correspondence between the input data and the terms used by pergola.
 It is thus the way pergola knows what is encoded in each of the fields of the input data.
 Provided we have an input file as the show in the <a class="reference internal" href="#input-data"><span class="std std-ref">Input data</span></a>. section, a mapping file looks like the following example:</p>
@@ -248,7 +249,7 @@ and thus, it is relatively easy to adapt the scaffold thought to encode genomic 
 encode a temporal sequence of events. In this section we present the formats we adapted and
 for which purpose they can be used.</p>
 <div class="section" id="discrete-data">
-<span id="id4"></span><h3>Discrete data<a class="headerlink" href="#discrete-data" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h3>Discrete data<a class="headerlink" href="#discrete-data" title="Permalink to this headline">¶</a></h3>
 <p>Longitudinal data many times presents the form of a sequence of irregular discrete events or time
 intervals with a series of associated data such as the type of event or the magnitude.
 Genomics provides formats that are specially suitable to encode this type of data such as
@@ -259,7 +260,7 @@ genomic annotations can be adapted to encode discrete temporal events by regardi
 positions in a genome as analogous to time points in a behavioral trajectory.</p>
 </div>
 <div class="section" id="continuous-data">
-<span id="id5"></span><h3>Continuous data<a class="headerlink" href="#continuous-data" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>Continuous data<a class="headerlink" href="#continuous-data" title="Permalink to this headline">¶</a></h3>
 <p>Pergola enables the calculation of parameters such as accumulated or mean values of a quantifiable
 measure over user-defined time windows. The <a class="reference external" href="https://genome.ucsc.edu/FAQ/FAQformat.html#format1.8">BedGraph</a>
 file format used in genomics to store continuous-valued data such as probability scores or transcriptome data,
@@ -267,7 +268,7 @@ provides a perfect structure for Pergola calculations or for whatever type of sc
 of your input data.</p>
 </div>
 <div class="section" id="reference-data">
-<span id="id6"></span><h3>Reference data<a class="headerlink" href="#reference-data" title="Permalink to this headline">¶</a></h3>
+<span id="id7"></span><h3>Reference data<a class="headerlink" href="#reference-data" title="Permalink to this headline">¶</a></h3>
 <p>Some types of genomics tools, such as several genome browsers, need a reference sequence in order to align the
 data sequences to this reference (genome).
 For this reason we adapted the <a class="reference external" href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&amp;PAGE_TYPE=BlastDocs&amp;DOC_TYPE=BlastHelp">FASTA</a> file format
@@ -325,7 +326,7 @@ to enable the use of these type of tools with pergola processed data.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jun 26, 2017.
+      Last updated on Oct 25, 2017.
 
     </p>
   </div>

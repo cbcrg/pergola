@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quick start &mdash; Pergola  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pergola  documentation" href="index.html"/>
+        <link rel="next" title="Installation" href="installation.html"/>
+        <link rel="prev" title="Welcome to Pergola’s documentation!" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#get-your-data">Get your data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#declare-equivalence">Declare equivalence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pull-pergola-image">Pull Pergola image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-pergola">Run Pergola</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualize-data">Visualize data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Quick start</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/quick_start.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quick-start">
+<span id="id1"></span><h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<p>If you have to start using Pergola in some easy steps follow this guide.</p>
+<div class="section" id="get-your-data">
+<h2>Get your data<a class="headerlink" href="#get-your-data" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="input-data"></span><p>A data set containing motion behavior from <em>C.elegans</em> data set is available on <a class="reference external" href="https://zenodo.org/record/582343/files/celegans_unc16_N2.tar.gz">Zenodo</a>.
+Two download all the files inside a folder name data you can follow these commands:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir data
+wget -O- https://zenodo.org/record/582343/files/celegans_unc16_N2.tar.gz <span class="p">|</span> tar xz -C data
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Explain in what consi</p>
+</div>
+<div class="section" id="declare-equivalence">
+<h3>Declare equivalence<a class="headerlink" href="#declare-equivalence" title="Permalink to this headline">¶</a></h3>
+<p>Pergola needs you to set the mappings between the information represented in your behavioral file in order to understand each piece of information inside your
+file, see <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">Mapping file</span></a> and <a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">Pergola ontology</span></a> for a deeper description. You can download the mapping file for this example <a class="reference external" href="https://gist.githubusercontent.com/JoseEspinosa/b49900521c53123108c82832da8d063c/raw/a9f05ec8f67dc19b665f788bc7b986876d1b6320/worm_speed2pergola.txt">here</a>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>wget -O- https://gist.githubusercontent.com/JoseEspinosa/b49900521c53123108c82832da8d063c/raw/a9f05ec8f67dc19b665f788bc7b986876d1b6320/worm_speed2pergola.txt &gt; ./data/worm_speed2pergola.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="pull-pergola-image">
+<h3>Pull Pergola image<a class="headerlink" href="#pull-pergola-image" title="Permalink to this headline">¶</a></h3>
+<p>You can obtain last Pergola version from <a class="reference external" href="https://hub.docker.com/u/pergola/">Pergola Docker Hub repository</a>.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
+</pre></div>
+</div>
+<p>First we will launch Pergola image mounting the files we need into the container by typing:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v /data:/container_data -w /container_data pergola/pergola bash
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to install Pergola on your system instead, refer to <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> documentation section.</p>
+</div>
+</div>
+<div class="section" id="run-pergola">
+<h3>Run Pergola<a class="headerlink" href="#run-pergola" title="Permalink to this headline">¶</a></h3>
+<p>You can know process the downloaded with Pergola using the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/*.csv -m ./data/worm_speed2pergola.txt -f bedGraph -w <span class="m">1</span> -min <span class="m">0</span> -max <span class="m">29000</span>
+</pre></div>
+</div>
+<p>The resultings files can be uploaded on a desktop browser for its visualization as explained below.</p>
+</div>
+<div class="section" id="visualize-data">
+<h3>Visualize data<a class="headerlink" href="#visualize-data" title="Permalink to this headline">¶</a></h3>
+<p>We choose the <a class="reference external" href="http://software.broadinstitute.org/software/igv/">Integrative Genomics Viewer</a> for visualizing the data. IGV can be downloaded from
+<a class="reference external" href="http://software.broadinstitute.org/software/igv/download">here</a>.</p>
+<p>After launching IGV, first you have to create a genome file. Go to <strong>Genomes</strong> menu and click on &#8220;Create .genome File...&#8221;
+Data can be visualize using a heatmap.</p>
+<img alt="_images/menu_create_genome.png" src="_images/menu_create_genome.png" />
+<p>On the menu that pops up load the fasta file generated by Pergola and click on OK.</p>
+<img alt="_images/create_genome.png" src="_images/create_genome.png" />
+<p>Now you can render all BedGraph files generated before by going to <strong>File</strong> menu and click on &#8220;Load from File...&#8221;</p>
+<img alt="_images/load_files.png" src="_images/load_files.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Stack the tracks corresponding to each group, in this manner differences will become easier to identify</p>
+</div>
+<p>Finally to obtain a heatmap of the tracks it is necessary to set some options:</p>
+<ul class="simple">
+<li>To visualize all the tracks in the screen go to <strong>Tracks</strong> and click on &#8220;Fit Data to Window&#8221;</li>
+</ul>
+<img alt="_images/load_files.png" src="_images/load_files.png" />
+<ul class="simple">
+<li>Now select all tracks by clicking on their names and right click with the mouse, as a result a menu will pop up. On this menu check &#8220;Heatmap&#8221; under <strong>Type of Graph</strong> menu and &#8220;None&#8221; under <strong>Windowing Function</strong>.</li>
+</ul>
+<img alt="_images/select_heatmap.png" src="_images/select_heatmap.png" />
+<ul class="simple">
+<li>To display the differences between the tracks, adjust heatmap settings as shown in the snapshot below.</li>
+</ul>
+<img alt="_images/heatmap_menu.png" src="_images/heatmap_menu.png" />
+<ul class="simple">
+<li>The resulting rendering shows how overall the speeds of UNC-16 (uncoordinated strain), tracks below, are lower depicting a deficient moving behavior when compared to control (N2) strain on top.</li>
+</ul>
+<img alt="_images/final_snapshot_heatmap.png" src="_images/final_snapshot_heatmap.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to Pergola’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
+      Last updated on Oct 25, 2017.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
