@@ -1,4 +1,4 @@
-.. _scripts-page:
+.. _scripts-page: 
 
 Ready-to-use scripts
 ======================
@@ -22,16 +22,16 @@ If you prefer to code your own scripts read :ref:`library` section.
 .. tip:: 
 	To reproduce all ``pergola_rules.py`` commands shown in this section you can download the following data set:
 	
-	.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.439439.svg
-	    :target: https://doi.org/10.5281/zenodo.439439
-    
+	.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg
+	    :target: https://doi.org/10.5281/zenodo.838237
+
 	The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
 	To download and uncompress the data you can use the following commands:
 	
 	.. code-block:: bash
 	
 	  mkdir data
-	  wget -O- https://zenodo.org/record/439439/files/C57BL6_mice_HF.tar.gz | tar xz -C data
+	  wget -O- https://zenodo.org/record/838237/files/C57BL6_mice_HF.tar.gz | tar xz -C data
 
 *******************
 General usage:
@@ -99,20 +99,14 @@ tabs. For instance if you field is delimited by ``,``, you can specify it as sho
 	
   pergola_rules.py -i ./data/feedingBehavior_HF_mice_commas.csv -m ./data/b2p.txt -fs ","
 
-If your file has not header, the ``-nh`` argument together with the ``-s`` enables you to set a name of each of
-the fields inside the input file in order to be able to set the mappings using the mapping file.
+Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
+list with the corresponding fields of your file as in the example below, using the ``-nh``, ``--no_header`` argument together with the ``-s``, ``--fields_read``:
 
 .. code-block:: bash
-	
+
   pergola_rules.py -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s 'CAGE' 'EndT' 'Nature' 'StartT' 'Value'
 
-Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
-list with the corresponding fields of your file as in the example below:
 
-.. code-block:: bash
-  
-  pergola_rules.py -i /your_data/your_comma_separated_file.csv -m /your_data/b2p.txt -nh -s 'CAGE' 'EndT' 'Nature' 'Value'
-  
 File formats 
 ------------
 Pergola can convert your data to several genomic file formats. The `BED <https://genome.ucsc.edu/FAQ/FAQformat#format1>`_ (default option) 
@@ -135,7 +129,7 @@ Following our previous example the command line to convert our data to BedGraph 
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m /data/b2p.txt -f bedGraph
+  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
   
 .. note::
 
@@ -237,6 +231,9 @@ Given the prominent temporal nature of longitudinal data, pergola provides sever
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
 | ``--window_mean``        | ``-wm``  |          | Averages by the window size       | ``-wm``                    |
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
+| ``--value_mean``         | ``-vm``  |          | Averages by the data items within | ``-vm``                    |
+|                          |          |          | the window                        |                            |
++--------------------------+----------+----------+-----------------------------------+----------------------------+
 | ``--min_time``           | ``-min`` | integer  | Min time point from which data    | ``-min 10``                |
 |                          |          |          | will be processed                 |                            |
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
@@ -245,6 +242,9 @@ Given the prominent temporal nature of longitudinal data, pergola provides sever
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
 | ``--intervals_gen``      | ``-n``   |	         | Creates two time points from an   | ``-n``                     | 
 |                          |          |          | original input with a single one  |                            |
++--------------------------+----------+----------+-----------------------------------+----------------------------+
+| ``--interval_step``      | ``-ns``  |	         | Sets the step to create end time  | ``-ns 100``                |
+|                          |          |          | points when -n option is set      |                            |
 +--------------------------+----------+----------+-----------------------------------+----------------------------+
 | ``--multiply_intervals`` | ``-mi``  |	integer	 | Multiple time points by the       | ``-mi 1000``               | 
 |                          |          |          | selected value                    |                            |
@@ -323,11 +323,11 @@ in files encoding data that are in equidistant time points, as the following one
   1     2    13  
   1     3    21
 
-In this case the ``-n`` argument generates a interval for each of the items of the file:
+In this case the ``-n`` argument generates an interval for each of the items of the file:
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/file_2.csv -m ./data/file2_to_p.txt -f bedGraph -n
+  pergola_rules.py -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
   
 .. This command will result in the following output file:
 
@@ -335,11 +335,11 @@ In the case were the input file encodes time as decimal values (for instance ten
 
 ::
 
-    time    value
-    0       -30.98
-    0.01    -5.19
-    0.02    23.96
-    0.03    -2.75
+    time  value
+    1     -30.98
+    2     -5.19
+    3     23.96
+    4     -2.75
 
 It is possible to multiply the time stamp inside this input file by a given factor using the ``-mi`` argument 
 and for instance getting the time stamps in milliseconds:
@@ -347,7 +347,7 @@ and for instance getting the time stamps in milliseconds:
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/file_3.csv -m ./data/file3_to_p.txt -n -mi 1000 -f bedGraph
+  pergola_rules.py -i ./data/file_3.csv -m ./data/file_3_to_p.txt -n -mi 1000 -f bedGraph
 
 As a result two time point intervals will be returned in output file:
 

@@ -6,15 +6,16 @@
 Welcome to Pergola's documentation!
 ===================================
 
-Pergola is a set of python modules for transforming your data in data visualizable
-in common genome browser
+The advent of new technologies in the field of behavioral neuroscience and other disciplines allows for the collection
+of big chunks of longitudinal data. Hence, powerful analysis and visualization tools are increasingly necessary.
 
-The advent of new technologies in the field of behavioral neuroscience allows for the collection 
-of big chunks of longitudinal data. Dealing with such a huge amount of data sometimes is difficult 
-and it is very important to have good visualization tools so that we let data “speak”. However, this 
-problem is not new in biology and other disciplines, such as genomics, have long dealt with it. 
-So why not take advantage of it? pergola aims is to be a simple tool for behavioral data manipulation 
-in order to visualize data in popular genome browsers.
+Dealing with such a huge amount of data is not a new problem in biology. Other biological disciplines such as genomics
+have long  develop software tools for the analysis of big data. This observation will be anecdotal if genomics data were
+not often sequential and hence share a similar structure with longitudinal data.
+
+Pushing this observation further, Pergola process your longitudinal data adopting widely-used genomic formats.
+This way, Pergola makes your data compliant with powerful genomics software tools, simplifying its analysis and
+visualization.
 
 Documentation index:
 ~~~~~~~~~~~~~~~~~~~~
@@ -23,8 +24,10 @@ Documentation index:
 
   .. toctree::
      :maxdepth: 3
+     
+     quick_start
   
-     installation
+     installation          
      
      basic_concepts
       

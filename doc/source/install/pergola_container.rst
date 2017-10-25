@@ -56,7 +56,7 @@ with the following command:
 
 	docker run -ti pergola/pergola bash
 
-You can also mount your fields in the container as shown below:
+You can also mount your files in the container as shown below:
 
 .. code-block:: bash	
 

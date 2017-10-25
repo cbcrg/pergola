@@ -79,7 +79,7 @@ of the code just clone the repository:
 Testing installation
 **********************
 
-Finally, if you want to check that your installation completed succesfully, move to test directory and run as in the example:
+Finally, if you want to check that your installation completed successfully, move to test directory and run as in the example:
 
 .. code-block:: bash
   

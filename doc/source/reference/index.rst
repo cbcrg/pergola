@@ -1,7 +1,7 @@
 
 .. _reference:
 
-Reference Guide
+Reference Guide 
 ===============
 
 .. toctree::
