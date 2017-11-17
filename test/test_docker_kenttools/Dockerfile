@@ -30,3 +30,6 @@ RUN git clone https://github.com/CRG-Barcelona/libbeato.git && \
     cd ../bwtool/  && ./configure && \
     make && \
     sudo make install
+
+# Install deeptools
+RUN pip install deeptools==2.5.3
