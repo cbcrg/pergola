@@ -32,16 +32,11 @@ to map tracks that are genereted by the application
 
 """
 
-from mapping import check_path
+from mapping  import check_path
 from csv      import reader
-# from os import getcwd
-# from os.path import join
 from sys      import stderr
-# from itertools import groupby 
 from tracks   import Track
 from operator import itemgetter
-# from re import split, search
-# from math import pow
 
 class IntData(object):
     """
@@ -130,6 +125,7 @@ class IntData(object):
         :returns: delimiter
         
         """
+
         for row in self._in_file:
 
             # Comments skipped
@@ -163,7 +159,7 @@ class IntData(object):
         Reading the behavioral fields from the header file or otherwise setting  
         the fields to numeric values corresponding the column index starting at 0
         
-        :param None fields: :py:func:`list` with the behavioral fields corresponding each column in the file
+        :param None fields: :py:func:`list` with the behavioral fields corresponding to each column in the file
         
         :returns: list with the behavioral fields
             
@@ -209,7 +205,7 @@ class IntData(object):
         else:
             first_r = first_l
 
-            if fields:
+            if fields and fields[0] != "ordinal":
                 if len(fields) > len(first_r):
                     raise ValueError("Input field list \"%s\" is longer than totals fields available in file \'%s\'" % ("\",\"".join(fields), len(first_r)))
 
@@ -218,6 +214,9 @@ class IntData(object):
                 print >>stderr, ("WARNING: As header=False you col names set by fields will be considered to have the order "
                         "you provided: \"%s\""
                         %"\",\"".join(fields))
+            elif fields and fields[0] == "ordinal":
+                fieldsB = range (1, len(first_r)+1)
+                fieldsB = [str(i) for i in fieldsB]
             else:
                 raise ValueError ('File should have a header, otherwise you should set ' 
                                   'an ordered list of columns names using fields')
@@ -394,7 +393,6 @@ class IntData(object):
 
         # If start not present out     
         try:
-
             idx_fields2int = self.fieldsG_dict[_f_rel_mand]
         except ValueError:
             raise ValueError("Parameter intervals=True needs that field '%s' is not missing in file %s."
@@ -642,11 +640,7 @@ class IntData(object):
 
         if _f_track in self.fieldsG_dict:
             i_track = self.fieldsG_dict[_f_track]
-            #             p_track = self.data[0][i_track]
             track_sw = True
-
-            #         if tr != p_tr:
-            #             lfl
 
         # All items except last
         for i in range(len(self.data[:-1])):
@@ -726,8 +720,6 @@ class IntData(object):
 
             temp = row + value_end
             data_int.append((tuple(temp)))
-
-        # data_int.append((tuple(temp)))
 
         return (data_int)
 
