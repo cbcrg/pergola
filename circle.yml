@@ -12,11 +12,11 @@ machine:
 dependencies:
   pre:
     - pip install -r requirements.txt
-    - sudo apt-get update; sudo apt-get install python-scipy
 test:
   pre:
+    - sudo apt-get update; sudo apt-get install python-scipy
     - cd pergola
-    - python setup.py
+    - python setup.py install
   override:
     - nosetests pergola/test/test_all.py
 
