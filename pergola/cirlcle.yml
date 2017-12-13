@@ -9,4 +9,12 @@ machine:
   python:
     version: 2.7.9
 
+dependencies:
+  override:
+    - pip install -r requirements.txt
+
+test:
+  override:
+    - nosetests pergola/test/test_all.py
+
 
