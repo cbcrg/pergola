@@ -14,7 +14,7 @@ dependencies:
     - pip install -r requirements.txt
 test:
   pre:
-    - sudo apt-get update; sudo apt-get install python-scipy
+    - pip install scipy
     - cd pergola
     - python setup.py install
   override:
