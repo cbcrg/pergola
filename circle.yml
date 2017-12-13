@@ -10,10 +10,13 @@ machine:
     version: 2.7.9
 
 dependencies:
-  override:
+  pre:
     - pip install -r requirements.txt
 
 test:
+  pre:
+    - cd pergola
+    - python setup.py
   override:
     - nosetests pergola/test/test_all.py
 
