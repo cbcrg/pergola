@@ -12,11 +12,15 @@ machine:
 dependencies:
   pre:
     - pip install -r requirements.txt
-test:
-  pre:
     - pip install scipy
     - cd pergola
     - python setup.py install
+
+test:
+#  pre:
+#    - pip install scipy
+#    - cd pergola
+#    - python setup.py install
   override:
     - nosetests pergola/test/test_all.py
 

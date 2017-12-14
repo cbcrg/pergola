@@ -105,12 +105,17 @@ for mname, msg, ex in PYTHON_DEPENDENCIES:
 if missing:
     exit("Essential dependencies missing, please review and install.\n")
 
+long_description = 'A library to analyze and visualize behavioral data by unlocking genomic tools'
+
+if path.exists ("README.rst"):
+    with open('README.rst') as file:
+        long_description = file.read()
 
 def main():
     setup(name='pergola',
           version='0.1',
           description='A library to analyze and visualize behavioral data by unlocking genomic tools',
-          long_description=open('README.md').read(),
+          long_description= long_description,
           url='http://github.com/cbcrg/pergola',
           author='Jose Espinosa-Carrasco',
           author_email='espinosacarrascoj@gmail.com',
