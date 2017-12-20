@@ -1,0 +1,78 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7.13
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: dependency-cache-{{ checksum "setup.py" }}
+
+      - run:
+          name: install python dependencies
+          command: |
+            sudo pip install -r requirements.txt
+            sudo pip install scipy
+            sudo pip install twine
+            sudo python setup.py install
+            python pergola/test/test_all.py
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "setup.py" }}
+          paths:
+            - "venv"
+
+  deploy:
+    docker:
+      - image: circleci/python:2.7.13
+    steps:
+      - checkout
+
+      - run:
+          name: install python dependencies
+          command: |
+            sudo pip install -r requirements.txt
+            sudo pip install scipy
+            sudo pip install twine
+
+      - run:
+          name: init .pypirc
+          command: |
+            if git log -1 --decorate --all --oneline --graph | grep "[0-9]\+\.[0-9]\+\.[0-9]";
+            then
+              CIRCLE_TAG=$(git describe)
+              python setup.py verify
+              echo -e "[distutils]" >> ~/.pypirc
+              echo -e "index-servers=" >> ~/.pypirc
+              echo -e " testpypi" >> ~/.pypirc
+              echo -e " pypi" >> ~/.pypirc
+              echo -e "[testpypi]" >> ~/.pypirc
+              echo -e "repository: https://test.pypi.org/legacy/" >> ~/.pypirc
+              echo -e "username = JoseEspinosa" >> ~/.pypirc
+              echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
+              sudo python setup.py sdist
+              sudo python setup.py bdist_wheel
+              twine upload --repository testpypi dist/*
+            else
+              echo "Not a release, skipping build"
+            fi
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              ignore: /^testing-.*/
+            branches:
+              only:
+                - master

@@ -24,6 +24,8 @@ from os import path
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
+VERSION = "0.1.0"
+
 TAGS = [
     "Development Status :: 2 - Pre-Alpha",
     "Environment :: Console",
@@ -111,6 +113,19 @@ if path.exists ("README.rst"):
     with open('README.rst') as file:
         long_description = file.read()
 
+class VerifyVersionCommand(install):
+    """Custom command to verify that the git tag matches version in setup"""
+    description = 'verify that the git tag matches our version'
+
+    def run(self):
+        tag = getenv('CIRCLE_TAG')
+
+        if tag != VERSION:
+            info = "Git tag: {0} does not match the version of this app: {1}".format(
+                tag, VERSION
+            )
+            exit(info)
+
 def main():
     setup(name='pergola',
           version='0.1',
@@ -133,7 +148,10 @@ def main():
                   'pergola_rules.py = scripts.pergola_rules:main',
                   'jaaba_to_pergola = scripts.jaaba_to_pergola:main',
                   'pergola_isatab.py = scripts.pergola_isatab:main',
-              ]}
+              ]},
+          cmdclass={
+              'verify': VerifyVersionCommand,
+              }
           )
 
 if __name__ == '__main__':
