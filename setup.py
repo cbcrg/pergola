@@ -20,7 +20,9 @@
 
 # from distutils.core import setup
 from setuptools import setup
-from os import path
+from setuptools.command.install import install
+from os import path, getenv
+from sys import exit
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
