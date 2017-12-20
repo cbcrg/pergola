@@ -130,7 +130,7 @@ class VerifyVersionCommand(install):
 
 def main():
     setup(name='pergola',
-          version='0.1',
+          version=VERSION,
           description='A library to analyze and visualize behavioral data by unlocking genomic tools',
           long_description= long_description,
           url='http://github.com/cbcrg/pergola',
