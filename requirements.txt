@@ -4,6 +4,5 @@ pybedtools>=0.7
 biopy-isatab>=0.1 # documentation
 ## indirect dependency of pybedtools
 pandas>=0.7
-## better not to install using pip (docker problem)
-# scipy>=0.17
-# sudo apt-get install python-scipy
+scipy>=0.17
+
