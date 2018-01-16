@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -26,7 +26,7 @@ from sys import exit
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
-VERSION = "0.1.1"
+VERSION = "0.1.0"
 
 TAGS = [
     "Development Status :: 2 - Pre-Alpha",

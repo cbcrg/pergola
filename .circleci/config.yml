@@ -1,3 +1,23 @@
+#!/usr/bin/env python
+#
+#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
+#
+#  This file is part of Pergola.
+#
+#  Pergola is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  Pergola is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
+
 version: 2
 jobs:
   build:
@@ -48,13 +68,15 @@ jobs:
               echo -e "index-servers=" >> ~/.pypirc
               echo -e " testpypi" >> ~/.pypirc
               echo -e " pypi" >> ~/.pypirc
-              echo -e "[testpypi]" >> ~/.pypirc
-              echo -e "repository: https://test.pypi.org/legacy/" >> ~/.pypirc
+              echo -e "[pypi]" >> ~/.pypirc
+#              echo -e "repository: https://test.pypi.org/legacy/" >> ~/.pypirc
+              echo -e "repository: https://pypi.python.org/pypi" >> ~/.pypirc
               echo -e "username = JoseEspinosa" >> ~/.pypirc
               echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
               sudo python setup.py sdist
               sudo python setup.py bdist_wheel
-              twine upload --repository testpypi dist/*
+#              twine upload --repository testpypi dist/*
+              twine upload dist/*
             else
               echo "Not a release, skipping build"
             fi
