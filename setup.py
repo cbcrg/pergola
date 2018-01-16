@@ -136,7 +136,7 @@ def main():
           url='http://github.com/cbcrg/pergola',
           author='Jose Espinosa-Carrasco',
           author_email='espinosacarrascoj@gmail.com',
-          license='GNU General Public License 3.0',
+          license='GPLv3', #License :: OSI Approved :: GNU General Public License v3 (GPLv3)
           package_dir={'pergola': PATH + '/pergola', 'scripts': PATH + '/pergola/scripts', },
           package_data={'mypkg': ['data/sample_data/*.csv']},
           packages=['pergola', 'scripts'],
