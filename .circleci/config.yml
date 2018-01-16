@@ -69,7 +69,7 @@ jobs:
               echo -e " testpypi" >> ~/.pypirc
               echo -e " pypi" >> ~/.pypirc
               echo -e "[pypi]" >> ~/.pypirc
-              echo -e "repository: https://pypi.python.org/pypi" >> ~/.pypirc
+              echo -e "repository: https://upload.pypi.org/legacy/" >> ~/.pypirc
               echo -e "username = JoseEspinosa" >> ~/.pypirc
               echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
               sudo python setup.py sdist
