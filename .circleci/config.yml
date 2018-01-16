@@ -69,13 +69,11 @@ jobs:
               echo -e " testpypi" >> ~/.pypirc
               echo -e " pypi" >> ~/.pypirc
               echo -e "[pypi]" >> ~/.pypirc
-#              echo -e "repository: https://test.pypi.org/legacy/" >> ~/.pypirc
               echo -e "repository: https://pypi.python.org/pypi" >> ~/.pypirc
               echo -e "username = JoseEspinosa" >> ~/.pypirc
               echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
               sudo python setup.py sdist
               sudo python setup.py bdist_wheel
-#              twine upload --repository testpypi dist/*
               twine upload dist/*
             else
               echo "Not a release, skipping build"
