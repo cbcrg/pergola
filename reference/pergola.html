@@ -79,8 +79,8 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
@@ -158,7 +158,7 @@ to map tracks that are genereted by the application</p>
 <dl class="attribute">
 <dt id="intervals.IntData.delimiter">
 <code class="descname">delimiter</code><a class="headerlink" href="#intervals.IntData.delimiter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Character use to separate values of the same record in file (default &#8221;   &#8221;).</p>
+<dd><p>Character use to separate values of the same record in file (default ”   “).</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -185,13 +185,13 @@ ontology to describe behavioral data</p>
 <dl class="attribute">
 <dt id="intervals.IntData.min">
 <code class="descname">min</code><a class="headerlink" href="#intervals.IntData.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>First time value in the file. Read from field set as &#8220;start&#8221;</p>
+<dd><p>First time value in the file. Read from field set as “start”</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="intervals.IntData.max">
 <code class="descname">max</code><a class="headerlink" href="#intervals.IntData.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Last timepoint in the file. Read from field set as &#8220;end&#8221;</p>
+<dd><p>Last timepoint in the file. Read from field set as “end”</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -209,15 +209,15 @@ ontology to describe behavioral data</p>
 <dl class="attribute">
 <dt id="intervals.IntData.data_types">
 <code class="descname">data_types</code><a class="headerlink" href="#intervals.IntData.data_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>All different data_types that appear in the data read from &#8220;data_types&#8221; field.
-If data_types field not in file, all intervals are set as belonging to data_types &#8220;a&#8221;</p>
+<dd><p>All different data_types that appear in the data read from “data_types” field.
+If data_types field not in file, all intervals are set as belonging to data_types “a”</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="intervals.IntData.tracks">
 <code class="descname">tracks</code><a class="headerlink" href="#intervals.IntData.tracks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set of tracks in the file. Read from &#8220;tracks&#8221; field.
-If tracks field not in file, all intervals are set as belonging to track &#8220;1&#8221;</p>
+<dd><p>Set of tracks in the file. Read from “tracks” field.
+If tracks field not in file, all intervals are set as belonging to track “1”</p>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -239,10 +239,10 @@ added to the the data and set to default value</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with the intervals read from data</li>
-<li><strong>field</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> field from data from which to inferred set of 
+<li><strong>data</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with the intervals read from data</li>
+<li><strong>field</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> field from data from which to inferred set of 
 unique values</li>
-<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; if field is not present in data is created and set to 
+<li><strong>default</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – if field is not present in data is created and set to 
 default</li>
 </ul>
 </td>
@@ -263,15 +263,15 @@ default</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fields</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
-<li><strong>relative_coord</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in start and end are
+<li><strong>fields</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
+<li><strong>relative_coord</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – If true all coordinates in start and end are
 make relative to the minimal value</li>
-<li><strong>intervals</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
+<li><strong>intervals</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – if set to true intervals will be inferred from timepoints in
 start</li>
-<li><strong>int_step</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> :param None int_step: <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> time step value to create 
+<li><strong>int_step</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> :param None int_step: <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> time step value to create 
 the end of intervals</li>
-<li><strong>fields2rel</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
-<li><strong>multiply_t</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
+<li><strong>fields2rel</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
+<li><strong>multiply_t</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
 end</li>
 </ul>
 </td>
@@ -297,7 +297,7 @@ this way data is always the original one.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> <code class="xref py py-func docutils literal"><span class="pre">float()</span></code> variable to check</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> <code class="xref py py-func docutils literal"><span class="pre">float()</span></code> variable to check</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-func docutils literal"><span class="pre">boolean()</span></code> True when input variable is a number otherwise False</td>
 </tr>
@@ -313,7 +313,7 @@ this way data is always the original one.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> string to be transformed to numeric</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> string to be transformed to numeric</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">numeric type</td>
 </tr>
@@ -367,7 +367,7 @@ Gene Ontology Consortium</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>0</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> set indent to be used when writing</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>0</em>) – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> set indent to be used when writing</td>
 </tr>
 </tbody>
 </table>
@@ -383,7 +383,7 @@ Gene Ontology Consortium</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; path to the intervals file</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – path to the intervals file</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the path assessed</td>
 </tr>
@@ -401,8 +401,8 @@ that will be use for the mapping the data into it</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mode</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</li>
-<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
+<li><strong>mode</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</li>
+<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
 </ul>
 </td>
 </tr>
@@ -413,15 +413,15 @@ that will be use for the mapping the data into it</p>
 <dl class="function">
 <dt id="mapping.write_chr_sizes">
 <code class="descclassname">mapping.</code><code class="descname">write_chr_sizes</code><span class="sig-paren">(</span><em>self</em>, <em>mode='w'</em>, <em>path_w=None</em>, <em>file_n=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#write_chr_sizes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.write_chr_sizes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a text file of the length of the &#8220;chromomosomes&#8221; that is needed to 
+<dd><p>Creates a text file of the length of the “chromomosomes” that is needed to 
 perform some BEDtools operations such as BEDcomplement</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mode</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</li>
-<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
+<li><strong>mode</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</li>
+<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
 </ul>
 </td>
 </tr>
@@ -438,15 +438,15 @@ perform some BEDtools operations such as BEDcomplement</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>end</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> last timepoint in the series</li>
-<li><strong>start</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> first timepoint in the series, by default 0</li>
-<li><strong>delta</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> delta between intervals, by default 43200 seconds, 12 hours</li>
-<li><strong>start_phase</strong> (<em>light</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> first phase &#8220;light&#8221; or &#8220;dark&#8221;, by default light</li>
-<li><strong>mode</strong> (<em>w</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use for file, by default write</li>
-<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
-<li><strong>lab_bed</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) &#8211; If true shows label corresponding to dataType in bed file otherwise 
-shows &#8221;.&#8221;</li>
-<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) &#8211; If true includes track_line in the file</li>
+<li><strong>end</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> last timepoint in the series</li>
+<li><strong>start</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> first timepoint in the series, by default 0</li>
+<li><strong>delta</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> delta between intervals, by default 43200 seconds, 12 hours</li>
+<li><strong>start_phase</strong> (<em>light</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> first phase “light” or “dark”, by default light</li>
+<li><strong>mode</strong> (<em>w</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use for file, by default write</li>
+<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
+<li><strong>lab_bed</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true shows label corresponding to dataType in bed file otherwise 
+shows “.”</li>
+<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true includes track_line in the file</li>
 </ul>
 </td>
 </tr>
@@ -467,16 +467,16 @@ shows &#8221;.&#8221;</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>end</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> last timepoint in the series</li>
-<li><strong>start</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> first timepoint in the series, by default 0</li>
-<li><strong>delta</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> delta between intervals, by default 43200 seconds, 12 hours</li>
-<li><strong>tag</strong> (<em>day</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> tag to use in the sequence of events</li>
-<li><strong>mode</strong> (<em>w</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use for file, by default write</li>
-<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
-<li><strong>name_file</strong> (<em>period_seq</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> output file name, by default period_seq</li>
-<li><strong>lab_bed</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) &#8211; If true shows label corresponding to dataType in bed file otherwise 
-shows &#8221;.&#8221;</li>
-<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) &#8211; If true includes track_line in the file</li>
+<li><strong>end</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> last timepoint in the series</li>
+<li><strong>start</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> first timepoint in the series, by default 0</li>
+<li><strong>delta</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> delta between intervals, by default 43200 seconds, 12 hours</li>
+<li><strong>tag</strong> (<em>day</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> tag to use in the sequence of events</li>
+<li><strong>mode</strong> (<em>w</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use for file, by default write</li>
+<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
+<li><strong>name_file</strong> (<em>period_seq</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> output file name, by default period_seq</li>
+<li><strong>lab_bed</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true shows label corresponding to dataType in bed file otherwise 
+shows “.”</li>
+<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true includes track_line in the file</li>
 </ul>
 </td>
 </tr>
@@ -501,8 +501,8 @@ From 1-4 generates a string</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tracks</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> of tracks to which track_action should be applied set([1,2])</li>
-<li><strong>delimiter</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> option to join tracks (join_all, split_all, join_odd, join_evens)</li>
+<li><strong>tracks</strong> – <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> of tracks to which track_action should be applied set([1,2])</li>
+<li><strong>delimiter</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> option to join tracks (join_all, split_all, join_odd, join_evens)</li>
 </ul>
 </td>
 </tr>
@@ -521,9 +521,9 @@ From 1-4 generates a string</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path_color_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to read user color for data_types</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path_color_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to read user color for data_types</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">d_user_color dictionary {&#8216;data_type_1&#8217;: &#8216;orange&#8217;, &#8216;data_type_2&#8217;:&#8217;blue&#8217;}</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">d_user_color dictionary {‘data_type_1’: ‘orange’, ‘data_type_2’:’blue’}</td>
 </tr>
 </tbody>
 </table>
@@ -538,8 +538,8 @@ From 1-4 generates a string</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tracks</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> of tracks to which track_action should be applied set([1,2])</li>
-<li><strong>track_action</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> option to join tracks (join_all, split_all, join_odd, join_evens)</li>
+<li><strong>tracks</strong> – <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> of tracks to which track_action should be applied set([1,2])</li>
+<li><strong>track_action</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> option to join tracks (join_all, split_all, join_odd, join_evens)</li>
 </ul>
 </td>
 </tr>
@@ -567,8 +567,8 @@ If it is a URL it downloads the file to $HOME/.pergola if it has not been previo
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pointer</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to a file or URL</li>
-<li><strong>download_path</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to download files if they are specified as an URL</li>
+<li><strong>pointer</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to a file or URL</li>
+<li><strong>download_path</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to download files if they are specified as an URL</li>
 </ul>
 </td>
 </tr>
@@ -601,7 +601,7 @@ If it is a URL it downloads the file to $HOME/.pergola if it has not been previo
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>isatab_dir</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> containing the path to isatab data folder</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>isatab_dir</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> containing the path to isatab data folder</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-func docutils literal"><span class="pre">dict()</span></code> of files to be processed by pergola</td>
 </tr>
@@ -614,34 +614,6 @@ If it is a URL it downloads the file to $HOME/.pergola if it has not been previo
 </div>
 <div class="section" id="module-test">
 <span id="test-module"></span><h2>test module<a class="headerlink" href="#module-test" title="Permalink to this headline">¶</a></h2>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is a example of how to refer to function and classed do not delete</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This module is <a class="reference internal" href="#module-tracks" title="tracks"><code class="xref py py-mod docutils literal"><span class="pre">tracks</span></code></a></p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Can I reference <code class="xref py py-func docutils literal"><span class="pre">tracks.read()</span></code></p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Can I reference <code class="xref py py-class docutils literal"><span class="pre">GenomicContainer</span></code></p>
-</div>
-<p>I need to include in code.rst
-.. note:: .. automodule:: pergola.tracks
-.. note::   :members: read, GenomicContainer</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">blabla</p>
-</div>
-<dl class="function">
-<dt id="test.printTest">
-<code class="descclassname">test.</code><code class="descname">printTest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/test.html#printTest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#test.printTest" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-tracks">
 <span id="tracks-module"></span><h2>tracks module<a class="headerlink" href="#module-tracks" title="Permalink to this headline">¶</a></h2>
@@ -731,10 +703,10 @@ an object of class BedGraph. The data is grouped in time windows.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>track</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
-<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If False the call to the function is from the user otherwise
+<li><strong>track</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
+<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – If False the call to the function is from the user otherwise
 is from inside :py:func: <cite>convert2single_track()</cite></li>
-<li><strong>window</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> length of windows inside bedGraph file in seconds (default 300)</li>
+<li><strong>window</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> length of windows inside bedGraph file in seconds (default 300)</li>
 </ul>
 </td>
 </tr>
@@ -814,14 +786,14 @@ or converted by <code class="xref py py-func docutils literal"><span class="pre"
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mode</strong> (<em>&quot;w&quot;</em>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> Only implemented write &#8216;w&#8217; (default).</li>
-<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; Path to create file, py:func:<cite>str</cite>. If None (default) the 
+<li><strong>mode</strong> (<em>&quot;w&quot;</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> Only implemented write ‘w’ (default).</li>
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – Path to create file, py:func:<cite>str</cite>. If None (default) the 
 file is dumped in the current working directory and prints a warning.</li>
-<li><strong>track</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; Path to create file, py:func:<cite>str</cite>. If None (default) the 
+<li><strong>track</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – Path to create file, py:func:<cite>str</cite>. If None (default) the 
 file is dumped in the current working directory and prints a warning.</li>
-<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) &#8211; If it is set to True includes the track_line</li>
-<li><strong>name_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; :py:func: <cite>str</cite> to set name of output file</li>
-<li><strong>bed_label</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; Whether to include or not the labels of each interval, 
+<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If it is set to True includes the track_line</li>
+<li><strong>name_file</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – :py:func: <cite>str</cite> to set name of output file</li>
+<li><strong>bed_label</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – Whether to include or not the labels of each interval, 
 default False in bed files</li>
 </ul>
 </td>
@@ -919,11 +891,11 @@ the one or several object of class set by mode</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mode</strong> (<em>bed</em>) &#8211; class of the output objects returned set to <cite>bed</cite> by
+<li><strong>mode</strong> (<em>bed</em>) – class of the output objects returned set to <cite>bed</cite> by
 default</li>
-<li><strong>range_color</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with range of values to set colors 
+<li><strong>range_color</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with range of values to set colors 
 of bed file. If set modifies self.range_values</li>
-<li><strong>tracks2remove</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to remove from the dict_t</li>
+<li><strong>tracks2remove</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to remove from the dict_t</li>
 </ul>
 </td>
 </tr>
@@ -943,9 +915,9 @@ of bed file. If set modifies self.range_values</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dict_d</strong> &#8211; py:func:<cite>dict</cite> containing one or more tracks, primary key 
+<li><strong>dict_d</strong> – py:func:<cite>dict</cite> containing one or more tracks, primary key 
 are tracks id and secondary tracks are data_types</li>
-<li><strong>mode</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> class of the object that is going to be 
+<li><strong>mode</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> class of the object that is going to be 
 generated</li>
 </ul>
 </td>
@@ -967,9 +939,9 @@ the new dictionary with colors assign by data type</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dict_t</strong> &#8211; py:func:<cite>dict</cite> containing one or more tracks, keys 
+<li><strong>dict_t</strong> – py:func:<cite>dict</cite> containing one or more tracks, keys 
 represent each of these tracks</li>
-<li><strong>tracks2join</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to join in a single track</li>
+<li><strong>tracks2join</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to join in a single track</li>
 </ul>
 </td>
 </tr>
@@ -994,9 +966,9 @@ set by tracks2remove</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dict_t</strong> &#8211; py:func:<cite>dict</cite> dictionary containing one or more tracks, keys represent each 
+<li><strong>dict_t</strong> – py:func:<cite>dict</cite> dictionary containing one or more tracks, keys represent each 
 of these tracks</li>
-<li><strong>tracks2remove</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to remove from the dict_t</li>
+<li><strong>tracks2remove</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tracks to remove from the dict_t</li>
 </ul>
 </td>
 </tr>
@@ -1019,10 +991,10 @@ an object of class Bed</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>track</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
-<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If False the call to the function is from the user otherwise
+<li><strong>track</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
+<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – If False the call to the function is from the user otherwise
 is from inside :py:func: <cite>convert2single_track()</cite></li>
-<li><strong>color_restrictions</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; Set colors not to be used #TODO this is not clear example??</li>
+<li><strong>color_restrictions</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – Set colors not to be used #TODO this is not clear example??</li>
 </ul>
 </td>
 </tr>
@@ -1043,12 +1015,12 @@ an object of class BedGraph. The data is grouped in time windows.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>track</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
-<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If False the call to the function is from the user otherwise
+<li><strong>track</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
+<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – If False the call to the function is from the user otherwise
 is from inside :py:func: <cite>convert2single_track()</cite></li>
-<li><strong>window</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> length of windows inside bedGraph file in seconds (default 300)</li>
-<li><strong>mean_win</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; Calculates average value over the time interval set by window (sum values/length window)</li>
-<li><strong>mean_value</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; Calculates average value (sum values/count)</li>
+<li><strong>window</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> length of windows inside bedGraph file in seconds (default 300)</li>
+<li><strong>mean_win</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – Calculates average value over the time interval set by window (sum values/length window)</li>
+<li><strong>mean_value</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – Calculates average value (sum values/count)</li>
 </ul>
 </td>
 </tr>
@@ -1069,10 +1041,10 @@ an object of class Gff</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>track</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
-<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If False the call to the function is from the user otherwise
+<li><strong>track</strong> – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> of tuples containing data of a single track</li>
+<li><strong>in_call</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – If False the call to the function is from the user otherwise
 is from inside :py:func: <cite>convert2single_track()</cite></li>
-<li><strong>color_restrictions</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; Set colors not to be used #TODO this is not clear example??</li>
+<li><strong>color_restrictions</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – Set colors not to be used #TODO this is not clear example??</li>
 </ul>
 </td>
 </tr>
@@ -1095,9 +1067,9 @@ data_types,  a restricted color will no be used for the remaining data_types.</p
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>set_data_types</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> containing data_types names that should 
+<li><strong>set_data_types</strong> – <code class="xref py py-func docutils literal"><span class="pre">set()</span></code> containing data_types names that should 
 be linked to color gradient</li>
-<li><strong>color_restrictions</strong> &#8211; <p>A <code class="xref py py-func docutils literal"><span class="pre">dict()</span></code> that has as key data_types and as  
+<li><strong>color_restrictions</strong> – <p>A <code class="xref py py-func docutils literal"><span class="pre">dict()</span></code> that has as key data_types and as  
 values colors that are set by the user</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;dataType&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">}</span>
 </pre></div>
@@ -1127,8 +1099,8 @@ as values</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tr_1</strong> &#8211; Object of class <code class="xref py py-class docutils literal"><span class="pre">Track</span></code></li>
-<li><strong>tr_2</strong> &#8211; Object of class <code class="xref py py-class docutils literal"><span class="pre">Track</span></code></li>
+<li><strong>tr_1</strong> – Object of class <code class="xref py py-class docutils literal"><span class="pre">Track</span></code></li>
+<li><strong>tr_2</strong> – Object of class <code class="xref py py-class docutils literal"><span class="pre">Track</span></code></li>
 </ul>
 </td>
 </tr>
@@ -1160,7 +1132,7 @@ in common genome browser</p>
 </ul>
 <p>Latest source code is available from GitHub:</p>
 <p><a class="reference external" href="https://github.com/cbcrg/pergola">https://github.com/cbcrg/pergola</a></p>
-<p>by clicking on &#8220;Downloads&#8221;, or by cloning the git repository with:</p>
+<p>by clicking on “Downloads”, or by cloning the git repository with:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone https://github.com/cbcrg/pergola.git
 </pre></div>
 </div>
@@ -1184,7 +1156,7 @@ of this license is in the LICENSE file.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Oct 25, 2017.
+      Last updated on Jan 18, 2018.
 
     </p>
   </div>
@@ -1215,7 +1187,7 @@ of this license is in the LICENSE file.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -166,16 +166,11 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">mapping</span> <span class="k">import</span> <span class="n">check_path</span>
+<span class="kn">from</span> <span class="nn">mapping</span>  <span class="k">import</span> <span class="n">check_path</span>
 <span class="kn">from</span> <span class="nn">csv</span>      <span class="k">import</span> <span class="n">reader</span>
-<span class="c1"># from os import getcwd</span>
-<span class="c1"># from os.path import join</span>
 <span class="kn">from</span> <span class="nn">sys</span>      <span class="k">import</span> <span class="n">stderr</span>
-<span class="c1"># from itertools import groupby </span>
 <span class="kn">from</span> <span class="nn">tracks</span>   <span class="k">import</span> <span class="n">Track</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
-<span class="c1"># from re import split, search</span>
-<span class="c1"># from math import pow</span>
 
 <div class="viewcode-block" id="IntData"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.IntData">[docs]</a><span class="k">class</span> <span class="nc">IntData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -264,6 +259,7 @@
 <span class="sd">        :returns: delimiter</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_file</span><span class="p">:</span>
 
             <span class="c1"># Comments skipped</span>
@@ -297,7 +293,7 @@
 <span class="sd">        Reading the behavioral fields from the header file or otherwise setting  </span>
 <span class="sd">        the fields to numeric values corresponding the column index starting at 0</span>
 <span class="sd">        </span>
-<span class="sd">        :param None fields: :py:func:`list` with the behavioral fields corresponding each column in the file</span>
+<span class="sd">        :param None fields: :py:func:`list` with the behavioral fields corresponding to each column in the file</span>
 <span class="sd">        </span>
 <span class="sd">        :returns: list with the behavioral fields</span>
 <span class="sd">            </span>
@@ -343,7 +339,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">first_r</span> <span class="o">=</span> <span class="n">first_l</span>
 
-            <span class="k">if</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fields</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_r</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input field list </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> is longer than totals fields available in file </span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_r</span><span class="p">)))</span>
 
@@ -352,6 +348,9 @@
                 <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: As header=False you col names set by fields will be considered to have the order &quot;</span>
                         <span class="s2">&quot;you provided: </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span>
                         <span class="o">%</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">fields</span> <span class="ow">and</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ordinal&quot;</span><span class="p">:</span>
+                <span class="n">fieldsB</span> <span class="o">=</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_r</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">fieldsB</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fieldsB</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span> <span class="p">(</span><span class="s1">&#39;File should have a header, otherwise you should set &#39;</span> 
                                   <span class="s1">&#39;an ordered list of columns names using fields&#39;</span><span class="p">)</span>
@@ -528,7 +527,6 @@
 
         <span class="c1"># If start not present out     </span>
         <span class="k">try</span><span class="p">:</span>
-
             <span class="n">idx_fields2int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG_dict</span><span class="p">[</span><span class="n">_f_rel_mand</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Parameter intervals=True needs that field &#39;</span><span class="si">%s</span><span class="s2">&#39; is not missing in file </span><span class="si">%s</span><span class="s2">.&quot;</span>
@@ -776,11 +774,7 @@
 
         <span class="k">if</span> <span class="n">_f_track</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG_dict</span><span class="p">:</span>
             <span class="n">i_track</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG_dict</span><span class="p">[</span><span class="n">_f_track</span><span class="p">]</span>
-            <span class="c1">#             p_track = self.data[0][i_track]</span>
             <span class="n">track_sw</span> <span class="o">=</span> <span class="kc">True</span>
-
-            <span class="c1">#         if tr != p_tr:</span>
-            <span class="c1">#             lfl</span>
 
         <span class="c1"># All items except last</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])):</span>
@@ -861,8 +855,6 @@
             <span class="n">temp</span> <span class="o">=</span> <span class="n">row</span> <span class="o">+</span> <span class="n">value_end</span>
             <span class="n">data_int</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">temp</span><span class="p">)))</span>
 
-        <span class="c1"># data_int.append((tuple(temp)))</span>
-
         <span class="k">return</span> <span class="p">(</span><span class="n">data_int</span><span class="p">)</span></div>
 
 
@@ -910,7 +902,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Oct 25, 2017.
+      Last updated on Jan 18, 2018.
 
     </p>
   </div>
@@ -941,7 +933,7 @@
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

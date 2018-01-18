@@ -82,8 +82,8 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
@@ -159,7 +159,7 @@
 <dl class="attribute">
 <dt id="intervals.IntData.delimiter">
 <code class="descname">delimiter</code><a class="headerlink" href="#intervals.IntData.delimiter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Character use to separate values of the same record in file (default &#8221;   &#8221;).</p>
+<dd><p>Character use to separate values of the same record in file (default ”   “).</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -186,13 +186,13 @@ ontology to describe behavioral data</p>
 <dl class="attribute">
 <dt id="intervals.IntData.min">
 <code class="descname">min</code><a class="headerlink" href="#intervals.IntData.min" title="Permalink to this definition">¶</a></dt>
-<dd><p>First time value in the file. Read from field set as &#8220;start&#8221;</p>
+<dd><p>First time value in the file. Read from field set as “start”</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="intervals.IntData.max">
 <code class="descname">max</code><a class="headerlink" href="#intervals.IntData.max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Last timepoint in the file. Read from field set as &#8220;end&#8221;</p>
+<dd><p>Last timepoint in the file. Read from field set as “end”</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -210,15 +210,15 @@ ontology to describe behavioral data</p>
 <dl class="attribute">
 <dt id="intervals.IntData.data_types">
 <code class="descname">data_types</code><a class="headerlink" href="#intervals.IntData.data_types" title="Permalink to this definition">¶</a></dt>
-<dd><p>All different data_types that appear in the data read from &#8220;data_types&#8221; field.
-If data_types field not in file, all intervals are set as belonging to data_types &#8220;a&#8221;</p>
+<dd><p>All different data_types that appear in the data read from “data_types” field.
+If data_types field not in file, all intervals are set as belonging to data_types “a”</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="intervals.IntData.tracks">
 <code class="descname">tracks</code><a class="headerlink" href="#intervals.IntData.tracks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set of tracks in the file. Read from &#8220;tracks&#8221; field.
-If tracks field not in file, all intervals are set as belonging to track &#8220;1&#8221;</p>
+<dd><p>Set of tracks in the file. Read from “tracks” field.
+If tracks field not in file, all intervals are set as belonging to track “1”</p>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -242,15 +242,15 @@ If tracks field not in file, all intervals are set as belonging to track &#8220;
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fields</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
-<li><strong>relative_coord</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; If true all coordinates in start and end are
+<li><strong>fields</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to read</li>
+<li><strong>relative_coord</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – If true all coordinates in start and end are
 make relative to the minimal value</li>
-<li><strong>intervals</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) &#8211; if set to true intervals will be inferred from timepoints in
+<li><strong>intervals</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#False" title="(in Python v2.7)"><em>False</em></a>) – if set to true intervals will be inferred from timepoints in
 start</li>
-<li><strong>int_step</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> :param None int_step: <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> time step value to create 
+<li><strong>int_step</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> :param None int_step: <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> time step value to create 
 the end of intervals</li>
-<li><strong>fields2rel</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
-<li><strong>multiply_t</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) &#8211; <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
+<li><strong>fields2rel</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">list()</span></code> with data columns to make relative</li>
+<li><strong>multiply_t</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> multiplies the values of the field set as start and 
 end</li>
 </ul>
 </td>
@@ -277,7 +277,7 @@ this way data is always the original one.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor</strong> &#8211; <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> <code class="xref py py-func docutils literal"><span class="pre">float()</span></code> variable to check</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>factor</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> <code class="xref py py-func docutils literal"><span class="pre">float()</span></code> variable to check</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="xref py py-func docutils literal"><span class="pre">boolean()</span></code> True when input variable is a number otherwise False</td>
 </tr>
@@ -308,7 +308,7 @@ this way data is always the original one.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Oct 25, 2017.
+      Last updated on Jan 18, 2018.
 
     </p>
   </div>
@@ -339,7 +339,7 @@ this way data is always the original one.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

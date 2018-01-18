@@ -180,7 +180,7 @@
 <span class="n">_p_ontology_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;data_value&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="s2">&quot;data_types&quot;</span><span class="p">,</span> <span class="s2">&quot;track&quot;</span><span class="p">,</span> <span class="s2">&quot;chrom&quot;</span><span class="p">,</span> <span class="s2">&quot;dummy&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="MappingInfo"><a class="viewcode-back" href="../reference/pergola.html#mapping.MappingInfo">[docs]</a><span class="k">class</span> <span class="nc">MappingInfo</span><span class="p">():</span>
+<div class="viewcode-block" id="MappingInfo"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.MappingInfo">[docs]</a><span class="k">class</span> <span class="nc">MappingInfo</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields</span>
 <span class="sd">    Mapping can be read both from a tabulated file or the _external_mapping_file_format from the </span>
@@ -287,7 +287,7 @@
                 <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
                 <span class="n">l</span><span class="o">=</span><span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">)</span>
                 <span class="n">file_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-                <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">pergola_term</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t\n\r</span><span class="s1">&#39;</span><span class="p">)</span>
                 
                 <span class="c1"># Validation of the ontology term</span>
                 <span class="k">if</span> <span class="n">pergola_term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_p_ontology_terms</span><span class="p">:</span>
@@ -308,7 +308,7 @@
                 
         <span class="k">return</span> <span class="p">(</span><span class="n">dict_correspondence</span><span class="p">)</span>   
     
-<div class="viewcode-block" id="MappingInfo.write"><a class="viewcode-back" href="../reference/pergola.html#mapping.MappingInfo.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="MappingInfo.write"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.MappingInfo.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; </span>
 <span class="sd">        Writes correspondence between the pergola ontology terms and the behavioral data </span>
 <span class="sd">         </span>
@@ -343,7 +343,7 @@
     <span class="k">return</span> <span class="n">path</span>      </div>
 
 
-<div class="viewcode-block" id="write_chr"><a class="viewcode-back" href="../reference/pergola.html#mapping.write_chr">[docs]</a><span class="k">def</span> <span class="nf">write_chr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="write_chr"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.write_chr">[docs]</a><span class="k">def</span> <span class="nf">write_chr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a fasta file of the length of the range of value inside the IntData object</span>
 <span class="sd">    that will be use for the mapping the data into it</span>
@@ -409,7 +409,7 @@
     <span class="nb">print</span> <span class="o">&gt;&gt;</span><span class="n">stderr</span><span class="p">,</span> <span class="s1">&#39;File containing chrom sizes created: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_sizes_n</span> <span class="o">+</span> <span class="n">_chrm_size_ext</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="write_cytoband"><a class="viewcode-back" href="../reference/pergola.html#mapping.write_cytoband">[docs]</a><span class="k">def</span> <span class="nf">write_cytoband</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">track_line</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="write_cytoband"><a class="viewcode-back" href="../reference/ref-mapping.html#mapping.write_cytoband">[docs]</a><span class="k">def</span> <span class="nf">write_cytoband</span><span class="p">(</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s2">&quot;light&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">track_line</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a cytoband-like and a bed file with phases of the experiment </span>
 <span class="sd">    </span>
@@ -593,7 +593,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Oct 25, 2017.
+      Last updated on Jan 18, 2018.
 
     </p>
   </div>
@@ -624,7 +624,7 @@
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

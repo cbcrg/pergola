@@ -5,6 +5,11 @@ Quick start
 
 If you have to start using Pergola in some easy steps follow this guide.
 
+.. note::
+
+  This quick start guide assumes Pergola has been previously installed, if this is not the case follow instructions in
+  :ref:`installation` section.
+
 -------------------------
 Get your data
 -------------------------
@@ -25,7 +30,7 @@ Two download all the files inside a folder name data you can follow these comman
 
 .. note::
   
-  Explain in what consi
+  Explain in what consist the data set
   
 ********************
 Declare equivalence
