@@ -229,8 +229,28 @@ class TestTutorial(unittest.TestCase):
         first_item = (0.0, '-30.98', 'a', '1', 9.0) 
         first_item_read = tracks_data_electro.data[0]
         self.assertEqual(tracks_data_electro.max, max, msg_track_electro)
-        self.assertEqual(first_item_read, first_item, msg_track_electro) 
-    
+        self.assertEqual(first_item_read, first_item, msg_track_electro)
+
+    def test_read_int_data_from_xls(self):
+        """
+        Testing the creation of intData object using data in xls format
+        """
+        # print >> stderr,"====================== test 11"
+
+        # Min value from tutorial file
+        min = 1335985200
+        max = 1337766069
+        msg_int_data_min = "Min value does not correspond to tutorial files."
+        msg_int_data_max = "Max value does not correspond to tutorial files."
+
+        int_data_tutorial = intervals.IntData(PATH + "/feeding/feeding_behavior_HF_mice.xlsx",
+                                              map_dict=mappings_tutorial.correspondence)
+
+        self.assertEqual(int_data_tutorial.min, min, msg_int_data_min)
+        self.assertEqual(int_data_tutorial.max, max, msg_int_data_max)
+
+        data_read = int_data_tutorial.read(relative_coord='False', intervals=False, multiply_t=1)
+
     def tearDown(self):
         rmtree (TEST)
         

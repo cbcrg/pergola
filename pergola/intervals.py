@@ -37,6 +37,7 @@ from csv      import reader
 from sys      import stderr
 from tracks   import Track
 from operator import itemgetter
+from pandas   import read_excel
 
 class IntData(object):
     """
@@ -101,7 +102,17 @@ class IntData(object):
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = header
 
-        self._reader =  reader(self._in_file, delimiter=self.delimiter)
+        ext = self.path.rpartition('.')[-1].lower()
+        if ext == "csv":
+            print >> stderr, ("Input file format identified as csv")
+            self._reader = reader(self._in_file, delimiter=self.delimiter)
+        elif ext == "xlsx":
+            print >> stderr, ("Input file format identified as xlsx")
+            self._reader = self.pandas_df_reader(read_excel(self._in_file, header=None, sheet_name=0, index=False))
+        else:
+            print "WARNING: File format not recognized, default format assumed to be csv"
+
+        # self._reader =  reader(self._in_file, delimiter=self.delimiter)
 
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
@@ -154,6 +165,17 @@ class IntData(object):
 
         return delimiter
 
+    def pandas_df_reader(self, df):
+        """
+        Reads pandas dataframe from excel file and returns generator
+        :param df: pandas :py:func:`dataframe`
+        :returns: :py:func:`generator` from excel file
+
+        """
+
+        for r in df.itertuples():
+            yield [str(i) for i in list(r[1:])]
+
     def _set_fields_b(self, fields=None):
         """
         Reading the behavioral fields from the header file or otherwise setting  
@@ -194,7 +216,7 @@ class IntData(object):
                                      "Also make sure you don't need to set header=False"
                                      % ("\",\"".join(fields), "\",\"".join(header)))
 
-                ori_fieldsB = [header[0].strip('# ')]+header[1:]  #del
+                ori_fieldsB = [header[0].strip('# ')]+header[1:]
 
                 for f in ori_fieldsB:
                     if f in fields: fieldsB.append(f)
