@@ -26,7 +26,7 @@ from sys import exit
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 TAGS = [
     "Development Status :: 2 - Pre-Alpha",

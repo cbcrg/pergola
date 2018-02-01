@@ -5,42 +5,63 @@ Quick start
 
 If you have to start using Pergola in some easy steps follow this guide.
 
--------------------------
-Get your data
--------------------------
+.. note::
 
+  This quick start guide assumes Pergola has been previously installed, if this is not the case follow instructions in
+  :ref:`installation` section.
+
+.. commented
 .. _input-data:
 
 .. *****************
 .. Zenodo data
 .. *****************
 
-A data set containing motion behavior from *C.elegans* data set is available on `Zenodo <https://zenodo.org/record/582343/files/celegans_unc16_N2.tar.gz>`_.
-Two download all the files inside a folder name data you can follow these commands:
+------------
+Sample data
+------------
+
+A data set containing motion behavior from *C.elegans* data set is available on
+`Zenodo <https://sandbox.zenodo.org/record/177697/files/celegans_speed_sample_data.tar.gz>`_.
+
+************************
+Sample data description
+************************
+
+The data set contains *C. elegans* motion measures derived from video recordings originally used on this
+`work <https://www.nature.com/articles/nmeth.2560>`_.
+
+The sample data set consists in two folders:  One named ``worm_speeds`` containing a ``CSV`` file for each of the
+tracked worms. From the several measures that can be found in the individual files, in this example we will use mid-body
+speed. The ``mapping`` folder contains the ``worm_speed2pergola.txt``, which sets the mappings between the information
+represented in the worm_speed files and the pergola ontology. See :ref:`mapping-file` and :ref:`pergola-ontology` for a
+deeper description.
+
+*************
+Get the data
+*************
+
+Two download the data set from Zenodo you can use this commands:
 
 .. code-block:: bash
 
   mkdir data
-  wget -O- https://zenodo.org/record/582343/files/celegans_unc16_N2.tar.gz | tar xz -C data
+  wget -O- https://zenodo.org/record/1161078/files/celegans_speed_sample_data.tar.gz | tar xz -C data
 
-.. note::
-  
-  Explain in what consi
-  
-********************
-Declare equivalence
-********************
+------------
+Run Pergola
+------------
 
-Pergola needs you to set the mappings between the information represented in your behavioral file in order to understand each piece of information inside your
-file, see :ref:`mapping-file` and :ref:`pergola-ontology` for a deeper description. You can download the mapping file for this example `here <https://gist.githubusercontent.com/JoseEspinosa/b49900521c53123108c82832da8d063c/raw/a9f05ec8f67dc19b665f788bc7b986876d1b6320/worm_speed2pergola.txt>`_.
-
-.. code-block:: bash
-
-  wget -O- https://gist.githubusercontent.com/JoseEspinosa/b49900521c53123108c82832da8d063c/raw/a9f05ec8f67dc19b665f788bc7b986876d1b6320/worm_speed2pergola.txt > ./data/worm_speed2pergola.txt
-    
 ********************
 Pull Pergola image
 ********************
+
+.. installation
+
+.. note::
+
+  If you want to install Pergola on your system instead, refer to :ref:`installation` documentation. And skip this
+  section.
 
 You can obtain last Pergola version from `Pergola Docker Hub repository <https://hub.docker.com/u/pergola/>`_.
 
@@ -48,36 +69,41 @@ You can obtain last Pergola version from `Pergola Docker Hub repository <https:/
 
   docker pull pergola/pergola:latest 
     
-First we will launch Pergola image mounting the files we need into the container by typing:
+To launch Pergola image and mount the sample data set in the container you can type:
 
 .. code-block:: bash
   
-  docker run --rm -it -v /data:/container_data -w /container_data pergola/pergola bash
+  docker run --rm -it -v "$(pwd)":/container_wd -w /container_wd pergola/pergola:latest bash
 
-.. note::
-
-  If you want to install Pergola on your system instead, refer to :ref:`installation` documentation section.
-    
 ************
-Run Pergola
+Execution
 ************
 
-You can know process the downloaded with Pergola using the following command:
+You can know process the downloaded sample data with Pergola using the following command:
 
 .. code-block:: bash
 
-  pergola -i ./data/*.csv -m ./data/worm_speed2pergola.txt -f bedGraph -w 1 -min 0 -max 29000
+  pergola -i ./data/worm_speeds/*.csv -m ./data/mapping/worm_speed2pergola.txt -f bedGraph -w 1 -min 0 -max 29000
 
-The resultings files can be uploaded on a desktop browser for its visualization as explained below.
+The resulting files can be uploaded on a desktop browser for its visualization as explained below.
 
-***************
-Visualize data
-***************
+--------------
+Visualization
+--------------
 
-We choose the `Integrative Genomics Viewer <http://software.broadinstitute.org/software/igv/>`_ for visualizing the data. IGV can be downloaded from 
-`here <http://software.broadinstitute.org/software/igv/download>`_. 
+*************
+Download IGV
+*************
 
-After launching IGV, first you have to create a genome file. Go to **Genomes** menu and click on "Create .genome File..." 
+As an example, we choose the `Integrative Genomics Viewer <http://software.broadinstitute.org/software/igv/>`_
+to illustrate how to visualize data. IGV can be downloaded from
+`here <http://software.broadinstitute.org/software/igv/download>`_.
+
+****************
+Create a genome
+****************
+
+After launching IGV, first you have to create a genome file. Go to **Genomes** menu and click on "Create .genome File..."
 Data can be visualize using a heatmap.
 
 .. image:: ./images/menu_create_genome.png
@@ -86,13 +112,21 @@ On the menu that pops up load the fasta file generated by Pergola and click on O
 
 .. image:: ./images/create_genome.png
 
-Now you can render all BedGraph files generated before by going to **File** menu and click on "Load from File..."
+********************
+Load BedGraph files
+********************
+
+Now you can render the BedGraph files generated before by going to **File** menu and click on "Load from File..."
 
 .. image:: ./images/load_files.png
 
 .. note:: 
   Stack the tracks corresponding to each group, in this manner differences will become easier to identify
-  
+
+*********************************
+Set heatmap graphical parameters
+*********************************
+
 Finally to obtain a heatmap of the tracks it is necessary to set some options:
 
 * To visualize all the tracks in the screen go to **Tracks** and click on "Fit Data to Window"
@@ -107,10 +141,6 @@ Finally to obtain a heatmap of the tracks it is necessary to set some options:
 
 .. image:: ./images/heatmap_menu.png
 
-* The resulting rendering shows how overall the speeds of UNC-16 (uncoordinated strain), tracks below, are lower depicting a deficient moving behavior when compared to control (N2) strain on top.
+* The resulting rendering shows how overall the speeds of *unc-16* (uncoordinated strain), tracks below, are lower depicting a deficient moving behavior when compared to control (N2) strain on top.
 
 .. image:: ./images/final_snapshot_heatmap.png
-
-
-
-

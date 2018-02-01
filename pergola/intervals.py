@@ -154,6 +154,12 @@ class IntData(object):
         return delimiter
 
     def _reader_data(self):
+        """
+        Reads input file into a generator depending on its formats
+
+        :returns: :py:func:`generator` containing data from input file
+
+        """
         ext = self.path.rpartition('.')[-1].lower()
 
         if ext == "csv":
@@ -172,7 +178,9 @@ class IntData(object):
     def _pandas_df_reader(self, df):
         """
         Reads pandas dataframe from excel file and returns generator
+
         :param df: pandas :py:func:`dataframe`
+
         :returns: :py:func:`generator` from excel file
 
         """
