@@ -153,7 +153,7 @@ class MappingInfo():
                 row = row.replace('\"','')
                 l=row.split(">")
                 file_term = l[0].split(":")[1].rstrip()
-                pergola_term = l[1].split(":")[1].rstrip('\t\n')
+                pergola_term = l[1].split(":")[1].rstrip('\t\n\r')
                 
                 # Validation of the ontology term
                 if pergola_term not in _p_ontology_terms:
