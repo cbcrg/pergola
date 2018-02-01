@@ -23,4 +23,4 @@ biopy-isatab>=0.1 # documentation
 ## indirect dependency of pybedtools
 pandas>=0.7
 scipy>=0.17
-
+xlrd >= 0.9.0 # xlsx files
