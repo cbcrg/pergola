@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2016, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2016, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -185,7 +185,7 @@ class TestTutorial(unittest.TestCase):
         """ 
 #         print >> stderr,"====================== test 8"
         
-        data_in = PATH + "/jaaba_data/scores_chase.mat"  
+        data_in = PATH + "/jaaba_data/scores_chase.mat"
         jaaba_scores_to_csv(input_file=data_in, path_w=TEST, name_file="file_out", norm=True, data_type="chase")
         map_j = PATH + "/jaaba_data/jaaba2pergola.txt"
         int_data_j = jaaba_scores_to_intData(input_file=data_in, map_jaaba=map_j, name_file="JAABA_scores", delimiter="\t", norm=True, data_type="a")

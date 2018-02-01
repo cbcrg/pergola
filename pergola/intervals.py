@@ -101,19 +101,7 @@ class IntData(object):
         self._in_file = open(self.path, "rb")
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = header
-
-        ext = self.path.rpartition('.')[-1].lower()
-        if ext == "csv":
-            print >> stderr, ("Input file format identified as csv")
-            self._reader = reader(self._in_file, delimiter=self.delimiter)
-        elif ext == "xlsx":
-            print >> stderr, ("Input file format identified as xlsx")
-            self._reader = self.pandas_df_reader(read_excel(self._in_file, header=None, sheet_name=0, index=False))
-        else:
-            print "WARNING: File format not recognized, default format assumed to be csv"
-
-        # self._reader =  reader(self._in_file, delimiter=self.delimiter)
-
+        self._reader = self._reader_data()
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
         self.fieldsG = self.fieldsG_dict.keys() #here before I added the new fields
@@ -165,7 +153,23 @@ class IntData(object):
 
         return delimiter
 
-    def pandas_df_reader(self, df):
+    def _reader_data(self):
+        ext = self.path.rpartition('.')[-1].lower()
+
+        if ext == "csv":
+            print >> stderr, ("Input file format identified as csv")
+            reader_obj = reader(self._in_file, delimiter=self.delimiter)
+            return reader_obj
+        elif ext == "xlsx":
+            print >> stderr, ("Input file format identified as xlsx")
+            reader_obj = self._pandas_df_reader(read_excel(self._in_file, header=None, sheet_name=0, index=False))
+            return reader_obj
+        else:
+            print >> stderr, ("WARNING: File format not recognized, default format assumed to be csv")
+            reader_obj = reader(self._in_file, delimiter=self.delimiter)
+            return reader_obj
+
+    def _pandas_df_reader(self, df):
         """
         Reads pandas dataframe from excel file and returns generator
         :param df: pandas :py:func:`dataframe`
