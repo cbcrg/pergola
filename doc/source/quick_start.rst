@@ -87,9 +87,14 @@ You can know process the downloaded sample data with Pergola using the following
 
 The resulting files can be uploaded on a desktop browser for its visualization as explained below.
 
---------------
-Visualization
---------------
+.. _visualization-igv:
+
+-----------------------
+Visualization with IGV
+-----------------------
+
+Once processed with Pergola, there are several available options to visualize your behavioral data. Here, we explain how
+to visualize the data using IGV, see :ref:`Visualization` section for other alternatives.
 
 *************
 Download IGV
