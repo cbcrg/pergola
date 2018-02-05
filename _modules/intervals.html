@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
 </ul>
@@ -132,8 +133,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for intervals</h1><div class="highlight"><pre>
-<span></span><span class="c1">#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).</span>
-<span class="c1">#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.</span>
+<span></span><span class="c1">#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).</span>
+<span class="c1">#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.</span>
 <span class="c1">#</span>
 <span class="c1">#  This file is part of Pergola.</span>
 <span class="c1">#</span>
@@ -171,6 +172,7 @@
 <span class="kn">from</span> <span class="nn">sys</span>      <span class="k">import</span> <span class="n">stderr</span>
 <span class="kn">from</span> <span class="nn">tracks</span>   <span class="k">import</span> <span class="n">Track</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span> <span class="nn">pandas</span>   <span class="k">import</span> <span class="n">read_excel</span>
 
 <div class="viewcode-block" id="IntData"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.IntData">[docs]</a><span class="k">class</span> <span class="nc">IntData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -234,9 +236,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_in_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_delimiter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;delimiter&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reader</span> <span class="o">=</span>  <span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reader_data</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fieldsB</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_fields_b</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fields_names&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_fields_g</span><span class="p">(</span><span class="n">map_dict</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldsG_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="c1">#here before I added the new fields</span>
@@ -288,6 +288,41 @@
 
         <span class="k">return</span> <span class="n">delimiter</span>
 
+    <span class="k">def</span> <span class="nf">_reader_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads input file into a generator depending on its formats</span>
+
+<span class="sd">        :returns: :py:func:`generator` containing data from input file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Input file format identified as csv&quot;</span><span class="p">)</span>
+            <span class="n">reader_obj</span> <span class="o">=</span> <span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">reader_obj</span>
+        <span class="k">elif</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;xlsx&quot;</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Input file format identified as xlsx&quot;</span><span class="p">)</span>
+            <span class="n">reader_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pandas_df_reader</span><span class="p">(</span><span class="n">read_excel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_file</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">reader_obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">stderr</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;WARNING: File format not recognized, default format assumed to be csv&quot;</span><span class="p">)</span>
+            <span class="n">reader_obj</span> <span class="o">=</span> <span class="n">reader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_in_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">reader_obj</span>
+
+    <span class="k">def</span> <span class="nf">_pandas_df_reader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads pandas dataframe from excel file and returns generator</span>
+
+<span class="sd">        :param df: pandas :py:func:`dataframe`</span>
+
+<span class="sd">        :returns: :py:func:`generator` from excel file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">:])]</span>
+
     <span class="k">def</span> <span class="nf">_set_fields_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reading the behavioral fields from the header file or otherwise setting  </span>
@@ -328,7 +363,7 @@
                                      <span class="s2">&quot;Also make sure you don&#39;t need to set header=False&quot;</span>
                                      <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">header</span><span class="p">)))</span>
 
-                <span class="n">ori_fieldsB</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;# &#39;</span><span class="p">)]</span><span class="o">+</span><span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1">#del</span>
+                <span class="n">ori_fieldsB</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;# &#39;</span><span class="p">)]</span><span class="o">+</span><span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
                 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">ori_fieldsB</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span> <span class="n">fieldsB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -901,8 +936,8 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 18, 2018.
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 05, 2018.
 
     </p>
   </div>

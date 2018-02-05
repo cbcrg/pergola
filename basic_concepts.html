@@ -35,7 +35,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pergola  documentation" href="index.html"/>
         <link rel="next" title="Ready-to-use scripts" href="ready_to_use_scripts.html"/>
-        <link rel="prev" title="Docker installation" href="install/pergola_container.html"/> 
+        <link rel="prev" title="Installation" href="installation.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -100,6 +100,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
 </ul>
@@ -217,7 +218,8 @@ the original data and Pergola output terms, read next section.</p>
 <span id="id4"></span><h3>Mapping file<a class="headerlink" href="#mapping-file" title="Permalink to this headline">¶</a></h3>
 <p>The mapping file sets the correspondence between the input data and the terms used by pergola.
 It is thus the way pergola knows what is encoded in each of the fields of the input data.
-Provided we have an input file as the show in the <a class="reference internal" href="#input-data"><span class="std std-ref">Input data</span></a>. section, a mapping file looks like the following example:</p>
+Provided we have an input file as the show in the <a class="reference internal" href="#input-data"><span class="std std-ref">input data</span></a> section, a mapping file looks like
+the following example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>! Mapping of behavioural fields into pergola ontology terms
 !
 ! Any test starting with an exclamation mark is a comment
@@ -235,9 +237,9 @@ from the <a class="reference external" href="http://geneontology.org/">Gene Onto
 between the input data and the pergola ontology.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The reserved term input_file is arbitrary and just to follow the convention of the external mapping
-file format. You can use whatever you want provided it is follow by a colon sign.
-This might be changed in following pergola versions.</p>
+<p class="last">The reserved term input_file is arbitrary.  The external mapping file format requires to tag the left part of the
+assignment and this way the mapping file follows this specification. However, you can use any other term to tag your
+input file. This might be changed in following pergola versions.</p>
 </div>
 </div>
 </div>
@@ -316,7 +318,7 @@ to enable the use of these type of tools with pergola processed data.</p>
         <a href="ready_to_use_scripts.html" class="btn btn-neutral float-right" title="Ready-to-use scripts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="install/pergola_container.html" class="btn btn-neutral" title="Docker installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -325,8 +327,8 @@ to enable the use of these type of tools with pergola processed data.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 18, 2018.
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 05, 2018.
 
     </p>
   </div>

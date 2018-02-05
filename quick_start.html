@@ -82,11 +82,21 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quick start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#get-your-data">Get your data</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#declare-equivalence">Declare equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sample-data">Sample data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sample-data-description">Sample data description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-data">Get the data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#run-pergola">Run Pergola</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#pull-pergola-image">Pull Pergola image</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#run-pergola">Run Pergola</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#visualize-data">Visualize data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization-with-igv">Visualization with IGV</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-igv">Download IGV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-genome">Create a genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-bedgraph-files">Load BedGraph files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-heatmap-graphical-parameters">Set heatmap graphical parameters</a></li>
 </ul>
 </li>
 </ul>
@@ -95,6 +105,7 @@
 <li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
 </ul>
@@ -147,73 +158,95 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This quick start guide assumes Pergola has been previously installed, if this is not the case follow instructions in
-<a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> section.</p>
+the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installation</span></a> section.</p>
 </div>
-<div class="section" id="get-your-data">
-<h2>Get your data<a class="headerlink" href="#get-your-data" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="input-data"></span><p>A data set containing motion behavior from <em>C.elegans</em> data set is available on <a class="reference external" href="https://zenodo.org/record/582343/files/celegans_unc16_N2.tar.gz">Zenodo</a>.
-Two download all the files inside a folder name data you can follow these commands:</p>
+<span class="target" id="input-data"></span><div class="section" id="sample-data">
+<h2>Sample data<a class="headerlink" href="#sample-data" title="Permalink to this headline">¶</a></h2>
+<p>A data set containing motion behavior from <em>C.elegans</em> data set is available on
+<a class="reference external" href="https://sandbox.zenodo.org/record/177697/files/celegans_speed_sample_data.tar.gz">Zenodo</a>.</p>
+<div class="section" id="sample-data-description">
+<h3>Sample data description<a class="headerlink" href="#sample-data-description" title="Permalink to this headline">¶</a></h3>
+<p>The data set contains <em>C. elegans</em> motion measures derived from video recordings originally used on this
+<a class="reference external" href="https://www.nature.com/articles/nmeth.2560">work</a>.</p>
+<p>The sample data set consists in two folders:  One named <code class="docutils literal"><span class="pre">worm_speeds</span></code> containing a <code class="docutils literal"><span class="pre">CSV</span></code> file for each of the
+tracked worms. From the several measures that can be found in the individual files, in this example we will use mid-body
+speed. The <code class="docutils literal"><span class="pre">mapping</span></code> folder contains the <code class="docutils literal"><span class="pre">worm_speed2pergola.txt</span></code>, which sets the mappings between the information
+represented in the worm_speed files and the pergola ontology. See <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">mapping file</span></a> and
+<a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">pergola ontology</span></a> for a deeper description.</p>
+</div>
+<div class="section" id="get-the-data">
+<h3>Get the data<a class="headerlink" href="#get-the-data" title="Permalink to this headline">¶</a></h3>
+<p>Two download the data set from Zenodo you can use this commands:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir data
-wget -O- https://zenodo.org/record/582343/files/celegans_unc16_N2.tar.gz <span class="p">|</span> tar xz -C data
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Explain in what consist the data set</p>
-</div>
-<div class="section" id="declare-equivalence">
-<h3>Declare equivalence<a class="headerlink" href="#declare-equivalence" title="Permalink to this headline">¶</a></h3>
-<p>Pergola needs you to set the mappings between the information represented in your behavioral file in order to understand each piece of information inside your
-file, see <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">Mapping file</span></a> and <a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">Pergola ontology</span></a> for a deeper description. You can download the mapping file for this example <a class="reference external" href="https://gist.githubusercontent.com/JoseEspinosa/b49900521c53123108c82832da8d063c/raw/a9f05ec8f67dc19b665f788bc7b986876d1b6320/worm_speed2pergola.txt">here</a>.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>wget -O- https://gist.githubusercontent.com/JoseEspinosa/b49900521c53123108c82832da8d063c/raw/a9f05ec8f67dc19b665f788bc7b986876d1b6320/worm_speed2pergola.txt &gt; ./data/worm_speed2pergola.txt
+wget -O- https://zenodo.org/record/1161078/files/celegans_speed_sample_data.tar.gz <span class="p">|</span> tar xz -C data
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="run-pergola">
+<h2>Run Pergola<a class="headerlink" href="#run-pergola" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="pull-pergola-image">
 <h3>Pull Pergola image<a class="headerlink" href="#pull-pergola-image" title="Permalink to this headline">¶</a></h3>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you want to install Pergola on your system instead, refer to <a class="reference internal" href="installation.html#installation"><span class="std std-ref">installation</span></a> documentation and
+skip this section.</p>
+</div>
 <p>You can obtain last Pergola version from <a class="reference external" href="https://hub.docker.com/u/pergola/">Pergola Docker Hub repository</a>.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
 </pre></div>
 </div>
-<p>First we will launch Pergola image mounting the files we need into the container by typing:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v /data:/container_data -w /container_data pergola/pergola bash
+<p>To launch Pergola image and mount the sample data set in the container you can type:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/container_wd -w /container_wd pergola/pergola:latest bash
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you want to install Pergola on your system instead, refer to <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> documentation section.</p>
 </div>
-</div>
-<div class="section" id="run-pergola">
-<h3>Run Pergola<a class="headerlink" href="#run-pergola" title="Permalink to this headline">¶</a></h3>
-<p>You can know process the downloaded with Pergola using the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/*.csv -m ./data/worm_speed2pergola.txt -f bedGraph -w <span class="m">1</span> -min <span class="m">0</span> -max <span class="m">29000</span>
+<div class="section" id="execution">
+<h3>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h3>
+<p>You can know process the downloaded sample data with Pergola using the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/worm_speeds/*.csv -m ./data/mapping/worm_speed2pergola.txt -f bedGraph -w <span class="m">1</span> -min <span class="m">0</span> -max <span class="m">29000</span>
 </pre></div>
 </div>
-<p>The resultings files can be uploaded on a desktop browser for its visualization as explained below.</p>
+<p>The resulting files can be uploaded on a desktop browser for its visualization as explained below.</p>
 </div>
-<div class="section" id="visualize-data">
-<h3>Visualize data<a class="headerlink" href="#visualize-data" title="Permalink to this headline">¶</a></h3>
-<p>We choose the <a class="reference external" href="http://software.broadinstitute.org/software/igv/">Integrative Genomics Viewer</a> for visualizing the data. IGV can be downloaded from
+</div>
+<div class="section" id="visualization-with-igv">
+<span id="visualization-igv"></span><h2>Visualization with IGV<a class="headerlink" href="#visualization-with-igv" title="Permalink to this headline">¶</a></h2>
+<p>Once processed with Pergola, there are several available options to visualize your behavioral data. Here, we explain how
+to visualize the data using IGV, see <a class="reference internal" href="visualization.html#visualization"><span class="std std-ref">visualization</span></a> section for other alternatives.</p>
+<div class="section" id="download-igv">
+<h3>Download IGV<a class="headerlink" href="#download-igv" title="Permalink to this headline">¶</a></h3>
+<p>As an example, we choose the <a class="reference external" href="http://software.broadinstitute.org/software/igv/">Integrative Genomics Viewer</a> (IGV) to
+illustrate how to visualize data. IGV can be downloaded from
 <a class="reference external" href="http://software.broadinstitute.org/software/igv/download">here</a>.</p>
+</div>
+<div class="section" id="create-a-genome">
+<h3>Create a genome<a class="headerlink" href="#create-a-genome" title="Permalink to this headline">¶</a></h3>
 <p>After launching IGV, first you have to create a genome file. Go to <strong>Genomes</strong> menu and click on “Create .genome File…”
 Data can be visualize using a heatmap.</p>
 <img alt="_images/menu_create_genome.png" src="_images/menu_create_genome.png" />
 <p>On the menu that pops up load the fasta file generated by Pergola and click on OK.</p>
 <img alt="_images/create_genome.png" src="_images/create_genome.png" />
-<p>Now you can render all BedGraph files generated before by going to <strong>File</strong> menu and click on “Load from File…”</p>
+</div>
+<div class="section" id="load-bedgraph-files">
+<h3>Load BedGraph files<a class="headerlink" href="#load-bedgraph-files" title="Permalink to this headline">¶</a></h3>
+<p>Now you can render the BedGraph files generated before by going to <strong>File</strong> menu and click on “Load from File…”</p>
 <img alt="_images/load_files.png" src="_images/load_files.png" />
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
 <p class="last">Stack the tracks corresponding to each group, in this manner differences will become easier to identify</p>
 </div>
+</div>
+<div class="section" id="set-heatmap-graphical-parameters">
+<h3>Set heatmap graphical parameters<a class="headerlink" href="#set-heatmap-graphical-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Finally to obtain a heatmap of the tracks it is necessary to set some options:</p>
 <ul class="simple">
 <li>To visualize all the tracks in the screen go to <strong>Tracks</strong> and click on “Fit Data to Window”</li>
 </ul>
 <img alt="_images/load_files.png" src="_images/load_files.png" />
 <ul class="simple">
-<li>Now select all tracks by clicking on their names and right click with the mouse, as a result a menu will pop up. On this menu check “Heatmap” under <strong>Type of Graph</strong> menu and “None” under <strong>Windowing Function</strong>.</li>
+<li>Now select all tracks by clicking on their names and right click with the mouse, as a result a menu will pop up. On
+this menu check “Heatmap” under <strong>Type of Graph</strong> menu and “None” under <strong>Windowing Function</strong>.</li>
 </ul>
 <img alt="_images/select_heatmap.png" src="_images/select_heatmap.png" />
 <ul class="simple">
@@ -221,7 +254,8 @@ Data can be visualize using a heatmap.</p>
 </ul>
 <img alt="_images/heatmap_menu.png" src="_images/heatmap_menu.png" />
 <ul class="simple">
-<li>The resulting rendering shows how overall the speeds of UNC-16 (uncoordinated strain), tracks below, are lower depicting a deficient moving behavior when compared to control (N2) strain on top.</li>
+<li>The resulting rendering shows how overall the speeds of <em>unc-16</em> (uncoordinated strain), tracks below, are lower
+depicting a deficient moving behavior when compared to control (N2) strain on top.</li>
 </ul>
 <img alt="_images/final_snapshot_heatmap.png" src="_images/final_snapshot_heatmap.png" />
 </div>
@@ -247,8 +281,8 @@ Data can be visualize using a heatmap.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 18, 2018.
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 05, 2018.
 
     </p>
   </div>

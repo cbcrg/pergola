@@ -34,7 +34,9 @@ Documentation index:
      ready_to_use_scripts
      
      data_analysis
-     
+
+     visualization
+
      tutorial
   
      reference/index

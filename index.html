@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
 </ul>
@@ -148,27 +149,43 @@ visualization.</p>
 <div><div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#get-your-data">Get your data</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="quick_start.html#declare-equivalence">Declare equivalence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#sample-data">Sample data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#sample-data-description">Sample data description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#get-the-data">Get the data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#run-pergola">Run Pergola</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="quick_start.html#pull-pergola-image">Pull Pergola image</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quick_start.html#run-pergola">Run Pergola</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quick_start.html#visualize-data">Visualize data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#visualization-with-igv">Visualization with IGV</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#download-igv">Download IGV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#create-a-genome">Create a genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#load-bedgraph-files">Load BedGraph files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#set-heatmap-graphical-parameters">Set heatmap graphical parameters</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#installation-from-github">Installation from Github</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="install/installing_pergola.html">Required Python libraries</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install/installing_pergola.html#download-and-installation">Download and installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install/installing_pergola.html#development-versions">Development versions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install/installing_pergola.html#testing-installation">Testing installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#required-python-libraries">Required Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#download-and-installation">Download and installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#development-versions">Development versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#testing-installation">Testing installation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#pergola-docker-container">Pergola Docker container</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="install/pergola_container.html">Docker installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install/pergola_container.html#pull-pergola-image">Pull Pergola image</a></li>
-<li class="toctree-l3"><a class="reference internal" href="install/pergola_container.html#pergola-docker-execution-example">Pergola Docker execution example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-via-pypi">Installation via PyPI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#id2">Required Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#install-latest-release-using-pip">Install latest release using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#id6">Testing installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#pergola-docker-image">Pergola Docker image</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#docker-installation">Docker installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#pull-pergola-image">Pull Pergola image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#pergola-docker-execution-example">Pergola Docker execution example</a></li>
 </ul>
 </li>
 </ul>
@@ -189,7 +206,7 @@ visualization.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ready_to_use_scripts.html#pergola-rules-py">pergola_rules.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ready_to_use_scripts.html#pergola">pergola</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ready_to_use_scripts.html#general-usage">General usage:</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ready_to_use_scripts.html#command-examples">Command examples :</a></li>
 </ul>
@@ -204,6 +221,32 @@ visualization.</p>
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="data_analysis.html#data-visualization">Data visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_analysis.html#data-processing">Data processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#shiny-pergola">Shiny-pergola</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#get-a-sample-data-set">Get a sample data set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#pull-image">Pull image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#run-image">Run image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#visualize-data">Visualize data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#igv">IGV</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#get-igv-official-version">Get IGV official version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#get-igv-adapted-version">Get IGV adapted version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#create-a-genome">Create a genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#load-files">Load files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#set-graphical-parameters">Set graphical parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#id3">Visualize data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#bioconductor-packages">Bioconductor packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#packages">Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#example-scripts">Example scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#id5">Visualize data</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a><ul>
@@ -266,8 +309,8 @@ visualization.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 18, 2018.
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 05, 2018.
 
     </p>
   </div>

@@ -85,7 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic concepts</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Ready-to-use scripts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#pergola-rules-py">pergola_rules.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pergola">pergola</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#general-usage">General usage:</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#command-examples">Command examples :</a></li>
 </ul>
@@ -98,6 +98,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
 </ul>
@@ -146,13 +147,14 @@
             
   <div class="section" id="ready-to-use-scripts">
 <span id="scripts-page"></span><h1><a class="toc-backref" href="#id1">Ready-to-use scripts</a><a class="headerlink" href="#ready-to-use-scripts" title="Permalink to this headline">¶</a></h1>
-<p>Pergola provides a series of scripts that are available in your system after its installation <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a>.</p>
+<p>Pergola provides a series of scripts that are available in your system after its installation
+<a class="reference internal" href="installation.html#installation"><span class="std std-ref">installation</span></a>.</p>
 <p>These scripts try to wrap up the most common functionalities of Pergola library.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
 <li><a class="reference internal" href="#ready-to-use-scripts" id="id1">Ready-to-use scripts</a><ul>
-<li><a class="reference internal" href="#pergola-rules-py" id="id2">pergola_rules.py</a><ul>
+<li><a class="reference internal" href="#pergola" id="id2">pergola</a><ul>
 <li><a class="reference internal" href="#general-usage" id="id3">General usage:</a><ul>
 <li><a class="reference internal" href="#data-input" id="id4">Data input</a></li>
 <li><a class="reference internal" href="#file-formats" id="id5">File formats</a></li>
@@ -173,13 +175,13 @@
 </li>
 </ul>
 </div>
-<div class="section" id="pergola-rules-py">
-<span id="scripts-pergola-rules"></span><h2><a class="toc-backref" href="#id2">pergola_rules.py</a><a class="headerlink" href="#pergola-rules-py" title="Permalink to this headline">¶</a></h2>
-<p><em>pergola_rules.py</em> enables the user to execute many of the main pergola functionalities.</p>
-<p>If you prefer to code your own scripts read <a class="reference internal" href="tutorial.html#library"><span class="std std-ref">Getting started</span></a> section.</p>
+<div class="section" id="pergola">
+<span id="scripts-pergola-rules"></span><h2><a class="toc-backref" href="#id2">pergola</a><a class="headerlink" href="#pergola" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">pergola</span></code> enables the user to execute many of the main pergola functionalities.</p>
+<p>If you prefer to code your own scripts you can see some examples at the <a class="reference internal" href="tutorial.html#library"><span class="std std-ref">tutorials</span></a> section.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>To reproduce all <code class="docutils literal"><span class="pre">pergola_rules.py</span></code> commands shown in this section you can download the following data set:</p>
+<p>To reproduce all <code class="docutils literal"><span class="pre">pergola</span></code> commands shown in this section you can download the following data set:</p>
 <a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.838237"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg" /></a>
 <p>The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
 To download and uncompress the data you can use the following commands:</p>
@@ -253,28 +255,29 @@ The <code class="docutils literal"><span class="pre">-i</span></code>, <code cla
 argument contains the mappings between the input file and the fields inside the pergola ontology terms.</p>
 <p>In this manner, the minimal command to run <code class="docutils literal"><span class="pre">pergola_rules.py</span></code> provided that the input and mappings file are correctly formated
 would be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The format of the mapping file consists in a text file containing in each line the correspondence between a field in the input data field
-and the pergola ontology. For more details, refer to <a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">Pergola ontology</span></a> and <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">Mapping file</span></a> for a mapping file example.</p>
+<p class="last">The format of the mapping file consists in a text file containing in each line the correspondence between a field in
+the input data field and the pergola ontology. For more details, refer to the
+<a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">pergola ontology</span></a> section and to the example of a <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">mapping file</span></a>.</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Any field on the input data that should not be used by pergola must be set to <code class="docutils literal"><span class="pre">dummy</span></code> term in the mapping file.</p>
 </div>
-<p>The rest of arguments are optional and enable the user to provide adittional information about the input data in cases it
-does not enterely fits the default pergola <a class="reference internal" href="basic_concepts.html#input-data"><span class="std std-ref">Input data</span></a> input format.</p>
-<p>The <code class="docutils literal"><span class="pre">-fs</span></code>, <code class="docutils literal"><span class="pre">--field_separator</span></code> sets the delimiter that separates fields inside the input data file. By default set to
-tabs. For instance if you field is delimited by <code class="docutils literal"><span class="pre">,</span></code>, you can specify it as shown below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice_commas.csv -m ./data/b2p.txt -fs <span class="s2">&quot;,&quot;</span>
+<p>The rest of arguments are optional and enable the user to provide additional information about the input data in the
+cases it does not entirely fits the default pergola <a class="reference internal" href="basic_concepts.html#input-data"><span class="std std-ref">input data</span></a> format.</p>
+<p>For instance, the <code class="docutils literal"><span class="pre">-fs</span></code>, <code class="docutils literal"><span class="pre">--field_separator</span></code> sets the delimiter that separates fields inside the input data file
+when it is not set to tabs (default). As an example if fields are delimited by <code class="docutils literal"><span class="pre">,</span></code>, you can specify it as shown below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice_commas.csv -m ./data/b2p.txt -fs <span class="s2">&quot;,&quot;</span>
 </pre></div>
 </div>
 <p>Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
 list with the corresponding fields of your file as in the example below, using the <code class="docutils literal"><span class="pre">-nh</span></code>, <code class="docutils literal"><span class="pre">--no_header</span></code> argument together with the <code class="docutils literal"><span class="pre">-s</span></code>, <code class="docutils literal"><span class="pre">--fields_read</span></code>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;StartT&#39;</span> <span class="s1">&#39;Value&#39;</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;StartT&#39;</span> <span class="s1">&#39;Value&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -319,29 +322,72 @@ provides a perfect structure to store continuous data such as for instance any b
 </tbody>
 </table>
 <p>Following our previous example the command line to convert our data to BedGraph format will be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Pergola converts data by default to BED file format. Refer to <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">Mapping file</span></a> section
+<p class="last">Pergola converts data by default to BED file format. Refer to the <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">mapping file</span></a> section
 to see pergola’s adapted genomic formats.</p>
 </div>
 </div>
 <div class="section" id="filtering">
 <h4><a class="toc-backref" href="#id6">Filtering</a><a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h4>
 <p>Filtering arguments allow you to select a part of your input data based on pergola assigned fields.</p>
-<p>Pergola allows you to filter a subset of your data input based on the field set as <code class="docutils literal"><span class="pre">track</span></code> in your <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">Mapping file</span></a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="5%" />
+<col width="37%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Argument</th>
+<th class="head">short</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--tracks</span></code></td>
+<td><code class="docutils literal"><span class="pre">-t</span></code></td>
+<td>List of tracks to keep</td>
+<td><code class="docutils literal"><span class="pre">-t</span> <span class="pre">track_id_1</span> <span class="pre">track_id_2</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--range</span></code></td>
+<td>&#160;</td>
+<td><code class="docutils literal"><span class="pre">-r</span></code>  Track range to keep (numerical)</td>
+<td><code class="docutils literal"><span class="pre">-r</span> <span class="pre">1</span> <span class="pre">10</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--track_actions</span></code></td>
+<td><code class="docutils literal"><span class="pre">-a</span></code></td>
+<td>Action to perform on selected tracks</td>
+<td><code class="docutils literal"><span class="pre">-t</span> <span class="pre">track_id_1</span> <span class="pre">track_id_2</span> <span class="pre">-a</span> <span class="pre">split_all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--data_types_list</span></code></td>
+<td><code class="docutils literal"><span class="pre">-dl</span></code></td>
+<td>List of data types to keep</td>
+<td><code class="docutils literal"><span class="pre">-dl</span> <span class="pre">data_type_one</span> <span class="pre">data_type_2</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--data_types_actions</span></code></td>
+<td><code class="docutils literal"><span class="pre">-d</span></code></td>
+<td>Action to perform on selected data types</td>
+<td><code class="docutils literal"><span class="pre">-dl</span> <span class="pre">data_type_one</span> <span class="pre">data_type_2</span> <span class="pre">-d</span> <span class="pre">one_per_channel</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Pergola allows you to filter a subset of your data input based on the field set as <code class="docutils literal"><span class="pre">track</span></code> in your
+<a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">mapping file</span></a>.</p>
 <p>The example below shows how to get the data only from animal 1 4 7  (tracks):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">4</span>  <span class="m">7</span> -dl food_sc food_fat
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">4</span>  <span class="m">7</span> -dl food_sc food_fat
 </pre></div>
 </div>
 <p>If you want to get all tracks from 1 to 4 you can then use the <code class="docutils literal"><span class="pre">-r</span></code> option provided your <code class="docutils literal"><span class="pre">track</span></code> field is numeric:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -r <span class="m">1</span>-4
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
 <p class="last">By default tracks selected by <code class="docutils literal"><span class="pre">-r</span></code> option are joined together in a single output track. You can use <code class="docutils literal"><span class="pre">-a</span></code> option
 to change this behavior.</p>
 </div>
@@ -372,16 +418,19 @@ to change this behavior.</p>
 </tbody>
 </table>
 <p>An example of how to join all tracks in the same file would be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -a join_all
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -a join_all
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">You can combine <code class="docutils literal"><span class="pre">-t</span></code> or <code class="docutils literal"><span class="pre">-r</span></code> options with <code class="docutils literal"><span class="pre">-a</span></code> in order to filter tracks and join them as you prefer</p>
 </div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> -a join_all
+</pre></div>
+</div>
 <p>It is possible to provide pergola with a list of the field assigned to <code class="docutils literal"><span class="pre">data_type</span></code> pergola ontology term to be kept using <code class="docutils literal"><span class="pre">-dl</span></code> argument.
 For instance, in the code below only events assigned to “food_fat” <code class="docutils literal"><span class="pre">data_type</span></code> term are kept:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
 </pre></div>
 </div>
 <p>Besides <code class="docutils literal"><span class="pre">-d</span></code> option allows to combine all data types into a single output file or split them in different files:</p>
@@ -498,11 +547,14 @@ time point inside the file.</p>
 below:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CAGE</span>  <span class="n">StartT</span>      <span class="n">EndT</span>        <span class="n">Value</span> <span class="n">Nature</span>
 <span class="mi">1</span>     <span class="mi">1335986151</span>  <span class="mi">1335986261</span>  <span class="mf">0.06</span>  <span class="n">food_sc</span>
-<span class="mi">1</span>     <span class="mi">1335986275</span>  <span class="mi">1335986330</span>  <span class="mf">0.02</span>  <span class="n">food_fat</span>
-<span class="mi">1</span>     <span class="mi">1335986341</span>  <span class="mi">1335986427</span>  <span class="mf">0.02</span>  <span class="n">water</span>
+<span class="mi">1</span>     <span class="mi">1335986275</span>  <span class="mi">1335986330</span>  <span class="mf">0.02</span>  <span class="n">food_sc</span>
+<span class="mi">1</span>     <span class="mi">1335986341</span>  <span class="mi">1335986427</span>  <span class="mf">0.02</span>  <span class="n">food_sc</span>
 </pre></div>
 </div>
 <p>Applying the <code class="docutils literal"><span class="pre">-e</span></code> it will result into the time coordinates below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file.csv -m data/b2p.txt -e
+</pre></div>
+</div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>     <span class="mi">110</span>
 <span class="mi">124</span>   <span class="mi">179</span>
 <span class="mi">190</span>   <span class="mi">276</span>
@@ -510,7 +562,7 @@ below:</p>
 </div>
 <p>Pergola enables the user to bin the data using equidistant time windows when formatting data to BedGraph files. The <code class="docutils literal"><span class="pre">-w</span></code> arguments sets the size of these windows.</p>
 <p>For example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">300</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">300</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -529,16 +581,16 @@ This can be used for instance to unify the beginning (example below) or end of f
 <span class="mi">1</span>       <span class="mi">50</span>      <span class="mi">60</span>      <span class="mf">0.02</span>  <span class="n">food_fat</span>
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">10</span> -min <span class="m">0</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">10</span> -min <span class="m">0</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The time points inserted at the beginning of the file using <code class="docutils literal"><span class="pre">-min</span></code> and <code class="docutils literal"><span class="pre">-max</span></code> will be set to zero value. In the example above
 the beginning of the output file will then look as follows:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>       <span class="mi">0</span>       <span class="mi">10</span>      <span class="mi">0</span>
-<span class="n">chr1</span>       <span class="mi">10</span>      <span class="mi">20</span>      <span class="mf">0.0</span>
-<span class="n">chr1</span>       <span class="mi">20</span>      <span class="mi">30</span>      <span class="mf">0.02</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>        <span class="mi">0</span>       <span class="mi">10</span>      <span class="mi">0</span>
+<span class="n">chr1</span>        <span class="mi">10</span>      <span class="mi">20</span>      <span class="mf">0.0</span>
+<span class="n">chr1</span>        <span class="mi">20</span>      <span class="mi">30</span>      <span class="mf">0.02</span>
 </pre></div>
 </div>
 </div>
@@ -551,7 +603,7 @@ in files encoding data that are in equidistant time points, as the following one
 </pre></div>
 </div>
 <p>In this case the <code class="docutils literal"><span class="pre">-n</span></code> argument generates an interval for each of the items of the file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
 </pre></div>
 </div>
 <p>In the case were the input file encodes time as decimal values (for instance tenth of seconds).</p>
@@ -565,7 +617,7 @@ in files encoding data that are in equidistant time points, as the following one
 <p>It is possible to multiply the time stamp inside this input file by a given factor using the <code class="docutils literal"><span class="pre">-mi</span></code> argument
 and for instance getting the time stamps in milliseconds:
 .. in the following way:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/file_3.csv -m ./data/file_3_to_p.txt -n -mi <span class="m">1000</span> -f bedGraph
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_3.csv -m ./data/file_2_to_p.txt -n -mi <span class="m">1000</span> -f bedGraph
 </pre></div>
 </div>
 <p>As a result two time point intervals will be returned in output file:</p>
@@ -627,12 +679,12 @@ the different data types to be displayed</td>
 </table>
 <p>Some genomic software as for example genome browsers use the track line to get parameters about the visualization of
 the data. To avoid the track line you can use the <code class="docutils literal"><span class="pre">-nt</span></code> option.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -nt
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -nt
 </pre></div>
 </div>
 <p>The name field of the BED file enables to display a label for each record encoded inside the file. Pergola uses this field
 to display the data_type of each file line when the option is set:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -bl
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -bl
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_food_sc&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 food_sc&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
@@ -647,11 +699,11 @@ pergola with a file coding the colors to be used. The file will consists:</p>
 </pre></div>
 </div>
 <p>How to use it is shown in the following example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
 <p class="last">In order to see all available options up you can simply type <code class="docutils literal"><span class="pre">pergola_rules.py</span> <span class="pre">-h</span></code></p>
 </div>
 </div>
@@ -664,15 +716,7 @@ pergola with a file coding the colors to be used. The file will consists:</p>
 </div>
 <p>TODO: Explain what the data contains.</p>
 <p>Generate raw intervals in bed format:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pergola_rules.py -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -e
-</pre></div>
-</div>
-<p>Combine only intervals corresponding to meals in a single file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pergola_rules.py -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -e -f bedGraph -dl food_sc food_fat -d all
-</pre></div>
-</div>
-<p>Generate windows of accumulated values in bedgraph format:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pergola_rules.py -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -f bedGraph -e
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pergola -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -e
 </pre></div>
 </div>
 </div>
@@ -729,9 +773,12 @@ by using the <code class="docutils literal"><span class="pre">fp</span></code> m
 <div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola fc -i &quot;/jaaba_data/perframe/&quot; -jf velmag dtheta -dd &quot;/output_dir/&quot;
 </pre></div>
 </div>
-<p>The above example shows how to obtain <code class="docutils literal"><span class="pre">velmag</span></code> and <code class="docutils literal"><span class="pre">dtheta</span></code> features from the perframe folder where
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The above example shows how to obtain <code class="docutils literal"><span class="pre">velmag</span></code> and <code class="docutils literal"><span class="pre">dtheta</span></code> features from the perframe folder where
 jaaba MAT features files are stored and dump them in a directory <code class="docutils literal"><span class="pre">output_dir</span></code>.</p>
-<p>The <code class="docutils literal"><span class="pre">fp</span></code> mode makes it possible to convert the selected features into bed or bedgraph files and perform any of the pergola_rules.py see <a class="reference internal" href="#pergola-rules-py">pergola_rules.py</a>.
+</div>
+<p>The <code class="docutils literal"><span class="pre">fp</span></code> mode makes it possible to convert the selected features into bed or bedgraph files and perform any of the pergola_rules.py see <a class="reference internal" href="#pergola">pergola</a>
 options:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola fp -i &quot;/jaaba_data/perframe/&quot; -jf velmag dtheta -dd &quot;/output_dir/&quot; -m &quot;jaaba2pergola_mapping.txt&quot; -f bedGraph -w 300
 </pre></div>
@@ -743,7 +790,7 @@ options:</p>
 are having a given behavior along a trajectory. These <a class="reference external" href="http://jaaba.sourceforge.net/SavingAndLoading.html#SavingPredictions">predictions</a> can be dumped into a
 <a class="reference external" href="http://es.mathworks.com/help/matlab/import_export/supported-file-formats.html">MAT-file format</a> that contain both the behavioral events predicted and the scores
 of the reliability of each event.</p>
-<p>Jaaba predictions can be also stored in CSV files or process to bed or bedGraph files applying any <a class="reference internal" href="#pergola-rules-py">pergola_rules.py</a> option. To choose between these two options
+<p>Jaaba predictions can be also stored in CSV files or process to bed or bedGraph files applying any <a class="reference internal" href="#pergola">pergola</a> option. To choose between these two options
 users can set the <code class="docutils literal"><span class="pre">sc</span></code> or the <code class="docutils literal"><span class="pre">sp</span></code> mode respectively.</p>
 <p>The possible arguments for this modes are:</p>
 <table border="1" class="docutils">
@@ -769,7 +816,7 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
 <div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola sc -i predicted_behavior.mat
 </pre></div>
 </div>
-<p>In the case of <code class="docutils literal"><span class="pre">sp</span></code> mode, besides we can use any <a class="reference internal" href="#pergola-rules-py">pergola_rules.py</a> option:</p>
+<p>In the case of <code class="docutils literal"><span class="pre">sp</span></code> mode, besides we can use any <a class="reference internal" href="#pergola">pergola</a> option:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola sc -i predicted_behavior.mat -m jaaba_scores2pergola_mapping.txt -f bed
 </pre></div>
 </div>
@@ -796,8 +843,8 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 18, 2018.
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 05, 2018.
 
     </p>
   </div>

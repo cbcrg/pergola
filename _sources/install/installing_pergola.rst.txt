@@ -10,7 +10,6 @@ your system are also listed in this section.
 
 .. contents::
 
-|
 
 **Pergola requires python >= 2.6 as well as several dependencies that are
 listed below.**
@@ -32,7 +31,7 @@ Pergola requires the following Python libraries installed in your system:
   $ pip install biopy-isatab
   $ pip install scipy
   $ pip install pandas
-
+  $ pip install pybedtools
 
 .. note:: **You might need to install** first `pip`_  if your python version is not 2.7.9 or later
 

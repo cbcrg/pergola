@@ -87,7 +87,8 @@ Mapping file
 
 The mapping file sets the correspondence between the input data and the terms used by pergola.
 It is thus the way pergola knows what is encoded in each of the fields of the input data.
-Provided we have an input file as the show in the :ref:`input-data`. section, a mapping file looks like the following example:
+Provided we have an input file as the show in the :ref:`input data<input-data>` section, a mapping file looks like
+the following example:
 
 
 .. :ref:`pergola-ontology`.
@@ -110,9 +111,9 @@ from the `Gene Ontology Consortium <http://geneontology.org/>`_ to set the corre
 between the input data and the pergola ontology.
 
 .. note::
-  The reserved term input_file is arbitrary and just to follow the convention of the external mapping 
-  file format. You can use whatever you want provided it is follow by a colon sign. 
-  This might be changed in following pergola versions.
+  The reserved term input_file is arbitrary.  The external mapping file format requires to tag the left part of the
+  assignment and this way the mapping file follows this specification. However, you can use any other term to tag your
+  input file. This might be changed in following pergola versions.
   
 .. comment
 .. `GFF <http://genome.ucsc.edu/FAQ/FAQformat.html#format3>`_

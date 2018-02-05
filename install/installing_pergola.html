@@ -35,8 +35,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Pergola  documentation" href="../index.html"/>
         <link rel="up" title="Installation" href="../installation.html"/>
-        <link rel="next" title="Docker installation" href="pergola_container.html"/>
-        <link rel="prev" title="Installation" href="../installation.html"/> 
+        <link rel="next" title="Basic concepts" href="../basic_concepts.html"/>
+        <link rel="prev" title="Docker installation" href="pergola_container.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -84,6 +84,7 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../installation.html">Installation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#pergola-docker-image">Pergola Docker image</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../installation.html#installation-from-github">Installation from Github</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Required Python libraries</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#download-and-installation">Download and installation</a></li>
@@ -91,7 +92,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#testing-installation">Testing installation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../installation.html#pergola-docker-container">Pergola Docker container</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
@@ -158,9 +158,6 @@ your system are also listed in this section.</p>
 <li><a class="reference internal" href="#testing-installation" id="id4">Testing installation</a></li>
 </ul>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 <p><strong>Pergola requires python &gt;= 2.6 as well as several dependencies that are
 listed below.</strong></p>
 <div class="admonition note">
@@ -175,6 +172,7 @@ $ pip install argparse
 $ pip install biopy-isatab
 $ pip install scipy
 $ pip install pandas
+$ pip install pybedtools
 </pre></div>
 </div>
 <div class="admonition note">
@@ -225,10 +223,10 @@ $ python test_all.py
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pergola_container.html" class="btn btn-neutral float-right" title="Docker installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../basic_concepts.html" class="btn btn-neutral float-right" title="Basic concepts" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../installation.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pergola_container.html" class="btn btn-neutral" title="Docker installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -238,7 +236,7 @@ $ python test_all.py
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2017, Jose Espinosa-Carrasco.
-      Last updated on Jan 18, 2018.
+      Last updated on Jan 25, 2018.
 
     </p>
   </div>
