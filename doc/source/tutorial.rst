@@ -1,4 +1,7 @@
-Tutorials 
+
+.. _tutorial:
+
+Tutorials
 =========
 
 .. _library:

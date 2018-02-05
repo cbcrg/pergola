@@ -3,7 +3,8 @@
 Ready-to-use scripts
 ======================
 
-Pergola provides a series of scripts that are available in your system after its installation :ref:`installation`. 
+Pergola provides a series of scripts that are available in your system after its installation
+:ref:`installation<installation>`.
 
 These scripts try to wrap up the most common functionalities of Pergola library.
 
@@ -12,24 +13,24 @@ These scripts try to wrap up the most common functionalities of Pergola library.
 .. _scripts-pergola_rules:
 
 -----------------
-pergola_rules.py
+pergola
 -----------------
 
-*pergola_rules.py* enables the user to execute many of the main pergola functionalities.
+``pergola`` enables the user to execute many of the main pergola functionalities.
 
-If you prefer to code your own scripts read :ref:`library` section.
+If you prefer to code your own scripts you can see some examples at the :ref:`tutorials<library>` section.
 
-.. tip:: 
-	To reproduce all ``pergola_rules.py`` commands shown in this section you can download the following data set:
-	
+.. tip::
+	To reproduce all ``pergola`` commands shown in this section you can download the following data set:
+
 	.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg
 	    :target: https://doi.org/10.5281/zenodo.838237
 
 	The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
 	To download and uncompress the data you can use the following commands:
-	
+
 	.. code-block:: bash
-	
+
 	  mkdir data
 	  wget -O- https://zenodo.org/record/838237/files/C57BL6_mice_HF.tar.gz | tar xz -C data
 
@@ -49,7 +50,7 @@ We divided in the five following sections the available arguments:
 * `Data output`_
 
 .. note::
-  
+
   All the command line examples can be reproduce using the files found in the C57BL6_mice_HF.tar.gz tarball file.
 
 Data input
@@ -57,63 +58,64 @@ Data input
 
 Available data input parameters are listed on the table below:
 
-======================= ======= =============================================   ===========================================
+======================= ======= =============================================   ==============================================
 Argument                short   Description                                     Example
-======================= ======= =============================================   ===========================================
+======================= ======= =============================================   ==============================================
 ``--input``             ``-i``  Path of input data file                         ``-i /foo/feedingBehavior_HF_mice.csv.csv``
 ``--mapping_file``      ``-m``  Path of mapping file                            ``-m /foo/my_mappings.txt``
 ``--field_separator``   ``-fs`` Field separator of mapping file                 ``-fs " "``
 ``--no_header``         ``-nh`` The input file has not header (column names)    ``-nh``
 ``--fields_read``       ``-s``  List of columns name (used in mappping file)    ``-s 'CAGE' 'EndT' 'Nature' 'StartT' 'Value'``
-======================= ======= =============================================   ===========================================
+======================= ======= =============================================   ==============================================
 
-Only two of the data input arguments are mandatory to run pergola_rules.py: 
-The ``-i``, ``--input`` argument specifies the csv file the user wants to convert and `the `-m``, ``--mapping_file`` 
+Only two of the data input arguments are mandatory to run pergola_rules.py:
+The ``-i``, ``--input`` argument specifies the csv file the user wants to convert and `the `-m``, ``--mapping_file``
 argument contains the mappings between the input file and the fields inside the pergola ontology terms.
 
-In this manner, the minimal command to run ``pergola_rules.py`` provided that the input and mappings file are correctly formated 
+In this manner, the minimal command to run ``pergola_rules.py`` provided that the input and mappings file are correctly formated
 would be:
 
 .. code-block:: bash
-	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt
+
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt
 
 .. following examples shows how to convert the ``feedingBehavior_HF_mice.csv`` from C57BL6_mice_HF data set.
 
 .. note::
 
-  The format of the mapping file consists in a text file containing in each line the correspondence between a field in the input data field
-  and the pergola ontology. For more details, refer to :ref:`pergola-ontology` and :ref:`mapping-file` for a mapping file example.
+  The format of the mapping file consists in a text file containing in each line the correspondence between a field in
+  the input data field and the pergola ontology. For more details, refer to the
+  :ref:`pergola ontology<pergola-ontology>` section and to the example of a :ref:`mapping file<mapping-file>`.
 
 .. tip::
 
-  Any field on the input data that should not be used by pergola must be set to ``dummy`` term in the mapping file. 
+  Any field on the input data that should not be used by pergola must be set to ``dummy`` term in the mapping file.
 
-The rest of arguments are optional and enable the user to provide adittional information about the input data in cases it 
-does not enterely fits the default pergola :ref:`input-data` input format.
+The rest of arguments are optional and enable the user to provide additional information about the input data in the
+cases it does not entirely fits the default pergola :ref:`input data<input-data>` format.
 
-The ``-fs``, ``--field_separator`` sets the delimiter that separates fields inside the input data file. By default set to 
-tabs. For instance if you field is delimited by ``,``, you can specify it as shown below:
+For instance, the ``-fs``, ``--field_separator`` sets the delimiter that separates fields inside the input data file
+when it is not set to tabs (default). As an example if fields are delimited by ``,``, you can specify it as shown below:
 
 .. code-block:: bash
-	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice_commas.csv -m ./data/b2p.txt -fs ","
+
+  pergola -i ./data/feedingBehavior_HF_mice_commas.csv -m ./data/b2p.txt -fs ","
 
 Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
 list with the corresponding fields of your file as in the example below, using the ``-nh``, ``--no_header`` argument together with the ``-s``, ``--fields_read``:
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s 'CAGE' 'EndT' 'Nature' 'StartT' 'Value'
+  pergola -i ./data/feedingBehavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s 'CAGE' 'EndT' 'Nature' 'StartT' 'Value'
 
 
-File formats 
+File formats
 ------------
-Pergola can convert your data to several genomic file formats. The `BED <https://genome.ucsc.edu/FAQ/FAQformat#format1>`_ (default option) 
-and `GFF <http://genome.ucsc.edu/FAQ/FAQformat.html#format3>`_ file formats provide the perfect scaffold to encode events in the form of 
-discrete time intervals such as for instance a meal. In the other hand, `BedGraph format <https://genome.ucsc.edu/goldenPath/help/bedgraph.html>`_ 
+Pergola can convert your data to several genomic file formats. The `BED <https://genome.ucsc.edu/FAQ/FAQformat#format1>`_ (default option)
+and `GFF <http://genome.ucsc.edu/FAQ/FAQformat.html#format3>`_ file formats provide the perfect scaffold to encode events in the form of
+discrete time intervals such as for instance a meal. In the other hand, `BedGraph format <https://genome.ucsc.edu/goldenPath/help/bedgraph.html>`_
 provides a perfect structure to store continuous data such as for instance any behavioral feature measure continuously along time
-(speed along a trajectory), or any score derived from the original data (cumulative values applying a binning or statitiscal parameter).  
+(speed along a trajectory), or any score derived from the original data (cumulative values applying a binning or statitiscal parameter).
 
 +----------------------+--------+----------+----------------------------------+----------------------------+
 | Argument             | short  | Options  | Description                      | Example                    |
@@ -121,45 +123,46 @@ provides a perfect structure to store continuous data such as for instance any b
 | ``--format``         | ``-f`` | bed      | Converts data to BED format      | ``-f bed``                 |
 +                      +        +----------+----------------------------------+----------------------------+
 |                      |        | gff      | Converts data to BedGraph format | ``-f gff``                 |
-+                      +        +----------+----------------------------------+----------------------------+                                
++                      +        +----------+----------------------------------+----------------------------+
 |                      |        | bedGraph | Converts data to  format         | ``-f bedGraph``            |
 +----------------------+--------+----------+----------------------------------+----------------------------+
 
 Following our previous example the command line to convert our data to BedGraph format will be:
 
 .. code-block:: bash
-	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
-  
+
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
+
 .. note::
 
-  Pergola converts data by default to BED file format. Refer to :ref:`mapping-file` section 
+  Pergola converts data by default to BED file format. Refer to the :ref:`mapping file<mapping-file>` section
   to see pergola's adapted genomic formats.
-   
+
 Filtering
 ---------
 
 Filtering arguments allow you to select a part of your input data based on pergola assigned fields.
 
-======================== ======= ==========================================           ====================================================
-Argument                 short   Description                                          Example
-======================== ======= ==========================================           ====================================================
-``--tracks``             ``-t``  List of tracks to keep                               ``-t track_id_1 track_id_2``
-``--range``        		 ``-r``  Range of tracks to keep if id are numerical          ``-r 1 10``
-``--track_actions``      ``-a``  Action to perform on selected tracks              	  ``-t track_id_1 track_id_2 -a split_all``         
-``--data_types_list``    ``-dl`` List of data types to keep                           ``-dl data_type_one data_type_2``
-``--data_types_actions`` ``-d``  Action to perform on selected data types             ``-dl data_type_one data_type_2 -d one_per_channel``
-======================== ======= ========================================             ====================================================
+======================== ======= ================================================= =====================================================
+Argument                 short   Description                                       Example
+======================== ======= ================================================= =====================================================
+``--tracks``             ``-t``  List of tracks to keep                            ``-t track_id_1 track_id_2``
+``--range``        		 ``-r``  Track range to keep (numerical)                   ``-r 1 10``
+``--track_actions``      ``-a``  Action to perform on selected tracks              ``-t track_id_1 track_id_2 -a split_all``
+``--data_types_list``    ``-dl`` List of data types to keep                        ``-dl data_type_one data_type_2``
+``--data_types_actions`` ``-d``  Action to perform on selected data types          ``-dl data_type_one data_type_2 -d one_per_channel``
+======================== ======= ================================================= =====================================================
 
 .. TODO primero como se hace para elegir solo tracks luego ademas data types
 
-Pergola allows you to filter a subset of your data input based on the field set as ``track`` in your :ref:`mapping-file`.
+Pergola allows you to filter a subset of your data input based on the field set as ``track`` in your
+:ref:`mapping file<mapping-file>`.
 
 The example below shows how to get the data only from animal 1 4 7  (tracks):
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t 1 4  7 -dl food_sc food_fat
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t 1 4  7 -dl food_sc food_fat
 
 If you want to get all tracks from 1 to 4 you can then use the ``-r`` option provided your ``track`` field is numeric:
 
@@ -167,7 +170,7 @@ If you want to get all tracks from 1 to 4 you can then use the ``-r`` option pro
 	
   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -r 1-4
   
-.. note::
+.. tip::
   By default tracks selected by ``-r`` option are joined together in a single output track. You can use ``-a`` option 
   to change this behavior.
 
@@ -186,20 +189,21 @@ An example of how to join all tracks in the same file would be:
 
 .. code-block:: bash
 	
-   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -a join_all
+   pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -a join_all
    
 .. tip::
   You can combine ``-t`` or ``-r`` options with ``-a`` in order to filter tracks and join them as you prefer
   
-  .. code-block:: bash
-    pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t 1 2 3 -a join_all
+.. code-block:: bash
+
+   pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -t 1 2 3 -a join_all
     
 It is possible to provide pergola with a list of the field assigned to ``data_type`` pergola ontology term to be kept using ``-dl`` argument.
 For instance, in the code below only events assigned to "food_fat" ``data_type`` term are kept:
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
 
 Besides ``-d`` option allows to combine all data types into a single output file or split them in different files:
 
@@ -260,11 +264,15 @@ below:
 
   CAGE	StartT	    EndT        Value Nature
   1     1335986151  1335986261  0.06  food_sc
-  1     1335986275  1335986330	0.02  food_fat
-  1     1335986341  1335986427	0.02  water	
+  1     1335986275  1335986330	0.02  food_sc
+  1     1335986341  1335986427	0.02  food_sc
 
 
 Applying the ``-e`` it will result into the time coordinates below:
+
+.. code-block:: bash
+
+  pergola -i ./data/file.csv -m data/b2p.txt -e
 
 ::
 
@@ -278,7 +286,7 @@ For example:
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w 300
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w 300
 
 .. note::
 
@@ -303,15 +311,17 @@ file_1.csv
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w 10 -min 0 
+  pergola -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w 10 -min 0
 
 .. note::
   The time points inserted at the beginning of the file using ``-min`` and ``-max`` will be set to zero value. In the example above
   the beginning of the output file will then look as follows:
+
   ::
-     chr1	0	10	0
-     chr1	10	20	0.0
-     chr1	20	30	0.02
+
+    chr1	0	10	0
+    chr1	10	20	0.0
+    chr1	20	30	0.02
 
 If the input file has only a single time point, pergola can process it using the ``-n`` argument. This situation is common
 in files encoding data that are in equidistant time points, as the following one:
@@ -327,7 +337,7 @@ In this case the ``-n`` argument generates an interval for each of the items of 
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
+  pergola -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
   
 .. This command will result in the following output file:
 
@@ -347,7 +357,7 @@ and for instance getting the time stamps in milliseconds:
 
 .. code-block:: bash
 
-  pergola_rules.py -i ./data/file_3.csv -m ./data/file_3_to_p.txt -n -mi 1000 -f bedGraph
+  pergola -i ./data/file_3.csv -m ./data/file_2_to_p.txt -n -mi 1000 -f bedGraph
 
 As a result two time point intervals will be returned in output file:
 
@@ -385,14 +395,14 @@ the data. To avoid the track line you can use the ``-nt`` option.
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -nt
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -nt
 
 The name field of the BED file enables to display a label for each record encoded inside the file. Pergola uses this field 
 to display the data_type of each file line when the option is set:
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -bl
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -bl
 
 ::
 
@@ -412,14 +422,11 @@ How to use it is shown in the following example:
 
 .. code-block:: bash
 	
-  pergola_rules.py -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
+  pergola -i ./data/feedingBehavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
                         
-.. note::
+.. tip::
 
     In order to see all available options up you can simply type ``pergola_rules.py -h`` 
-
-.. this is a comment ?
-
 
 *******************
 Command examples :
@@ -435,19 +442,7 @@ Generate raw intervals in bed format:
 
 .. code-block:: bash
 	
-  $ pergola_rules.py -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -e
-
-Combine only intervals corresponding to meals in a single file:
-
-.. code-block:: bash
-	
-  $ pergola_rules.py -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -e -f bedGraph -dl food_sc food_fat -d all
-
-Generate windows of accumulated values in bedgraph format:
-
-.. code-block:: bash
-
-  $ pergola_rules.py -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -f bedGraph -e
+  $ pergola -i /your_path_to_pergola/sample_data/feeding_behavior/feedingBehavior_HF_mice.csv -m /your_path_to_pergola/sample_data/feeding_behavior/b2g.txt -e
 
 .. _scripts-jaaba_to_pergola:
 
@@ -494,12 +489,12 @@ For example it is possible to obtain JAABA features formatted as CSV files using
 
     $jaaba_to_pergola fc -i "/jaaba_data/perframe/" -jf velmag dtheta -dd "/output_dir/"
 
-::
+.. note::
 
-The above example shows how to obtain ``velmag`` and ``dtheta`` features from the perframe folder where
-jaaba MAT features files are stored and dump them in a directory ``output_dir``.
+    The above example shows how to obtain ``velmag`` and ``dtheta`` features from the perframe folder where
+    jaaba MAT features files are stored and dump them in a directory ``output_dir``.
 
-The ``fp`` mode makes it possible to convert the selected features into bed or bedgraph files and perform any of the pergola_rules.py see `pergola_rules.py`_.
+The ``fp`` mode makes it possible to convert the selected features into bed or bedgraph files and perform any of the pergola_rules.py see `pergola`_
 options::
 
 	$jaaba_to_pergola fp -i "/jaaba_data/perframe/" -jf velmag dtheta -dd "/output_dir/" -m "jaaba2pergola_mapping.txt" -f bedGraph -w 300	
@@ -515,7 +510,7 @@ are having a given behavior along a trajectory. These `predictions <http://jaaba
 `MAT-file format <http://es.mathworks.com/help/matlab/import_export/supported-file-formats.html>`_ that contain both the behavioral events predicted and the scores 
 of the reliability of each event.
 
-Jaaba predictions can be also stored in CSV files or process to bed or bedGraph files applying any `pergola_rules.py`_ option. To choose between these two options 
+Jaaba predictions can be also stored in CSV files or process to bed or bedGraph files applying any `pergola`_ option. To choose between these two options
 users can set the ``sc`` or the ``sp`` mode respectively.
 
 The possible arguments for this modes are:
@@ -530,7 +525,7 @@ Hence, the command line to process a scores Jaaba file into a CSV formatted file
 
   $jaaba_to_pergola sc -i predicted_behavior.mat
 
-In the case of ``sp`` mode, besides we can use any `pergola_rules.py`_ option::
+In the case of ``sp`` mode, besides we can use any `pergola`_ option::
   
 	$jaaba_to_pergola sc -i predicted_behavior.mat -m jaaba_scores2pergola_mapping.txt -f bed  
 

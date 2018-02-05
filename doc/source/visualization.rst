@@ -25,7 +25,7 @@ Requirements
 *************
 
 Shiny-pergola needs Docker to be installed in your system. If you don't have Docker installed in your system you can
-follow the instructions in :ref:`Docker-installation` section.
+follow the instructions in the :ref:`Docker-installation` section.
 
 **********************
 Get a sample data set
@@ -154,8 +154,8 @@ Packages
 
 Among the available packages we have tried `Sushi <https://bioconductor.org/packages/release/bioc/html/Sushi.html>`_ and
 `Gviz <https://bioconductor.org/packages/release/bioc/html/Gviz.html>`_. Both packages provide very nice capabilities to
-visualize data, you can see below the result of visualizing the data using them in the :ref:`visualize_bioconductor`
-section.
+visualize data, you can see below the result of visualizing the data using them in the
+:ref:`snapshots<visualize_bioconductor>` below.
 
 ***************
 Example scripts

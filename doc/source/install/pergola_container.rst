@@ -13,7 +13,11 @@ the same version of Pergola using the tag of the image.
 
 .. _Docker: https://www.docker.com/
 
-.. contents::
+.. .. contents::
+
+|
+
+.. _Docker-installation:
 
 Docker installation
 **************************
@@ -62,5 +66,4 @@ You can also mount your files in the container as shown below:
 
 	docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
 
-For a more complete example go to tutorials section.
-
+For a more complete example go to the :ref:`tutorial section <tutorial>`.

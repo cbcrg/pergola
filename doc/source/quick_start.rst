@@ -8,7 +8,7 @@ If you have to start using Pergola in some easy steps follow this guide.
 .. note::
 
   This quick start guide assumes Pergola has been previously installed, if this is not the case follow instructions in
-  :ref:`installation` section.
+  the :ref:`installation<installation>` section.
 
 .. commented
 .. _input-data:
@@ -34,8 +34,8 @@ The data set contains *C. elegans* motion measures derived from video recordings
 The sample data set consists in two folders:  One named ``worm_speeds`` containing a ``CSV`` file for each of the
 tracked worms. From the several measures that can be found in the individual files, in this example we will use mid-body
 speed. The ``mapping`` folder contains the ``worm_speed2pergola.txt``, which sets the mappings between the information
-represented in the worm_speed files and the pergola ontology. See :ref:`mapping-file` and :ref:`pergola-ontology` for a
-deeper description.
+represented in the worm_speed files and the pergola ontology. See :ref:`mapping file<mapping-file>` and
+:ref:`pergola ontology<pergola-ontology>` for a deeper description.
 
 *************
 Get the data
@@ -58,10 +58,10 @@ Pull Pergola image
 
 .. installation
 
-.. note::
+.. tip::
 
-  If you want to install Pergola on your system instead, refer to :ref:`installation` documentation. And skip this
-  section.
+  If you want to install Pergola on your system instead, refer to :ref:`installation<installation>` documentation and
+  skip this section.
 
 You can obtain last Pergola version from `Pergola Docker Hub repository <https://hub.docker.com/u/pergola/>`_.
 
@@ -94,14 +94,14 @@ Visualization with IGV
 -----------------------
 
 Once processed with Pergola, there are several available options to visualize your behavioral data. Here, we explain how
-to visualize the data using IGV, see :ref:`Visualization` section for other alternatives.
+to visualize the data using IGV, see :ref:`visualization<visualization>` section for other alternatives.
 
 *************
 Download IGV
 *************
 
-As an example, we choose the `Integrative Genomics Viewer <http://software.broadinstitute.org/software/igv/>`_
-to illustrate how to visualize data. IGV can be downloaded from
+As an example, we choose the `Integrative Genomics Viewer <http://software.broadinstitute.org/software/igv/>`_ (IGV) to
+illustrate how to visualize data. IGV can be downloaded from
 `here <http://software.broadinstitute.org/software/igv/download>`_.
 
 ****************
@@ -125,7 +125,7 @@ Now you can render the BedGraph files generated before by going to **File** menu
 
 .. image:: ./images/load_files.png
 
-.. note:: 
+.. tip::
   Stack the tracks corresponding to each group, in this manner differences will become easier to identify
 
 *********************************
@@ -138,7 +138,8 @@ Finally to obtain a heatmap of the tracks it is necessary to set some options:
 
 .. image:: ./images/load_files.png
 
-* Now select all tracks by clicking on their names and right click with the mouse, as a result a menu will pop up. On this menu check "Heatmap" under **Type of Graph** menu and "None" under **Windowing Function**. 
+* Now select all tracks by clicking on their names and right click with the mouse, as a result a menu will pop up. On
+  this menu check "Heatmap" under **Type of Graph** menu and "None" under **Windowing Function**.
 
 .. image:: ./images/select_heatmap.png
 
@@ -146,6 +147,7 @@ Finally to obtain a heatmap of the tracks it is necessary to set some options:
 
 .. image:: ./images/heatmap_menu.png
 
-* The resulting rendering shows how overall the speeds of *unc-16* (uncoordinated strain), tracks below, are lower depicting a deficient moving behavior when compared to control (N2) strain on top.
+* The resulting rendering shows how overall the speeds of *unc-16* (uncoordinated strain), tracks below, are lower
+  depicting a deficient moving behavior when compared to control (N2) strain on top.
 
 .. image:: ./images/final_snapshot_heatmap.png
