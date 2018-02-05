@@ -170,13 +170,16 @@ In both cases the rendered data corresponds to the same data set.
 Visualize data
 ***************
 
-The resulting visualization look like the following ones:
+The resulting Sushi visualization:
 
 .. _visualize_bioconductor:
 
 .. image:: ./images/mice_sushi_viz.png
 
+Using Gviz, we obtained this visualization:
+
 .. image:: ./images/mice_gviz_viz.png
 
-
+|
+|
 
