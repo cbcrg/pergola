@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Visualization &mdash; Pergola  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pergola  documentation" href="index.html"/>
+        <link rel="next" title="Tutorials" href="tutorial.html"/>
+        <link rel="prev" title="Data analysis" href="data_analysis.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic_concepts.html">Basic concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#shiny-pergola">Shiny-pergola</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-a-sample-data-set">Get a sample data set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pull-image">Pull image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-image">Run image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualize-data">Visualize data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#igv">IGV</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-igv-official-version">Get IGV official version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-igv-adapted-version">Get IGV adapted version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-genome">Create a genome</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-files">Load files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-graphical-parameters">Set graphical parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Visualize data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bioconductor-packages">Bioconductor packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#packages">Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-scripts">Example scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Visualize data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Visualization</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/visualization.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="visualization">
+<span id="id1"></span><h1>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h1>
+<p>One of the main benefits of using Pergola is that it allows you to easily visualize longitudinal behavioral data using
+ready-to-use genomic tools. Here you will find some examples of how to use these tools.</p>
+<div class="section" id="shiny-pergola">
+<h2>Shiny-pergola<a class="headerlink" href="#shiny-pergola" title="Permalink to this headline">¶</a></h2>
+<p>Using several <a class="reference external" href="https://www.bioconductor.org/">Bioconductor</a> packages (Gviz, rtracklayer and GenomicRanges) and <a class="reference external" href="https://shiny.rstudio.com/">Shiny</a> we created an ad-hoc browser
+to visualize data. The code of this interactive web app can be found in our <a class="reference external" href="https://github.com/JoseEspinosa/shiny-pergola-docker">GitHub repository</a>.
+We distributed Shiny-pergola as a <a class="reference internal" href="#docker-image">Docker image</a> to make easier its use. Read the following sections to learn
+how to use Shiny-pergola Docker image.</p>
+<div class="section" id="requirements">
+<span id="docker-image"></span><h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h3>
+<p>Shiny-pergola needs Docker to be installed in your system. If you don’t have Docker installed in your system you can
+follow the instructions in the <a class="reference internal" href="installation.html#docker-installation"><span class="std std-ref">Docker installation</span></a> section.</p>
+</div>
+<div class="section" id="get-a-sample-data-set">
+<h3>Get a sample data set<a class="headerlink" href="#get-a-sample-data-set" title="Permalink to this headline">¶</a></h3>
+<p>Besides, you need a data set to be displayed on the browser. If you want to give Shiny-pergola a try, you may want to
+use our sample data set that consists in longitudinal behavioral recordings of mice feeding behavior processed with
+Pergola. The data is host in Zenodo and can be download with the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir data
+wget -O- https://zenodo.org/record/1162230/files/mouse__viz_shiny_pergola_sample_data.tar.gz <span class="p">|</span> tar xz -C data
+<span class="nb">cd</span> data
+</pre></div>
+</div>
+</div>
+<div class="section" id="pull-image">
+<h3>Pull image<a class="headerlink" href="#pull-image" title="Permalink to this headline">¶</a></h3>
+<p>First thing you have to do is to pull Shiny-pergola Docker image from Pergola Docker Hub:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/shiny-pergola:0.1.1
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-image">
+<h3>Run image<a class="headerlink" href="#run-image" title="Permalink to this headline">¶</a></h3>
+<p>Once you have downloaded the Shiny-pergola image you can launch it by executing:
+You should be in the folder where you have untar the sample data.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -p <span class="m">3600</span>:80 -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/pergola_data pergola/shiny-pergola:0.1.1 <span class="p">&amp;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">“$(pwd)” can be substitute by where you have untar the downloaded data</p>
+</div>
+</div>
+<div class="section" id="visualize-data">
+<h3>Visualize data<a class="headerlink" href="#visualize-data" title="Permalink to this headline">¶</a></h3>
+<p>To visualize the data you just need to go to your web browser and type in your address bar the ip address returned
+by the following command e.g. <a class="reference external" href="http://0.0.0.0:3600">http://0.0.0.0:3600</a></p>
+<img alt="_images/snapshot_pergola_shiny.png" src="_images/snapshot_pergola_shiny.png" />
+</div>
+</div>
+<div class="section" id="igv">
+<h2>IGV<a class="headerlink" href="#igv" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://software.broadinstitute.org/software/igv/">Integrative Genomics Viewer</a> (IGV )is a widely-used, powerful
+genomic desktop browser. You can use IGV to visualize longitudinal behavioral after converting the data to genomic
+formats such as BED or BedGraph.</p>
+<div class="section" id="get-igv-official-version">
+<h3>Get IGV official version<a class="headerlink" href="#get-igv-official-version" title="Permalink to this headline">¶</a></h3>
+<p>You can download IGV from <a class="reference external" href="http://software.broadinstitute.org/software/igv/download">here</a>.</p>
+</div>
+<div class="section" id="get-igv-adapted-version">
+<h3>Get IGV adapted version<a class="headerlink" href="#get-igv-adapted-version" title="Permalink to this headline">¶</a></h3>
+<p>We adapted IGV to display time units instead of base pairs. This version of IGV is available for its download
+<a class="reference external" href="https://github.com/JoseEspinosa/IBB">here</a> with detailed instructions of how to compile it.</p>
+</div>
+<div class="section" id="create-a-genome">
+<h3>Create a genome<a class="headerlink" href="#create-a-genome" title="Permalink to this headline">¶</a></h3>
+<p>After launching IGV, first you have to create a genome file. Go to <strong>Genomes</strong> menu and click on “Create .genome File…”
+Data can be visualize using a heatmap.</p>
+<img alt="_images/menu_create_genome.png" src="_images/menu_create_genome.png" />
+<p>On the menu that pops up load the fasta file generated by Pergola and click on OK.</p>
+<img alt="_images/create_genome.png" src="_images/create_genome.png" />
+</div>
+<div class="section" id="load-files">
+<h3>Load files<a class="headerlink" href="#load-files" title="Permalink to this headline">¶</a></h3>
+<p>Now you can render your Pergola processed files by going to <strong>File</strong> menu and click on “Load from File…”</p>
+<img alt="_images/load_files.png" src="_images/load_files.png" />
+</div>
+<div class="section" id="set-graphical-parameters">
+<h3>Set graphical parameters<a class="headerlink" href="#set-graphical-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Finally to obtain a heatmap of the tracks it is necessary to set some options:</p>
+<p>To visualize all the tracks in the screen go to <strong>Tracks</strong> and click on “Fit Data to Window”</p>
+<img alt="_images/load_files.png" src="_images/load_files.png" />
+<p>By right-clicking on tracks names a menu will pop up. On this menu you can choose between several options of how to
+display your data. For instance, in the case of BedGraph files you can set with which type of graph they are rendered
+(heatmap, lines plot, etc.).</p>
+</div>
+<div class="section" id="id3">
+<h3>Visualize data<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>This is an example of how you data will show up on IGV.</p>
+<img alt="_images/mouse_hf_igv.png" src="_images/mouse_hf_igv.png" />
+</div>
+</div>
+<div class="section" id="bioconductor-packages">
+<h2>Bioconductor packages<a class="headerlink" href="#bioconductor-packages" title="Permalink to this headline">¶</a></h2>
+<p>You can use some of the Bioconductor libraries developed for the visualization of genomic information to render
+behavioral data once processed with Pergola. <a class="reference external" href="https://www.bioconductor.org/">Bioconductor</a> is a software project that
+for the analysis of genomic data developed in the <a class="reference external" href="https://www.r-project.org/">R programming language</a>.
+Some of these libraries provide nice functionalities for the programmatic visualization of data.</p>
+<div class="section" id="packages">
+<h3>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h3>
+<p>Among the available packages we have tried <a class="reference external" href="https://bioconductor.org/packages/release/bioc/html/Sushi.html">Sushi</a> and
+<a class="reference external" href="https://bioconductor.org/packages/release/bioc/html/Gviz.html">Gviz</a>. Both packages provide very nice capabilities to
+visualize data, you can see below the result of visualizing the data using them in the
+<a class="reference internal" href="#visualize-bioconductor"><span class="std std-ref">snapshots</span></a> below.</p>
+</div>
+<div class="section" id="example-scripts">
+<h3>Example scripts<a class="headerlink" href="#example-scripts" title="Permalink to this headline">¶</a></h3>
+<p>You can find an example of the scripts to load the data using Sushi on this
+<a class="reference external" href="https://github.com/cbcrg/mouse-pergola-reproduce/blob/master/bin/mice_sushi_visualization.R">link</a> and a second
+example using Gviz <a class="reference external" href="https://github.com/cbcrg/mouse-pergola-reproduce/blob/master/bin/mice_gviz_visualization.R">here</a>.
+In both cases the rendered data corresponds to the same data set.</p>
+</div>
+<div class="section" id="id5">
+<h3>Visualize data<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The resulting Sushi visualization:</p>
+<img alt="_images/mice_sushi_viz.png" id="visualize-bioconductor" src="_images/mice_sushi_viz.png" />
+<p>Using Gviz, we obtained this visualization:</p>
+<img alt="_images/mice_gviz_viz.png" src="_images/mice_gviz_viz.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="data_analysis.html" class="btn btn-neutral" title="Data analysis" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 05, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
