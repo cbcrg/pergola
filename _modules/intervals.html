@@ -174,13 +174,13 @@
 <span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
 <span class="kn">from</span> <span class="nn">pandas</span>   <span class="k">import</span> <span class="n">read_excel</span>
 
-<div class="viewcode-block" id="IntData"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.IntData">[docs]</a><span class="k">class</span> <span class="nc">IntData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="IntData"><a class="viewcode-back" href="../reference/pergola.html#intervals.IntData">[docs]</a><span class="k">class</span> <span class="nc">IntData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generic class for input data</span>
 <span class="sd">    </span>
 <span class="sd">    .. attribute:: path</span>
 <span class="sd">    </span>
-<span class="sd">       Name of path to a csv/tab input file</span>
+<span class="sd">       Name of path to a csv/tab or xlsx (excel) input file</span>
 <span class="sd">    </span>
 <span class="sd">    .. attribute:: delimiter</span>
 <span class="sd">    </span>
@@ -518,7 +518,7 @@
 
         <span class="k">return</span> <span class="n">set_fields</span></div>
 
-<div class="viewcode-block" id="IntData.read"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.IntData.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_coord</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">int_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields2rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiply_t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="IntData.read"><a class="viewcode-back" href="../reference/pergola.html#intervals.IntData.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">relative_coord</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">int_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields2rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiply_t</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;        </span>
 <span class="sd">        Reads the data and converts it depending on selected options</span>
@@ -893,7 +893,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">data_int</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="is_number"><a class="viewcode-back" href="../reference/ref-intervals.html#intervals.is_number">[docs]</a><span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
+<div class="viewcode-block" id="is_number"><a class="viewcode-back" href="../reference/pergola.html#intervals.is_number">[docs]</a><span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks whether an string is a number, if is already an integer or float it also returns True</span>
 <span class="sd">    </span>
@@ -937,7 +937,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 05, 2018.
+      Last updated on Feb 06, 2018.
 
     </p>
   </div>

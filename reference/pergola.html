@@ -153,7 +153,7 @@ to map tracks that are genereted by the application</p>
 <dl class="attribute">
 <dt id="intervals.IntData.path">
 <code class="descname">path</code><a class="headerlink" href="#intervals.IntData.path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Name of path to a csv/tab input file</p>
+<dd><p>Name of path to a csv/tab or xlsx (excel) input file</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -447,16 +447,14 @@ perform some BEDtools operations such as BEDcomplement</p>
 <li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
 <li><strong>lab_bed</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true shows label corresponding to dataType in bed file otherwise 
 shows “.”</li>
-<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true includes track_line in the file</li>
+<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true includes track_line in the file 
+TODO: extend light and dark to other possible values using variables
+Eventually separate into two different functions write_cytoband and write_bed</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>TODO: extend light and dark to other possible values using variables</dt>
-<dd>Eventually separate into two different functions write_cytoband and write_bed</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1160,7 +1158,7 @@ of this license is in the LICENSE file.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 02, 2018.
+      Last updated on Feb 06, 2018.
 
     </p>
   </div>
