@@ -169,6 +169,74 @@
 </div>
 <p>The minimal input file must contain at least two columns. One of these columns should
 correspond to time points and the second one to any value assigned to each of the time points.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Pergola also takes as input an <strong>excel</strong> file (<strong>xlsx</strong>) with the same structure as the file shown above in the first
+sheet of the file, as shown below:</p>
+<table border="1" class="colwidths-given last docutils">
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="14%" />
+<col width="10%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">id</th>
+<th class="head">t_ini</th>
+<th class="head">t_end</th>
+<th class="head">type</th>
+<th class="head">value</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>137</td>
+<td>156</td>
+<td>type_x</td>
+<td>0.06</td>
+<td>type x event</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>168</td>
+<td>192</td>
+<td>type_y</td>
+<td>0.02</td>
+<td>type y event</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>250</td>
+<td>281</td>
+<td>type_x</td>
+<td>0.07</td>
+<td>type x event</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>311</td>
+<td>333</td>
+<td>type_x</td>
+<td>0.08</td>
+<td>type x event</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>457</td>
+<td>482</td>
+<td>type_y</td>
+<td>0.02</td>
+<td>type y event</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>569</td>
+<td>601</td>
+<td>type_z</td>
+<td>0.03</td>
+<td>type z event</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="pergola-ontology">
 <span id="id3"></span><h3>Pergola ontology<a class="headerlink" href="#pergola-ontology" title="Permalink to this headline">¶</a></h3>
@@ -222,7 +290,7 @@ Provided we have an input file as the show in the <a class="reference internal" 
 the following example:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>! Mapping of behavioural fields into pergola ontology terms
 !
-! Any test starting with an exclamation mark is a comment
+! Any line starting with an exclamation mark is a comment
 
 input_file:id &gt; pergola:track
 input_file:t_ini &gt; pergola:start
@@ -300,8 +368,8 @@ to enable the use of these type of tools with pergola processed data.</p>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
 <p class="last">You can go to the specifications of each of these data file formats clicking on the file names in the table.</p>
 </div>
 </div>
@@ -328,7 +396,7 @@ to enable the use of these type of tools with pergola processed data.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 05, 2018.
+      Last updated on Feb 06, 2018.
 
     </p>
   </div>
