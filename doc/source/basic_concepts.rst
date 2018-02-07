@@ -36,6 +36,22 @@ Pergola can process any sequence of temporal events contained in a character-sep
 The minimal input file must contain at least two columns. One of these columns should 
 correspond to time points and the second one to any value assigned to each of the time points.
 
+.. tip::
+  Pergola also takes as input an **excel** file (**xlsx**) with the same structure as the file shown above in the first
+  sheet of the file, as shown below:
+
+  .. csv-table::
+     :header: "id", "t_ini", "t_end", "type", "value", "description"
+     :widths: 2, 2, 2, 3, 2, 10
+
+     1, 137, 156,	"type_x", 0.06, "type x event"
+     1, 168, 192,	"type_y", 0.02, "type y event"
+     1, 250, 281,	"type_x", 0.07, "type x event"
+     2, 311, 333,	"type_x", 0.08, "type x event"
+     2, 457, 482,	"type_y", 0.02, "type y event"
+     2, 569, 601,	"type_z", 0.03, "type z event"
+
+
 .. Mappings 
 
 .. _pergola-ontology:
@@ -97,7 +113,7 @@ the following example:
 
   ! Mapping of behavioural fields into pergola ontology terms
   !
-  ! Any test starting with an exclamation mark is a comment
+  ! Any line starting with an exclamation mark is a comment
 
   input_file:id > pergola:track 
   input_file:t_ini > pergola:start
@@ -188,7 +204,7 @@ File formats adapted as pergola output are summarized in the following table:
 | Reference    | `FASTA <https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=BlastHelp>`_ |
 +--------------+----------------------------------------------------------------------------------------------------+
 
-.. note::
+.. tip::
   You can go to the specifications of each of these data file formats clicking on the file names in the table.
 
 .. -------------------------
