@@ -6,16 +6,16 @@ Tutorials
 
 .. _library:
 
-Getting started
----------------
+Code your own scripts
+---------------------
 
 .. toctree::
    :maxdepth: 2
    
    tutorial/pergola_tutorial
 
-Jaaba data
-----------
+Pergola Jaaba tutorial
+----------------------
 
 .. toctree::
    :maxdepth: 2
