@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Pergola with JAABA data &mdash; Pergola  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pergola  documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="../tutorial.html"/>
+        <link rel="next" title="Links" href="../links.html"/>
+        <link rel="prev" title="Input data" href="pergola_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualization</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#code-your-own-scripts">Code your own scripts</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#pergola-jaaba-tutorial">Pergola Jaaba tutorial</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Pergola with JAABA data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intdata-objects">IntData objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#basic-data-outputs-for-visualization-or-analysis">Basic data outputs for visualization or analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intdata-to-bed">IntData to bed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../links.html">Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../tutorial.html">Tutorials</a> &raquo;</li>
+      
+    <li>Using Pergola with JAABA data</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/tutorial/jaaba_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-pergola-with-jaaba-data">
+<h1>Using Pergola with JAABA data<a class="headerlink" href="#using-pergola-with-jaaba-data" title="Permalink to this headline">¶</a></h1>
+<p>The Janelia Automatic Animal Behavior Annotator (JAABA)* is a machine
+learning-based system that enables researchers to automatically anotate
+animal behaviors. Pergola can import score files generated by JAABA in
+matlab format as show in this notebook:</p>
+<p>*Kabra, M., Robie, A. A., Rivera-Alba, M., Branson, S., &amp; Branson, K.
+(2013). JAABA: interactive machine learning for automatic annotation of
+animal behavior. Nat Meth, 10(1), 64–67. doi:10.1038/nmeth.2281</p>
+<p>Path to matlab file containing scores of <em>Drosophila</em> chasing behavior
+generated using JAABA (sample_data folder):</p>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Importing pergola modules used</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="c1"># We need to set the path to run this notebook directly from ipython notebook</span>
+<span class="n">my_path_to_modules</span> <span class="o">=</span> <span class="s2">&quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/&quot;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">my_path_to_modules</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">jaaba_parsers</span>
+</pre></div>
+</div>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">input_jaaba_file</span><span class="o">=</span><span class="s2">&quot;../../sample_data/jaaba_example/scores_chase_ctrl_pBDPGAL4.mat&quot;</span>
+</pre></div>
+</div>
+<p>Data can be easily export to a csv file. Note that we can normalize the
+scores using “norm” flag so they move within a range of -1 to 1.</p>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">path_csv</span><span class="o">=</span><span class="s2">&quot;../../test&quot;</span>
+<span class="n">jaaba_parsers</span><span class="o">.</span><span class="n">jaaba_scores_to_csv</span><span class="p">(</span><span class="n">input_file</span><span class="o">=</span><span class="n">input_jaaba_file</span><span class="p">,</span> <span class="n">path_w</span><span class="o">=</span><span class="n">path_csv</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;chase&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can also load the data into an IntData object. For this we can use
+the file we have generated above but the function
+jaaba_scores_to_intData performs the process without this intermediate
+steps. We need to set the equivalences between the jaaba scores fields
+and the pergola ontology using a file that contains the mappings. This
+function also allows for the normalization of the scores using “norm”
+flag and for the annotation of the behavior using data_type parameter.</p>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">map_file_jaaba</span> <span class="o">=</span> <span class="s2">&quot;../../sample_data/jaaba_example/jaaba2pergola.txt&quot;</span>
+<span class="n">int_data_jaaba</span> <span class="o">=</span> <span class="n">jaaba_parsers</span><span class="o">.</span><span class="n">jaaba_scores_to_intData</span><span class="p">(</span><span class="n">input_file</span><span class="o">=</span><span class="n">input_jaaba_file</span><span class="p">,</span> <span class="n">map_jaaba</span> <span class="o">=</span> <span class="n">map_file_jaaba</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;chase&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">WARNING</span><span class="p">:</span> <span class="n">File</span> <span class="nb">format</span> <span class="ow">not</span> <span class="n">recognized</span><span class="p">,</span> <span class="n">default</span> <span class="nb">format</span> <span class="n">assumed</span> <span class="n">to</span> <span class="n">be</span> <span class="n">csv</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="intdata-objects">
+<h1>IntData objects<a class="headerlink" href="#intdata-objects" title="Permalink to this headline">¶</a></h1>
+<p>IntData, contains all the intervals of a file and some interesting
+related attributes like the dataTypes it contains, min and max values,
+the tracks (in this case individuals) and the data itself:</p>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="n">int_data_jaaba</span><span class="o">.</span><span class="n">data_types</span>
+<span class="nb">print</span> <span class="n">int_data_jaaba</span><span class="o">.</span><span class="n">min</span>
+<span class="nb">print</span> <span class="n">int_data_jaaba</span><span class="o">.</span><span class="n">max</span>
+<span class="nb">print</span> <span class="n">int_data_jaaba</span><span class="o">.</span><span class="n">tracks</span>
+<span class="nb">print</span> <span class="n">int_data_jaaba</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">([</span><span class="s1">&#39;chase&#39;</span><span class="p">])</span>
+<span class="mi">3376</span>
+<span class="mi">27330</span>
+<span class="nb">set</span><span class="p">([</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;14&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">,</span> <span class="s1">&#39;16&#39;</span><span class="p">,</span> <span class="s1">&#39;19&#39;</span><span class="p">,</span> <span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">])</span>
+<span class="p">[(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">3486</span><span class="p">,</span> <span class="mi">3486</span><span class="p">,</span> <span class="s1">&#39;-0.0625935142616&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">4427</span><span class="p">,</span> <span class="mi">4438</span><span class="p">,</span> <span class="s1">&#39;0.0894133992959&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">8032</span><span class="p">,</span> <span class="mi">8032</span><span class="p">,</span> <span class="s1">&#39;-0.0741294976008&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">8397</span><span class="p">,</span> <span class="mi">8397</span><span class="p">,</span> <span class="s1">&#39;-0.0224614989493&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">8399</span><span class="p">,</span> <span class="mi">8402</span><span class="p">,</span> <span class="s1">&#39;-0.0260602853835&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">8755</span><span class="p">,</span> <span class="mi">8755</span><span class="p">,</span> <span class="s1">&#39;-0.069399336129&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">8759</span><span class="p">,</span> <span class="mi">8760</span><span class="p">,</span> <span class="s1">&#39;-0.036959462996&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">10409</span><span class="p">,</span> <span class="mi">10409</span><span class="p">,</span> <span class="s1">&#39;-0.110257591161&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">11434</span><span class="p">,</span> <span class="mi">11436</span><span class="p">,</span> <span class="s1">&#39;0.0418167820454&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">11439</span><span class="p">,</span> <span class="mi">11439</span><span class="p">,</span> <span class="s1">&#39;-0.0318922057499&#39;</span><span class="p">,</span> <span class="s1">&#39;chase&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basic-data-outputs-for-visualization-or-analysis">
+<h1>Basic data outputs for visualization or analysis<a class="headerlink" href="#basic-data-outputs-for-visualization-or-analysis" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="intdata-to-bed">
+<h1>IntData to bed<a class="headerlink" href="#intdata-to-bed" title="Permalink to this headline">¶</a></h1>
+<p>Data can be transformed to bed files. Bed files contain just the raw
+intervals and values without any further manipulation of the data:</p>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">#reading the data with your desired options</span>
+<span class="n">read_data_jaaba</span> <span class="o">=</span> <span class="n">int_data_jaaba</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fields2rel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiply_t</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#You can set several functions when tranforming the data</span>
+<span class="c1">#data_types select the data_types you want to transform</span>
+<span class="c1">#dataTypes_actions in the case of having multiple dataTypes you can join them in the same track (&quot;all&quot;) or keep them separated.</span>
+<span class="c1">#data_type_col sets the colors to display by the genome browser when bed file is loaded for each dataTypes</span>
+<span class="n">data_type_col</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;chase&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">}</span>
+<span class="c1">#range_color sets the range of data you want to be the maximun and lower maximun intensity</span>
+<span class="n">range_color</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">bed_jaaba</span> <span class="o">=</span> <span class="n">read_data_jaaba</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chase&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
+                                 <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col</span><span class="p">,</span> <span class="n">range_color</span><span class="o">=</span><span class="n">range_color</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Fields</span> <span class="n">containing</span> <span class="n">time</span> <span class="n">points</span> <span class="n">will</span> <span class="n">be</span> <span class="n">multiplied</span> <span class="n">by</span><span class="p">:</span>  <span class="mi">1</span>
+<span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
+<span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_jaaba</span><span class="p">:</span>
+    <span class="n">bedSingle</span> <span class="o">=</span> <span class="n">bed_jaaba</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">bedSingle</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/Users/jespinosa/git/pergola/test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_2_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_14_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_6_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_1_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_8_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_13_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_5_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_17_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_19_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_12_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_4_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_16_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_11_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_18_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_3_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_15_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_7_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_9_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+<span class="n">Files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">test</span>
+<span class="n">File</span> <span class="n">tr_10_dt_chase</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../links.html" class="btn btn-neutral float-right" title="Links" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pergola_tutorial.html" class="btn btn-neutral" title="Input data" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 09, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
