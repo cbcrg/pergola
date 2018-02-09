@@ -1,6 +1,5 @@
-#
-#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -288,9 +287,9 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
     :param True lab_bed: If true shows label corresponding to dataType in bed file otherwise 
         shows "."
     :param True track_line: If true includes track_line in the file 
-    TODO: extend light and dark to other possible values using variables
-          Eventually separate into two different functions write_cytoband and write_bed
-    
+        TODO: extend light and dark to other possible values using variables
+        Eventually separate into two different functions write_cytoband and write_bed
+
     """
 
     t = 0

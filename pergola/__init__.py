@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -21,8 +21,9 @@
 Description
 ===========
 
-Pergola is a set of python modules for transforming your data in data visualizable
-in common genome browser
+Pergola is a python library for the conversion of behavioral data into genome browser
+compatible formats. The adoption of genomic formats enables the analysis and
+visualization of longitudinal behavioral data by genomic software tools.
 
 ============
 Installation
@@ -37,12 +38,14 @@ pergola requires:
 * biopy-isatab (https://github.com/ISA-tools/biopy-isatab)
 * scipy (https://www.scipy.org/)
 * pybedtools (https://daler.github.io/pybedtools/)
+* pandas (https://pandas.pydata.org/)
+* xlrd (https://pypi.python.org/pypi/xlrd)
 
-Latest source code is available from GitHub::
+Latest source code is available on GitHub::
 
 https://github.com/cbcrg/pergola
 
-by clicking on "Downloads", or by cloning the git repository with::
+By clicking on "Downloads", or by cloning the git repository with::
 
 $ git clone https://github.com/cbcrg/pergola.git
     

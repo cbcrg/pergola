@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2017, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2017, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -45,7 +45,7 @@ class IntData(object):
     
     .. attribute:: path
     
-       Name of path to a csv/tab input file
+       Name of path to a csv/tab or xlsx (excel) input file
     
     .. attribute:: delimiter
     

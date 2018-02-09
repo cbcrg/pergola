@@ -10,6 +10,10 @@ provides a ready-to-use, portable version of pergola.
 
 .. _PyPI: https://pypi.python.org/pypi
 
+.. tip:: If you don't feel like to install ``pergola`` you can always use our `web server <http://pergola.crg.eu/>`_ to
+   access main ``pergola`` functionalities in a user-friendly interface.
+
+
 .. contents::
 
 -------------------------
