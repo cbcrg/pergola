@@ -21,18 +21,24 @@ pergola
 If you prefer to code your own scripts you can see some examples at the :ref:`tutorials<library>` section.
 
 .. tip::
-	To reproduce all ``pergola`` commands shown in this section you can download the following data set:
+    To reproduce all ``pergola`` commands shown in this section you can download the following data set:
 
-	.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg
-	    :target: https://doi.org/10.5281/zenodo.838237
+    .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1168982.svg
+        :target: https://doi.org/10.5281/zenodo.1168982
 
-	The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
-	To download and uncompress the data you can use the following commands:
+    The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed
+    either with a high-fat or a standard chow. To download and uncompress the data you can use the following commands:
 
-	.. code-block:: bash
+    .. code-block:: bash
 
-	  mkdir data
-	  wget -O- https://zenodo.org/record/838237/files/C57BL6_mice_HF.tar.gz | tar xz -C data
+      mkdir data
+      wget -O- https://zenodo.org/record/1168982/files/feeding_behavior_C57BL6_mice_HF.tar.gz | tar xz -C data
+
+    If you install ``pergola`` from GitHub or use the Docker image you can also find this data set on:
+
+    ::
+
+        /path_to_installation/pergola/sample_data`.
 
 Pergola options allow the user to use the main features of Pergola library in a ready-to-use script.
 
@@ -46,7 +52,8 @@ We divided in the five following sections the available arguments:
 
 .. note::
 
-  All the command line examples can be reproduce using the files found in the C57BL6_mice_HF.tar.gz tarball file.
+  All the command line examples can be reproduce using the files found in the feeding_behavior_C57BL6_mice_HF.tar.gz
+  tarball file.
 
 *******************
 Data input
@@ -81,6 +88,13 @@ would be:
 .. code-block:: bash
 
   pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt
+
+As mentioned before you can also use a xlsx file as input instead:
+
+.. code-block:: bash
+
+  pergola -i ./data/feeding_behavior_HF_mice.xlsx -m ./data/b2p.txt
+
 
 .. note::
 
@@ -293,7 +307,7 @@ Applying the ``-e`` it will result into the time coordinates below:
 
 .. code-block:: bash
 
-  pergola -i ./data/file.csv -m data/b2p.txt -e
+  pergola -i ./data/file_0.csv -m data/b2p.txt -e
 
 ::
 
@@ -362,7 +376,7 @@ In this case the ``-n`` argument generates an interval for each of the items of 
   
 .. This command will result in the following output file:
 
-In the case were the input file encodes time as decimal values (for instance tenth of seconds). 
+In the case were the time inside the input file is encode as decimal values (for instance tenth of seconds).
 
 ::
 
@@ -425,6 +439,8 @@ to display the data_type of each file line when the option is set:
 .. code-block:: bash
 	
   pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -bl
+
+The header of a BED file resulting of this option will look as the following one:
 
 ::
 
@@ -534,6 +550,3 @@ Hence, the command line to process a scores Jaaba file into a CSV formatted file
 In the case of ``sp`` mode, besides we can use any `pergola`_ option::
   
 	$jaaba_to_pergola sc -i predicted_behavior.mat -m jaaba_scores2pergola_mapping.txt -f bed  
-
-
-  

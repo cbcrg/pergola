@@ -103,6 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">Links</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
 </ul>
 
@@ -181,11 +182,15 @@
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>To reproduce all <code class="docutils literal"><span class="pre">pergola</span></code> commands shown in this section you can download the following data set:</p>
-<a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.838237"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.838237.svg" /></a>
-<p>The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed either with a high-fat or a standard chow.
-To download and uncompress the data you can use the following commands:</p>
-<div class="last highlight-bash"><div class="highlight"><pre><span></span>mkdir data
-wget -O- https://zenodo.org/record/838237/files/C57BL6_mice_HF.tar.gz <span class="p">|</span> tar xz -C data
+<a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.1168982"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.1168982.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.1168982.svg" /></a>
+<p>The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed
+either with a high-fat or a standard chow. To download and uncompress the data you can use the following commands:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir data
+wget -O- https://zenodo.org/record/1168982/files/feeding_behavior_C57BL6_mice_HF.tar.gz <span class="p">|</span> tar xz -C data
+</pre></div>
+</div>
+<p>If you install <code class="docutils literal"><span class="pre">pergola</span></code> from GitHub or use the Docker image you can also find this data set on:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>/path_to_installation/pergola/sample_data`.
 </pre></div>
 </div>
 </div>
@@ -200,7 +205,8 @@ wget -O- https://zenodo.org/record/838237/files/C57BL6_mice_HF.tar.gz <span clas
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All the command line examples can be reproduce using the files found in the C57BL6_mice_HF.tar.gz tarball file.</p>
+<p class="last">All the command line examples can be reproduce using the files found in the feeding_behavior_C57BL6_mice_HF.tar.gz
+tarball file.</p>
 </div>
 <div class="section" id="data-input">
 <h3><a class="toc-backref" href="#id3">Data input</a><a class="headerlink" href="#data-input" title="Permalink to this headline">¶</a></h3>
@@ -263,6 +269,10 @@ in the <a class="reference internal" href="basic_concepts.html#pergola-ontology"
 <p>In this manner, the minimal command to run <code class="docutils literal"><span class="pre">pergola</span></code> provided that the input and mappings file are correctly formatted
 would be:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt
+</pre></div>
+</div>
+<p>As mentioned before you can also use a xlsx file as input instead:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.xlsx -m ./data/b2p.txt
 </pre></div>
 </div>
 <div class="admonition note">
@@ -573,7 +583,7 @@ below:</p>
 </pre></div>
 </div>
 <p>Applying the <code class="docutils literal"><span class="pre">-e</span></code> it will result into the time coordinates below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file.csv -m data/b2p.txt -e
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_0.csv -m data/b2p.txt -e
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>     <span class="mi">110</span>
@@ -627,7 +637,7 @@ in files encoding data that are in equidistant time points, as the following one
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
 </pre></div>
 </div>
-<p>In the case were the input file encodes time as decimal values (for instance tenth of seconds).</p>
+<p>In the case were the time inside the input file is encode as decimal values (for instance tenth of seconds).</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">time</span>  <span class="n">value</span>
 <span class="mi">1</span>     <span class="o">-</span><span class="mf">30.98</span>
 <span class="mi">2</span>     <span class="o">-</span><span class="mf">5.19</span>
@@ -707,6 +717,7 @@ to display the data_type of each file line when the option is set:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -bl
 </pre></div>
 </div>
+<p>The header of a BED file resulting of this option will look as the following one:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_food_sc&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 food_sc&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
 <span class="n">chr1</span>        <span class="mi">1335986151</span>      <span class="mi">1335986261</span>      <span class="n">food_sc</span> <span class="mf">0.06</span>    <span class="o">+</span>       <span class="mi">1335986151</span>      <span class="mi">1335986261</span>      <span class="mi">113</span><span class="p">,</span><span class="mi">113</span><span class="p">,</span><span class="mi">113</span>
 <span class="n">chr1</span>        <span class="mi">1335986275</span>      <span class="mi">1335986330</span>      <span class="n">food_sc</span> <span class="mf">0.02</span>    <span class="o">+</span>       <span class="mi">1335986275</span>      <span class="mi">1335986330</span>      <span class="mi">170</span><span class="p">,</span><span class="mi">170</span><span class="p">,</span><span class="mi">170</span>
@@ -851,7 +862,7 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 07, 2018.
+      Last updated on Feb 09, 2018.
 
     </p>
   </div>

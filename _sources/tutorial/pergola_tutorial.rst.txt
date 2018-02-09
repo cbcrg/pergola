@@ -1,15 +1,32 @@
 
-.. \_getting\_start:
-====================
+.. \_getting_start:
+===================
 
-Code your own scripts
-=====================
+You can code your own scripts using ``pergola`` as a Python library.
+Here we summarize some examples of how you can use it on your scripts.
+
+.. raw:: html
+
+   <div class="alert alert-block alert-info">
+
+Tip: This page is available as a Jupyter Notebook on
+/pergola/doc/notebooks under pergola GitHub repository. Should you want,
+you can interactively execute the code using Jupyter.
+
+.. raw:: html
+
+   </div>
 
 Input data
-==========
+----------
+
+The two basics data inputs ``pergola`` uses is a file with longitudinal
+recordings (sequence of temporal events) in the form of a ``CSV`` or
+``xlsx`` file and a mapping file containing the correspondence between
+the fields in this previous file and the ``pergola`` ontology.
 
 Sequence of temporal events
-===========================
+---------------------------
 
 Pergola can process any sequence of temporal events contained in a
 character-separated file as in the example below:
@@ -24,16 +41,24 @@ character-separated file as in the example below:
     1   457 482 drink   0.02
     1   569 601 drink   0.03
 
-.. tip:: this example loads a sequence of eating and drinking events from
-    a experiment where mice were used to study feeding behavior.
+.. raw:: html
+
+   <div class="alert alert-block alert-info">
+
+Note: This example loads a sequence of eating and drinking events from a
+experiment where mice were used to study feeding behavior.
+
+.. raw:: html
+
+   </div>
 
 Mapping file
-============
+------------
 
 Pergola needs that you set the equivalences between the fields of the
 input data and a controled vocabular defined by Pergola ontology. The
-format of the mapping file is `the external mapping file format
-<http://geneontology.org/page/external-mapping-file-format>`_
+format of the mapping file is `the external mapping file
+format <http://geneontology.org/page/external-mapping-file-format>`__
 from the Gene Ontology Consortium, you can see an example below:
 
 ::
@@ -46,30 +71,30 @@ from the Gene Ontology Consortium, you can see an example below:
     behavioural_file:Behavior > pergola:dataTypes
     behavioural_file:Value > pergola:dataValue
 
-.. code:: python
+.. code:: ipython2
 
     # You might have to set the path to run this notebook directly from ipython notebook
     import sys
-    
+
     my_path_to_modules = "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/"
     sys.path.append(my_path_to_modules)
 
 MappingInfo objects
-===================
+-------------------
 
 Mappings between the input data and pergola ontology are loaded in
 MappingInfo objects:
 
-.. code:: python
+.. code:: ipython2
 
     from pergola import mapping
-    # load mapping file 
-    mapping_info = mapping.MappingInfo("../../sample_data/feeding_behavior/b2g.txt")
+    # load mapping file
+    mapping_info = mapping.MappingInfo("../../sample_data/feeding_behavior/b2p.txt")
 
 To view the mappings MappingInfo objects provide the
 :func:``pergola.mapping.Mapping.write`` method
 
-.. code:: python
+.. code:: ipython2
 
     mapping_info.write()
 
@@ -88,24 +113,30 @@ MappingInfo objects are needed to load data into IntData objects as it
 will be explained in the lines below.
 
 IntData objects
-===============
+---------------
 
 IntData objects load all the intervals of a file:
 
-.. code:: python
+.. code:: ipython2
 
     from pergola import parsers
     from pergola import intervals
-    
-    
+
+
     # load the data into an IntData object that will store the sequence of events
-    int_data = intervals.IntData("../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv", map_dict=mapping_info.correspondence)
+    int_data = intervals.IntData("../../sample_data/feeding_behavior/feeding_behavior_HF_mice.csv", map_dict=mapping_info.correspondence)
+
+
+
+.. parsed-literal::
+
+    Input file format identified as csv
 
 
 Intervals when loaded are stored in a list of tuples that can be
 accessed by data attribute:
 
-.. code:: python
+.. code:: ipython2
 
     #Displays first 10 tuples of data list
     int_data.data[:10]
@@ -115,16 +146,16 @@ accessed by data attribute:
 
 .. parsed-literal::
 
-    [('1', '1335986261', 'food_sc', 1335986151, '0.06'),
-     ('1', '1335986330', 'food_sc', 1335986275, '0.02'),
-     ('1', '1335986427', 'food_sc', 1335986341, '0.02'),
-     ('1', '1335986451', 'water', 1335986420, '0.08'),
-     ('1', '1335986553', 'water', 1335986541, '0.02'),
-     ('1', '1335986844', 'water', 1335986832, '0.02'),
-     ('1', '1335986947', 'food_sc', 1335986845, '0.02'),
-     ('1', '1335987059', 'water', 1335987044, '0.02'),
-     ('1', '1335987223', 'food_sc', 1335987089, '0.02'),
-     ('1', '1335987495', 'food_sc', 1335987424, '0.02')]
+    [('1', 1335985232, 'food_sc', 1335985200, '0.02'),
+     ('1', 1335986427, 'food_sc', 1335986151, '0.1'),
+     ('1', 1335986451, 'water', 1335986420, '0.08'),
+     ('1', 1335986553, 'water', 1335986541, '0.02'),
+     ('1', 1335986844, 'water', 1335986832, '0.02'),
+     ('1', 1335986947, 'food_sc', 1335986845, '0.02'),
+     ('1', 1335987059, 'water', 1335987044, '0.02'),
+     ('1', 1335987223, 'food_sc', 1335987089, '0.02'),
+     ('1', 1335987495, 'food_sc', 1335987424, '0.02'),
+     ('1', 1335987574, 'water', 1335987546, '0.04')]
 
 
 
@@ -132,7 +163,7 @@ IntData objects also provide some other attributes like the set of
 different tracks (term for IDs in pergola ontology) contained in the
 data:
 
-.. code:: python
+.. code:: ipython2
 
     int_data.data_types
 
@@ -147,7 +178,7 @@ data:
 
 The minimun value present in the data:
 
-.. code:: python
+.. code:: ipython2
 
     int_data.min
 
@@ -162,7 +193,7 @@ The minimun value present in the data:
 
 The maximun value:
 
-.. code:: python
+.. code:: ipython2
 
     int_data.max
 
@@ -171,14 +202,14 @@ The maximun value:
 
 .. parsed-literal::
 
-    1337766069
+    1337799586
 
 
 
 The set of different tracks present in the data (term for different IDs
 in pergola ontology). In this case the different IDs for each mice:
 
-.. code:: python
+.. code:: ipython2
 
     int_data.tracks
 
@@ -201,7 +232,6 @@ in pergola ontology). In this case the different IDs for each mice:
      '3',
      '4',
      '5',
-     '6',
      '7',
      '8',
      '9'}
@@ -211,20 +241,7 @@ in pergola ontology). In this case the different IDs for each mice:
 And finally the dataTypes (term for different types of data in pergola
 ontology) that can be used to encode for example different behaviours:
 
-.. code:: python
-
-    int_data.data_types
-
-
-
-
-.. parsed-literal::
-
-    {'food_fat', 'food_sc', 'water'}
-
-
-
-.. code:: python
+.. code:: ipython2
 
     mapping_info.write()
 
@@ -239,7 +256,7 @@ ontology) that can be used to encode for example different behaviours:
     CAGE 	track
 
 
-.. code:: python
+.. code:: ipython2
 
     mapping_info.correspondence['EndT']
 
@@ -252,74 +269,19 @@ ontology) that can be used to encode for example different behaviours:
 
 
 
-.. code:: python
-
-    path_intervals = "../../sample_data/feeding_behavior/feedingBehavior_HF_mice.csv"
-    int_data = intervals.IntData(path_intervals, map_dict=mapping_info.correspondence)
-
-.. code:: python
-
-    print int_data.min
-
-
-.. parsed-literal::
-
-    1335985200
-
-
-.. code:: python
-
-    print int_data.max
-
-
-.. parsed-literal::
-
-    1337766069
-
-
-.. code:: python
-
-    int_data.tracks
-
-
-
-
-.. parsed-literal::
-
-    {'1',
-     '10',
-     '11',
-     '12',
-     '13',
-     '14',
-     '15',
-     '16',
-     '17',
-     '18',
-     '2',
-     '3',
-     '4',
-     '5',
-     '6',
-     '7',
-     '8',
-     '9'}
-
-
-
 Data conversion:
-================
+----------------
 
 GenomicContainer is a generic class from which three subclasses derive:
 
 Track objects
-=============
+-------------
 
 Data can be loaded into a Track objects by read function. This function
 allows to convert the intervals to relative values using the first time
 point as 0:
 
-.. code:: python
+.. code:: ipython2
 
     int_data_read = int_data.read(relative_coord=True)
 
@@ -330,7 +292,7 @@ point as 0:
     Relative coordinates set to: True
 
 
-.. code:: python
+.. code:: ipython2
 
     int_data_read.list_tracks
 
@@ -353,14 +315,13 @@ point as 0:
      '3',
      '4',
      '5',
-     '6',
      '7',
      '8',
      '9'}
 
 
 
-.. code:: python
+.. code:: ipython2
 
     int_data_read.range_values
 
@@ -369,15 +330,15 @@ point as 0:
 
 .. parsed-literal::
 
-    [0.02, 4.46]
+    [0.02, 8.82]
 
 
 
-.. code:: python
+.. code:: ipython2
 
     dict_bed = int_data_read.convert(mode='bed')
 
-.. code:: python
+.. code:: ipython2
 
     #dict_bed = data_read.convert(mode='bed')
     for key in dict_bed:
@@ -388,7 +349,7 @@ point as 0:
 
 .. parsed-literal::
 
-     key.......:  ('12', 'food_sc')
+    key.......:  ('12', 'food_sc')
     :::::::::::::: food_sc
     key.......:  ('7', 'food_sc')
     :::::::::::::: food_sc
@@ -406,8 +367,6 @@ point as 0:
     :::::::::::::: food_sc
     key.......:  ('17', 'water')
     :::::::::::::: water
-    key.......:  ('6', 'food_fat')
-    :::::::::::::: food_fat
     key.......:  ('14', 'food_fat')
     :::::::::::::: food_fat
     key.......:  ('5', 'food_sc')
@@ -448,8 +407,6 @@ point as 0:
     :::::::::::::: food_sc
     key.......:  ('12', 'water')
     :::::::::::::: water
-    key.......:  ('6', 'water')
-    :::::::::::::: water
     key.......:  ('16', 'food_sc')
     :::::::::::::: food_sc
     key.......:  ('5', 'water')
@@ -466,8 +423,6 @@ point as 0:
     :::::::::::::: water
     key.......:  ('18', 'food_sc')
     :::::::::::::: food_sc
-    key.......:  ('6', 'food_sc')
-    :::::::::::::: food_sc
     key.......:  ('15', 'water')
     :::::::::::::: water
     key.......:  ('18', 'water')
@@ -480,11 +435,11 @@ point as 0:
     :::::::::::::: food_sc
 
 
-.. code:: python
+.. code:: ipython2
 
     bed_12_food_sc = dict_bed[('2', 'food_sc')]
 
-.. code:: python
+.. code:: ipython2
 
     bed_12_food_sc.range_values
 
@@ -497,7 +452,7 @@ point as 0:
 
 
 
-.. code:: python
+.. code:: ipython2
 
     type(bed_12_food_sc)
 
@@ -510,10 +465,10 @@ point as 0:
 
 
 
-.. code:: python
+.. code:: ipython2
 
-    bed_12_food_sc.data    
-    
+    bed_12_food_sc.data
+
     # Code to print the data inside a bed object (generator object)
     #for row in bed_12_food_sc.data:
     #    print row
@@ -523,15 +478,15 @@ point as 0:
 
 .. parsed-literal::
 
-    <generator object track_convert2bed at 0x109d92d70>
+    <generator object track_convert2bed at 0x1077e5550>
 
 
 
-.. code:: python
+.. code:: ipython2
 
     dict_bedGraph = int_data_read.convert(mode='bedGraph')
 
-.. code:: python
+.. code:: ipython2
 
     for key in dict_bedGraph:
         print "key.......: ",key#del
@@ -541,7 +496,7 @@ point as 0:
 
 .. parsed-literal::
 
-     key.......:  ('12', 'food_sc')
+    key.......:  ('12', 'food_sc')
     :::::::::::::: food_sc
     key.......:  ('7', 'food_sc')
     :::::::::::::: food_sc
@@ -559,8 +514,6 @@ point as 0:
     :::::::::::::: food_sc
     key.......:  ('17', 'water')
     :::::::::::::: water
-    key.......:  ('6', 'food_fat')
-    :::::::::::::: food_fat
     key.......:  ('14', 'food_fat')
     :::::::::::::: food_fat
     key.......:  ('5', 'food_sc')
@@ -601,8 +554,6 @@ point as 0:
     :::::::::::::: food_sc
     key.......:  ('12', 'water')
     :::::::::::::: water
-    key.......:  ('6', 'water')
-    :::::::::::::: water
     key.......:  ('16', 'food_sc')
     :::::::::::::: food_sc
     key.......:  ('5', 'water')
@@ -619,8 +570,6 @@ point as 0:
     :::::::::::::: water
     key.......:  ('18', 'food_sc')
     :::::::::::::: food_sc
-    key.......:  ('6', 'food_sc')
-    :::::::::::::: food_sc
     key.......:  ('15', 'water')
     :::::::::::::: water
     key.......:  ('18', 'water')
@@ -633,17 +582,17 @@ point as 0:
     :::::::::::::: food_sc
 
 
-.. code:: python
+.. code:: ipython2
 
     bedG_8_food_sc = dict_bedGraph[('8', 'food_sc')]
 
 Track object
-============
+------------
 
-.. code:: python
+.. code:: ipython2
 
     bedG_8_food_sc.data
-    
+
     # Code to print the data inside a bed object (generator object)
     #for row in bedG_8_food_sc:
     #    print row
@@ -653,11 +602,11 @@ Track object
 
 .. parsed-literal::
 
-    <generator object track_convert2bedGraph at 0x10ab70140>
+    <generator object track_convert2bedGraph at 0x1081f9690>
 
 
 
-.. code:: python
+.. code:: ipython2
 
     type(int_data_read)
 
@@ -670,7 +619,7 @@ Track object
 
 
 
-.. code:: python
+.. code:: ipython2
 
     type(int_data_read.data)
 
@@ -683,7 +632,7 @@ Track object
 
 
 
-.. code:: python
+.. code:: ipython2
 
     int_data_read.range_values
 
@@ -692,11 +641,11 @@ Track object
 
 .. parsed-literal::
 
-    [0.02, 4.46]
+    [0.02, 8.82]
 
 
 
-.. code:: python
+.. code:: ipython2
 
     int_data_read.list_tracks
 
@@ -719,14 +668,13 @@ Track object
      '3',
      '4',
      '5',
-     '6',
      '7',
      '8',
      '9'}
 
 
 
-.. code:: python
+.. code:: ipython2
 
     int_data_read.data[-10]
 
@@ -735,14 +683,11 @@ Track object
 
 .. parsed-literal::
 
-    ('18', 1778342, 'food_fat', 1778315, '0.0800000000000001')
+    ('18', 1812042, 'food_fat', 1811948, '0.14')
 
 
 
-Primero poner todo lo que se puede hacer con el intdata y luego ya poner
-el resto
-
-.. code:: python
+.. code:: ipython2
 
     int_data_read.data_types
 
@@ -755,13 +700,13 @@ el resto
 
 
 
-.. code:: python
+.. code:: ipython2
 
-    #data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge, 
-    #                                 data_types=data_types_list, dataTypes_actions=dataTypes_act, 
-    #                                 window=window_size) 
+    #data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge,
+    #                                 data_types=data_types_list, dataTypes_actions=dataTypes_act,
+    #                                 window=window_size)
 
-.. code:: python
+.. code:: ipython2
 
     mapping.write_chr (int_data_read)
 
@@ -772,7 +717,7 @@ el resto
     Genome fasta file created: /Users/jespinosa/git/pergola/doc/notebooks/chr1.fa
 
 
-.. code:: python
+.. code:: ipython2
 
     # Generate a cytoband file and a bed file with phases
     mapping.write_cytoband(end = int_data.max - int_data.min, delta=43200, start_phase="dark", lab_bed=False)
@@ -784,7 +729,7 @@ el resto
     Bed files with phases will be dump into "/Users/jespinosa/git/pergola/doc/notebooks" as it has not been set using path_w
 
 
-.. code:: python
+.. code:: ipython2
 
     #data_read = intData.read(relative_coord=True, multiply_t=1)
     data_read = int_data.read(relative_coord=True)
@@ -795,18 +740,18 @@ el resto
     Relative coordinates set to: True
 
 
-.. code:: python
+.. code:: ipython2
 
     #for i in data_read.data:
     #        print i
 
-.. code:: python
+.. code:: ipython2
 
     data_type_col = {'food_sc': 'orange', 'food_fat':'blue'}
 
-.. code:: python
+.. code:: ipython2
 
-    bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all", 
+    bed_str = data_read.convert(mode="bed", data_types=["food_sc", "food_fat"], dataTypes_actions="all",
                                 color_restrictions=data_type_col)
 
 
@@ -815,7 +760,7 @@ el resto
     Removed data types are: water
 
 
-.. code:: python
+.. code:: ipython2
 
     for key in bed_str:
         bedSingle = bed_str[key]
@@ -834,8 +779,6 @@ el resto
     File tr_2_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_15_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_6_dt_food_fat.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_5_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
@@ -869,8 +812,6 @@ el resto
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_18_dt_food_sc.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_6_dt_food_sc.bed generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_18_dt_food_fat.bed generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_4_dt_food_fat.bed generated
@@ -881,10 +822,14 @@ el resto
 
 
 Output data
-===========
+-----------
+
+``pergola`` allows the conversion to several genomic formats, here we
+summarize some commands and operations as an example of ``pergola``
+capabilities:
 
 Bed file
-========
+--------
 
 ::
 
@@ -900,11 +845,11 @@ Bed file
     chr1    113 144 ""  0.07    +   113 144 0,254,0
     chr1    174 196 ""  0.08    +   174 196 25,115,25
 
-.. code:: python
+.. code:: ipython2
 
     data_type_col_bedGraph = {'food_sc':'orange', 'food_fat_food_sc':'blue'}
 
-.. code:: python
+.. code:: ipython2
 
     bedGraph_str = data_read.convert(mode="bedGraph", window=1800, data_types=["food_sc", "food_fat"], dataTypes_actions="all", color_restrictions=data_type_col_bedGraph)
 
@@ -914,7 +859,7 @@ Bed file
     Removed data types are: water
 
 
-.. code:: python
+.. code:: ipython2
 
     for key in bedGraph_str:
         bedGraph_single = bedGraph_str[key]
@@ -933,8 +878,6 @@ Bed file
     File tr_2_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_15_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_6_dt_food_fat.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_5_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
@@ -968,8 +911,6 @@ Bed file
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_18_dt_food_sc.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
-    File tr_6_dt_food_sc.bedGraph generated
-    No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_18_dt_food_fat.bedGraph generated
     No path selected, files dump into path:  /Users/jespinosa/git/pergola/doc/notebooks
     File tr_4_dt_food_fat.bedGraph generated
@@ -979,11 +920,8 @@ Bed file
     File tr_8_dt_food_sc.bedGraph generated
 
 
-Output data
-===========
-
 bedGraph files
-==============
+--------------
 
 ::
 
@@ -997,13 +935,13 @@ bedGraph files
     chr1    180 210 0.0581818181818
     chr1    210 240 0
 
-.. code:: python
+.. code:: ipython2
 
     ## Bed file showing the files (recordings)
     # reading correspondence file
     mapping_file_data = mapping.MappingInfo("../../sample_data/feeding_behavior/f2g.txt")
 
-.. code:: python
+.. code:: ipython2
 
     mapping_file_data.write()
 
@@ -1017,7 +955,7 @@ bedGraph files
     NameFile 	data_types
 
 
-.. code:: python
+.. code:: ipython2
 
     # Reading file info
     files_data = intervals.IntData("../../sample_data/feeding_behavior/files.csv", map_dict=mapping_file_data.correspondence)
@@ -1026,10 +964,11 @@ bedGraph files
 
 .. parsed-literal::
 
+    Input file format identified as csv
     Relative coordinates set to: True
 
 
-.. code:: python
+.. code:: ipython2
 
     bed_file = data_file_read.convert(mode="bed", dataTypes_actions="all", tracks_merge=files_data.tracks)
 
@@ -1040,7 +979,7 @@ bedGraph files
     Tracks that will be merged are: 1 3 2 5 4 7 6 9 8
 
 
-.. code:: python
+.. code:: ipython2
 
     for key in bed_file:
         bed_file_single = bed_file[key]
@@ -1069,7 +1008,7 @@ bedGraph files
     File files_data.bed generated
 
 
-.. code:: python
+.. code:: ipython2
 
     # Reading phase info
     phase_data = intervals.IntData("../../sample_data/feeding_behavior/phases_exp.csv", map_dict=mapping_file_data.correspondence)
@@ -1078,10 +1017,11 @@ bedGraph files
 
 .. parsed-literal::
 
+    Input file format identified as csv
     Relative coordinates set to: True
 
 
-.. code:: python
+.. code:: ipython2
 
     bed_file = data_phase_read.convert(mode="bed", dataTypes_actions="all", tracks_merge=phase_data.tracks)
 
@@ -1091,7 +1031,7 @@ bedGraph files
     Tracks that will be merged are: 1 2
 
 
-.. code:: python
+.. code:: ipython2
 
     for key in bed_file:
         bed_file_single = bed_file[key]
@@ -1122,4 +1062,3 @@ intermeal to delete
     chr1    1   30  ""  1000    +   1   30  0
     chr1    183 345 ""  1000    +   183 345 0
     chr1    502 924 ""  1000    +   502 924 0
-

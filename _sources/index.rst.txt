@@ -38,8 +38,9 @@ Documentation index:
      visualization
 
      tutorial
+
+     links
   
      reference/index
- 
  
  .. order might be 1 installation, 2 basic concepts, 3 basic use, 4 ready to use scripts, 5 tutorials 
