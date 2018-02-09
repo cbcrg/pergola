@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Required Python libraries &mdash; Pergola  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pergola  documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pergola
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic_concepts.html">Basic concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ready_to_use_scripts.html">Ready-to-use scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_analysis.html">Data analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../visualization.html">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../links.html">Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">Reference Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pergola</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Required Python libraries</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/install/installing_pypi.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <hr class="docutils" />
+<p>Stable pergola releases are available on <code class="docutils literal"><span class="pre">PyPI</span></code>.
+In this section you will find the details of how to download Pergola source code
+from Github and how to compile it. Prerequisites that Pergola require installed in
+your system are also listed in this section.</p>
+<p><strong>Pergola requires python &gt;= 2.6 as well as several dependencies that are listed below.</strong></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">At the moment the installation has been tested only under Ubuntu-linux and MacOS.</p>
+</div>
+<div class="section" id="required-python-libraries">
+<h1>Required Python libraries<a class="headerlink" href="#required-python-libraries" title="Permalink to this headline">¶</a></h1>
+<p>Pergola requires the following Python libraries installed in your system:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install numpy argparse biopy-isatab scipy pandas pybedtools xlrd
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><strong>You might need to install</strong> first <a class="reference external" href="https://pip.pypa.io/en/latest/installing.html">pip</a>  if your python version is not 2.7.9 or later</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Under Ubuntu <strong>you might need to install</strong> <a class="reference external" href="http://packages.ubuntu.com/precise/python-dev">python-dev</a>  in order to be able to install packages belonging
+to the <a class="reference external" href="http://www.scipy.org/install.html">SciPy Stack</a> such as numpy and scipy using pip.  Alternatively you can also use:
+<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-numpy</span> <span class="pre">python-scipy</span></code>.</p>
+</div>
+</div>
+<div class="section" id="install-latest-release-using-pip">
+<h1>Install latest release using pip<a class="headerlink" href="#install-latest-release-using-pip" title="Permalink to this headline">¶</a></h1>
+<p>Use this command to install last released pergola version:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install pergola
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-installation">
+<h1>Testing installation<a class="headerlink" href="#testing-installation" title="Permalink to this headline">¶</a></h1>
+<p>To check whether pergola has been correctly installed you can call pergola main script help option</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pergola -h
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
+      Last updated on Feb 09, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
