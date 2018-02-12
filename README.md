@@ -9,4 +9,4 @@ visualization of longitudinal behavioral data by genomic software tools.
 
 For more info, installation info and tutorials please visit:
 
-[Pergola website](http://cbcrg.github.io/pergola/) 
+[Pergola documentation](http://cbcrg.github.io/pergola/) 
