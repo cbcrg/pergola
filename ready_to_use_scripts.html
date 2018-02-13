@@ -53,9 +53,13 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> Pergola
+            <!--<a href="index.html" class="icon icon-home"> Pergola-->
+            <a href="index.html">
           
 
+          
+            
+            <img src="_static/pergola_logo.svg" class="logo" />
           
           </a>
 
@@ -103,7 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data_analysis.html">Data analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="links.html">Links</a></li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">Useful links</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference Guide</a></li>
 </ul>
 
@@ -264,7 +268,7 @@ in the <a class="reference internal" href="basic_concepts.html#pergola-ontology"
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last"><code class="docutils literal"><span class="pre">pergola</span></code> can take as input files in <strong>CSV</strong> and <strong>xlsx</strong> format. You can see examples of both in the
-<a class="reference internal" href="basic_concepts.html#input-data"><span class="std std-ref">input data</span></a> section.</p>
+<a class="reference internal" href="quick_start.html#input-data"><span class="std std-ref">input data</span></a> section.</p>
 </div>
 <p>In this manner, the minimal command to run <code class="docutils literal"><span class="pre">pergola</span></code> provided that the input and mappings file are correctly formatted
 would be:</p>
@@ -286,7 +290,7 @@ the input data field and the pergola ontology. For more details, refer to the
 <p class="last">Any field on the input data that should not be used by pergola must be set to <code class="docutils literal"><span class="pre">dummy</span></code> term in the mapping file.</p>
 </div>
 <p>The rest of arguments are optional and enable the user to provide additional information about the input data in the
-cases it does not entirely fits the default pergola <a class="reference internal" href="basic_concepts.html#input-data"><span class="std std-ref">input data</span></a> format.</p>
+cases it does not entirely fits the default pergola <a class="reference internal" href="quick_start.html#input-data"><span class="std std-ref">input data</span></a> format.</p>
 <p>For instance, the <code class="docutils literal"><span class="pre">-fs</span></code>, <code class="docutils literal"><span class="pre">--field_separator</span></code> sets the delimiter that separates fields inside the input data file
 when it is not set to tabs (default). As an example if fields are delimited by <code class="docutils literal"><span class="pre">,</span></code>, you can specify it as shown below:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_commas.csv -m ./data/b2p.txt -fs <span class="s2">&quot;,&quot;</span>
@@ -862,7 +866,7 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 09, 2018.
+      Last updated on Feb 13, 2018.
 
     </p>
   </div>

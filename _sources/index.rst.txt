@@ -14,8 +14,8 @@ have long  develop software tools for the analysis of big data. This observation
 not often sequential and hence share a similar structure with longitudinal data.
 
 Pushing this observation further, Pergola process your longitudinal data adopting widely-used genomic formats.
-This way, Pergola makes your data compliant with powerful genomics software tools, simplifying its analysis and
-visualization.
+Besides offering you several processing options, Pergola makes your data compliant with powerful genomics software
+tools, this way simplifying its analysis and visualization.
 
 Documentation index:
 ~~~~~~~~~~~~~~~~~~~~
