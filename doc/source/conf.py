@@ -130,6 +130,7 @@ html_theme =  "sphinx_rtd_theme"
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
 #html_logo = None
+html_logo = '_static/img/pergola_logo.svg'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -159,6 +160,7 @@ html_last_updated_fmt = '%b %d, %Y'
 
 # Showing nicer sidebar
 html_sidebars = {
+   # '**': ['globaltoc.html', 'sourcelink.html', 'relations.html', 'searchbox.html'],
    '**': ['globaltoc.html', 'sourcelink.html', 'relations.html', 'searchbox.html'],
    'using/windows': ['windowssidebar.html', 'searchbox.html'],
 }
@@ -236,7 +238,7 @@ latex_documents = [
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-#latex_logo = None
+# latex_logo = None
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.

@@ -1,6 +1,6 @@
 .. _links:
 
-Links
+Useful links
 ============
 
 In this section we gathered all the links that are related to ``pergola``. Our GitHub and DockerHub repositories,
