@@ -33,23 +33,19 @@ from pergola  import mapping
 # from scripts import pergola_rules
 from argparse import ArgumentParser, ArgumentTypeError
 from sys      import stderr, exit
-from os import path
+from os       import path, makedirs
 
 # from bcbio import isatab
 import pergola_rules
 
-
-# from urllib import urlretrieve, URLopener
 from urllib2 import urlopen, URLError, HTTPError
 
 home_dir = path.expanduser('~')
+
 path_pergola = path.join(home_dir,".pergola/projects")
 
-url = "https://raw.githubusercontent.com/cbcrg/pergola/master/data/feeding_beh_files/20120502_FDF_CRG_hab_DevW1_W2_filt_c1.csv"
-# url = "/users/cn/jespinosa/Desktop/SB_PhD_list.txt"
-
-# check_assay_pointer(url)
-      
+if not path.exists(path_pergola):
+    makedirs(path_pergola)
 
 def main():
 
@@ -62,11 +58,12 @@ def main():
         print >> stderr, "@@@Pergola_isatab.py: Input file: %s" % input_file
         print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.mapping_file
         print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: ", args.tracks
+        print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: test"
 
         # I have to check whether when a isatab folder is given if it is actually a folder or a file
         # difference with -i
         if not path.isdir(input_file):
-            raise ValueError ("Argument input must be a folder containning data in isatab format")
+            raise ValueError ("Argument input must be a folder containing the data in ISAtab format")
 
         # It might be interesting to check inside the function whether files are url or in path
         dict_files = isatab_parser.parse_isatab_assays (input_file)
@@ -75,14 +72,12 @@ def main():
         # First try with files in local then with url
         for key in dict_files:
             pointer_file = dict_files[key]
-    #         print "key %s -----value %s"% (key, dict_files[key]) #del or #perm
-    #         print ">>>>>>>>>>>>>>>>>>>>>pointer to file is:", pointer_file #del or #perm
 
             # Tengo que relacionar de alguna manera cual es el assay de donde tiene que sacar los archivos
             #Probar varios isatab files
 
             file_path = isatab_parser.check_assay_pointer(pointer_file, download_path=path_pergola)
-    #         print "File name is::::::::::::::::::::::::::%s   \n" % file_path #del or #perm
+
             pergola_rules.pergola_rules(path=file_path, map_file_path=args.mapping_file,
                                sel_tracks=args.tracks, list=args.list, range=args.range,
                                track_actions=args.track_actions, data_types_list=args.data_types_list,
@@ -91,10 +86,11 @@ def main():
                                multiply_f=args.multiply_intervals, fields2read=args.fields_read,
                                window_size=args.window_size)
 
-            print >> stderr, "@@@Pergola_isatab.py: : File correctly processed:" % file_path
+            print >> stderr, "@@@Pergola_isatab.py: : File correctly processed:", file_path
 
     print >> stderr, "@@@Pergola_isatab.py: execution finished correctly" 
-#It might be interesting to implement a append option
+
+## It might be interesting to implement an append option
 
 if __name__ == '__main__':
     exit(main())
