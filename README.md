@@ -8,7 +8,7 @@ compatible formats. Once behavioral data is formatted in genomic formats
 it is easy to use genomic software tools for its analysis. 
 For instance you can query your data using BEDTools or visualize your records using a
 genome browser (see snapshot below corresponding to a rendering of 
-mice feeding behavior on the [IGV](http://software.broadinstitute.org/software/igv/) genome browser.    
+mice feeding behavior on the [IGV](http://software.broadinstitute.org/software/igv/) genome browser).    
 
 For more information, instructions for installation and tutorials please visit:
 
