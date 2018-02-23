@@ -180,7 +180,7 @@ Filtering arguments allow you to select a part of your input data based on pergo
 Argument                 short   Description                                       Example
 ======================== ======= ================================================= =====================================================
 ``--tracks``             ``-t``  List of tracks to keep                            ``-t track_id_1 track_id_2``
-``--range``        		 ``-r``  Track range to keep (numerical)                   ``-r 1 10``
+``--range``              ``-r``  Track range to keep (numerical)                   ``-r 1 10``
 ``--track_actions``      ``-a``  Action to perform on selected tracks              ``-t track_id_1 track_id_2 -a split_all``
 ``--data_types_list``    ``-dl`` List of data types to keep                        ``-dl data_type_one data_type_2``
 ``--data_types_actions`` ``-d``  Action to perform on selected data types          ``-dl data_type_one data_type_2 -d one_per_channel``

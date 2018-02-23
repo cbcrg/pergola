@@ -446,7 +446,7 @@
     <span class="n">dict_stain</span> <span class="o">=</span> <span class="p">{</span><span class="n">light_ph</span><span class="p">:</span> <span class="s2">&quot;gneg&quot;</span><span class="p">,</span> <span class="n">dark_ph</span><span class="p">:</span><span class="s2">&quot;gpos25&quot;</span><span class="p">}</span>
     
     <span class="n">name_bed</span> <span class="o">=</span> <span class="s2">&quot;phases&quot;</span>
-    <span class="n">name_bed_light</span> <span class="o">=</span> <span class="n">name_bed</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">light_ph</span>
+    <span class="c1"># name_bed_light = name_bed + &quot;_&quot; + light_ph</span>
     <span class="n">name_bed_dark</span> <span class="o">=</span> <span class="n">name_bed</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">dark_ph</span>
     
     <span class="n">dict_bed_values</span> <span class="o">=</span> <span class="p">{</span><span class="n">light_ph</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">dark_ph</span><span class="p">:</span><span class="s2">&quot;1000&quot;</span><span class="p">}</span>
@@ -461,13 +461,13 @@
         <span class="n">path</span> <span class="o">=</span> <span class="n">path_w</span>
              
     <span class="n">cytoband_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_cytob</span> <span class="o">+</span> <span class="n">_cytoband_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>  
-    <span class="n">phases_bed_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_bed</span> <span class="o">+</span> <span class="n">_bed_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span>  
-    <span class="n">phases_bed_light_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_bed_light</span> <span class="o">+</span> <span class="n">_bed_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span> 
+    <span class="c1"># phases_bed_file = open(join(path, name_bed + _bed_file_ext), mode)</span>
+    <span class="c1"># phases_bed_light_f = open(join(path, name_bed_light + _bed_file_ext), mode)</span>
     <span class="n">phases_bed_dark_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name_bed_dark</span> <span class="o">+</span> <span class="n">_bed_file_ext</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span> 
     
     <span class="k">if</span> <span class="n">track_line</span><span class="p">:</span>
-        <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;track name=</span><span class="se">\&quot;</span><span class="s2">phases</span><span class="se">\&quot;</span><span class="s2"> description=</span><span class="se">\&quot;</span><span class="s2">Track annotating phases of the experiment</span><span class="se">\&quot;</span><span class="s2"> visibility=2 color=0,0,255 useScore=1 priority=user</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;track name=</span><span class="se">\&quot;</span><span class="s2">phases</span><span class="se">\&quot;</span><span class="s2"> description=</span><span class="se">\&quot;</span><span class="s2">Track annotating phases of the experiment</span><span class="se">\&quot;</span><span class="s2"> visibility=2 color=0,0,255 useScore=1 priority=user</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># phases_bed_file.write(&quot;track name=\&quot;phases\&quot; description=\&quot;Track annotating phases of the experiment\&quot; visibility=2 color=0,0,255 useScore=1 priority=user\n&quot;)</span>
+        <span class="c1"># phases_bed_light_f.write(&quot;track name=\&quot;phases\&quot; description=\&quot;Track annotating phases of the experiment\&quot; visibility=2 color=0,0,255 useScore=1 priority=user\n&quot;)</span>
         <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;track name=</span><span class="se">\&quot;</span><span class="s2">phases</span><span class="se">\&quot;</span><span class="s2"> description=</span><span class="se">\&quot;</span><span class="s2">Track annotating phases of the experiment</span><span class="se">\&quot;</span><span class="s2"> visibility=2 color=0,0,255 useScore=1 priority=user</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="n">phase</span> <span class="o">=</span> <span class="n">start_phase</span>
@@ -486,13 +486,13 @@
         
         <span class="k">if</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">light_ph</span><span class="p">:</span> 
             <span class="n">phase</span><span class="o">=</span><span class="n">dark_ph</span>
-            <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+            <span class="c1"># phases_bed_light_f.write(line_bed)</span>
         <span class="k">elif</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">dark_ph</span><span class="p">:</span> 
             <span class="n">phase</span><span class="o">=</span><span class="n">light_ph</span>
             <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span> 
         
         <span class="n">cytoband_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+        <span class="c1"># phases_bed_file.write(line_bed)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">end_t</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">end_t</span> <span class="o">+=</span> <span class="n">delta</span>
@@ -505,7 +505,7 @@
 <span class="c1">#         line_bed = &quot;{0}\t{1}\t{2}\t{3}\t{4}\n&quot;.format(chr, t, end_t, phase, dict_bed_values[phase])</span>
         <span class="n">line_bed</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="se">\t</span><span class="si">{1}</span><span class="se">\t</span><span class="si">{2}</span><span class="se">\t</span><span class="si">{3}</span><span class="se">\t</span><span class="si">{4}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">end_t</span><span class="p">,</span> <span class="n">phase_bed</span><span class="p">,</span> <span class="n">dict_bed_values</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>
         <span class="n">cytoband_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+        <span class="c1"># phases_bed_file.write(line_bed)</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">end_t</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">end_t</span> <span class="o">+=</span> <span class="n">delta</span>
         
@@ -515,7 +515,7 @@
             <span class="k">if</span> <span class="n">lab_bed</span><span class="p">:</span> <span class="n">phase_bed</span> <span class="o">=</span> <span class="n">phase</span>
             <span class="k">else</span><span class="p">:</span> <span class="n">phase_bed</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
             
-            <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+            <span class="c1"># phases_bed_light_f.write(line_bed)</span>
         <span class="k">elif</span> <span class="n">phase</span> <span class="o">==</span> <span class="n">dark_ph</span><span class="p">:</span> 
             <span class="n">phase</span><span class="o">=</span><span class="n">light_ph</span>
             
@@ -531,10 +531,10 @@
     <span class="n">line_bed</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="se">\t</span><span class="si">{1}</span><span class="se">\t</span><span class="si">{2}</span><span class="se">\t</span><span class="si">{3}</span><span class="se">\t</span><span class="si">{4}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">phase_bed</span><span class="p">,</span> <span class="n">dict_bed_values</span><span class="p">[</span><span class="n">phase</span><span class="p">])</span>   
     
     <span class="n">cytoband_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line_bed</span><span class="p">)</span>
+    <span class="c1"># phases_bed_file.write(line_bed)</span>
     <span class="n">cytoband_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">phases_bed_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="n">phases_bed_light_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># phases_bed_file.close()</span>
+    <span class="c1"># phases_bed_light_f.close()</span>
     <span class="n">phases_bed_dark_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
@@ -598,7 +598,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 13, 2018.
+      Last updated on Feb 23, 2018.
 
     </p>
   </div>
