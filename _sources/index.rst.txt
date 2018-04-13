@@ -17,6 +17,9 @@ Pushing this observation further, Pergola process your longitudinal data adoptin
 Besides offering you several processing options, Pergola makes your data compliant with powerful genomics software
 tools, this way simplifying its analysis and visualization.
 
+.. tip:: If you don't feel like to install ``pergola`` you can always use our `web server <http://pergola.crg.eu/>`_ to
+   access main ``pergola`` functionalities in a user-friendly interface.
+
 Documentation index:
 ~~~~~~~~~~~~~~~~~~~~
 
