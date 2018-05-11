@@ -191,8 +191,8 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         start = 0
         end = intData.max - intData.min
 
-    print >> stderr, "@@@Pergola_rules.py: min time in file......................... %d" % start
-    print >> stderr, "@@@Pergola_rules.py: max time in file......................... %d" % end
+    print >> stderr, "@@@Pergola_rules.py: min time in trajectory......................... %d" % start
+    print >> stderr, "@@@Pergola_rules.py: max time in trajectory......................... %d" % end
 
     if min_t or min_t == 0:
         min_time = min_t

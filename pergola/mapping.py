@@ -208,14 +208,15 @@ def check_path(path):
     return path      
 
 
-def write_chr(self, mode="w", path_w=None):
+def write_chr(self, mode="w", path_w=None, min_c=None, max_c=None):
     """
     Creates a fasta file of the length of the range of value inside the IntData object
     that will be use for the mapping the data into it
     
     :param mode: :py:func:`str` mode to use by default write
     :param None path_w: :py:func:`str` path to dump the files, by default None 
-    
+    :param None min_c: :py:func:`int` min coordinate for fasta file generation, by default None
+    :param None max_c: :py:func:`str` max coordinate for fasta file generation, by default None
     """
 
     assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
@@ -229,10 +230,17 @@ def write_chr(self, mode="w", path_w=None):
                        'as it has not been set using path_w' % (path)
     else:
         path = path_w
-                            
+
+    if min_c is None:
+        min_c = self.min
+
+    if max_c is None:
+        max_c = self.max
+
     genomeFile = open(join(path, chrom + _genome_file_ext), mode)        
     genomeFile.write(">" + chrom + "\n")
-    genomeFile.write(_generic_nt * int(self.max - self.min) + "\n")
+    # genomeFile.write(_generic_nt * int(self.max - self.min) + "\n")
+    genomeFile.write(_generic_nt * int(max_c - min_c) + "\n")
     genomeFile.close()
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 

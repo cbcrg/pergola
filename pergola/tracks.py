@@ -926,7 +926,7 @@ class Track(GenomicContainer):
                 sec_fake_line[i_chr_end] = fake_end + 2 * delta_window
                 sec_fake_line[i_data_value] = 0
                 track.append(tuple(sec_fake_line)) 
-                
+
             for row in track:
                 temp_list = []
                 chr_start = row[i_chr_start]        
@@ -946,15 +946,14 @@ class Track(GenomicContainer):
                         temp_list.append("chr1")
                         temp_list.append(ini_window)
                         temp_list.append(end_window)
-                        
+
                         if mean_win:
                             temp_list.append(partial_value/window)
                         elif mean_value and counts:
-                            temp_list.append(float(sum(mean_value_l)) / float(len(mean_value_l)))
-
-                            # print "list values.........", mean_value_l  #del
-                            # print "mean values.........", float(sum(mean_value_l)) / float(len(mean_value_l))
-
+                            if float(sum(mean_value_l)) == 0:
+                                temp_list.append(0)
+                            else:
+                                temp_list.append(float(sum(mean_value_l)) / float(len(mean_value_l)))
                             # else:
                             #     temp_list.append(partial_value)
                         else:
