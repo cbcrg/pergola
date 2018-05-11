@@ -273,6 +273,10 @@ class IntData(object):
         dict_fields_g = {}
         i_field_b=0
 
+        if len(self.fieldsB) != len(map_dict):
+            print >> stderr, ("WARNING: Number of fields in input file (%d) does not match number of fields in "
+                              "mapping file (%d)." % (len(self.fieldsB), len(map_dict)))
+
         for field_B in self.fieldsB:
             if field_B:
                 try:
