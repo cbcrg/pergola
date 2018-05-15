@@ -47,13 +47,13 @@ def main(args=None):
                       multiply_f=args.multiply_intervals, no_header=args.no_header, fields2read=args.fields_read,
                       window_size=args.window_size, no_track_line=args.no_track_line, separator=args.field_separator,
                       bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
-                      value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time)
+                      value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time, phases=args.phases)
 
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
                   data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False,
                   intervals_gen=False, multiply_f=None, no_header=False, fields2read=None, window_size=None,
                   no_track_line=False, separator=None, bed_lab_sw=False, color_dict=None, window_mean=False,
-                  value_mean=False, min_t=None, max_t=None, interval_step=None):
+                  value_mean=False, min_t=None, max_t=None, interval_step=None, phases=False):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -209,6 +209,8 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         else:
             max_time = end + 1
 
+    print >> stderr, "@@@Pergola_rules.py: phases file set to............................%s" % phases
+
     if multiply_f:
         min_time = min_time * multiply_f
         max_time = max_time * multiply_f
@@ -224,9 +226,10 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     mapping.write_chr(data_read)#mantain
     mapping.write_chr_sizes(data_read)
 
-    # writes cytoband and light, dark and light_dark bed files
-    mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
-#     mapping.write_period_seq(start=0, end=intData.max, delta=43200, name_file="phases_dark", track_line=False) 
+    if phases:
+        # writes cytoband and light, dark and light_dark bed files
+        mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
+        # mapping.write_period_seq(start=0, end=intData.max, delta=43200, name_file="phases_dark", track_line=False)
     
     data_read.save_track(name_file="all_intervals")
 

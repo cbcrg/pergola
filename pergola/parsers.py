@@ -190,6 +190,8 @@ parent_parser.add_argument('-min', '--min_time', type=int, required=False,
                            help='Initial time point to extract')
 parent_parser.add_argument('-max', '--max_time', type=int, required=False,
                            help='Last time point to extract')
+parent_parser.add_argument('-p', '--phases', required=False, action='store_true',
+                           default=False, help='Creates phases bed file')
 
 """"   
 Parsers argument of jaaba_to_pergola.py script
