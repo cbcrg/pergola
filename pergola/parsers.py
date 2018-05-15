@@ -192,6 +192,9 @@ parent_parser.add_argument('-max', '--max_time', type=int, required=False,
                            help='Last time point to extract')
 parent_parser.add_argument('-p', '--phases', required=False, action='store_true',
                            default=False, help='Creates phases bed file')
+parent_parser.add_argument('-g', '--genome', required=False, action='store_true',
+                           default=None, help='Creates a FASTA file which allows to render a longitudinal trajectory' \
+                           ' in a genome browser')
 
 """"   
 Parsers argument of jaaba_to_pergola.py script
