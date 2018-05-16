@@ -228,9 +228,12 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
                              min_time=min_time, max_time=max_time,
                              int_step=interval_step)
     if genome:
+        # whole trajectory
         # mapping.write_chr(data_read, min_c=start, max_c=end)
+        # mapping.write_chr_sizes(data_read, min_c=start, max_c=end)
+
+        # using min and max set by user
         mapping.write_chr(data_read)
-        # mapping.write_chr_sizes(data_read, max_c=end)
         mapping.write_chr_sizes(data_read)
 
     if phases:
