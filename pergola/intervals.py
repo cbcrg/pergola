@@ -27,9 +27,6 @@ This module provides the way to read the input intervals files.
 It contains a class :class:`~pergola.intervals.IntData` which has 
 the attributes and methods needed for reading the data.
 
-:py:func:`~pergola.intervals.write_chr` generates a chromosome fasta file
-to map tracks that are genereted by the application
-
 """
 
 from mapping  import check_path
@@ -498,8 +495,16 @@ class IntData(object):
 
         # If min and max set by argument take them after converting to relative coordinates
         # set by max_time or min_time argument #TODO
-        self.min = kwargs.get('min_time', self.min)
-        self.max = kwargs.get('max_time', self.max)
+        # self.min = kwargs.get('min_time', self.min)
+        # self.max = kwargs.get('max_time', self.max)
+        min_t = kwargs.get('min_time', self.min)
+        max_t = kwargs.get('max_time', self.max)
+
+        if min_t >= max_t: raise ValueError("FATAL ERROR: Minimum time point \'%i\' can not be greater than maximum " \
+                                            "time point \'%i\'" % (min_t, max_t))
+
+        self.min = min_t
+        self.max = max_t
 
         if intervals:
             self.max = self.max + 1
