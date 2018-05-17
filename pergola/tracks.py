@@ -463,17 +463,23 @@ class Track(GenomicContainer):
 
                 d_2 = [r for r in d_2 if r[i_chr_start] >= min_time and r[i_chr_end] <= max_time]
 
-                track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2,
-                                                                                                     True,
-                                                                                                     window=window,
-                                                                                                     mean_win=mean_win,
-                                                                                                     mean_value=mean_value,
-                                                                                                     color_restrictions=color_restrictions,
-                                                                                                     min_t = self.min,
-                                                                                                     max_t = self.max,
-                                                                                                     min_time=kwargs.get('min_time', self.min),
-                                                                                                     max_time=kwargs.get('max_time', self.max)),
-                                                                   track=k, data_types=k_2, range_values=range_val, color=_dict_col_grad[k_2])
+                if d_2:
+                    track_dict[k,k_2] = globals()[_dict_file[mode][0]](getattr(self,_dict_file[mode][1])(d_2,
+                                                                                                         True,
+                                                                                                         window=window,
+                                                                                                         mean_win=mean_win,
+                                                                                                         mean_value=mean_value,
+                                                                                                         color_restrictions=color_restrictions,
+                                                                                                         min_t = self.min,
+                                                                                                         max_t = self.max,
+                                                                                                         min_time=kwargs.get('min_time', self.min),
+                                                                                                         max_time=kwargs.get('max_time', self.max)),
+                                                                                                         track=k, data_types=k_2,
+                                                                                                         range_values=range_val,
+                                                                                                         color=_dict_col_grad[k_2])
+                else:
+                    print >> stderr, ("WARNING: Processed track %s, %s will be deleted because is empty with current " \
+                                      "time boundaries." % (k, k_2))
 
         return track_dict
     
@@ -658,7 +664,7 @@ class Track(GenomicContainer):
             _intervals = [0, self.range_values[1]]
         else: 
             _intervals = list(arange(float(self.range_values[0]), float(self.range_values[1]), step))
-        
+
         for row in track:
             temp_list = []
             temp_list.append("chr1")
@@ -909,141 +915,144 @@ class Track(GenomicContainer):
             last_point = max_t 
             r = last_point % delta_window
             fake_end = last_point + delta_window - r
-            last_fake_line = list(track[-1])
 
-            if last_fake_line[i_chr_end] > max_t + 1:
-                exit("FATAL ERROR: Something went wrong during bedGraph window conversion")
-                
-            last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
-            last_fake_line[i_chr_end] = fake_end
-            last_fake_line[i_data_value] = 0
-            track.append(tuple(last_fake_line)) 
-    
-            if not r == 1 or r == 0:
-                fake_end = last_point + delta_window - r
-                sec_fake_line = last_fake_line
-                sec_fake_line[i_chr_start] = fake_end + delta_window + 1
-                sec_fake_line[i_chr_end] = fake_end + 2 * delta_window
-                sec_fake_line[i_data_value] = 0
-                track.append(tuple(sec_fake_line)) 
+            if track:
 
-            for row in track:
-                temp_list = []
-                chr_start = row[i_chr_start]        
-                chr_end = row[i_chr_end]
-                data_value = float(row[i_data_value])
-                self.fields.index(f)
+                last_fake_line = list(track[-1])
 
-                # Intervals happening after the current window
-                # if there is a value accumulated it has to be dumped otherwise 0
-                if chr_start > end_window:               
-                    while end_window < chr_start:
-                        partial_value = partial_value + cross_interv_dict.get(ini_window, 0)
+                if last_fake_line[i_chr_end] > max_t + 1:
+                    exit("FATAL ERROR: Something went wrong during bedGraph window conversion")
 
-                        if mean_value and cross_interv_dict.get(ini_window):
-                            mean_value_l.append(cross_interv_dict.get(ini_window, 0))
+                last_fake_line[i_chr_start] = last_fake_line[i_chr_end] + 1
+                last_fake_line[i_chr_end] = fake_end
+                last_fake_line[i_data_value] = 0
+                track.append(tuple(last_fake_line))
 
-                        temp_list.append("chr1")
-                        temp_list.append(ini_window)
-                        temp_list.append(end_window)
+                if not r == 1 or r == 0:
+                    fake_end = last_point + delta_window - r
+                    sec_fake_line = last_fake_line
+                    sec_fake_line[i_chr_start] = fake_end + delta_window + 1
+                    sec_fake_line[i_chr_end] = fake_end + 2 * delta_window
+                    sec_fake_line[i_data_value] = 0
+                    track.append(tuple(sec_fake_line))
 
-                        if mean_win:
-                            temp_list.append(partial_value/window)
-                        elif mean_value and counts:
-                            if float(sum(mean_value_l)) == 0:
-                                temp_list.append(0)
+                for row in track:
+                    temp_list = []
+                    chr_start = row[i_chr_start]
+                    chr_end = row[i_chr_end]
+                    data_value = float(row[i_data_value])
+                    self.fields.index(f)
+
+                    # Intervals happening after the current window
+                    # if there is a value accumulated it has to be dumped otherwise 0
+                    if chr_start > end_window:
+                        while end_window < chr_start:
+                            partial_value = partial_value + cross_interv_dict.get(ini_window, 0)
+
+                            if mean_value and cross_interv_dict.get(ini_window):
+                                mean_value_l.append(cross_interv_dict.get(ini_window, 0))
+
+                            temp_list.append("chr1")
+                            temp_list.append(ini_window)
+                            temp_list.append(end_window)
+
+                            if mean_win:
+                                temp_list.append(partial_value/window)
+                            elif mean_value and counts:
+                                if float(sum(mean_value_l)) == 0:
+                                    temp_list.append(0)
+                                else:
+                                    temp_list.append(float(sum(mean_value_l)) / float(len(mean_value_l)))
+                                # else:
+                                #     temp_list.append(partial_value)
                             else:
-                                temp_list.append(float(sum(mean_value_l)) / float(len(mean_value_l)))
-                            # else:
-                            #     temp_list.append(partial_value)
+                                temp_list.append(partial_value)
+
+                            partial_value = 0
+                            counts = 0
+                            mean_value_l = []
+        #                     ini_window += delta_window + 1 #ojo
+                            ini_window += delta_window
+        #                     end_window += delta_window + 1 #ojo
+                            end_window += delta_window
+
+                            yield(tuple(temp_list))
+                            temp_list = []
+
+                        ## Value must to be weighted between intervals
+                        if chr_end > end_window:
+                            value2weight = data_value
+                            end_w = end_window
+                            start_new = chr_start
+                            end_new = chr_end
+
+                            for start_w in range (int(ini_window), int(chr_end), delta_window):
+                                weighted_value = 0.0
+                                counts += 1
+
+                                if end_w == start_w:
+                                    weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
+                                else:
+                                    weighted_value = float(end_w - start_new) / float(end_new - start_new)
+                                    # weighted_value= 9/2
+
+                                weighted_value *= value2weight
+                                cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w, 0)) + float(weighted_value)
+                                start_new = end_w
+                                value2weight = value2weight - weighted_value
+
+                                if (end_w + delta_window) >= chr_end:
+                                    new_start_w = start_w + delta_window
+                                    cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w, 0) + value2weight
+                                    break
+
+                                end_w = end_w + delta_window
                         else:
-                            temp_list.append(partial_value)
-                                                    
-                        partial_value = 0
-                        counts = 0
-                        mean_value_l = []
-    #                     ini_window += delta_window + 1 #ojo
-                        ini_window += delta_window
-    #                     end_window += delta_window + 1 #ojo
-                        end_window += delta_window
-                                                         
-                        yield(tuple(temp_list))
-                        temp_list = []
-                         
-                    ## Value must to be weighted between intervals
-                    if chr_end > end_window:                                   
-                        value2weight = data_value
-                        end_w = end_window
-                        start_new = chr_start
-                        end_new = chr_end
-                        
-                        for start_w in range (int(ini_window), int(chr_end), delta_window):
-                            weighted_value = 0.0
-                            counts += 1
+                            partial_value = partial_value + data_value
 
-                            if end_w == start_w:
-                                weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
-                            else:                                                           
-                                weighted_value = float(end_w - start_new) / float(end_new - start_new)
-                                # weighted_value= 9/2
+                            if mean_value:
+                                counts += 1
+                                mean_value_l.append(data_value)
 
-                            weighted_value *= value2weight
-                            cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w, 0)) + float(weighted_value)
-                            start_new = end_w
-                            value2weight = value2weight - weighted_value                        
+                    # elif chr_start <= end_window and chr_start >= ini_window:
+                    elif end_window > chr_start >= ini_window:
+                        if chr_end <= end_window:
+                            partial_value = partial_value + data_value
 
-                            if (end_w + delta_window) >= chr_end:
-                                new_start_w = start_w + delta_window
-                                cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w, 0) + value2weight
-                                break
-                            
-                            end_w = end_w + delta_window
-                    else:
-                        partial_value = partial_value + data_value
+                            if mean_value and data_value:
+                                mean_value_l.append(data_value)
+                                counts += 1
 
-                        if mean_value:
-                            counts += 1
-                            mean_value_l.append(data_value)
+                        else:
+                            value2weight = data_value
+                            end_w = end_window
+                            start_new = chr_start
+                            end_new = chr_end
 
-                # elif chr_start <= end_window and chr_start >= ini_window:
-                elif end_window > chr_start >= ini_window:
-                    if chr_end <= end_window:
-                        partial_value = partial_value + data_value
+                            for start_w in range (int(ini_window), int(chr_end), delta_window):
+                                weighted_value = 0
+                                counts += 1
 
-                        if mean_value and data_value:
-                            mean_value_l.append(data_value)
-                            counts += 1
+                                if end_w == start_w:
+                                    weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
+                                else:
+                                    weighted_value = float(end_w - start_new) / float(end_new - start_new)
 
-                    else:
-                        value2weight = data_value
-                        end_w = end_window
-                        start_new = chr_start
-                        end_new = chr_end
-                        
-                        for start_w in range (int(ini_window), int(chr_end), delta_window):                
-                            weighted_value = 0
-                            counts += 1
+                                weighted_value *= value2weight
+                                cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)
+                                start_new = end_w
+                                value2weight = value2weight - weighted_value
 
-                            if end_w == start_w:
-                                weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
-                            else:    
-                                weighted_value = float(end_w - start_new) / float(end_new - start_new)
-                                
-                            weighted_value *= value2weight
-                            cross_interv_dict[start_w] = float(cross_interv_dict.get(start_w,0)) + float(weighted_value)
-                            start_new = end_w
-                            value2weight = value2weight - weighted_value
-                            
-                            if end_w + delta_window >= chr_end:
-                                new_start_w = start_w + delta_window
-                                cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
-                                break
-                            
-                            end_w = end_w + delta_window
+                                if end_w + delta_window >= chr_end:
+                                    new_start_w = start_w + delta_window
+                                    cross_interv_dict[new_start_w] = cross_interv_dict.get(new_start_w,0) + value2weight
+                                    break
 
-                elif chr_start < ini_window:
-                    print >> stderr, ("WARNING: Value %d deleted because you set first time point " \
-                                      "to a higher value %d") % (chr_start, end_window)
+                                end_w = end_w + delta_window
+
+                    elif chr_start < ini_window:
+                        print >> stderr, ("WARNING: Value %d deleted because you set first time point " \
+                                          "to a higher value %d") % (chr_start, end_window)
                 # else:
                     # print >> stderr, ("FATAL ERROR: Something went wrong during bedGraph window " \
                     #                   "conversion.")

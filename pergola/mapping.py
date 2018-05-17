@@ -216,7 +216,7 @@ def write_chr(self, mode="w", path_w=None, min_c=None, max_c=None):
     :param mode: :py:func:`str` mode to use by default write
     :param None path_w: :py:func:`str` path to dump the files, by default None 
     :param None min_c: :py:func:`int` min coordinate for fasta file generation, by default None
-    :param None max_c: :py:func:`str` max coordinate for fasta file generation, by default None
+    :param None max_c: :py:func:`int` max coordinate for fasta file generation, by default None
     """
 
     assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
@@ -245,14 +245,16 @@ def write_chr(self, mode="w", path_w=None, min_c=None, max_c=None):
     print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
 
 
-def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
+def write_chr_sizes(self, mode="w", path_w=None, file_n=None, min_c=None, max_c=None):
     """    
     Creates a text file of the length of the "chromomosomes" that is needed to 
     perform some BEDtools operations such as BEDcomplement
     
     :param mode: :py:func:`str` mode to use by default write
-    :param None path_w: :py:func:`str` path to dump the files, by default None 
-    
+    :param None path_w: :py:func:`str` path to dump the files, by default None
+    :param None file_n: :py:func:`str` name of file
+    :param None min_c: :py:func:`int` min coordinate for chromosome size file, by default None
+    :param None max_c: :py:func:`int` max coordinate for chromosome size file, by default None
     """
 
     assert isinstance(self, Track), "Expected Track object, found %s." % type(self)
@@ -272,12 +274,19 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None):
                        'as it has not been set using path_w' % (path)
     else:
         path = path_w
-                            
+
+    if min_c is None:
+        min_c = self.min
+
+    if max_c is None:
+        max_c = self.max
+
     chrom_size_f = open(join(path, file_sizes_n + _chrm_size_ext), mode)        
     chrom_size_f.write('%s\t' % chrom)
 #     chrom_size_f.write ('%d\n' % (self.max - self.min))
 #     chrom_size_f.write ('%d\n' % (self.max - 0))
-    chrom_size_f.write('%d\n' % (self.max + 2))
+#     chrom_size_f.write('%d\n' % (self.max + 2))
+    chrom_size_f.write('%d\n' % (max_c - min_c + 2))
     chrom_size_f.close()
     print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
 
