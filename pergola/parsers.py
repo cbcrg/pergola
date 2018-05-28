@@ -190,11 +190,18 @@ parent_parser.add_argument('-min', '--min_time', type=int, required=False,
                            help='Initial time point to extract')
 parent_parser.add_argument('-max', '--max_time', type=int, required=False,
                            help='Last time point to extract')
-parent_parser.add_argument('-p', '--phases', required=False, action='store_true',
-                           default=False, help='Creates phases bed file')
-parent_parser.add_argument('-g', '--genome', required=False, action='store_true',
-                           default=None, help='Creates a FASTA file which allows to render a longitudinal trajectory' \
+# parent_parser.add_argument('-p', '--phases', required=False, action='store_true',
+#                            default=False, help='Creates phases bed file')
+# parent_parser.add_argument('-g', '--genome', required=False, action='store_true',
+#                            default=None, help='Creates a FASTA file which allows to render a longitudinal trajectory' \
+#                            ' in a genome browser')
+parent_parser.add_argument('-ng', '--no-genome', dest='genome', action='store_false',
+                           help='Avoinds the creation of a FASTA file which allows to render a longitudinal trajectory' \
                            ' in a genome browser')
+parent_parser.add_argument('-np', '--no-phases', dest='phases', action='store_false',
+                           help='Avoids the creation of a phases bed file')
+parent_parser.set_defaults(genome=True)
+parent_parser.set_defaults(phases=True)
 
 """"   
 Parsers argument of jaaba_to_pergola.py script
