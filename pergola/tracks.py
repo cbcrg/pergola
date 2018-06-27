@@ -995,6 +995,8 @@ class Track(GenomicContainer):
 
                                 if end_w == start_w:
                                     weighted_value = float(end_w - start_new + 1) / float(end_new - start_new)
+                                elif end_new == start_new:
+                                    break
                                 else:
                                     weighted_value = float(end_w - start_new) / float(end_new - start_new)
                                     # weighted_value= 9/2
