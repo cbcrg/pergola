@@ -227,6 +227,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
                              multiply_t=multiply_f,
                              min_time=min_time, max_time=max_time,
                              int_step=interval_step)
+
     if genome:
         # whole trajectory
         # mapping.write_chr(data_read, min_c=start, max_c=end)
