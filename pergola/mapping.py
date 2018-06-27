@@ -323,7 +323,7 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
     dict_stain = {light_ph: "gneg", dark_ph:"gpos25"}
     
     name_bed = "phases"
-    # name_bed_light = name_bed + "_" + light_ph
+    name_bed_light = name_bed + "_" + light_ph
     name_bed_dark = name_bed + "_" + dark_ph
     
     dict_bed_values = {light_ph: "0", dark_ph:"1000"}
@@ -339,12 +339,12 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
              
     cytoband_file = open(join(path, name_cytob + _cytoband_file_ext), mode)  
     # phases_bed_file = open(join(path, name_bed + _bed_file_ext), mode)
-    # phases_bed_light_f = open(join(path, name_bed_light + _bed_file_ext), mode)
+    phases_bed_light_f = open(join(path, name_bed_light + _bed_file_ext), mode)
     phases_bed_dark_f = open(join(path, name_bed_dark + _bed_file_ext), mode) 
     
     if track_line:
         # phases_bed_file.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
-        # phases_bed_light_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
+        phases_bed_light_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
         phases_bed_dark_f.write("track name=\"phases\" description=\"Track annotating phases of the experiment\" visibility=2 color=0,0,255 useScore=1 priority=user\n")
     
     phase = start_phase
@@ -363,7 +363,7 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
         
         if phase == light_ph: 
             phase=dark_ph
-            # phases_bed_light_f.write(line_bed)
+            phases_bed_light_f.write(line_bed)
         elif phase == dark_ph: 
             phase=light_ph
             phases_bed_dark_f.write(line_bed) 
@@ -392,7 +392,7 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
             if lab_bed: phase_bed = phase
             else: phase_bed = "."
             
-            # phases_bed_light_f.write(line_bed)
+            phases_bed_light_f.write(line_bed)
         elif phase == dark_ph: 
             phase=light_ph
             
@@ -411,7 +411,7 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
     # phases_bed_file.write(line_bed)
     cytoband_file.close()
     # phases_bed_file.close()
-    # phases_bed_light_f.close()
+    phases_bed_light_f.close()
     phases_bed_dark_f.close()
 
 
