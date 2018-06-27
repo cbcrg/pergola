@@ -912,9 +912,9 @@ class Track(GenomicContainer):
             cross_interv_dict = {}
             
 #             last_point =  track[-1][i_chr_end]
-            last_point = max_t 
+            last_point = max_t
             r = last_point % delta_window
-            fake_end = last_point + delta_window - r
+            fake_end = last_point # + delta_window - r
 
             if track:
 
@@ -975,6 +975,9 @@ class Track(GenomicContainer):
                             ini_window += delta_window
         #                     end_window += delta_window + 1 #ojo
                             end_window += delta_window
+
+                            if end_window > max_t:
+                                break
 
                             yield(tuple(temp_list))
                             temp_list = []
