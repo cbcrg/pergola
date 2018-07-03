@@ -28,14 +28,12 @@ This module provides the way to read scripts options provided by pergola library
 
 """
 
+from _version  import __version__
 from sys       import stderr
 from argparse  import ArgumentParser, ArgumentTypeError
 from re        import match
-# from os        import makedirs
-from os.path   import join, exists, abspath, split, realpath
-# from scipy.io  import loadmat
+from os.path   import abspath, split, realpath
 from mapping   import check_path
-# from intervals import IntData
 
 _csv_file_ext = ".csv"
 
@@ -198,6 +196,7 @@ parent_parser.add_argument('-np', '--no_phases', required=False, dest='phases', 
 parent_parser.set_defaults(genome=True)
 parent_parser.set_defaults(phases=True)
 parent_parser.add_argument('-o', '--output_file_name', type=str, required=False, help='File name for output files')
+parent_parser.add_argument('-v', '--version', action='version', version='%(prog)s {version}'.format(version=__version__))
 
 """"   
 Parsers argument of jaaba_to_pergola.py script
@@ -206,6 +205,7 @@ Parsers argument of jaaba_to_pergola.py script
 
 jaaba_parser = ArgumentParser(description = 'Script to transform Jaaba annotations into Pergola readable formats', 
                               add_help=False)
+jaaba_parser.add_argument('-v', '--version', action='version', version='%(prog)s {version}'.format(version=__version__))
 
 subparsers = jaaba_parser.add_subparsers(help='Calls pergola_rules.py', dest='command')
 jaaba_parser_sp = subparsers.add_parser('sp', help="Converts Jaaba data and process it using pergola", parents=[parent_parser])

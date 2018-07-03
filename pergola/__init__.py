@@ -58,7 +58,8 @@ of this license is in the LICENSE file.
 
 """
 
-__version__ = '0.1'
+from pergola._version import __version__
+
 __all__ = ['intervals', 'isatab_parser', 'mapping', 'parsers', 'tracks', 'jaaba_parsers']
 # from pergola import printTest
 # from intervals import IntData

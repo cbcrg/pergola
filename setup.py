@@ -26,7 +26,8 @@ from sys import exit
 
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
 
-VERSION = "0.1.5"
+# VERSION = "0.1.5"
+VERSION = open("pergola/_version.py").readlines()[-1].split()[-1].strip("\"'")
 
 TAGS = [
     "Development Status :: 2 - Pre-Alpha",
