@@ -38,7 +38,19 @@ def main(args=None):
     
     args = parser_pergola_rules.parse_args()
 
-    for input_file in args.input:
+    if len(args.input) > 1:
+        print "@@@Pergola_rules.py: Multiple input files processed"
+        multiple_files = True
+
+    for idx, input_file in enumerate(args.input):
+        if multiple_files:
+            if args.output_file_name is None:
+                output_file_n = "f_" + str(idx)
+            else:
+                output_file_n = "f_" + str(idx) + "_" + args.output_file_name
+        else:
+            output_file_n = args.output_file_name
+
         pergola_rules(path=input_file, map_file_path=args.mapping_file, sel_tracks=args.tracks,
                       list=args.list, range=args.range, track_actions=args.track_actions,
                       data_types_actions=args.data_types_actions, data_types_list=args.data_types_list,
@@ -48,13 +60,13 @@ def main(args=None):
                       window_size=args.window_size, no_track_line=args.no_track_line, separator=args.field_separator,
                       bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
                       value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time, phases=args.phases,
-                      genome=args.genome)
+                      genome=args.genome, output_file_name=output_file_n)
 
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
                   data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False,
                   intervals_gen=False, multiply_f=None, no_header=False, fields2read=None, window_size=None,
                   no_track_line=False, separator=None, bed_lab_sw=False, color_dict=None, window_mean=False,
-                  value_mean=False, min_t=None, max_t=None, interval_step=None, phases=False, genome=False):
+                  value_mean=False, min_t=None, max_t=None, interval_step=None, phases=False, genome=False, output_file_name=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -216,6 +228,9 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     # Genome option
     print >> stderr, "@@@Pergola_rules.py: Genome option set to..........................%s" % genome
 
+    # Output file name
+    print >> stderr, "@@@Pergola_rules.py: Output file/s name set t......................%s" % output_file_name
+
     if multiply_f:
         min_time = min_time * multiply_f
         max_time = max_time * multiply_f
@@ -241,8 +256,9 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         # writes cytoband and light, dark and light_dark bed files
         mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
         # mapping.write_period_seq(start=0, end=intData.max, delta=43200, name_file="phases_dark", track_line=False)
-    
-    data_read.save_track(name_file="all_intervals")
+
+    ## all intervals not save, in should be an option if necessary to save it
+    # data_read.save_track(name_file="all_intervals")
 
     bed_str = data_read.convert(mode=write_format, tracks=sel_tracks,
                                 tracks_merge=tracks2merge, data_types=data_types_list,
@@ -252,7 +268,13 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     
     for key in bed_str:
         bedSingle = bed_str[key]
-        bedSingle.save_track(track_line=track_line, bed_label=bed_lab)
+
+        output_file_n = None
+
+        if output_file_name is not None:
+            output_file_n = output_file_name + '_' + '_'.join(key)
+
+        bedSingle.save_track(name_file=output_file_n, track_line=track_line, bed_label=bed_lab)
 
 if __name__ == '__main__':
     exit(main())
