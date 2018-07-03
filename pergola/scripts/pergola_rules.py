@@ -29,7 +29,8 @@ from pergola  import mapping
 # from pergola  import tracks
 from argparse import ArgumentParser
 from sys      import stderr, exit
-import os
+# import os
+from os.path import basename, splitext
 from pergola import parsers
 
 
@@ -43,11 +44,12 @@ def main(args=None):
         multiple_files = True
 
     for idx, input_file in enumerate(args.input):
+
         if multiple_files:
             if args.output_file_name is None:
-                output_file_n = "f_" + str(idx)
+                output_file_n = splitext(basename(input_file))[0]
             else:
-                output_file_n = "f_" + str(idx) + "_" + args.output_file_name
+                output_file_n = args.output_file_name + "_" + str(idx + 1)
         else:
             output_file_n = args.output_file_name
 
@@ -272,7 +274,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         output_file_n = None
 
         if output_file_name is not None:
-            output_file_n = output_file_name + '_' + '_'.join(key)
+            output_file_n = output_file_name + '.' + '_'.join(key)
 
         bedSingle.save_track(name_file=output_file_n, track_line=track_line, bed_label=bed_lab)
 
