@@ -242,7 +242,8 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
             print >> stderr, "@@@Pergola_rules.py: Starting phase set to.............. %s" % starting_phase
         else:
             raise ValueError("Starting phase needs phases option to be set to true")
-
+    else:
+        starting_phase = "light"
     if shift:
         time_shift = shift
         print >> stderr, "@@@Pergola_rules.py: Time shift set to....................... %d" % shift
