@@ -357,7 +357,7 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
     
     if start != 0:
         line =  "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, start, phase, dict_stain[phase])
-        line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, start, phase, dict_bed_values[phase])
+        line_bed = "{0}\t{1}\t{2}\t{3}\t{4}\n".format(chr, t, start, phase_bed, dict_bed_values[phase])
         t = t + start + 1
         end_t = t + delta
         

@@ -33,11 +33,12 @@ from sys      import stderr, exit
 from os.path import basename, splitext
 from pergola import parsers
 
-
-def main(args=None):       
+def main(args=None):
     parser_pergola_rules = ArgumentParser(parents=[parsers.parent_parser]) 
     
     args = parser_pergola_rules.parse_args()
+
+    multiple_files = False
 
     if len(args.input) > 1:
         print "@@@Pergola_rules.py: Multiple input files processed"
@@ -62,13 +63,15 @@ def main(args=None):
                       window_size=args.window_size, no_track_line=args.no_track_line, separator=args.field_separator,
                       bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean,
                       value_mean=args.value_mean, min_t=args.min_time, max_t=args.max_time, phases=args.phases,
-                      genome=args.genome, output_file_name=output_file_n)
+                      genome=args.genome, output_file_name=output_file_n, starting_phase=args.starting_phase,
+                      shift=args.shift)
 
 def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, track_actions=None, 
                   data_types_actions=None, data_types_list=None, write_format=None, relative_coord=False,
                   intervals_gen=False, multiply_f=None, no_header=False, fields2read=None, window_size=None,
                   no_track_line=False, separator=None, bed_lab_sw=False, color_dict=None, window_mean=False,
-                  value_mean=False, min_t=None, max_t=None, interval_step=None, phases=False, genome=False, output_file_name=None):
+                  value_mean=False, min_t=None, max_t=None, interval_step=None, phases=False, genome=False,
+                  output_file_name=None, starting_phase=False, shift=None):
     
     print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
     print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
@@ -233,6 +236,21 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     # Output file name
     print >> stderr, "@@@Pergola_rules.py: Output file/s name set t......................%s" % output_file_name
 
+    # Starting phase option
+    if starting_phase:
+        if phases:
+            print >> stderr, "@@@Pergola_rules.py: Starting phase set to.............. %s" % starting_phase
+        else:
+            raise ValueError("Starting phase needs phases option to be set to true")
+
+    if shift:
+        time_shift = shift
+        print >> stderr, "@@@Pergola_rules.py: Time shift set to....................... %d" % shift
+    else:
+        #         window_size = 300
+        time_shift = 0
+        print >> stderr, "@@@Pergola_rules.py: Window size set by default to............ %d" % window_size
+
     if multiply_f:
         min_time = min_time * multiply_f
         max_time = max_time * multiply_f
@@ -256,7 +274,8 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
 
     if phases:
         # writes cytoband and light, dark and light_dark bed files
-        mapping.write_cytoband(end=end, track_line=track_line, lab_bed=False)
+        mapping.write_cytoband(end=end, start=time_shift, start_phase=starting_phase, track_line=track_line,
+                               lab_bed=bed_lab)
         # mapping.write_period_seq(start=0, end=intData.max, delta=43200, name_file="phases_dark", track_line=False)
 
     ## all intervals not save, in should be an option if necessary to save it

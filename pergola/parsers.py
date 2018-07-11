@@ -39,6 +39,7 @@ _csv_file_ext = ".csv"
 
 _dt_act_options = ['all', 'one_per_channel']
 _tr_act_options = ['split_all', 'join_all', 'join_odd', 'join_even']
+_starting_phase_options = ['light', 'dark']
 
 PATH = abspath(split(realpath(__file__))[0])
 
@@ -195,7 +196,11 @@ parent_parser.add_argument('-np', '--no_phases', required=False, dest='phases', 
                            help='Avoids the creation of a phases bed file')
 parent_parser.set_defaults(genome=True)
 parent_parser.set_defaults(phases=True)
-parent_parser.add_argument('-o', '--output_file_name', type=str, required=False, help='File name for output files')
+parent_parser.add_argument('-o', '--output_file_name', help='File name for output files')
+parent_parser.add_argument('-sp', '--starting_phase', type=str, required=False, choices=_starting_phase_options,
+                           help='Sets the first phase to appear in the phases and cytoband file: light or dark\n')
+parent_parser.add_argument('-sh', '--shift', required=False, metavar="TIME_SHIFT", type=int,
+                           help='Time shift to be set for the first phase')
 parent_parser.add_argument('-v', '--version', action='version', version='%(prog)s {version}'.format(version=__version__))
 
 """"   
