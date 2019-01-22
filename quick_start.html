@@ -59,7 +59,7 @@
 
           
             
-            <img src="_static/img/pergola_logo.svg" class="logo" />
+            <img src="_static/img/pergola_logo.png" class="logo" />
           
           </a>
 
@@ -173,16 +173,16 @@ the <a class="reference internal" href="installation.html#installation"><span cl
 <h3>Sample data description<a class="headerlink" href="#sample-data-description" title="Permalink to this headline">¶</a></h3>
 <p>The data set contains <em>C. elegans</em> motion measures derived from video recordings originally used on this
 <a class="reference external" href="https://www.nature.com/articles/nmeth.2560">work</a>.</p>
-<p>The sample data set consists in two folders:  One named <code class="docutils literal"><span class="pre">worm_speeds</span></code> containing a <code class="docutils literal"><span class="pre">CSV</span></code> file for each of the
+<p>The sample data set consists in two folders:  One named <code class="docutils literal notranslate"><span class="pre">worm_speeds</span></code> containing a <code class="docutils literal notranslate"><span class="pre">CSV</span></code> file for each of the
 tracked worms. From the several measures that can be found in the individual files, in this example we will use mid-body
-speed. The <code class="docutils literal"><span class="pre">mapping</span></code> folder contains the <code class="docutils literal"><span class="pre">worm_speed2pergola.txt</span></code>, which sets the mappings between the information
+speed. The <code class="docutils literal notranslate"><span class="pre">mapping</span></code> folder contains the <code class="docutils literal notranslate"><span class="pre">worm_speed2pergola.txt</span></code>, which sets the mappings between the information
 represented in the worm_speed files and the pergola ontology. See <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">mapping file</span></a> and
 <a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">pergola ontology</span></a> for a deeper description.</p>
 </div>
 <div class="section" id="get-the-data">
 <h3>Get the data<a class="headerlink" href="#get-the-data" title="Permalink to this headline">¶</a></h3>
 <p>Two download the data set from Zenodo you can use this commands:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir data
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir data
 wget -O- https://zenodo.org/record/1161078/files/celegans_speed_sample_data.tar.gz <span class="p">|</span> tar xz -C data
 </pre></div>
 </div>
@@ -198,18 +198,18 @@ wget -O- https://zenodo.org/record/1161078/files/celegans_speed_sample_data.tar.
 skip this section.</p>
 </div>
 <p>You can obtain last Pergola version from <a class="reference external" href="https://hub.docker.com/u/pergola/">Pergola Docker Hub repository</a>.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
 </pre></div>
 </div>
 <p>To launch Pergola image and mount the sample data set in the container you can type:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/container_wd -w /container_wd pergola/pergola:latest bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run --rm -it -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/container_wd -w /container_wd pergola/pergola:latest bash
 </pre></div>
 </div>
 </div>
 <div class="section" id="execution">
 <h3>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h3>
 <p>You can know process the downloaded sample data with Pergola using the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/worm_speeds/*.csv -m ./data/mapping/worm_speed2pergola.txt -f bedGraph -w <span class="m">1</span> -min <span class="m">0</span> -max <span class="m">29000</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/worm_speeds/*.csv -m ./data/mapping/worm_speed2pergola.txt -f bedGraph -w <span class="m">1</span> -min <span class="m">0</span> -max <span class="m">29000</span>
 </pre></div>
 </div>
 <p>The resulting files can be uploaded on a desktop browser for its visualization as explained below.</p>
@@ -286,8 +286,8 @@ depicting a deficient moving behavior when compared to control (N2) strain on to
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 13, 2018.
+        &copy; Copyright 2016-2019, Jose Espinosa-Carrasco.
+      Last updated on Jan 22, 2019.
 
     </p>
   </div>
@@ -318,7 +318,6 @@ depicting a deficient moving behavior when compared to control (N2) strain on to
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

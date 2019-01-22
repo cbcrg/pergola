@@ -59,7 +59,7 @@
 
           
             
-            <img src="_static/img/pergola_logo.svg" class="logo" />
+            <img src="_static/img/pergola_logo.png" class="logo" />
           
           </a>
 
@@ -181,20 +181,20 @@
 </div>
 <div class="section" id="pergola">
 <span id="scripts-pergola"></span><h2><a class="toc-backref" href="#id2">pergola</a><a class="headerlink" href="#pergola" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">pergola</span></code> enables the user to execute many of the main pergola functionalities.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pergola</span></code> enables the user to execute many of the main pergola functionalities.</p>
 <p>If you prefer to code your own scripts you can see some examples at the <a class="reference internal" href="tutorial.html#library"><span class="std std-ref">tutorials</span></a> section.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>To reproduce all <code class="docutils literal"><span class="pre">pergola</span></code> commands shown in this section you can download the following data set:</p>
+<p>To reproduce all <code class="docutils literal notranslate"><span class="pre">pergola</span></code> commands shown in this section you can download the following data set:</p>
 <a class="reference external image-reference" href="https://doi.org/10.5281/zenodo.1168982"><img alt="https://zenodo.org/badge/DOI/10.5281/zenodo.1168982.svg" src="https://zenodo.org/badge/DOI/10.5281/zenodo.1168982.svg" /></a>
 <p>The data consists of a series of recordings corresponding to three weeks of the feeding behavior of C57BL/6 mice fed
 either with a high-fat or a standard chow. To download and uncompress the data you can use the following commands:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir data
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir data
 wget -O- https://zenodo.org/record/1168982/files/feeding_behavior_C57BL6_mice_HF.tar.gz <span class="p">|</span> tar xz -C data
 </pre></div>
 </div>
-<p>If you install <code class="docutils literal"><span class="pre">pergola</span></code> from GitHub or use the Docker image you can also find this data set on:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span>/path_to_installation/pergola/sample_data`.
+<p>If you install <code class="docutils literal notranslate"><span class="pre">pergola</span></code> from GitHub or use the Docker image you can also find this data set on:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span>/path_to_installation/pergola/sample_data`.
 </pre></div>
 </div>
 </div>
@@ -230,53 +230,53 @@ tarball file.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--input</span></code></td>
-<td><code class="docutils literal"><span class="pre">-i</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--input</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-i</span></code></td>
 <td>Path of input data file</td>
-<td><code class="docutils literal"><span class="pre">-i</span> <span class="pre">/foo/feeding_behavior_HF_mice.csv.csv</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-i</span> <span class="pre">/foo/feeding_behavior_HF_mice.csv.csv</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--mapping_file</span></code></td>
-<td><code class="docutils literal"><span class="pre">-m</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--mapping_file</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-m</span></code></td>
 <td>Path of mapping file</td>
-<td><code class="docutils literal"><span class="pre">-m</span> <span class="pre">/foo/my_mappings.txt</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-m</span> <span class="pre">/foo/my_mappings.txt</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--field_separator</span></code></td>
-<td><code class="docutils literal"><span class="pre">-fs</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--field_separator</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-fs</span></code></td>
 <td>Field separator of mapping file</td>
-<td><code class="docutils literal"><span class="pre">-fs</span> <span class="pre">&quot;</span> <span class="pre">&quot;</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-fs</span> <span class="pre">&quot;</span> <span class="pre">&quot;</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--no_header</span></code></td>
-<td><code class="docutils literal"><span class="pre">-nh</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--no_header</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-nh</span></code></td>
 <td>The input file has not header (column names)</td>
-<td><code class="docutils literal"><span class="pre">-nh</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-nh</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--fields_read</span></code></td>
-<td><code class="docutils literal"><span class="pre">-s</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--fields_read</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-s</span></code></td>
 <td>List of columns name (used in mappping file)</td>
-<td><code class="docutils literal"><span class="pre">-s</span> <span class="pre">'CAGE'</span> <span class="pre">'EndT'</span> <span class="pre">'Nature'</span> <span class="pre">'StartT'</span> <span class="pre">'Value'</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-s</span> <span class="pre">'CAGE'</span> <span class="pre">'EndT'</span> <span class="pre">'Nature'</span> <span class="pre">'StartT'</span> <span class="pre">'Value'</span></code></td>
 </tr>
 </tbody>
 </table>
-<p>Only two of the data input arguments are mandatory to run <code class="docutils literal"><span class="pre">pergola</span></code>:</p>
+<p>Only two of the data input arguments are mandatory to run <code class="docutils literal notranslate"><span class="pre">pergola</span></code>:</p>
 <blockquote>
 <div><ul class="simple">
-<li>the <code class="docutils literal"><span class="pre">-i</span></code>, <code class="docutils literal"><span class="pre">--input</span></code> argument specifies the file to convert.</li>
-<li>the <code class="docutils literal"><span class="pre">-m</span></code>, <code class="docutils literal"><span class="pre">--mapping_file</span></code> argument contains the mappings between the input file fields and the terms defined
+<li>the <code class="docutils literal notranslate"><span class="pre">-i</span></code>, <code class="docutils literal notranslate"><span class="pre">--input</span></code> argument specifies the file to convert.</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">-m</span></code>, <code class="docutils literal notranslate"><span class="pre">--mapping_file</span></code> argument contains the mappings between the input file fields and the terms defined
 in the <a class="reference internal" href="basic_concepts.html#pergola-ontology"><span class="std std-ref">pergola ontology</span></a>.</li>
 </ul>
 </div></blockquote>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last"><code class="docutils literal"><span class="pre">pergola</span></code> can take as input files in <strong>CSV</strong> and <strong>xlsx</strong> format. You can see examples of both in the
+<p class="last"><code class="docutils literal notranslate"><span class="pre">pergola</span></code> can take as input files in <strong>CSV</strong> and <strong>xlsx</strong> format. You can see examples of both in the
 <a class="reference internal" href="quick_start.html#input-data"><span class="std std-ref">input data</span></a> section.</p>
 </div>
-<p>In this manner, the minimal command to run <code class="docutils literal"><span class="pre">pergola</span></code> provided that the input and mappings file are correctly formatted
+<p>In this manner, the minimal command to run <code class="docutils literal notranslate"><span class="pre">pergola</span></code> provided that the input and mappings file are correctly formatted
 would be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt
 </pre></div>
 </div>
 <p>As mentioned before you can also use a xlsx file as input instead:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.xlsx -m ./data/b2p.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.xlsx -m ./data/b2p.txt
 </pre></div>
 </div>
 <div class="admonition note">
@@ -287,30 +287,30 @@ the input data field and the pergola ontology. For more details, refer to the
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Any field on the input data that should not be used by pergola must be set to <code class="docutils literal"><span class="pre">dummy</span></code> term in the mapping file.</p>
+<p class="last">Any field on the input data that should not be used by pergola must be set to <code class="docutils literal notranslate"><span class="pre">dummy</span></code> term in the mapping file.</p>
 </div>
 <p>The rest of arguments are optional and enable the user to provide additional information about the input data in the
 cases it does not entirely fits the default pergola <a class="reference internal" href="quick_start.html#input-data"><span class="std std-ref">input data</span></a> format.</p>
-<p>For instance, the <code class="docutils literal"><span class="pre">-fs</span></code>, <code class="docutils literal"><span class="pre">--field_separator</span></code> sets the delimiter that separates fields inside the input data file
-when it is not set to tabs (default). As an example if fields are delimited by <code class="docutils literal"><span class="pre">,</span></code>, you can specify it as shown below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_commas.csv -m ./data/b2p.txt -fs <span class="s2">&quot;,&quot;</span>
+<p>For instance, the <code class="docutils literal notranslate"><span class="pre">-fs</span></code>, <code class="docutils literal notranslate"><span class="pre">--field_separator</span></code> sets the delimiter that separates fields inside the input data file
+when it is not set to tabs (default). As an example if fields are delimited by <code class="docutils literal notranslate"><span class="pre">,</span></code>, you can specify it as shown below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_commas.csv -m ./data/b2p.txt -fs <span class="s2">&quot;,&quot;</span>
 </pre></div>
 </div>
 <p>Pergola needs that input files columns are mapped into pergola ontology terms and thus, if the input file has not header you should provide an ordered
-list with the corresponding fields of your file as in the example below, using the <code class="docutils literal"><span class="pre">-nh</span></code>, <code class="docutils literal"><span class="pre">--no_header</span></code> argument together with the <code class="docutils literal"><span class="pre">-s</span></code>, <code class="docutils literal"><span class="pre">--fields_read</span></code>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;StartT&#39;</span> <span class="s1">&#39;Value&#39;</span>
+list with the corresponding fields of your file as in the example below, using the <code class="docutils literal notranslate"><span class="pre">-nh</span></code>, <code class="docutils literal notranslate"><span class="pre">--no_header</span></code> argument together with the <code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">--fields_read</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_no_header.csv -m ./data/b2p.txt -nh -s <span class="s1">&#39;CAGE&#39;</span> <span class="s1">&#39;EndT&#39;</span> <span class="s1">&#39;Nature&#39;</span> <span class="s1">&#39;StartT&#39;</span> <span class="s1">&#39;Value&#39;</span>
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>To avoid setting fields names you can use the reserved word <code class="docutils literal"><span class="pre">ordinal</span></code> with -s argument. This allows to use numbers
+<p>To avoid setting fields names you can use the reserved word <code class="docutils literal notranslate"><span class="pre">ordinal</span></code> with -s argument. This allows to use numbers
 instead of terms in the mapping file. Below you can see an example of a assignation of the mapping file using this
 option:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">behavioral_file</span><span class="p">:</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="n">pergola</span><span class="p">:</span><span class="n">track</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">behavioral_file</span><span class="p">:</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="n">pergola</span><span class="p">:</span><span class="n">track</span>
 </pre></div>
 </div>
 <p>The command would result in:</p>
-<div class="last highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_no_header.csv -m ./data/b2p_ordinal.txt -nh -s <span class="s1">&#39;ordinal&#39;</span>
+<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice_no_header.csv -m ./data/b2p_ordinal.txt -nh -s <span class="s1">&#39;ordinal&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -339,24 +339,24 @@ provides a perfect structure to store continuous data such as for instance any b
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td rowspan="3"><code class="docutils literal"><span class="pre">--format</span></code></td>
-<td rowspan="3"><code class="docutils literal"><span class="pre">-f</span></code></td>
+<tr class="row-even"><td rowspan="3"><code class="docutils literal notranslate"><span class="pre">--format</span></code></td>
+<td rowspan="3"><code class="docutils literal notranslate"><span class="pre">-f</span></code></td>
 <td>bed</td>
 <td>Converts data to BED format</td>
-<td><code class="docutils literal"><span class="pre">-f</span> <span class="pre">bed</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">bed</span></code></td>
 </tr>
 <tr class="row-odd"><td>gff</td>
 <td>Converts data to BedGraph format</td>
-<td><code class="docutils literal"><span class="pre">-f</span> <span class="pre">gff</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">gff</span></code></td>
 </tr>
 <tr class="row-even"><td>bedGraph</td>
 <td>Converts data to  format</td>
-<td><code class="docutils literal"><span class="pre">-f</span> <span class="pre">bedGraph</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">bedGraph</span></code></td>
 </tr>
 </tbody>
 </table>
 <p>Following our previous example the command line to convert our data to BedGraph format will be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph
 </pre></div>
 </div>
 <div class="admonition note">
@@ -383,49 +383,49 @@ to see pergola’s adapted genomic formats.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--tracks</span></code></td>
-<td><code class="docutils literal"><span class="pre">-t</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--tracks</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-t</span></code></td>
 <td>List of tracks to keep</td>
-<td><code class="docutils literal"><span class="pre">-t</span> <span class="pre">track_id_1</span> <span class="pre">track_id_2</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">track_id_1</span> <span class="pre">track_id_2</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--range</span></code></td>
-<td><code class="docutils literal"><span class="pre">-r</span></code></td>
-<td>Track range to keep (numerical)</td>
-<td><code class="docutils literal"><span class="pre">-r</span> <span class="pre">1</span> <span class="pre">10</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--range</span></code></td>
+<td>&#160;</td>
+<td><code class="docutils literal notranslate"><span class="pre">-r</span></code>  Track range to keep (numerical)</td>
+<td><code class="docutils literal notranslate"><span class="pre">-r</span> <span class="pre">1</span> <span class="pre">10</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--track_actions</span></code></td>
-<td><code class="docutils literal"><span class="pre">-a</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--track_actions</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-a</span></code></td>
 <td>Action to perform on selected tracks</td>
-<td><code class="docutils literal"><span class="pre">-t</span> <span class="pre">track_id_1</span> <span class="pre">track_id_2</span> <span class="pre">-a</span> <span class="pre">split_all</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">track_id_1</span> <span class="pre">track_id_2</span> <span class="pre">-a</span> <span class="pre">split_all</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--data_types_list</span></code></td>
-<td><code class="docutils literal"><span class="pre">-dl</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--data_types_list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-dl</span></code></td>
 <td>List of data types to keep</td>
-<td><code class="docutils literal"><span class="pre">-dl</span> <span class="pre">data_type_one</span> <span class="pre">data_type_2</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-dl</span> <span class="pre">data_type_one</span> <span class="pre">data_type_2</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--data_types_actions</span></code></td>
-<td><code class="docutils literal"><span class="pre">-d</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--data_types_actions</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-d</span></code></td>
 <td>Action to perform on selected data types</td>
-<td><code class="docutils literal"><span class="pre">-dl</span> <span class="pre">data_type_one</span> <span class="pre">data_type_2</span> <span class="pre">-d</span> <span class="pre">one_per_channel</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-dl</span> <span class="pre">data_type_one</span> <span class="pre">data_type_2</span> <span class="pre">-d</span> <span class="pre">one_per_channel</span></code></td>
 </tr>
 </tbody>
 </table>
-<p>Pergola allows you to filter a subset of your data input based on the field set as <code class="docutils literal"><span class="pre">track</span></code> in your
+<p>Pergola allows you to filter a subset of your data input based on the field set as <code class="docutils literal notranslate"><span class="pre">track</span></code> in your
 <a class="reference internal" href="basic_concepts.html#mapping-file"><span class="std std-ref">mapping file</span></a>.</p>
 <p>The example below shows how to get the data only from animal 1 4 7  (tracks):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">4</span>  <span class="m">7</span> -dl food_sc food_fat
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">4</span>  <span class="m">7</span> -dl food_sc food_fat
 </pre></div>
 </div>
-<p>If you want to get all tracks from 1 to 4 you can then use the <code class="docutils literal"><span class="pre">-r</span></code> option provided your <code class="docutils literal"><span class="pre">track</span></code> field is numeric:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -r <span class="m">1</span>-4
+<p>If you want to get all tracks from 1 to 4 you can then use the <code class="docutils literal notranslate"><span class="pre">-r</span></code> option provided your <code class="docutils literal notranslate"><span class="pre">track</span></code> field is numeric:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -r <span class="m">1</span>-4
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">By default tracks selected by <code class="docutils literal"><span class="pre">-r</span></code> option are joined together in a single output track. You can use <code class="docutils literal"><span class="pre">-a</span></code> option
+<p class="last">By default tracks selected by <code class="docutils literal notranslate"><span class="pre">-r</span></code> option are joined together in a single output track. You can use <code class="docutils literal notranslate"><span class="pre">-a</span></code> option
 to change this behavior.</p>
 </div>
-<p>The <code class="docutils literal"><span class="pre">-a</span></code> option allows to join together tracks in the same file. Available <code class="docutils literal"><span class="pre">-a</span></code> options are:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-a</span></code> option allows to join together tracks in the same file. Available <code class="docutils literal notranslate"><span class="pre">-a</span></code> options are:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="34%" />
@@ -438,36 +438,36 @@ to change this behavior.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>split_all</td>
-<td>Split all <code class="docutils literal"><span class="pre">tracks</span></code> into different files</td>
+<td>Split all <code class="docutils literal notranslate"><span class="pre">tracks</span></code> into different files</td>
 </tr>
 <tr class="row-odd"><td>join_all</td>
-<td>Join all <code class="docutils literal"><span class="pre">tracks</span></code> in a single file</td>
+<td>Join all <code class="docutils literal notranslate"><span class="pre">tracks</span></code> in a single file</td>
 </tr>
 <tr class="row-even"><td>join_odd</td>
-<td>Join only odd <code class="docutils literal"><span class="pre">tracks</span></code> in a single file</td>
+<td>Join only odd <code class="docutils literal notranslate"><span class="pre">tracks</span></code> in a single file</td>
 </tr>
 <tr class="row-odd"><td>join_even</td>
-<td>Join only even <code class="docutils literal"><span class="pre">tracks</span></code> in a single file</td>
+<td>Join only even <code class="docutils literal notranslate"><span class="pre">tracks</span></code> in a single file</td>
 </tr>
 </tbody>
 </table>
 <p>An example of how to join all tracks in the same file would be:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -a join_all
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -a join_all
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">You can combine <code class="docutils literal"><span class="pre">-t</span></code> or <code class="docutils literal"><span class="pre">-r</span></code> options with <code class="docutils literal"><span class="pre">-a</span></code> in order to filter tracks and join them as you prefer</p>
+<p class="last">You can combine <code class="docutils literal notranslate"><span class="pre">-t</span></code> or <code class="docutils literal notranslate"><span class="pre">-r</span></code> options with <code class="docutils literal notranslate"><span class="pre">-a</span></code> in order to filter tracks and join them as you prefer</p>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> -a join_all
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -t <span class="m">1</span> <span class="m">2</span> <span class="m">3</span> -a join_all
 </pre></div>
 </div>
-<p>It is possible to provide pergola with a list of the field assigned to <code class="docutils literal"><span class="pre">data_type</span></code> pergola ontology term to be kept using <code class="docutils literal"><span class="pre">-dl</span></code> argument.
-For instance, in the code below only events assigned to “food_fat” <code class="docutils literal"><span class="pre">data_type</span></code> term are kept:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
+<p>It is possible to provide pergola with a list of the field assigned to <code class="docutils literal notranslate"><span class="pre">data_type</span></code> pergola ontology term to be kept using <code class="docutils literal notranslate"><span class="pre">-dl</span></code> argument.
+For instance, in the code below only events assigned to “food_fat” <code class="docutils literal notranslate"><span class="pre">data_type</span></code> term are kept:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -dl food_fat
 </pre></div>
 </div>
-<p>Besides <code class="docutils literal"><span class="pre">-d</span></code> option allows to combine all data types into a single output file or split them in different files:</p>
+<p>Besides <code class="docutils literal notranslate"><span class="pre">-d</span></code> option allows to combine all data types into a single output file or split them in different files:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="34%" />
@@ -480,16 +480,16 @@ For instance, in the code below only events assigned to “food_fat” <code cla
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>all</td>
-<td>Join all <code class="docutils literal"><span class="pre">data_type</span></code> into a single file</td>
+<td>Join all <code class="docutils literal notranslate"><span class="pre">data_type</span></code> into a single file</td>
 </tr>
 <tr class="row-odd"><td>one_per_channel</td>
-<td>Split each <code class="docutils literal"><span class="pre">data_type</span></code> into different files</td>
+<td>Split each <code class="docutils literal notranslate"><span class="pre">data_type</span></code> into different files</td>
 </tr>
 </tbody>
 </table>
-<p>Both <code class="docutils literal"><span class="pre">-dl</span></code> and <code class="docutils literal"><span class="pre">-d</span></code> options can be combined into a single command, in the example below only events tagged as
+<p>Both <code class="docutils literal notranslate"><span class="pre">-dl</span></code> and <code class="docutils literal notranslate"><span class="pre">-d</span></code> options can be combined into a single command, in the example below only events tagged as
 food_sc and food_fat will be kept and joined for each mice id (track):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -dl food_sc food_fat -d all
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -dl food_sc food_fat -d all
 </pre></div>
 </div>
 </div>
@@ -513,149 +513,149 @@ food_sc and food_fat will be kept and joined for each mice id (track):</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--relative_coord</span></code></td>
-<td><code class="docutils literal"><span class="pre">-e</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--relative_coord</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-e</span></code></td>
 <td>&#160;</td>
 <td>Time relative to first time point</td>
-<td><code class="docutils literal"><span class="pre">-e</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-e</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--window_size</span></code></td>
-<td><code class="docutils literal"><span class="pre">-w</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--window_size</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-w</span></code></td>
 <td>integer</td>
 <td>Bins the data in time windows of
 the selected size</td>
-<td><code class="docutils literal"><span class="pre">-w</span> <span class="pre">300</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-w</span> <span class="pre">300</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--window_mean</span></code></td>
-<td><code class="docutils literal"><span class="pre">-wm</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--window_mean</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-wm</span></code></td>
 <td>&#160;</td>
 <td>Averages by the window size</td>
-<td><code class="docutils literal"><span class="pre">-wm</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-wm</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--value_mean</span></code></td>
-<td><code class="docutils literal"><span class="pre">-vm</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--value_mean</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-vm</span></code></td>
 <td>&#160;</td>
 <td>Averages by the data items within
 the window</td>
-<td><code class="docutils literal"><span class="pre">-vm</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-vm</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--min_time</span></code></td>
-<td><code class="docutils literal"><span class="pre">-min</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--min_time</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-min</span></code></td>
 <td>integer</td>
 <td>Min time point from which data
 will be processed</td>
-<td><code class="docutils literal"><span class="pre">-min</span> <span class="pre">10</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-min</span> <span class="pre">10</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--max_time</span></code></td>
-<td><code class="docutils literal"><span class="pre">-max</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--max_time</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-max</span></code></td>
 <td>integer</td>
 <td>Max time point from which data
 will be processed</td>
-<td><code class="docutils literal"><span class="pre">-max</span> <span class="pre">1000</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-max</span> <span class="pre">1000</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--intervals_gen</span></code></td>
-<td><code class="docutils literal"><span class="pre">-n</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--intervals_gen</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-n</span></code></td>
 <td>&#160;</td>
 <td>Creates two time points from an
 original input with a single one</td>
-<td><code class="docutils literal"><span class="pre">-n</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-n</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--interval_step</span></code></td>
-<td><code class="docutils literal"><span class="pre">-ns</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--interval_step</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-ns</span></code></td>
 <td>&#160;</td>
 <td>Sets the step to create end time
 points when -n option is set</td>
-<td><code class="docutils literal"><span class="pre">-ns</span> <span class="pre">100</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-ns</span> <span class="pre">100</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--multiply_intervals</span></code></td>
-<td><code class="docutils literal"><span class="pre">-mi</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--multiply_intervals</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-mi</span></code></td>
 <td>integer</td>
 <td>Multiple time points by the
 selected value</td>
-<td><code class="docutils literal"><span class="pre">-mi</span> <span class="pre">1000</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-mi</span> <span class="pre">1000</span></code></td>
 </tr>
 </tbody>
 </table>
-<p>It is possible that input files do not start at time 0. The <code class="docutils literal"><span class="pre">relative_coord</span></code> transforms the time points relative to the first
+<p>It is possible that input files do not start at time 0. The <code class="docutils literal notranslate"><span class="pre">relative_coord</span></code> transforms the time points relative to the first
 time point inside the file.</p>
 <p>For instance, if time inside the file is expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/Unix_time/">epoch time</a> as in the example
 below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CAGE</span>  <span class="n">StartT</span>      <span class="n">EndT</span>        <span class="n">Value</span> <span class="n">Nature</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CAGE</span>  <span class="n">StartT</span>      <span class="n">EndT</span>        <span class="n">Value</span> <span class="n">Nature</span>
 <span class="mi">1</span>     <span class="mi">1335986151</span>  <span class="mi">1335986261</span>  <span class="mf">0.06</span>  <span class="n">food_sc</span>
 <span class="mi">1</span>     <span class="mi">1335986275</span>  <span class="mi">1335986330</span>  <span class="mf">0.02</span>  <span class="n">food_sc</span>
 <span class="mi">1</span>     <span class="mi">1335986341</span>  <span class="mi">1335986427</span>  <span class="mf">0.02</span>  <span class="n">food_sc</span>
 </pre></div>
 </div>
-<p>Applying the <code class="docutils literal"><span class="pre">-e</span></code> it will result into the time coordinates below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_0.csv -m data/b2p.txt -e
+<p>Applying the <code class="docutils literal notranslate"><span class="pre">-e</span></code> it will result into the time coordinates below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/file_0.csv -m data/b2p.txt -e
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>     <span class="mi">110</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>     <span class="mi">110</span>
 <span class="mi">124</span>   <span class="mi">179</span>
 <span class="mi">190</span>   <span class="mi">276</span>
 </pre></div>
 </div>
-<p>Pergola enables the user to bin the data using equidistant time windows when formatting data to BedGraph files. The <code class="docutils literal"><span class="pre">-w</span></code> arguments sets the size of these windows.</p>
+<p>Pergola enables the user to bin the data using equidistant time windows when formatting data to BedGraph files. The <code class="docutils literal notranslate"><span class="pre">-w</span></code> arguments sets the size of these windows.</p>
 <p>For example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">300</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">300</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <code class="docutils literal"><span class="pre">-w</span></code> argument can be only used together with <code class="docutils literal"><span class="pre">-f</span> <span class="pre">bedGraph</span></code> option</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">-w</span></code> argument can be only used together with <code class="docutils literal notranslate"><span class="pre">-f</span> <span class="pre">bedGraph</span></code> option</p>
 </div>
-<p>The <code class="docutils literal"><span class="pre">-wm</span></code> argument calculates the mean value inside each of the window of time.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">300</span> -wm
+<p>The <code class="docutils literal notranslate"><span class="pre">-wm</span></code> argument calculates the mean value inside each of the window of time.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">300</span> -wm
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">-min</span></code> and <code class="docutils literal"><span class="pre">-max</span></code> arguments set which is the first and the last time point to be present in pergola output file.
+<p>The <code class="docutils literal notranslate"><span class="pre">-min</span></code> and <code class="docutils literal notranslate"><span class="pre">-max</span></code> arguments set which is the first and the last time point to be present in pergola output file.
 This can be used for instance to unify the beginning (example below) or end of files:</p>
 <p>file_1.csv</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CAGE</span>    <span class="n">StartT</span>  <span class="n">EndT</span>    <span class="n">Value</span> <span class="n">Nature</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CAGE</span>    <span class="n">StartT</span>  <span class="n">EndT</span>    <span class="n">Value</span> <span class="n">Nature</span>
 <span class="mi">1</span>       <span class="mi">20</span>      <span class="mi">30</span>      <span class="mf">0.02</span>  <span class="n">food_sc</span>
 <span class="mi">1</span>       <span class="mi">50</span>      <span class="mi">60</span>      <span class="mf">0.02</span>  <span class="n">food_fat</span>
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">10</span> -min <span class="m">0</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/file_1.csv -m ./data/b2p.txt -f bedGraph -w <span class="m">10</span> -min <span class="m">0</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>The time points inserted at the beginning of the file using <code class="docutils literal"><span class="pre">-min</span></code> and <code class="docutils literal"><span class="pre">-max</span></code> will be set to zero value. In the example above
+<p>The time points inserted at the beginning of the file using <code class="docutils literal notranslate"><span class="pre">-min</span></code> and <code class="docutils literal notranslate"><span class="pre">-max</span></code> will be set to zero value. In the example above
 the beginning of the output file will then look as follows:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>        <span class="mi">0</span>       <span class="mi">10</span>      <span class="mi">0</span>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chr1</span>        <span class="mi">0</span>       <span class="mi">10</span>      <span class="mi">0</span>
 <span class="n">chr1</span>        <span class="mi">10</span>      <span class="mi">20</span>      <span class="mf">0.0</span>
 <span class="n">chr1</span>        <span class="mi">20</span>      <span class="mi">30</span>      <span class="mf">0.02</span>
 </pre></div>
 </div>
 </div>
-<p>If the input file has only a single time point, pergola can process it using the <code class="docutils literal"><span class="pre">-n</span></code> argument. This situation is common
+<p>If the input file has only a single time point, pergola can process it using the <code class="docutils literal notranslate"><span class="pre">-n</span></code> argument. This situation is common
 in files encoding data that are in equidistant time points, as the following one:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">id</span>    <span class="n">time</span> <span class="n">value</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span>    <span class="n">time</span> <span class="n">value</span>
 <span class="mi">1</span>     <span class="mi">1</span>    <span class="mi">8</span>
 <span class="mi">1</span>     <span class="mi">2</span>    <span class="mi">13</span>
 <span class="mi">1</span>     <span class="mi">3</span>    <span class="mi">21</span>
 </pre></div>
 </div>
-<p>In this case the <code class="docutils literal"><span class="pre">-n</span></code> argument generates an interval for each of the items of the file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
+<p>In this case the <code class="docutils literal notranslate"><span class="pre">-n</span></code> argument generates an interval for each of the items of the file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/file_2.csv -m ./data/file_2_to_p.txt -f bedGraph -n
 </pre></div>
 </div>
 <p>In the case were the time inside the input file is encode as decimal values (for instance tenth of seconds).</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">time</span>  <span class="n">value</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span>  <span class="n">value</span>
 <span class="mi">1</span>     <span class="o">-</span><span class="mf">30.98</span>
 <span class="mi">2</span>     <span class="o">-</span><span class="mf">5.19</span>
 <span class="mi">3</span>     <span class="mf">23.96</span>
 <span class="mi">4</span>     <span class="o">-</span><span class="mf">2.75</span>
 </pre></div>
 </div>
-<p>It is possible to multiply the time stamp inside this input file by a given factor using the <code class="docutils literal"><span class="pre">-mi</span></code> argument
+<p>It is possible to multiply the time stamp inside this input file by a given factor using the <code class="docutils literal notranslate"><span class="pre">-mi</span></code> argument
 and for instance getting the time stamps in milliseconds:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/file_3.csv -m ./data/file_2_to_p.txt -n -mi <span class="m">1000</span> -f bedGraph
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/file_3.csv -m ./data/file_2_to_p.txt -n -mi <span class="m">1000</span> -f bedGraph
 </pre></div>
 </div>
 <p>As a result two time point intervals will be returned in output file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>        <span class="mi">0</span>       <span class="mi">9</span>       <span class="o">-</span><span class="mf">30.98</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chr1</span>        <span class="mi">0</span>       <span class="mi">9</span>       <span class="o">-</span><span class="mf">30.98</span>
 <span class="n">chr1</span>        <span class="mi">10</span>      <span class="mi">19</span>      <span class="o">-</span><span class="mf">5.19</span>
 <span class="n">chr1</span>        <span class="mi">20</span>      <span class="mi">29</span>      <span class="mf">23.96</span>
 <span class="n">chr1</span>        <span class="mi">30</span>      <span class="mi">31</span>      <span class="o">-</span><span class="mf">2.75</span>
@@ -688,58 +688,58 @@ are related to the data visualization in genomic tools.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--no_track_line</span></code></td>
-<td><code class="docutils literal"><span class="pre">-nt</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--no_track_line</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-nt</span></code></td>
 <td>&#160;</td>
 <td>When set bed file does not include
 a track line (Browser configuration)</td>
-<td><code class="docutils literal"><span class="pre">-nt</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-nt</span></code></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--bed_label</span></code></td>
-<td><code class="docutils literal"><span class="pre">-bl</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--bed_label</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-bl</span></code></td>
 <td>&#160;</td>
 <td>BED files include labels describing
 each interval (data type)</td>
-<td><code class="docutils literal"><span class="pre">-bl</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-bl</span></code></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--color_file</span></code></td>
-<td><code class="docutils literal"><span class="pre">-c</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--color_file</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-c</span></code></td>
 <td>&#160;</td>
 <td>Path to a file setting a color for
 the different data types to be displayed</td>
-<td><code class="docutils literal"><span class="pre">-c</span> <span class="pre">/your_path/color.txt</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">/your_path/color.txt</span></code></td>
 </tr>
 </tbody>
 </table>
 <p>Some genomic software as for example genome browsers use the track line to get parameters about the visualization of
-the data. To avoid the track line you can use the <code class="docutils literal"><span class="pre">-nt</span></code> option.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -nt
+the data. To avoid the track line you can use the <code class="docutils literal notranslate"><span class="pre">-nt</span></code> option.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -nt
 </pre></div>
 </div>
 <p>The name field of the BED file enables to display a label for each record encoded inside the file. Pergola uses this field
 to display the data_type of each file line when the option is set:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -bl
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -bl
 </pre></div>
 </div>
 <p>The header of a BED file resulting of this option will look as the following one:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_food_sc&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 food_sc&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_food_sc&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 food_sc&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
 <span class="n">chr1</span>        <span class="mi">1335986151</span>      <span class="mi">1335986261</span>      <span class="n">food_sc</span> <span class="mf">0.06</span>    <span class="o">+</span>       <span class="mi">1335986151</span>      <span class="mi">1335986261</span>      <span class="mi">113</span><span class="p">,</span><span class="mi">113</span><span class="p">,</span><span class="mi">113</span>
 <span class="n">chr1</span>        <span class="mi">1335986275</span>      <span class="mi">1335986330</span>      <span class="n">food_sc</span> <span class="mf">0.02</span>    <span class="o">+</span>       <span class="mi">1335986275</span>      <span class="mi">1335986330</span>      <span class="mi">170</span><span class="p">,</span><span class="mi">170</span><span class="p">,</span><span class="mi">170</span>
 </pre></div>
 </div>
 <p>To choose which color will be use to display each of the data types inside the file, it is possible to provide
 pergola with a file coding the colors to be used. The file will consists:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">food_sc</span>     <span class="n">orange</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">food_sc</span>     <span class="n">orange</span>
 <span class="n">food_fat</span>    <span class="n">blue</span>
 </pre></div>
 </div>
 <p>How to use it is shown in the following example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pergola -i ./data/feeding_behavior_HF_mice.csv -m ./data/b2p.txt -c ./data/color_code.txt
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">In order to see all available options up you can simply type <code class="docutils literal"><span class="pre">pergola</span> <span class="pre">-h</span></code></p>
+<p class="last">In order to see all available options up you can simply type <code class="docutils literal notranslate"><span class="pre">pergola</span> <span class="pre">-h</span></code></p>
 </div>
 </div>
 </div>
@@ -755,14 +755,14 @@ for its visualization and analysis.</p>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In order to see all available options up you can simply type <code class="docutils literal"><span class="pre">jaaba_to_pergola</span> <span class="pre">-h</span></code></p>
+<p class="last">In order to see all available options up you can simply type <code class="docutils literal notranslate"><span class="pre">jaaba_to_pergola</span> <span class="pre">-h</span></code></p>
 </div>
 <div class="section" id="jaaba-features">
 <span id="scripts-jaaba-features"></span><h3><a class="toc-backref" href="#id9">Jaaba features</a><a class="headerlink" href="#jaaba-features" title="Permalink to this headline">¶</a></h3>
 <p>Jaaba uses a series of features or variables derived from the video-based trajectories of behaving animals to annotate behavior.
 Pergola allows to obtain these features.</p>
-<p>Pergola allows to obtain these features as csv files using the <code class="docutils literal"><span class="pre">fc</span></code> mode. Users can also directly process them using
-<code class="docutils literal"><span class="pre">pergola</span></code> by using the <code class="docutils literal"><span class="pre">fp</span></code> mode.</p>
+<p>Pergola allows to obtain these features as csv files using the <code class="docutils literal notranslate"><span class="pre">fc</span></code> mode. Users can also directly process them using
+<code class="docutils literal notranslate"><span class="pre">pergola</span></code> by using the <code class="docutils literal notranslate"><span class="pre">fp</span></code> mode.</p>
 <p>Available arguments are:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -777,32 +777,32 @@ Pergola allows to obtain these features.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--input</span></code></td>
-<td><code class="docutils literal"><span class="pre">-i</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--input</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-i</span></code></td>
 <td>Directory where jaaba features files are placed</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--jaaba_features</span></code></td>
-<td><code class="docutils literal"><span class="pre">-jf</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">--jaaba_features</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-jf</span></code></td>
 <td>Features to extract</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--dumping_directory</span></code></td>
-<td><code class="docutils literal"><span class="pre">-dd</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--dumping_directory</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-dd</span></code></td>
 <td>Directory for dumping csv files</td>
 </tr>
 </tbody>
 </table>
-<p>For example it is possible to obtain JAABA features formatted as CSV files using <code class="docutils literal"><span class="pre">fc</span></code> mode:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola fc -i &quot;/jaaba_data/perframe/&quot; -jf velmag dtheta -dd &quot;/output_dir/&quot;
+<p>For example it is possible to obtain JAABA features formatted as CSV files using <code class="docutils literal notranslate"><span class="pre">fc</span></code> mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$jaaba_to_pergola fc -i &quot;/jaaba_data/perframe/&quot; -jf velmag dtheta -dd &quot;/output_dir/&quot;
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The above example shows how to obtain <code class="docutils literal"><span class="pre">velmag</span></code> and <code class="docutils literal"><span class="pre">dtheta</span></code> features from the perframe folder where
-jaaba MAT features files are stored and dump them in a directory <code class="docutils literal"><span class="pre">output_dir</span></code>.</p>
+<p class="last">The above example shows how to obtain <code class="docutils literal notranslate"><span class="pre">velmag</span></code> and <code class="docutils literal notranslate"><span class="pre">dtheta</span></code> features from the perframe folder where
+jaaba MAT features files are stored and dump them in a directory <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>.</p>
 </div>
-<p>The <code class="docutils literal"><span class="pre">fp</span></code> mode makes it possible to convert the selected features into bed or bedGraph files. At the same time it is
+<p>The <code class="docutils literal notranslate"><span class="pre">fp</span></code> mode makes it possible to convert the selected features into bed or bedGraph files. At the same time it is
 possible to process the data using any of the <a class="reference internal" href="#scripts-pergola"><span class="std std-ref">pergola</span></a> options:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">$jaaba_to_pergola</span> fp -i <span class="s2">&quot;/jaaba_data/perframe/&quot;</span> -jf velmag dtheta -dd <span class="s2">&quot;/output_dir/&quot;</span> -m <span class="s2">&quot;jaaba2pergola_mapping.txt&quot;</span> -f bedGraph -w <span class="m">300</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">$jaaba_to_pergola</span> fp -i <span class="s2">&quot;/jaaba_data/perframe/&quot;</span> -jf velmag dtheta -dd <span class="s2">&quot;/output_dir/&quot;</span> -m <span class="s2">&quot;jaaba2pergola_mapping.txt&quot;</span> -f bedGraph -w <span class="m">300</span>
 </pre></div>
 </div>
 </div>
@@ -813,7 +813,7 @@ are having a given behavior along a trajectory. These <a class="reference extern
 <a class="reference external" href="http://es.mathworks.com/help/matlab/import_export/supported-file-formats.html">MAT-file format</a> that contain both the behavioral events predicted and the scores
 of the reliability of each event.</p>
 <p>Jaaba predictions can be also stored in CSV files or process to bed or bedGraph files applying any <a class="reference internal" href="#pergola">pergola</a> option. To choose between these two options
-users can set the <code class="docutils literal"><span class="pre">sc</span></code> or the <code class="docutils literal"><span class="pre">sp</span></code> mode respectively.</p>
+users can set the <code class="docutils literal notranslate"><span class="pre">sc</span></code> or the <code class="docutils literal notranslate"><span class="pre">sp</span></code> mode respectively.</p>
 <p>The possible arguments for this modes are:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -828,18 +828,18 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">--input</span></code></td>
-<td><code class="docutils literal"><span class="pre">-i</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">--input</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">-i</span></code></td>
 <td>Path to jaaba scores file</td>
 </tr>
 </tbody>
 </table>
-<p>Hence, the command line to process a scores Jaaba file into a CSV formatted file using <code class="docutils literal"><span class="pre">sc</span></code> mode will be:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola sc -i predicted_behavior.mat
+<p>Hence, the command line to process a scores Jaaba file into a CSV formatted file using <code class="docutils literal notranslate"><span class="pre">sc</span></code> mode will be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$jaaba_to_pergola sc -i predicted_behavior.mat
 </pre></div>
 </div>
-<p>In the case of <code class="docutils literal"><span class="pre">sp</span></code> mode, besides we can use any <a class="reference internal" href="#pergola">pergola</a> option:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$jaaba_to_pergola sc -i predicted_behavior.mat -m jaaba_scores2pergola_mapping.txt -f bed
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">sp</span></code> mode, besides we can use any <a class="reference internal" href="#pergola">pergola</a> option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$jaaba_to_pergola sc -i predicted_behavior.mat -m jaaba_scores2pergola_mapping.txt -f bed
 </pre></div>
 </div>
 </div>
@@ -865,8 +865,8 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 23, 2018.
+        &copy; Copyright 2016-2019, Jose Espinosa-Carrasco.
+      Last updated on Jan 22, 2019.
 
     </p>
   </div>
@@ -897,7 +897,6 @@ users can set the <code class="docutils literal"><span class="pre">sc</span></co
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

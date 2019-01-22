@@ -60,7 +60,7 @@
 
           
             
-            <img src="../_static/img/pergola_logo.svg" class="logo" />
+            <img src="../_static/img/pergola_logo.png" class="logo" />
           
           </a>
 
@@ -159,23 +159,23 @@
            <div itemprop="articleBody">
             
   <hr class="docutils" />
-<p>You can code your own scripts using <code class="docutils literal"><span class="pre">pergola</span></code> as a Python library.
+<p>You can code your own scripts using <code class="docutils literal notranslate"><span class="pre">pergola</span></code> as a Python library.
 Here we summarize some examples of how you can use it on your scripts.</p>
 <div class="alert alert-block alert-info"><p>Tip: This page is available as a Jupyter Notebook on
 /pergola/doc/notebooks under pergola GitHub repository. Should you want,
 you can interactively execute the code using Jupyter.</p>
 </div><div class="section" id="input-data">
 <h1>Input data<a class="headerlink" href="#input-data" title="Permalink to this headline">¶</a></h1>
-<p>The two basics data inputs <code class="docutils literal"><span class="pre">pergola</span></code> uses is a file with longitudinal
-recordings (sequence of temporal events) in the form of a <code class="docutils literal"><span class="pre">CSV</span></code> or
-<code class="docutils literal"><span class="pre">xlsx</span></code> file and a mapping file containing the correspondence between
-the fields in this previous file and the <code class="docutils literal"><span class="pre">pergola</span></code> ontology.</p>
+<p>The two basics data inputs <code class="docutils literal notranslate"><span class="pre">pergola</span></code> uses is a file with longitudinal
+recordings (sequence of temporal events) in the form of a <code class="docutils literal notranslate"><span class="pre">CSV</span></code> or
+<code class="docutils literal notranslate"><span class="pre">xlsx</span></code> file and a mapping file containing the correspondence between
+the fields in this previous file and the <code class="docutils literal notranslate"><span class="pre">pergola</span></code> ontology.</p>
 </div>
 <div class="section" id="sequence-of-temporal-events">
 <h1>Sequence of temporal events<a class="headerlink" href="#sequence-of-temporal-events" title="Permalink to this headline">¶</a></h1>
 <p>Pergola can process any sequence of temporal events contained in a
 character-separated file as in the example below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Animal</span>  <span class="n">StartT</span>  <span class="n">EndT</span>    <span class="n">Behavior</span>    <span class="n">Value</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Animal</span>  <span class="n">StartT</span>  <span class="n">EndT</span>    <span class="n">Behavior</span>    <span class="n">Value</span>
 <span class="mi">1</span>   <span class="mi">137</span> <span class="mi">156</span> <span class="n">eat</span> <span class="mf">0.06</span>
 <span class="mi">1</span>   <span class="mi">168</span> <span class="mi">192</span> <span class="n">drink</span>   <span class="mf">0.02</span>
 <span class="mi">1</span>   <span class="mi">250</span> <span class="mi">281</span> <span class="n">eat</span> <span class="mf">0.07</span>
@@ -194,7 +194,7 @@ input data and a controled vocabular defined by Pergola ontology. The
 format of the mapping file is <a class="reference external" href="http://geneontology.org/page/external-mapping-file-format">the external mapping file
 format</a>
 from the Gene Ontology Consortium, you can see an example below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>! Mapping of behavioural fields into genome browser fields
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! Mapping of behavioural fields into genome browser fields
 !
 behavioural_file:Animal &gt; pergola:track
 behavioural_file:StartT &gt; pergola:chromStart
@@ -203,29 +203,14 @@ behavioural_file:Behavior &gt; pergola:dataTypes
 behavioural_file:Value &gt; pergola:dataValue
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1"># You might have to set the path to run this notebook directly from ipython notebook</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="n">my_path_to_modules</span> <span class="o">=</span> <span class="s2">&quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/&quot;</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">my_path_to_modules</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <div class="section" id="mappinginfo-objects">
 <h1>MappingInfo objects<a class="headerlink" href="#mappinginfo-objects" title="Permalink to this headline">¶</a></h1>
 <p>Mappings between the input data and pergola ontology are loaded in
 MappingInfo objects:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">mapping</span>
-<span class="c1"># load mapping file</span>
-<span class="n">mapping_info</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">MappingInfo</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/b2p.txt&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
 <p>To view the mappings MappingInfo objects provide the
-:func:<code class="docutils literal"><span class="pre">pergola.mapping.Mapping.write</span></code> method</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">EndT</span>        <span class="n">end</span>
+:func:<code class="docutils literal notranslate"><span class="pre">pergola.mapping.Mapping.write</span></code> method</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EndT</span>        <span class="n">end</span>
 <span class="n">Nature</span>      <span class="n">data_types</span>
 <span class="n">Value</span>       <span class="n">data_value</span>
 <span class="n">StartT</span>      <span class="n">start</span>
@@ -239,24 +224,12 @@ will be explained in the lines below.</p>
 <div class="section" id="intdata-objects">
 <h1>IntData objects<a class="headerlink" href="#intdata-objects" title="Permalink to this headline">¶</a></h1>
 <p>IntData objects load all the intervals of a file:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">parsers</span>
-<span class="kn">from</span> <span class="nn">pergola</span> <span class="k">import</span> <span class="n">intervals</span>
-
-
-<span class="c1"># load the data into an IntData object that will store the sequence of events</span>
-<span class="n">int_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/feeding_behavior_HF_mice.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Input</span> <span class="n">file</span> <span class="nb">format</span> <span class="n">identified</span> <span class="k">as</span> <span class="n">csv</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span> <span class="n">file</span> <span class="nb">format</span> <span class="n">identified</span> <span class="k">as</span> <span class="n">csv</span>
 </pre></div>
 </div>
 <p>Intervals when loaded are stored in a list of tuples that can be
 accessed by data attribute:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">#Displays first 10 tuples of data list</span>
-<span class="n">int_data</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1335985232</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335985200</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1335985232</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335985200</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1335986427</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="mi">1335986151</span><span class="p">,</span> <span class="s1">&#39;0.1&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1335986451</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986420</span><span class="p">,</span> <span class="s1">&#39;0.08&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">1335986553</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="mi">1335986541</span><span class="p">,</span> <span class="s1">&#39;0.02&#39;</span><span class="p">),</span>
@@ -271,32 +244,20 @@ accessed by data attribute:</p>
 <p>IntData objects also provide some other attributes like the set of
 different tracks (term for IDs in pergola ontology) contained in the
 data:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">data_types</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>The minimun value present in the data:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">min</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1335985200</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1335985200</span>
 </pre></div>
 </div>
 <p>The maximun value:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">max</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1337799586</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1337799586</span>
 </pre></div>
 </div>
 <p>The set of different tracks present in the data (term for different IDs
 in pergola ontology). In this case the different IDs for each mice:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data</span><span class="o">.</span><span class="n">tracks</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
  <span class="s1">&#39;10&#39;</span><span class="p">,</span>
  <span class="s1">&#39;11&#39;</span><span class="p">,</span>
  <span class="s1">&#39;12&#39;</span><span class="p">,</span>
@@ -317,10 +278,7 @@ in pergola ontology). In this case the different IDs for each mice:</p>
 </div>
 <p>And finally the dataTypes (term for different types of data in pergola
 ontology) that can be used to encode for example different behaviours:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_info</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">EndT</span>        <span class="n">end</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EndT</span>        <span class="n">end</span>
 <span class="n">Nature</span>      <span class="n">data_types</span>
 <span class="n">Value</span>       <span class="n">data_value</span>
 <span class="n">StartT</span>      <span class="n">start</span>
@@ -328,10 +286,7 @@ ontology) that can be used to encode for example different behaviours:</p>
 <span class="n">CAGE</span>        <span class="n">track</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_info</span><span class="o">.</span><span class="n">correspondence</span><span class="p">[</span><span class="s1">&#39;EndT&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s1">&#39;end&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;end&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -344,16 +299,10 @@ ontology) that can be used to encode for example different behaviours:</p>
 <p>Data can be loaded into a Track objects by read function. This function
 allows to convert the intervals to relative values using the first time
 point as 0:</p>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">list_tracks</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
  <span class="s1">&#39;10&#39;</span><span class="p">,</span>
  <span class="s1">&#39;11&#39;</span><span class="p">,</span>
  <span class="s1">&#39;12&#39;</span><span class="p">,</span>
@@ -372,23 +321,10 @@ point as 0:</p>
  <span class="s1">&#39;9&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">range_values</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">8.82</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">8.82</span><span class="p">]</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">dict_bed</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bed&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">#dict_bed = data_read.convert(mode=&#39;bed&#39;)</span>
-<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bed</span><span class="p">:</span>
-    <span class="nb">print</span> <span class="s2">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c1">#del</span>
-    <span class="n">bedSingle</span> <span class="o">=</span> <span class="n">dict_bed</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="nb">print</span> <span class="s2">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedSingle</span><span class="o">.</span><span class="n">data_types</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
 <span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
@@ -474,41 +410,16 @@ point as 0:</p>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_12_food_sc</span> <span class="o">=</span> <span class="n">dict_bed</span><span class="p">[(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;0.02&#39;</span><span class="p">,</span> <span class="s1">&#39;0.540000000000001&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_12_food_sc</span><span class="o">.</span><span class="n">range_values</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Bed</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;0.02&#39;</span><span class="p">,</span> <span class="s1">&#39;0.540000000000001&#39;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">track_convert2bed</span> <span class="n">at</span> <span class="mh">0x1077e5550</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">bed_12_food_sc</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Bed</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_12_food_sc</span><span class="o">.</span><span class="n">data</span>
-
-<span class="c1"># Code to print the data inside a bed object (generator object)</span>
-<span class="c1">#for row in bed_12_food_sc.data:</span>
-<span class="c1">#    print row</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">track_convert2bed</span> <span class="n">at</span> <span class="mh">0x1077e5550</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">dict_bedGraph</span> <span class="o">=</span> <span class="n">int_data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bedGraph&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dict_bedGraph</span><span class="p">:</span>
-    <span class="nb">print</span> <span class="s2">&quot;key.......: &quot;</span><span class="p">,</span><span class="n">key</span><span class="c1">#del</span>
-    <span class="n">bedGraphSingle</span> <span class="o">=</span> <span class="n">dict_bedGraph</span> <span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="nb">print</span> <span class="s2">&quot;::::::::::::::&quot;</span><span class="p">,</span><span class="n">bedGraphSingle</span><span class="o">.</span><span class="n">data_types</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
 <span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
@@ -592,46 +503,24 @@ point as 0:</p>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
 <span class="n">key</span><span class="o">.......</span><span class="p">:</span>  <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)</span>
 <span class="p">::::::::::::::</span> <span class="n">food_sc</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bedG_8_food_sc</span> <span class="o">=</span> <span class="n">dict_bedGraph</span><span class="p">[(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="track-object">
 <h1>Track object<a class="headerlink" href="#track-object" title="Permalink to this headline">¶</a></h1>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bedG_8_food_sc</span><span class="o">.</span><span class="n">data</span>
-
-<span class="c1"># Code to print the data inside a bed object (generator object)</span>
-<span class="c1">#for row in bedG_8_food_sc:</span>
-<span class="c1">#    print row</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">track_convert2bedGraph</span> <span class="n">at</span> <span class="mh">0x1081f9690</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">track_convert2bedGraph</span> <span class="n">at</span> <span class="mh">0x1081f9690</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Track</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pergola</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">Track</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">8.82</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">list</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">range_values</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">8.82</span><span class="p">]</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">list_tracks</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
  <span class="s1">&#39;10&#39;</span><span class="p">,</span>
  <span class="s1">&#39;11&#39;</span><span class="p">,</span>
  <span class="s1">&#39;12&#39;</span><span class="p">,</span>
@@ -650,65 +539,27 @@ point as 0:</p>
  <span class="s1">&#39;9&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="mi">1812042</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="mi">1811948</span><span class="p">,</span> <span class="s1">&#39;0.14&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;18&#39;</span><span class="p">,</span> <span class="mi">1812042</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="mi">1811948</span><span class="p">,</span> <span class="s1">&#39;0.14&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">int_data_read</span><span class="o">.</span><span class="n">data_types</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;food_fat&#39;</span><span class="p">,</span> <span class="s1">&#39;food_sc&#39;</span><span class="p">,</span> <span class="s1">&#39;water&#39;</span><span class="p">}</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">#data_read.convert(mode=write_format, tracks=sel_tracks, tracks_merge=tracks2merge,</span>
-<span class="c1">#                                 data_types=data_types_list, dataTypes_actions=dataTypes_act,</span>
-<span class="c1">#                                 window=window_size)</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping</span><span class="o">.</span><span class="n">write_chr</span> <span class="p">(</span><span class="n">int_data_read</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Chromosome</span> <span class="n">fasta</span> <span class="n">like</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Chromosome</span> <span class="n">fasta</span> <span class="n">like</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
 <span class="n">Genome</span> <span class="n">fasta</span> <span class="n">file</span> <span class="n">created</span><span class="p">:</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">chr1</span><span class="o">.</span><span class="n">fa</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Generate a cytoband file and a bed file with phases</span>
-<span class="n">mapping</span><span class="o">.</span><span class="n">write_cytoband</span><span class="p">(</span><span class="n">end</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">int_data</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">43200</span><span class="p">,</span> <span class="n">start_phase</span><span class="o">=</span><span class="s2">&quot;dark&quot;</span><span class="p">,</span> <span class="n">lab_bed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Cytoband</span> <span class="n">like</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Cytoband</span> <span class="n">like</span> <span class="n">file</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
 <span class="n">Bed</span> <span class="n">files</span> <span class="k">with</span> <span class="n">phases</span> <span class="n">will</span> <span class="n">be</span> <span class="n">dump</span> <span class="n">into</span> <span class="s2">&quot;/Users/jespinosa/git/pergola/doc/notebooks&quot;</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">using</span> <span class="n">path_w</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">#data_read = intData.read(relative_coord=True, multiply_t=1)</span>
-<span class="n">data_read</span> <span class="o">=</span> <span class="n">int_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span> <span class="n">water</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">#for i in data_read.data:</span>
-<span class="c1">#        print i</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">data_type_col</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;food_sc&#39;</span><span class="p">:</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat&#39;</span><span class="p">:</span><span class="s1">&#39;blue&#39;</span><span class="p">}</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s2">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span>
-                            <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span> <span class="n">water</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_str</span><span class="p">:</span>
-    <span class="n">bedSingle</span> <span class="o">=</span> <span class="n">bed_str</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">bedSingle</span><span class="o">.</span><span class="n">save_track</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">tr_12_dt_food_sc</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 <span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">tr_14_dt_food_fat</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
@@ -763,39 +614,28 @@ point as 0:</p>
 </div>
 <div class="section" id="output-data">
 <h1>Output data<a class="headerlink" href="#output-data" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal"><span class="pre">pergola</span></code> allows the conversion to several genomic formats, here we
-summarize some commands and operations as an example of <code class="docutils literal"><span class="pre">pergola</span></code>
+<p><code class="docutils literal notranslate"><span class="pre">pergola</span></code> allows the conversion to several genomic formats, here we
+summarize some commands and operations as an example of <code class="docutils literal notranslate"><span class="pre">pergola</span></code>
 capabilities:</p>
 </div>
 <div class="section" id="bed-file">
 <h1>Bed file<a class="headerlink" href="#bed-file" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bed</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bed</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
 <span class="n">chr1</span>    <span class="mf">137.0</span>   <span class="mf">156.0</span>   <span class="s2">&quot;&quot;</span>  <span class="mf">0.06</span>    <span class="o">+</span>   <span class="mf">137.0</span>   <span class="mf">156.0</span>   <span class="mi">51</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">51</span>
 <span class="n">chr1</span>    <span class="mf">250.0</span>   <span class="mf">281.0</span>   <span class="s2">&quot;&quot;</span>  <span class="mf">0.07</span>    <span class="o">+</span>   <span class="mf">250.0</span>   <span class="mf">281.0</span>   <span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mf">311.0</span>   <span class="mf">333.0</span>   <span class="s2">&quot;&quot;</span>  <span class="mf">0.08</span>    <span class="o">+</span>   <span class="mf">311.0</span>   <span class="mf">333.0</span>   <span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bed</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bed</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1 eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="mi">2</span> <span class="n">itemRgb</span><span class="o">=</span><span class="s2">&quot;On&quot;</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
 <span class="n">chr1</span>    <span class="mi">0</span>   <span class="mi">19</span>  <span class="s2">&quot;&quot;</span>  <span class="mf">0.06</span>    <span class="o">+</span>   <span class="mi">0</span>   <span class="mi">19</span>  <span class="mi">51</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">51</span>
 <span class="n">chr1</span>    <span class="mi">113</span> <span class="mi">144</span> <span class="s2">&quot;&quot;</span>  <span class="mf">0.07</span>    <span class="o">+</span>   <span class="mi">113</span> <span class="mi">144</span> <span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mi">174</span> <span class="mi">196</span> <span class="s2">&quot;&quot;</span>  <span class="mf">0.08</span>    <span class="o">+</span>   <span class="mi">174</span> <span class="mi">196</span> <span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">data_type_col_bedGraph</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;food_sc&#39;</span><span class="p">:</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;food_fat_food_sc&#39;</span><span class="p">:</span><span class="s1">&#39;blue&#39;</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span> <span class="n">water</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bedGraph_str</span> <span class="o">=</span> <span class="n">data_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bedGraph&quot;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span> <span class="n">data_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;food_sc&quot;</span><span class="p">,</span> <span class="s2">&quot;food_fat&quot;</span><span class="p">],</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">color_restrictions</span><span class="o">=</span><span class="n">data_type_col_bedGraph</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Removed</span> <span class="n">data</span> <span class="n">types</span> <span class="n">are</span><span class="p">:</span> <span class="n">water</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bedGraph_str</span><span class="p">:</span>
-    <span class="n">bedGraph_single</span> <span class="o">=</span> <span class="n">bedGraph_str</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">bedGraph_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">tr_12_dt_food_sc</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
 <span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">tr_14_dt_food_fat</span><span class="o">.</span><span class="n">bedGraph</span> <span class="n">generated</span>
@@ -850,7 +690,7 @@ capabilities:</p>
 </div>
 <div class="section" id="bedgraph-files">
 <h1>bedGraph files<a class="headerlink" href="#bedgraph-files" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bedGraph</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="n">full</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span> <span class="n">altColor</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">track</span> <span class="nb">type</span><span class="o">=</span><span class="n">bedGraph</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;1_eat&quot;</span> <span class="n">visibility</span><span class="o">=</span><span class="n">full</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="mi">254</span><span class="p">,</span><span class="mi">0</span> <span class="n">altColor</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">25</span> <span class="n">priority</span><span class="o">=</span><span class="mi">20</span>
 <span class="n">chr1</span>    <span class="mi">0</span>   <span class="mi">30</span>  <span class="mf">0.06</span>
 <span class="n">chr1</span>    <span class="mi">30</span>  <span class="mi">60</span>  <span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mi">60</span>  <span class="mi">90</span>  <span class="mi">0</span>
@@ -861,42 +701,21 @@ capabilities:</p>
 <span class="n">chr1</span>    <span class="mi">210</span> <span class="mi">240</span> <span class="mi">0</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1">## Bed file showing the files (recordings)</span>
-<span class="c1"># reading correspondence file</span>
-<span class="n">mapping_file_data</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">MappingInfo</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/f2g.txt&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Value</span>       <span class="n">data_value</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Value</span>       <span class="n">data_value</span>
 <span class="n">EndT</span>        <span class="n">end</span>
 <span class="n">StartT</span>      <span class="n">start</span>
 <span class="n">File</span>        <span class="n">track</span>
 <span class="n">NameFile</span>    <span class="n">data_types</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Reading file info</span>
-<span class="n">files_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/files.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
-<span class="n">data_file_read</span> <span class="o">=</span> <span class="n">files_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Input</span> <span class="n">file</span> <span class="nb">format</span> <span class="n">identified</span> <span class="k">as</span> <span class="n">csv</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span> <span class="n">file</span> <span class="nb">format</span> <span class="n">identified</span> <span class="k">as</span> <span class="n">csv</span>
 <span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_file</span> <span class="o">=</span> <span class="n">data_file_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">tracks_merge</span><span class="o">=</span><span class="n">files_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Tracks</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">are</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">6</span> <span class="mi">9</span> <span class="mi">8</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Tracks</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">are</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">6</span> <span class="mi">9</span> <span class="mi">8</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_file</span><span class="p">:</span>
-    <span class="n">bed_file_single</span> <span class="o">=</span> <span class="n">bed_file</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">bed_file_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">name_file</span> <span class="o">=</span> <span class="s2">&quot;files_data&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 <span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
@@ -916,41 +735,28 @@ capabilities:</p>
 <span class="n">File</span> <span class="n">files_data</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Reading phase info</span>
-<span class="n">phase_data</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">IntData</span><span class="p">(</span><span class="s2">&quot;../../sample_data/feeding_behavior/phases_exp.csv&quot;</span><span class="p">,</span> <span class="n">map_dict</span><span class="o">=</span><span class="n">mapping_file_data</span><span class="o">.</span><span class="n">correspondence</span><span class="p">)</span>
-<span class="n">data_phase_read</span> <span class="o">=</span> <span class="n">phase_data</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">relative_coord</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Input</span> <span class="n">file</span> <span class="nb">format</span> <span class="n">identified</span> <span class="k">as</span> <span class="n">csv</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span> <span class="n">file</span> <span class="nb">format</span> <span class="n">identified</span> <span class="k">as</span> <span class="n">csv</span>
 <span class="n">Relative</span> <span class="n">coordinates</span> <span class="nb">set</span> <span class="n">to</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="n">bed_file</span> <span class="o">=</span> <span class="n">data_phase_read</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;bed&quot;</span><span class="p">,</span> <span class="n">dataTypes_actions</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">tracks_merge</span><span class="o">=</span><span class="n">phase_data</span><span class="o">.</span><span class="n">tracks</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Tracks</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">are</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Tracks</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">merged</span> <span class="n">are</span><span class="p">:</span> <span class="mi">1</span> <span class="mi">2</span>
-</pre></div>
-</div>
-<div class="code ipython2 highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">bed_file</span><span class="p">:</span>
-    <span class="n">bed_file_single</span> <span class="o">=</span> <span class="n">bed_file</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">bed_file_single</span><span class="o">.</span><span class="n">save_track</span><span class="p">(</span><span class="n">name_file</span> <span class="o">=</span> <span class="s2">&quot;phase_exp&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">phase_exp</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 <span class="n">No</span> <span class="n">path</span> <span class="n">selected</span><span class="p">,</span> <span class="n">files</span> <span class="n">dump</span> <span class="n">into</span> <span class="n">path</span><span class="p">:</span>  <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">jespinosa</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">pergola</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">notebooks</span>
 <span class="n">File</span> <span class="n">phase_exp</span><span class="o">.</span><span class="n">bed</span> <span class="n">generated</span>
 </pre></div>
 </div>
 <p>means bed file to delete</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>    <span class="mi">1</span>   <span class="mi">1801</span>    <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mf">0.06</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chr1</span>    <span class="mi">1</span>   <span class="mi">1801</span>    <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">0</span>   <span class="mi">1</span>   <span class="mf">0.06</span>
 <span class="n">chr1</span>    <span class="mi">137171</span>  <span class="mi">138971</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">132936</span>  <span class="mi">137171</span>  <span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mi">397442</span>  <span class="mi">399242</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">391684</span>  <span class="mi">397442</span>  <span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mi">568633</span>  <span class="mi">570433</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">563646</span>  <span class="mi">568633</span>  <span class="mf">0.125714</span>
 </pre></div>
 </div>
 <p>intermeal to delete</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">chr1</span>    <span class="mi">1</span>   <span class="mi">30</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">1</span>   <span class="mi">30</span>  <span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chr1</span>    <span class="mi">1</span>   <span class="mi">30</span>  <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">1</span>   <span class="mi">30</span>  <span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mi">183</span> <span class="mi">345</span> <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">183</span> <span class="mi">345</span> <span class="mi">0</span>
 <span class="n">chr1</span>    <span class="mi">502</span> <span class="mi">924</span> <span class="s2">&quot;&quot;</span>  <span class="mi">1000</span>    <span class="o">+</span>   <span class="mi">502</span> <span class="mi">924</span> <span class="mi">0</span>
 </pre></div>
@@ -976,8 +782,8 @@ capabilities:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 13, 2018.
+        &copy; Copyright 2016-2019, Jose Espinosa-Carrasco.
+      Last updated on Jan 22, 2019.
 
     </p>
   </div>
@@ -1008,7 +814,6 @@ capabilities:</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

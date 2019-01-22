@@ -60,7 +60,7 @@
 
           
             
-            <img src="../_static/img/pergola_logo.svg" class="logo" />
+            <img src="../_static/img/pergola_logo.png" class="logo" />
           
           </a>
 
@@ -152,101 +152,11 @@
             
   <div class="section" id="mapping-class">
 <h1>Mapping class<a class="headerlink" href="#mapping-class" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="mapping.MappingInfo">
-<em class="property">class </em><code class="descclassname">mapping.</code><code class="descname">MappingInfo</code><span class="sig-paren">(</span><em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#MappingInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.MappingInfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class holds a dictionary with the mappings between the pergola ontology and the phenomics fields
-Mapping can be read both from a tabulated file or the _external_mapping_file_format from the 
-Gene Ontology Consortium</p>
-<dl class="attribute">
-<dt id="mapping.MappingInfo.path">
-<code class="descname">path</code><a class="headerlink" href="#mapping.MappingInfo.path" title="Permalink to this definition">¶</a></dt>
-<dt>
-<code class="descname">Name of/path to a configuration file</code></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="mapping.MappingInfo.correspondence">
-<code class="descname">correspondence</code><a class="headerlink" href="#mapping.MappingInfo.correspondence" title="Permalink to this definition">¶</a></dt>
-<dt>
-<code class="descname">Dictionary with keys fields in behavioral file and values correspondence in genomic grammar</code></dt>
-<dd></dd></dl>
-
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MappingInfo object</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="mapping.MappingInfo.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#MappingInfo.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.MappingInfo.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes correspondence between the pergola ontology terms and the behavioral data</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>0</em>) – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> set indent to be used when writing</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
 <div class="section" id="create-a-chromosome-in-fasta-format">
 <h2>Create a chromosome in fasta format<a class="headerlink" href="#create-a-chromosome-in-fasta-format" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="mapping.write_chr">
-<code class="descclassname">mapping.</code><code class="descname">write_chr</code><span class="sig-paren">(</span><em>self</em>, <em>mode='w'</em>, <em>path_w=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#write_chr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.write_chr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a fasta file of the length of the range of value inside the IntData object
-that will be use for the mapping the data into it</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mode</strong> – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use by default write</li>
-<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="create-a-cytoband-like-file">
 <h2>Create a cytoband-like file<a class="headerlink" href="#create-a-cytoband-like-file" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="mapping.write_cytoband">
-<code class="descclassname">mapping.</code><code class="descname">write_cytoband</code><span class="sig-paren">(</span><em>end</em>, <em>start=0</em>, <em>delta=43200</em>, <em>start_phase='light'</em>, <em>mode='w'</em>, <em>path_w=None</em>, <em>lab_bed=True</em>, <em>track_line=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mapping.html#write_cytoband"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mapping.write_cytoband" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a cytoband-like and a bed file with phases of the experiment</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>end</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> last timepoint in the series</li>
-<li><strong>start</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> first timepoint in the series, by default 0</li>
-<li><strong>delta</strong> – <code class="xref py py-func docutils literal"><span class="pre">int()</span></code> delta between intervals, by default 43200 seconds, 12 hours</li>
-<li><strong>start_phase</strong> (<em>light</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> first phase “light” or “dark”, by default light</li>
-<li><strong>mode</strong> (<em>w</em>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> mode to use for file, by default write</li>
-<li><strong>path_w</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#None" title="(in Python v2.7)"><em>None</em></a>) – <code class="xref py py-func docutils literal"><span class="pre">str()</span></code> path to dump the files, by default None</li>
-<li><strong>lab_bed</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true shows label corresponding to dataType in bed file otherwise 
-shows “.”</li>
-<li><strong>track_line</strong> (<a class="reference external" href="https://docs.python.org/2/library/constants.html#True" title="(in Python v2.7)"><em>True</em></a>) – If true includes track_line in the file 
-TODO: extend light and dark to other possible values using variables
-Eventually separate into two different functions write_cytoband and write_bed</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 </div>
 
@@ -269,8 +179,8 @@ Eventually separate into two different functions write_cytoband and write_bed</l
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 23, 2018.
+        &copy; Copyright 2016-2019, Jose Espinosa-Carrasco.
+      Last updated on Jan 22, 2019.
 
     </p>
   </div>
@@ -301,7 +211,6 @@ Eventually separate into two different functions write_cytoband and write_bed</l
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

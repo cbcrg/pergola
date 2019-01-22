@@ -57,7 +57,7 @@
 
           
             
-            <img src="../_static/img/pergola_logo.svg" class="logo" />
+            <img src="../_static/img/pergola_logo.png" class="logo" />
           
           </a>
 
@@ -157,7 +157,7 @@ the same version of Pergola using the tag of the image.</p>
 <p>Docker images are tagged and thus at any time you will be able to retrieve the
 exactly same version of the Pergola using the tag corresponding to the version.
 You can pull the latest Pergola image from <a class="reference external" href="https://hub.docker.com/">Docker Hub</a>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
 </pre></div>
 </div>
 <div class="admonition note">
@@ -169,11 +169,11 @@ You can pull the latest Pergola image from <a class="reference external" href="h
 <h1>Pergola Docker execution example<a class="headerlink" href="#pergola-docker-execution-example" title="Permalink to this headline">¶</a></h1>
 <p>You can run Pergola on a container created from the downloaded image interatively
 with the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run -ti pergola/pergola bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -ti pergola/pergola bash
 </pre></div>
 </div>
 <p>You can also mount your files in the container as shown below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
 </pre></div>
 </div>
 <p>For a more complete example go to the <a class="reference internal" href="../tutorial.html#tutorial"><span class="std std-ref">tutorial section</span></a>.</p>
@@ -189,8 +189,8 @@ with the following command:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 13, 2018.
+        &copy; Copyright 2016-2019, Jose Espinosa-Carrasco.
+      Last updated on Jan 22, 2019.
 
     </p>
   </div>
@@ -221,7 +221,6 @@ with the following command:</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

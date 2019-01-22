@@ -59,7 +59,7 @@
 
           
             
-            <img src="_static/img/pergola_logo.svg" class="logo" />
+            <img src="_static/img/pergola_logo.png" class="logo" />
           
           </a>
 
@@ -161,14 +161,14 @@
             
   <div class="section" id="installation">
 <span id="id1"></span><h1><a class="toc-backref" href="#id9">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal"><span class="pre">pergola</span></code> is a Python package that works either as a command line tool or a library. Pergola installation involves its
+<p><code class="docutils literal notranslate"><span class="pre">pergola</span></code> is a Python package that works either as a command line tool or a library. Pergola installation involves its
 compilation from the downloaded source code via <a class="reference external" href="https://www.github.com/">GitHub</a>, installing a stable release via
 <a class="reference external" href="https://pypi.python.org/pypi">PyPI</a> or to pull the last Docker image. We strongly recommend this last option (<a class="reference internal" href="#pergola-docker-image">Pergola docker image</a>) since it
 provides a ready-to-use, portable version of pergola.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you don’t feel like to install <code class="docutils literal"><span class="pre">pergola</span></code> you can always use our <a class="reference external" href="http://pergola.crg.eu/">web server</a> to
-access main <code class="docutils literal"><span class="pre">pergola</span></code> functionalities in a user-friendly interface.</p>
+<p class="last">If you don’t feel like to install <code class="docutils literal notranslate"><span class="pre">pergola</span></code> you can always use our <a class="reference external" href="http://pergola.crg.eu/">web server</a> to
+access main <code class="docutils literal notranslate"><span class="pre">pergola</span></code> functionalities in a user-friendly interface.</p>
 </div>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
@@ -199,7 +199,7 @@ access main <code class="docutils literal"><span class="pre">pergola</span></cod
 </div>
 <div class="section" id="installation-from-github">
 <h2><a class="toc-backref" href="#id10">Installation from Github</a><a class="headerlink" href="#installation-from-github" title="Permalink to this headline">¶</a></h2>
-<p>In this section you will find the details of how to download <code class="docutils literal"><span class="pre">pergola</span></code> source code via
+<p>In this section you will find the details of how to download <code class="docutils literal notranslate"><span class="pre">pergola</span></code> source code via
 Github and how to compile it. Prerequisites that pergola require installed in
 your system are also listed in this section.</p>
 <hr class="docutils" />
@@ -219,8 +219,8 @@ your system are also listed in this section.</p>
 </div>
 <div class="section" id="required-python-libraries">
 <span id="required-libraries"></span><h3><a class="toc-backref" href="#id11">Required Python libraries</a><a class="headerlink" href="#required-python-libraries" title="Permalink to this headline">¶</a></h3>
-<p>Pergola requires some Python libraries installed in your system, to install them you can use <code class="docutils literal"><span class="pre">pip</span></code>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install numpy argparse biopy-isatab scipy pandas pybedtools
+<p>Pergola requires some Python libraries installed in your system, to install them you can use <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install numpy argparse biopy-isatab scipy pandas pybedtools
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -231,34 +231,34 @@ your system are also listed in this section.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">Under Ubuntu <strong>you might need to install</strong> <a class="reference external" href="http://packages.ubuntu.com/precise/python-dev">python-dev</a>  in order to be able to install packages belonging
 to the <a class="reference external" href="http://www.scipy.org/install.html">SciPy Stack</a> such as numpy and scipy using pip.  Alternatively you can also use:
-<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-numpy</span> <span class="pre">python-scipy</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-numpy</span> <span class="pre">python-scipy</span></code>.</p>
 </div>
 </div>
 <div class="section" id="download-and-installation">
 <h3><a class="toc-backref" href="#id12">Download and installation</a><a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h3>
 <p>Download Pergola tarball from github, unpack and install it:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ curl -L  http://github.com/cbcrg/pergola/archive/master.zip -o <span class="s2">&quot;pergola.zip&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ curl -L  http://github.com/cbcrg/pergola/archive/master.zip -o <span class="s2">&quot;pergola.zip&quot;</span>
 $ unzip pergola.zip
 $ <span class="nb">cd</span> pergola-master
 $ sudo python setup.py install
 </pre></div>
 </div>
-<p>or, you can download the code as a <code class="docutils literal"><span class="pre">.zip</span></code> file from Github website and follow the three last instructions above.</p>
+<p>or, you can download the code as a <code class="docutils literal notranslate"><span class="pre">.zip</span></code> file from Github website and follow the three last instructions above.</p>
 <img alt="_images/github_zip_red.png" src="_images/github_zip_red.png" />
 </div>
 <div class="section" id="development-versions">
 <h3><a class="toc-backref" href="#id13">Development versions</a><a class="headerlink" href="#development-versions" title="Permalink to this headline">¶</a></h3>
-<p>The source code of pergola can be found in <a href="https://github.com/cbcrg/pergola" target="_blank">GitHub</a> <code class="docutils literal"><span class="pre">pergola</span></code> repository. There you
+<p>The source code of pergola can be found in <a href="https://github.com/cbcrg/pergola" target="_blank">GitHub</a> <code class="docutils literal notranslate"><span class="pre">pergola</span></code> repository. There you
 will find the last development version. If you want to modify, contribute or just run the last version of the code just
 clone the repository:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/cbcrg/pergola.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/cbcrg/pergola.git
 </pre></div>
 </div>
 </div>
 <div class="section" id="testing-installation">
 <h3><a class="toc-backref" href="#id14">Testing installation</a><a class="headerlink" href="#testing-installation" title="Permalink to this headline">¶</a></h3>
 <p>Finally, if you want to check that your installation completed successfully, move to test directory and run as in the example:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> pergola/test
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> pergola/test
 $ python test_all.py
 </pre></div>
 </div>
@@ -266,9 +266,9 @@ $ python test_all.py
 </div>
 <div class="section" id="installation-via-pypi">
 <h2><a class="toc-backref" href="#id15">Installation via PyPI</a><a class="headerlink" href="#installation-via-pypi" title="Permalink to this headline">¶</a></h2>
-<p>pergola can be installed using <code class="docutils literal"><span class="pre">pip</span></code> following the instructions described here.</p>
+<p>pergola can be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code> following the instructions described here.</p>
 <hr class="docutils" />
-<p>Stable pergola releases are available on <code class="docutils literal"><span class="pre">PyPI</span></code>.
+<p>Stable pergola releases are available on <code class="docutils literal notranslate"><span class="pre">PyPI</span></code>.
 In this section you will find the details of how to download Pergola source code
 from Github and how to compile it. Prerequisites that Pergola require installed in
 your system are also listed in this section.</p>
@@ -280,7 +280,7 @@ your system are also listed in this section.</p>
 <div class="section" id="id2">
 <h3><a class="toc-backref" href="#id16">Required Python libraries</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Pergola requires the following Python libraries installed in your system:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install numpy argparse biopy-isatab scipy pandas pybedtools xlrd
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install numpy argparse biopy-isatab scipy pandas pybedtools xlrd
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -291,20 +291,20 @@ your system are also listed in this section.</p>
 <p class="first admonition-title">Warning</p>
 <p class="last">Under Ubuntu <strong>you might need to install</strong> <a class="reference external" href="http://packages.ubuntu.com/precise/python-dev">python-dev</a>  in order to be able to install packages belonging
 to the <a class="reference external" href="http://www.scipy.org/install.html">SciPy Stack</a> such as numpy and scipy using pip.  Alternatively you can also use:
-<code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-numpy</span> <span class="pre">python-scipy</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-numpy</span> <span class="pre">python-scipy</span></code>.</p>
 </div>
 </div>
 <div class="section" id="install-latest-release-using-pip">
 <h3><a class="toc-backref" href="#id17">Install latest release using pip</a><a class="headerlink" href="#install-latest-release-using-pip" title="Permalink to this headline">¶</a></h3>
 <p>Use this command to install last released pergola version:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install pergola
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install pergola
 </pre></div>
 </div>
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id18">Testing installation</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>To check whether pergola has been correctly installed you can call pergola main script help option</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pergola -h
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pergola -h
 </pre></div>
 </div>
 </div>
@@ -314,7 +314,7 @@ to the <a class="reference external" href="http://www.scipy.org/install.html">Sc
 <p><a class="reference external" href="https://www.docker.com/">Docker</a> allows to sandbox an application with all the requirements it needs to run
 (operating system, software, libraries and dependencies) in a container.
 Besides avoiding the tedious process of installing all dependencies,
-the use of <code class="docutils literal"><span class="pre">pergola</span></code> docker images provides the extra benefit of guarantee
+the use of <code class="docutils literal notranslate"><span class="pre">pergola</span></code> docker images provides the extra benefit of guarantee
 the reproducibility of your results. Regardless your operating system
 and the software installed in your machine, you can always run your computation
 under the same environment and the same version of Pergola using the image tag.
@@ -340,7 +340,7 @@ the same version of Pergola using the tag of the image.</p>
 <p>Docker images are tagged and thus at any time you will be able to retrieve the
 exactly same version of the Pergola using the tag corresponding to the version.
 You can pull the latest Pergola image from <a class="reference external" href="https://hub.docker.com/">Docker Hub</a>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull pergola/pergola:latest
 </pre></div>
 </div>
 <div class="admonition note">
@@ -352,11 +352,11 @@ You can pull the latest Pergola image from <a class="reference external" href="h
 <h3><a class="toc-backref" href="#id22">Pergola Docker execution example</a><a class="headerlink" href="#pergola-docker-execution-example" title="Permalink to this headline">¶</a></h3>
 <p>You can run Pergola on a container created from the downloaded image interatively
 with the following command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run -ti pergola/pergola bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -ti pergola/pergola bash
 </pre></div>
 </div>
 <p>You can also mount your files in the container as shown below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run --rm -it -v /local_path_to_files:/container_path -w /container_path pergola/pergola bash
 </pre></div>
 </div>
 <p>For a more complete example go to the <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">tutorial section</span></a>.</p>
@@ -390,8 +390,8 @@ instance this <a class="reference external" href="https://github.com/pyenv/pyenv
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016-2018, Jose Espinosa-Carrasco.
-      Last updated on Feb 13, 2018.
+        &copy; Copyright 2016-2019, Jose Espinosa-Carrasco.
+      Last updated on Jan 22, 2019.
 
     </p>
   </div>
@@ -422,7 +422,6 @@ instance this <a class="reference external" href="https://github.com/pyenv/pyenv
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
