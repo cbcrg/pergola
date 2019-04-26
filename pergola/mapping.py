@@ -1,5 +1,5 @@
-#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2019, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2019, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
@@ -30,9 +30,9 @@ It provides a class :class:`~pergola.mapping.MappingInfo` that reads the informa
 from a mapping file.
  
 """
-from re      import compile, match
+from re      import compile, match, split
 from os      import getcwd
-from sys     import stderr
+from sys     import stderr, exit
 from os.path import join
 from tracks  import Track
 
@@ -80,15 +80,19 @@ class MappingInfo():
 
         with open(path) as config_file:
             # Eliminates possible empty lines at the end
-            config_file_list = filter(lambda x:  not match(r'^\s*$', x), config_file)
-            
-            if config_file_list[0][0] == '#':
-                del config_file_list[0]
-                return self._tab_config(config_file_list)
+            config_file_list = filter(lambda x: not match(r'^\s*$', x), config_file)
 
-            elif config_file_list[0][0] == '!':
-                del config_file_list[:1]
-                return self._mapping_config(config_file_list)
+            file_list_no_comments = [l for l in config_file_list if l[0] != "!" if l[0] != "#"]
+
+            for i, line in enumerate(file_list_no_comments):
+                if not match(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ", line) and not match(r"(\w+)\s+(\w+)", line):
+                    raise TypeError("Mapping file format is not recognized: \"%s\"." % (path))
+
+            # Checks that files is a tsv and has the desired number of fields
+            if match(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ", file_list_no_comments[0]):
+                return self._mapping_config(file_list_no_comments)
+            elif match(r"(\w+)\s+(\w+)", file_list_no_comments[0]):
+                return self._tab_config(file_list_no_comments)
             else:
                 raise TypeError("Mapping file format is not recognized: \"%s\"." % (path))
 
@@ -108,10 +112,10 @@ class MappingInfo():
         dummy_ctr=0
         
         for row in file_tab:
-            if(row.startswith(comment_tag_t)):
+            if row.startswith(comment_tag_t):
                 continue
-                                    
-            row_split = row.rstrip('\n').split('\t')
+            row_split = split(r'\s+', row.rstrip('\n'))
+
             file_term = row_split[0]
             pergola_term = row_split[1]
             
