@@ -18,4 +18,6 @@ You can also use our web server still under development:
 
 [Pergola web server](http://pergola.crg.eu/)
 
+* Example of a visualization using the IGV desktop app:
+
 ![Mouse feeding behavior-IGV snapshot](https://github.com/cbcrg/pergola/blob/master/doc/source/images/mouse_hf_igv.png)
