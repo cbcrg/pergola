@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
-#  Copyright (c) 2014-2018, Centre for Genomic Regulation (CRG).
-#  Copyright (c) 2014-2018, Jose Espinosa-Carrasco and the respective authors.
+#  Copyright (c) 2014-2019, Centre for Genomic Regulation (CRG).
+#  Copyright (c) 2014-2019, Jose Espinosa-Carrasco and the respective authors.
 #
 #  This file is part of Pergola.
 #
