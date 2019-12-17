@@ -97,7 +97,7 @@ class IntData(object):
 
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
-        self._in_file = open(self.path, "rb")
+        self._in_file = open(self.path, "r")
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = header
         self._reader = self._reader_data()
@@ -167,7 +167,7 @@ class IntData(object):
             return reader_obj
         elif ext == "xlsx":
             print(("Input file format identified as xlsx"), file=stderr)
-            reader_obj = self._pandas_df_reader(read_excel(self._in_file, header=None, sheet_name=0, index=False))
+            reader_obj = self._pandas_df_reader(read_excel(self.path, header=None, sheet_name=0, index=False))
             return reader_obj
         else:
             print(("WARNING: File format not recognized, default format assumed to be csv"), file=stderr)
