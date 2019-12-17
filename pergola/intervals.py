@@ -522,7 +522,7 @@ class IntData(object):
         # Updated and order list of the fields        
         list_fields = [None] * len(self.fieldsG_dict)
 
-        for field, i in self.fieldsG_dict.iteritems():
+        for field, i in self.fieldsG_dict.items():
             list_fields[i] = field
 
         self.fieldsG = list_fields

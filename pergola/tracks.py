@@ -1279,7 +1279,7 @@ def assign_color(set_data_types, color_restrictions=None):
 
     for dataType in set_data_types:        
         if not colors_not_used:
-            colors_not_used = _dict_colors.keys() 
+            colors_not_used = list(_dict_colors.keys())
         
         if dataType in d_dataType_color:
             continue
