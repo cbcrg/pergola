@@ -942,6 +942,7 @@ class Track(GenomicContainer):
                     chr_start = row[i_chr_start]
                     chr_end = row[i_chr_end]
                     data_value = float(row[i_data_value])
+                    f = "data_value"
                     self.fields.index(f)
 
                     # Intervals happening after the current window
