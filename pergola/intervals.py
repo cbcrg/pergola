@@ -322,10 +322,10 @@ class IntData(object):
                 header_check = True
                 continue
 
-            if isinstance((row[self.fieldsG_dict["start"]]), basestring):
+            if isinstance((row[self.fieldsG_dict["start"]]), str):
                 row[self.fieldsG_dict["start"]] = num(row[self.fieldsG_dict["start"]])
 
-            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), basestring):
+            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), str):
                     row[self.fieldsG_dict["end"]] = num(row[self.fieldsG_dict["end"]])
 
             list_data.append(tuple(row)) #TODO what is better tuple or list
@@ -474,7 +474,7 @@ class IntData(object):
 
             else:
                 # Are the provided fields present in data and are numeric #TODO en realidad si no es numerico ya petara
-                if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
+                if isinstance(fields2rel, str): fields2rel = [fields2rel]
                 f2rel = [f for f in fields2rel if f in self.fieldsG]
 
             # Getting indexes of fields to relativize

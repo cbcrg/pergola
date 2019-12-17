@@ -202,7 +202,7 @@ def check_path(path):
     
     """
 
-    assert isinstance(path, basestring), "Expected string or unicode, found %s." % type(path)
+    assert isinstance(path, str), "Expected string or unicode, found %s." % type(path)
     try:
         open(path, "r")
     except IOError:
