@@ -204,9 +204,11 @@ def check_path(path):
 
     assert isinstance(path, str), "Expected string or unicode, found %s." % type(path)
     try:
-        open(path, "r")
+        f = open(path, "r")
     except IOError:
         raise IOError('File does not exist: %s' % path)
+    finally:
+        f.close()
     return path      
 
 

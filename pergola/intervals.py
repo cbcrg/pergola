@@ -772,6 +772,8 @@ class IntData(object):
 
         return (data_int)
 
+    def __del__(self):
+        self._in_file.close()
 
 def is_number(var):
     """
