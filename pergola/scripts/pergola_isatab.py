@@ -23,6 +23,8 @@
 
 Script to run pergola from the command line using isatab format
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
 sp = " "
 
@@ -36,7 +38,7 @@ from sys      import stderr, exit
 from os       import path, makedirs
 
 # from bcbio import isatab
-import pergola_rules
+from . import pergola_rules
 
 from urllib2 import urlopen, URLError, HTTPError
 
@@ -55,10 +57,10 @@ def main():
     args = parser_isatab.parse_args()
 
     for input_file in args.input:
-        print >> stderr, "@@@Pergola_isatab.py: Input file: %s" % input_file
-        print >> stderr, "@@@Pergola_isatab.py: Configuration file: %s" % args.mapping_file
-        print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: ", args.tracks
-        print >> stderr, "@@@Pergola_isatab.py: Selected tracks are: test"
+        print("@@@Pergola_isatab.py: Input file: %s" % input_file, file=stderr)
+        print("@@@Pergola_isatab.py: Configuration file: %s" % args.mapping_file, file=stderr)
+        print("@@@Pergola_isatab.py: Selected tracks are: ", args.tracks, file=stderr)
+        print("@@@Pergola_isatab.py: Selected tracks are: test", file=stderr)
 
         # I have to check whether when a isatab folder is given if it is actually a folder or a file
         # difference with -i
@@ -67,7 +69,7 @@ def main():
 
         # It might be interesting to check inside the function whether files are url or in path
         dict_files = isatab_parser.parse_isatab_assays (input_file)
-        print dict_files
+        print(dict_files)
 
         # First try with files in local then with url
         for key in dict_files:
@@ -86,9 +88,9 @@ def main():
                                multiply_f=args.multiply_intervals, fields2read=args.fields_read,
                                window_size=args.window_size)
 
-            print >> stderr, "@@@Pergola_isatab.py: : File correctly processed:", file_path
+            print("@@@Pergola_isatab.py: : File correctly processed:", file_path, file=stderr)
 
-    print >> stderr, "@@@Pergola_isatab.py: execution finished correctly" 
+    print("@@@Pergola_isatab.py: execution finished correctly", file=stderr) 
 
 ## It might be interesting to implement an append option
 

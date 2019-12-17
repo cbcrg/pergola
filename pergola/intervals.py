@@ -28,11 +28,13 @@ It contains a class :class:`~pergola.intervals.IntData` which has
 the attributes and methods needed for reading the data.
 
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
-from mapping  import check_path
+from .mapping  import check_path
 from csv      import reader
 from sys      import stderr
-from tracks   import Track
+from .tracks   import Track
 from operator import itemgetter
 from pandas   import read_excel
 
@@ -160,15 +162,15 @@ class IntData(object):
         ext = self.path.rpartition('.')[-1].lower()
 
         if ext == "csv":
-            print >> stderr, ("Input file format identified as csv")
+            print(("Input file format identified as csv"), file=stderr)
             reader_obj = reader(self._in_file, delimiter=self.delimiter)
             return reader_obj
         elif ext == "xlsx":
-            print >> stderr, ("Input file format identified as xlsx")
+            print(("Input file format identified as xlsx"), file=stderr)
             reader_obj = self._pandas_df_reader(read_excel(self._in_file, header=None, sheet_name=0, index=False))
             return reader_obj
         else:
-            print >> stderr, ("WARNING: File format not recognized, default format assumed to be csv")
+            print(("WARNING: File format not recognized, default format assumed to be csv"), file=stderr)
             reader_obj = reader(self._in_file, delimiter=self.delimiter)
             return reader_obj
 
@@ -208,7 +210,7 @@ class IntData(object):
 
         if self.header:
             header = first_l
-            first_r = self._reader.next()
+            first_r = next(self._reader)
 
             if len(header) != len(first_r):
                 raise ValueError("Number of fields in header '%d' does not match number of fields in first row '%d'"
@@ -242,9 +244,9 @@ class IntData(object):
 
                 fieldsB = fields
 
-                print >>stderr, ("WARNING: As header=False you col names set by fields will be considered to have the order "
+                print(("WARNING: As header=False you col names set by fields will be considered to have the order "
                         "you provided: \"%s\""
-                        %"\",\"".join(fields))
+                        %"\",\"".join(fields)), file=stderr)
             elif fields and fields[0] == "ordinal":
                 fieldsB = range (1, len(first_r)+1)
                 fieldsB = [str(i) for i in fieldsB]
@@ -271,8 +273,8 @@ class IntData(object):
         i_field_b=0
 
         if len(self.fieldsB) != len(map_dict):
-            print >> stderr, ("WARNING: Number of fields in input file (%d) does not match number of fields in "
-                              "mapping file (%d)." % (len(self.fieldsB), len(map_dict)))
+            print(("WARNING: Number of fields in input file (%d) does not match number of fields in "
+                              "mapping file (%d)." % (len(self.fieldsB), len(map_dict))), file=stderr)
 
         for field_B in self.fieldsB:
             if field_B:
@@ -449,7 +451,7 @@ class IntData(object):
 
         # Coordinates multiplied by a given factor set by the user
         if multiply_t:
-            print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t
+            print("Fields containing time points will be multiplied by: ", multiply_t, file=stderr)
 
             try:
                 f=""
@@ -461,7 +463,7 @@ class IntData(object):
             self.data = self._multiply_values(i_fields=idx_fields2mult, factor=multiply_t)
 
         # Coordinates transformed into relative to the minimun time point
-        print >>stderr, "Relative coordinates set to:", relative_coord
+        print("Relative coordinates set to:", relative_coord, file=stderr)
 
         if relative_coord:
             if fields2rel is None:
@@ -485,7 +487,7 @@ class IntData(object):
 
         # From only start value for each time point we generate intervals
         if intervals:
-            print >>stderr, "Intervals will be inferred from timepoints"
+            print("Intervals will be inferred from timepoints", file=stderr)
 
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))

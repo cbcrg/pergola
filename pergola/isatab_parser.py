@@ -27,6 +27,7 @@ This module provides the way to read ISA-tab format.
 
 
 """
+from __future__ import print_function
 
 from sys       import stderr
 from bcbio     import isatab 
@@ -81,10 +82,10 @@ def check_assay_pointer(pointer, download_path):
     
     # Checking if pointer is a file
     if isfile(pointer):
-       print >>stderr, "\nPointer in isatab assays \"%s\" is a file in the system" % pointer
+       print("\nPointer in isatab assays \"%s\" is a file in the system" % pointer, file=stderr)
        return (pointer)   
     elif exists(path_file):
-        print >>stderr, "File has already been downloaded before: %s" % path_file
+        print("File has already been downloaded before: %s" % path_file, file=stderr)
         return (path_file)
     else:
         if not internet_on():  raise URLError("Check your network connection")
@@ -93,7 +94,7 @@ def check_assay_pointer(pointer, download_path):
             url_file = urlopen(pointer)
             local_file = open(path_file, "w")
             local_file.write(url_file.read())
-            print "\nFile %s has been correctly downloaded to %s"%(file_name, download_path)
+            print("\nFile %s has been correctly downloaded to %s"%(file_name, download_path))
             return path_file
         except (HTTPError, ValueError):
             raise ValueError("Pointer inside isatab assays table is either a file in your system nor a valid URL %s: " %

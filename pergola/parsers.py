@@ -27,13 +27,15 @@ This module provides the way to read scripts options provided by pergola library
 
 
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
-from _version  import __version__
+from ._version  import __version__
 from sys       import stderr
 from argparse  import ArgumentParser, ArgumentTypeError
 from re        import match
 from os.path   import abspath, split, realpath
-from mapping   import check_path
+from .mapping   import check_path
 
 _csv_file_ext = ".csv"
 
@@ -93,10 +95,10 @@ def read_track_actions (tracks, track_action = "split_all"):
     else:
         tracks2merge = ""
         
-    print >> stderr,"Tracks to merge are: ", ",".join("'{0}'".format(t) for t in tracks2merge)
+    print("Tracks to merge are: ", ",".join("'{0}'".format(t) for t in tracks2merge), file=stderr)
        
     if not tracks2merge:
-        print >> stderr,("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks)))
+        print(("No track action applied as track actions \'%s\' can not be applied to list of tracks provided \'%s\'"%(track_action, " ".join(tracks))), file=stderr)
         
     return (tracks2merge)
 
