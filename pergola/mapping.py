@@ -82,7 +82,7 @@ class MappingInfo():
 
         with open(path) as config_file:
             # Eliminates possible empty lines at the end
-            config_file_list = filter(lambda x:  not match(r'^\s*$', x), config_file)
+            config_file_list = list(filter(lambda x:  not match(r'^\s*$', x), config_file))
             
             if config_file_list[0][0] == '#':
                 del config_file_list[0]

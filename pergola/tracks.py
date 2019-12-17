@@ -1274,7 +1274,7 @@ def assign_color(set_data_types, color_restrictions=None):
         for dataType in color_restrictions:
             d_dataType_color[dataType] = _dict_colors[color_restrictions[dataType]] 
     
-        colors_not_used = _dict_colors.keys()
+        colors_not_used = list(__dict_colors.keys())
         colors_not_used.remove (color_restrictions[dataType])
 
     for dataType in set_data_types:        
