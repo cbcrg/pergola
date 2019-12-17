@@ -162,7 +162,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     scores_flat = hstack(hstack(hstack(scores)))
     score_norm = hstack(hstack(score_norm))[0][0]
     
-    temp = NamedTemporaryFile(delete=True)
+    temp = NamedTemporaryFile(delete=True, mode='w')
     temp.write(delimiter.join(header) + "\n")
     
     if norm:
