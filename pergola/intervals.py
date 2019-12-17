@@ -123,8 +123,12 @@ class IntData(object):
         :returns: delimiter
         
         """
+        ext = self.path.rpartition('.')[-1].lower()
+            
+        if ext == "xlsx":
+            return "\t"
 
-        for row in self._in_file:
+        for row in self._in_file:            
 
             # Comments skipped
             if row.startswith("#"):
