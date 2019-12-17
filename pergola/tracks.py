@@ -688,7 +688,7 @@ class Track(GenomicContainer):
                         break
             else:
                  d_type = row [self.fields.index("data_types")]
-                 global color
+                 # global color
                  color = _dict_col_grad[d_type][-1]
                  
             temp_list.append(color)          
@@ -798,7 +798,7 @@ class Track(GenomicContainer):
                         break
             else:
                  d_type = row [self.fields.index("data_types")]
-                 global color
+                 # global color
                  color = _dict_col_grad[d_type][-1]
                  
             temp_list.append("color=" + color)          
