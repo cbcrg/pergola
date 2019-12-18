@@ -211,7 +211,7 @@ class TestTutorial(unittest.TestCase):
 
         fields = list(mappings_electro.correspondence.values())
 
-        self.assertEqual(keys_electro, fields, msg_mappings)
+        self.assertEqual(keys_electro.sort(), fields.sort(), msg_mappings)
 
         min = 0
         max = 0.3
