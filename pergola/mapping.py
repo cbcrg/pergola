@@ -84,9 +84,7 @@ class MappingInfo():
             # Eliminates possible empty lines at the end
             config_file_list = list(filter(lambda x:  not match(r'^\s*$', x), config_file))
             
-            if config_file_list[0][0] == '#':
-                del config_file_list[0]
-                return self._tab_config(config_file_list)
+            file_list_no_comments = [l for l in config_file_list if l[0] != "!" if l[0] != "#"]
 
             for i, line in enumerate(file_list_no_comments):
                 if not match(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ", line) and not match(r"(\w+)\s+(\w+)", line):
