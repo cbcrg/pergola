@@ -18,11 +18,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+from __future__ import absolute_import
 from pergola import parsers
 from pergola import jaaba_parsers
 from argparse import ArgumentParser
 from sys      import stderr, exit
-import pergola_rules
+from . import pergola_rules
 from os.path import dirname, abspath, basename, splitext
 from os import chdir, getcwd
 from shutil import copy, rmtree
@@ -52,7 +54,7 @@ def jaaba_to_pergola(option, args):
     for input_file in args.input:
         if option == "sc" or option =="sp":
 
-            print >> stderr,     "@@@jaaba_to_pergola.py: Input file is %s" % input_file
+            print("@@@jaaba_to_pergola.py: Input file is %s" % input_file, file=stderr)
 
             tmp_track = NamedTemporaryFile(prefix='jaaba_csv', suffix='.csv', delete=True)
 
@@ -68,7 +70,7 @@ def jaaba_to_pergola(option, args):
                 f_out = path_w + '/' + 'JAABA_scores.csv'
 
                 copy (tmp_track.name, f_out)
-                print >> stderr,  "@@@jaaba_to_pergola.py: Scores dumped in %s" % f_out
+                print("@@@jaaba_to_pergola.py: Scores dumped in %s" % f_out, file=stderr)
 
             elif option == "sp":
                 pergola_rules.pergola_rules(path=output_file, map_file_path=args.mapping_file, sel_tracks=args.tracks,
@@ -81,16 +83,16 @@ def jaaba_to_pergola(option, args):
                       bed_lab_sw=args.bed_label, color_dict=args.color_file, window_mean=args.window_mean)
 
         elif option == "fc" or option == "fp":
-            print >> stderr,  "@@@jaaba_to_pergola.py: Extracting Jaaba features from %s" % input_file
-            print >> stderr,  "@@@jaaba_to_pergola.py: Selected feature/s %s" %args.feature
+            print("@@@jaaba_to_pergola.py: Extracting Jaaba features from %s" % input_file, file=stderr)
+            print("@@@jaaba_to_pergola.py: Selected feature/s %s" %args.feature, file=stderr)
 
 
             if not args.dumping_dir:
                 dumping_dir = getcwd()
-                print >> stderr, "@@@jaaba_to_pergola.py: No path selected, files dump into path: ", dumping_dir
+                print("@@@jaaba_to_pergola.py: No path selected, files dump into path: ", dumping_dir, file=stderr)
             else:
                 dumping_dir = args.dumping_dir
-                print >> stderr, "@@@jaaba_to_pergola.py: Files dump into path: ", dumping_dir
+                print("@@@jaaba_to_pergola.py: Files dump into path: ", dumping_dir, file=stderr)
 
             path_tmp = mkdtemp()
 

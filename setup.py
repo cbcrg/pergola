@@ -19,6 +19,7 @@
 #  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
 
 # from distutils.core import setup
+from __future__ import print_function
 from setuptools import setup
 from setuptools.command.install import install
 from os import path, getenv
@@ -92,13 +93,13 @@ PYTHON_DEPENDENCIES = [
     ["pybedtools", "Required to create pybedtools objects from Bed, BedGraph and Gff pergola objects.", 0]]
 
 
-print "Checking dependencies..."
+print("Checking dependencies...")
 missing = False
 for mname, msg, ex in PYTHON_DEPENDENCIES:
 
     if not can_import(mname):
-        print "  *", mname, "cannot be found in your python installation."
-        print "   ->", msg
+        print("  *", mname, "cannot be found in your python installation.")
+        print("   ->", msg)
 
         if ex:
             missing = True

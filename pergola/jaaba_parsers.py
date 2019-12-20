@@ -27,13 +27,15 @@ This module provides the way to read scripts options provided by pergola library
 
 
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
 from scipy.io  import loadmat
 from os.path   import join, exists
-from mapping   import MappingInfo, check_path
+from .mapping   import MappingInfo, check_path
 from tempfile  import NamedTemporaryFile
 
-from intervals import IntData
+from .intervals import IntData
 from numpy     import hstack, ndenumerate, mean, divide 
 from shutil    import copyfileobj
 
@@ -60,8 +62,8 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     header = ["animal", "startTime", "endTime", "value", "dataType"]
     if not path_w: 
         path = getcwd()
-        print >>stderr, 'CSV file will be dump into \"%s\" ' \
-                       'as not path has been set in path_w' % (path)
+        print('CSV file will be dump into \"%s\" ' \
+                       'as not path has been set in path_w' % (path), file=stderr)
     else:
         if exists(path_w):
             path = path_w
@@ -75,9 +77,9 @@ def jaaba_scores_to_csv(input_file, name_file="JAABA_scores", mode="w", delimite
     version_jaaba = hstack(hstack(hstack(jaaba_data['version'])))[0][0]
     
     if version_jaaba != '0.5.1':
-        print >>stderr, 'WARNING: JAABA version is not 0.5.1 but %s, this might cause ' \
+        print('WARNING: JAABA version is not 0.5.1 but %s, this might cause ' \
                         'problems if the structure of JAABA files has changed.' \
-                        % (version_jaaba)
+                        % (version_jaaba), file=stderr)
     
     # Structure of the file can be find here:
     # http://jaaba.sourceforge.net/ApplyingAClassifier.html#ScoresFile
@@ -144,9 +146,9 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     version_jaaba = hstack(hstack(hstack(jaaba_data['version'])))[0][0]
     
     if version_jaaba != '0.5.1':
-        print >>stderr, 'WARNING: JAABA version is not 0.5.1 but %s, this might cause ' \
+        print('WARNING: JAABA version is not 0.5.1 but %s, this might cause ' \
                         'problems if the structure of JAABA files has changed.' \
-                        % (version_jaaba)
+                        % (version_jaaba), file=stderr)
     
     # Structure of the file can be find here:
     # http://jaaba.sourceforge.net/ApplyingAClassifier.html#ScoresFile
@@ -160,7 +162,7 @@ def jaaba_scores_to_intData(input_file, map_jaaba, name_file="JAABA_scores", del
     scores_flat = hstack(hstack(hstack(scores)))
     score_norm = hstack(hstack(score_norm))[0][0]
     
-    temp = NamedTemporaryFile(delete=True)
+    temp = NamedTemporaryFile(delete=True, mode='w')
     temp.write(delimiter.join(header) + "\n")
     
     if norm:
@@ -241,8 +243,8 @@ def extract_jaaba_features(dir_perframe,  output="csv", map_jaaba=False, delimit
     if output == "csv":
         if not path_w: 
             path = getcwd()
-            print >>stderr, 'CSV file will be dump into \"%s\" ' \
-                           'as not path has been set in path_w' % (path)
+            print('CSV file will be dump into \"%s\" ' \
+                           'as not path has been set in path_w' % (path), file=stderr)
         else:
             if exists(path_w):
                 path = path_w

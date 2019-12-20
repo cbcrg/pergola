@@ -20,6 +20,7 @@
 unittest for pergola functions
 
 """
+from __future__ import print_function
 
 import unittest
 from pergola import mapping
@@ -32,7 +33,7 @@ from shutil  import rmtree
 
 # Getting the path to test files
 PATH = path.abspath(path.split(path.realpath(__file__))[0])
-print path.split(path.realpath(__file__))
+print(path.split(path.realpath(__file__)))
 PATH_DATA = path.join(path.dirname(path.dirname(path.dirname(path.abspath(__file__)))), "sample_data", '')
 
 TEST = path.join(PATH, "uni_test", '' )
@@ -205,11 +206,12 @@ class TestTutorial(unittest.TestCase):
         global int_data_electro, mappings_electro
         msg_mappings = "Equivalences set in electrophysiology mapping file are not correct."
 
-        mappings_electro = mapping.MappingInfo(PATH_DATA + "/electrophysiology/e2p.txt")
-        keys_electro = ['track', 'data_types', 'data_value', 'start']
-        fields = mappings_electro.correspondence.values()
+        mappings_electro = mapping.MappingInfo(PATH_DATA + "/electrophysiology/e2p.txt")        
+        keys_electro = ['data_value', 'start', 'data_types', 'track']
 
-        self.assertEqual(keys_electro, fields, msg_mappings)
+        fields = list(mappings_electro.correspondence.values())
+
+        self.assertEqual(keys_electro.sort(), fields.sort(), msg_mappings)
 
         min = 0
         max = 0.3

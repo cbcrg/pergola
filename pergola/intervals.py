@@ -28,11 +28,13 @@ It contains a class :class:`~pergola.intervals.IntData` which has
 the attributes and methods needed for reading the data.
 
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
-from mapping  import check_path
+from .mapping  import check_path
 from csv      import reader
 from sys      import stderr
-from tracks   import Track
+from .tracks   import Track
 from operator import itemgetter
 from pandas   import read_excel
 
@@ -95,13 +97,13 @@ class IntData(object):
 
     def __init__(self, path, map_dict, header=True, **kwargs):
         self.path = check_path(path)
-        self._in_file = open(self.path, "rb")
+        self._in_file = open(self.path, "r")
         self.delimiter = self._check_delimiter(self.path, kwargs.get('delimiter', "\t"))
         self.header = header
         self._reader = self._reader_data()
         self.fieldsB = self._set_fields_b(kwargs.get('fields_names', None))
         self.fieldsG_dict = self._set_fields_g(map_dict)
-        self.fieldsG = self.fieldsG_dict.keys() #here before I added the new fields
+        self.fieldsG = list(self.fieldsG_dict.keys()) #here before I added the new fields
 
         self.min = self.max = 0
         self.range_values = 0
@@ -121,8 +123,12 @@ class IntData(object):
         :returns: delimiter
         
         """
+        ext = self.path.rpartition('.')[-1].lower()
+            
+        if ext == "xlsx":
+            return "\t"
 
-        for row in self._in_file:
+        for row in self._in_file:            
 
             # Comments skipped
             if row.startswith("#"):
@@ -160,15 +166,15 @@ class IntData(object):
         ext = self.path.rpartition('.')[-1].lower()
 
         if ext == "csv":
-            print >> stderr, ("Input file format identified as csv")
+            print(("Input file format identified as csv"), file=stderr)
             reader_obj = reader(self._in_file, delimiter=self.delimiter)
             return reader_obj
         elif ext == "xlsx":
-            print >> stderr, ("Input file format identified as xlsx")
-            reader_obj = self._pandas_df_reader(read_excel(self._in_file, header=None, sheet_name=0, index=False))
+            print(("Input file format identified as xlsx"), file=stderr)
+            reader_obj = self._pandas_df_reader(read_excel(self.path, header=None, sheet_name=0, index=False))
             return reader_obj
         else:
-            print >> stderr, ("WARNING: File format not recognized, default format assumed to be csv")
+            print(("WARNING: File format not recognized, default format assumed to be csv"), file=stderr)
             reader_obj = reader(self._in_file, delimiter=self.delimiter)
             return reader_obj
 
@@ -208,7 +214,7 @@ class IntData(object):
 
         if self.header:
             header = first_l
-            first_r = self._reader.next()
+            first_r = next(self._reader)
 
             if len(header) != len(first_r):
                 raise ValueError("Number of fields in header '%d' does not match number of fields in first row '%d'"
@@ -242,9 +248,9 @@ class IntData(object):
 
                 fieldsB = fields
 
-                print >>stderr, ("WARNING: As header=False you col names set by fields will be considered to have the order "
+                print(("WARNING: As header=False you col names set by fields will be considered to have the order "
                         "you provided: \"%s\""
-                        %"\",\"".join(fields))
+                        %"\",\"".join(fields)), file=stderr)
             elif fields and fields[0] == "ordinal":
                 fieldsB = range (1, len(first_r)+1)
                 fieldsB = [str(i) for i in fieldsB]
@@ -271,8 +277,8 @@ class IntData(object):
         i_field_b=0
 
         if len(self.fieldsB) != len(map_dict):
-            print >> stderr, ("WARNING: Number of fields in input file (%d) does not match number of fields in "
-                              "mapping file (%d)." % (len(self.fieldsB), len(map_dict)))
+            print(("WARNING: Number of fields in input file (%d) does not match number of fields in "
+                              "mapping file (%d)." % (len(self.fieldsB), len(map_dict))), file=stderr)
 
         for field_B in self.fieldsB:
             if field_B:
@@ -320,10 +326,10 @@ class IntData(object):
                 header_check = True
                 continue
 
-            if isinstance((row[self.fieldsG_dict["start"]]), basestring):
+            if isinstance((row[self.fieldsG_dict["start"]]), str):
                 row[self.fieldsG_dict["start"]] = num(row[self.fieldsG_dict["start"]])
 
-            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), basestring):
+            if "end" in self.fieldsG_dict and isinstance((row[self.fieldsG_dict["end"]]), str):
                     row[self.fieldsG_dict["end"]] = num(row[self.fieldsG_dict["end"]])
 
             list_data.append(tuple(row)) #TODO what is better tuple or list
@@ -449,7 +455,7 @@ class IntData(object):
 
         # Coordinates multiplied by a given factor set by the user
         if multiply_t:
-            print >>stderr, "Fields containing time points will be multiplied by: ", multiply_t
+            print("Fields containing time points will be multiplied by: ", multiply_t, file=stderr)
 
             try:
                 f=""
@@ -461,7 +467,7 @@ class IntData(object):
             self.data = self._multiply_values(i_fields=idx_fields2mult, factor=multiply_t)
 
         # Coordinates transformed into relative to the minimun time point
-        print >>stderr, "Relative coordinates set to:", relative_coord
+        print("Relative coordinates set to:", relative_coord, file=stderr)
 
         if relative_coord:
             if fields2rel is None:
@@ -472,7 +478,7 @@ class IntData(object):
 
             else:
                 # Are the provided fields present in data and are numeric #TODO en realidad si no es numerico ya petara
-                if isinstance(fields2rel, basestring): fields2rel = [fields2rel]
+                if isinstance(fields2rel, str): fields2rel = [fields2rel]
                 f2rel = [f for f in fields2rel if f in self.fieldsG]
 
             # Getting indexes of fields to relativize
@@ -485,7 +491,7 @@ class IntData(object):
 
         # From only start value for each time point we generate intervals
         if intervals:
-            print >>stderr, "Intervals will be inferred from timepoints"
+            print("Intervals will be inferred from timepoints", file=stderr)
 
             if _f_int_end in self.fieldsG_dict:
                 raise ValueError("Intervals can not be generated as '%s' already exists in file %s." % (_f_int_end, self.path))
@@ -520,7 +526,7 @@ class IntData(object):
         # Updated and order list of the fields        
         list_fields = [None] * len(self.fieldsG_dict)
 
-        for field, i in self.fieldsG_dict.iteritems():
+        for field, i in self.fieldsG_dict.items():
             list_fields[i] = field
 
         self.fieldsG = list_fields
@@ -766,6 +772,8 @@ class IntData(object):
 
         return (data_int)
 
+    def __del__(self):
+        self._in_file.close()
 
 def is_number(var):
     """

@@ -40,6 +40,7 @@ for Bed files.
 class for BedGraph files.
 
 """
+from __future__ import print_function
 
 from os         import getcwd
 from sys        import stderr, exit
@@ -152,7 +153,7 @@ class GenomicContainer(object):
          
         """
 
-        return self.data.next()
+        return next(self.data)
     
     def save_track(self, mode="w", path=None, name_file=None, track_line=True, bed_label=False, gff_label=False):
         """
@@ -179,10 +180,10 @@ class GenomicContainer(object):
         
         if not path: 
             pwd = getcwd()
-            print >> stderr, "No path selected, files dump into path: ", pwd 
+            print("No path selected, files dump into path: ", pwd, file=stderr) 
         else:
             pwd = path
-            print >> stderr, "Files dump into path: ", pwd
+            print("Files dump into path: ", pwd, file=stderr)
          
                              
         if not(isinstance(self, GenomicContainer)):
@@ -207,7 +208,7 @@ class GenomicContainer(object):
             if not name_file.endswith('.tmp'):
                 name_file = name_file + file_ext
                 
-        print >> stderr, "File %s generated" % name_file       
+        print("File %s generated" % name_file, file=stderr)       
 
         track_file = open(join(pwd, name_file), mode)
                 
@@ -360,7 +361,7 @@ class Track(GenomicContainer):
         data_tuples = sorted(data_tuples, key=itemgetter(*idx_fields2split))
         
         for key,group in groupby(data_tuples, itemgetter(*idx_fields2split)):
-            if not dict_split.has_key(key[0]):
+            if key[0] not in dict_split:
                 dict_split [key[0]] = {}
             dict_split [key[0]][key[1]] = tuple(group)
         
@@ -383,7 +384,7 @@ class Track(GenomicContainer):
             tracks2rm = self.list_tracks.difference(sel_tracks)
 #             tracks2rm = sel_tracks                           
             dict_split = self.remove (dict_split, tracks2rm)
-            print >> stderr, "Removed tracks are:", ' '.join(sorted(tracks2rm, key=int))
+            print("Removed tracks are:", ' '.join(sorted(tracks2rm, key=int)), file=stderr)
             
             # I have to keep the original list otherwise the original object is changed
             self.list_tracks = ori_tracks
@@ -405,7 +406,7 @@ class Track(GenomicContainer):
             for track, track_dict in dict_split.items():    
                 dict_data_type = self.remove (track_dict, data_types2rm)        
                 new_dict_split [track] = dict_data_type
-            print >> stderr, "Removed data types are:", ' '.join(data_types2rm)        
+            print("Removed data types are:", ' '.join(data_types2rm), file=stderr)        
 
         if new_dict_split: 
             dict_split = new_dict_split
@@ -423,7 +424,7 @@ class Track(GenomicContainer):
                 raise ValueError ("Tracks to merge: %s, are not in the track list: " % 
                                   ",".join("'{0}'".format(n) for n in tracks_merge), 
                                   ",".join("'{0}'".format(n) for n in self.list_tracks_filt))
-            print >> stderr, ("Tracks that will be merged are: %s" %  " ".join(tracks_merge))
+            print(("Tracks that will be merged are: %s" %  " ".join(tracks_merge)), file=stderr)
             
             d_track_merge = self.join_by_track(dict_split, tracks_merge)       
         
@@ -478,8 +479,8 @@ class Track(GenomicContainer):
                                                                                                          range_values=range_val,
                                                                                                          color=_dict_col_grad[k_2])
                 else:
-                    print >> stderr, ("WARNING: Processed track %s, %s will be deleted because is empty with current " \
-                                      "time boundaries." % (k, k_2))
+                    print(("WARNING: Processed track %s, %s will be deleted because is empty with current " \
+                                      "time boundaries." % (k, k_2)), file=stderr)
 
         return track_dict
     
@@ -567,15 +568,15 @@ class Track(GenomicContainer):
         for key, nest_dict in dict_t.items():
             
             if key not in tracks2join: 
-                print "Track not use because was not set when join_by_track is called: %s" % key
+                print("Track not use because was not set when join_by_track is called: %s" % key)
                 continue
             
-            if not d_track_merge.has_key('_'.join(tracks2join)):
+            if '_'.join(tracks2join) not in d_track_merge:
                 d_track_merge['_'.join(tracks2join)] = {}
                 new_tracks.add('_'.join(tracks2join))
             
             for key_2, data in nest_dict.items():                            
-                if not d_track_merge['_'.join(tracks2join)].has_key(key_2):
+                if key_2 not in d_track_merge['_'.join(tracks2join)]:
                     d_track_merge['_'.join(tracks2join)] [key_2]= data
                 else:  
                     d_track_merge['_'.join(tracks2join)] [key_2] = d_track_merge['_'.join(tracks2join)] [key_2] + data
@@ -607,7 +608,7 @@ class Track(GenomicContainer):
             
             for key_2, data in nest_dict.items(): 
                 
-                if not d_data_types_merge[key].has_key('_'.join(nest_dict.keys())):
+                if '_'.join(nest_dict.keys()) not in d_data_types_merge[key]:
                     d_data_types_merge[key]['_'.join(nest_dict.keys())] = data                    
                     new_data_types.add('_'.join(nest_dict.keys())) 
                 else:                    
@@ -687,7 +688,7 @@ class Track(GenomicContainer):
                         break
             else:
                  d_type = row [self.fields.index("data_types")]
-                 global color
+                 # global color
                  color = _dict_col_grad[d_type][-1]
                  
             temp_list.append(color)          
@@ -797,7 +798,7 @@ class Track(GenomicContainer):
                         break
             else:
                  d_type = row [self.fields.index("data_types")]
-                 global color
+                 # global color
                  color = _dict_col_grad[d_type][-1]
                  
             temp_list.append("color=" + color)          
@@ -896,12 +897,12 @@ class Track(GenomicContainer):
             if min_time is not None:
                 min_t = min_time
                 if min_time < min_t:
-                    print >> stderr, ("WARNING: min_time \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_time, min_t))
+                    print(("WARNING: min_time \'%d\' is smaller than minimun time point \'%d\' inside the input file" %(min_time, min_t)), file=stderr)
 
             if max_time is not None:
                 max_t = max_time
                 if max_time > max_t:
-                    print >> stderr, ("WARNING: max_time \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_time, max_t))
+                    print(("WARNING: max_time \'%d\' is bigger than minimun time point \'%d\' inside the input file" %(max_time, max_t)), file=stderr)
 
             ini_window = divmod(min_t/delta_window, 1)[0] * delta_window
             end_window = ini_window + delta_window
@@ -941,6 +942,7 @@ class Track(GenomicContainer):
                     chr_start = row[i_chr_start]
                     chr_end = row[i_chr_end]
                     data_value = float(row[i_data_value])
+                    f = "data_value"
                     self.fields.index(f)
 
                     # Intervals happening after the current window
@@ -1056,8 +1058,8 @@ class Track(GenomicContainer):
                                 end_w = end_w + delta_window
 
                     elif chr_start < ini_window:
-                        print >> stderr, ("WARNING: Value %d deleted because you set first time point " \
-                                          "to a higher value %d") % (chr_start, end_window)
+                        print(("WARNING: Value %d deleted because you set first time point " \
+                                          "to a higher value %d") % (chr_start, end_window), file=stderr)
                 # else:
                     # print >> stderr, ("FATAL ERROR: Something went wrong during bedGraph window " \
                     #                   "conversion.")
@@ -1273,12 +1275,12 @@ def assign_color(set_data_types, color_restrictions=None):
         for dataType in color_restrictions:
             d_dataType_color[dataType] = _dict_colors[color_restrictions[dataType]] 
     
-        colors_not_used = _dict_colors.keys()
+        colors_not_used = list(__dict_colors.keys())
         colors_not_used.remove (color_restrictions[dataType])
 
     for dataType in set_data_types:        
         if not colors_not_used:
-            colors_not_used = _dict_colors.keys() 
+            colors_not_used = list(_dict_colors.keys())
         
         if dataType in d_dataType_color:
             continue

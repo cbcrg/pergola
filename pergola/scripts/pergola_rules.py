@@ -23,6 +23,7 @@
 
 Script to run pergola from the command line
 """
+from __future__ import print_function
 
 from pergola  import intervals
 from pergola  import mapping
@@ -41,7 +42,7 @@ def main(args=None):
     multiple_files = False
 
     if len(args.input) > 1:
-        print "@@@Pergola_rules.py: Multiple input files processed"
+        print("@@@Pergola_rules.py: Multiple input files processed")
         multiple_files = True
 
     for idx, input_file in enumerate(args.input):
@@ -73,18 +74,18 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
                   value_mean=False, min_t=None, max_t=None, interval_step=None, phases=False, genome=False,
                   output_file_name=None, starting_phase=False, shift=None):
     
-    print >> stderr, "@@@Pergola_rules.py: Input file: %s" % path 
-    print >> stderr, "@@@Pergola_rules.py: Configuration file: %s" % map_file_path
+    print("@@@Pergola_rules.py: Input file: %s" % path, file=stderr) 
+    print("@@@Pergola_rules.py: Configuration file: %s" % map_file_path, file=stderr)
     
     # Tracks selected by user
-    print >> stderr, "@@@Pergola_rules.py: Selected tracks are: ", sel_tracks
+    print("@@@Pergola_rules.py: Selected tracks are: ", sel_tracks, file=stderr)
     
     # Configuration file
     map_file_dict = mapping.MappingInfo(map_file_path)
     
     # Reading color dictionary to set data_types
     if color_dict:
-        print >> stderr, "@@@Pergola_rules.py: Color for data_types in file............ %s" % color_dict
+        print("@@@Pergola_rules.py: Color for data_types in file............ %s" % color_dict, file=stderr)
         d_colors_data_types = parsers.read_colors (color_dict)
     else:
         d_colors_data_types = None    
@@ -100,7 +101,7 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     else:
         tracks2merge = ""
     
-    if tracks2merge: print >> stderr, "@@@Pergola_rules.py: Tracks to join are............ ", tracks2merge
+    if tracks2merge: print("@@@Pergola_rules.py: Tracks to join are............ ", tracks2merge, file=stderr)
     
     # Handling argument track actions
     if tracks2merge and track_actions:
@@ -108,73 +109,73 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
                           "--track_actions -a, please change your options")
     
     track_act = track_actions
-    print >> stderr, "@@@Pergola_rules.py: Track actions are.............................. ", track_act
+    print("@@@Pergola_rules.py: Track actions are.............................. ", track_act, file=stderr)
     
     data_types_list = data_types_list
-    print >> stderr, "@@@Pergola_rules.py: data_types list is: ", data_types_list
+    print("@@@Pergola_rules.py: data_types list is: ", data_types_list, file=stderr)
       
     # Handling argument data_types actions
     data_types_act = data_types_actions
-    print >> stderr, "@@@Pergola_rules.py: data_types actions are......................... ", data_types_act
+    print("@@@Pergola_rules.py: data_types actions are......................... ", data_types_act, file=stderr)
     
     # Handling argument format    
     if write_format:
-        print >> stderr, "@@@Pergola_rules.py format to write files....................... ", write_format
+        print("@@@Pergola_rules.py format to write files....................... ", write_format, file=stderr)
     else:
         write_format = 'bed'
-        print >>stderr, "@@@Pergola_rules.py format to write files has been set" \
-                        " to default value:", write_format
+        print("@@@Pergola_rules.py format to write files has been set" \
+                        " to default value:", write_format, file=stderr)
 
     # Handling relative coordinates
-    print >> stderr, "@@@Pergola_rules.py: Relative coordinates set to................. %s" % relative_coord
+    print("@@@Pergola_rules.py: Relative coordinates set to................. %s" % relative_coord, file=stderr)
     
     # Handling intervals_gen
-    print >> stderr, "@@@Pergola_rules.py: Intervals parameter set to.................. %s" % intervals_gen
+    print("@@@Pergola_rules.py: Intervals parameter set to.................. %s" % intervals_gen, file=stderr)
 
     # Handling interval_step
     if interval_step:
         if intervals_gen:
-            print >> stderr, "@@@Pergola_rules.py: Interval step set to........................ %s" % interval_step
+            print("@@@Pergola_rules.py: Interval step set to........................ %s" % interval_step, file=stderr)
         else:
             raise ValueError("Interval step needs intervals paramater to be set -n/--intervals_gen")
 
     # Handling multiply_intervals
     if multiply_f:
-        print >>stderr, "@@@Pergola_rules.py: Multiply intervals parameter set to...... %s" % multiply_f                        
+        print("@@@Pergola_rules.py: Multiply intervals parameter set to...... %s" % multiply_f, file=stderr)                        
     else:
         multiply_f = 1
     
-    print >> stderr, "@@@Pergola_rules.py: Selected tracks are......................... ", sel_tracks
+    print("@@@Pergola_rules.py: Selected tracks are......................... ", sel_tracks, file=stderr)
     
     # Setting whether input file has header or not
     header_sw = True
     
     if no_header:
         header_sw = False
-        print >> stderr, "@@@Pergola_rules.py: Data file has header set to............. ", header_sw
+        print("@@@Pergola_rules.py: Data file has header set to............. ", header_sw, file=stderr)
 
     # Handling fields to read
     if fields2read:
-        print >>stderr, "@@@Pergola_rules.py: Fields to read from the file are......... %s" % fields2read                        
+        print("@@@Pergola_rules.py: Fields to read from the file are......... %s" % fields2read, file=stderr)                        
     else:
         fields2read = None    
     
     # When binning data setting the window of time used in seconds
     # if not size provided set to False
     if window_size:
-        print >>stderr, "@@@Pergola_rules.py: Window size set to....................... %d" % window_size
+        print("@@@Pergola_rules.py: Window size set to....................... %d" % window_size, file=stderr)
     else:
 #         window_size = 300
         window_size = False
-        print >>stderr, "@@@Pergola_rules.py: Window size set by default to............ %d" % window_size
+        print("@@@Pergola_rules.py: Window size set by default to............ %d" % window_size, file=stderr)
     
     if window_mean:
-        print >>stderr, "@@@Pergola_rules.py: Window mean set to....................... %d" % window_mean
+        print("@@@Pergola_rules.py: Window mean set to....................... %d" % window_mean, file=stderr)
     else:      
         window_mean = False
 
     if value_mean:
-        print >> stderr, "@@@Pergola_rules.py: Value mean set to....................... %d" % value_mean
+        print("@@@Pergola_rules.py: Value mean set to....................... %d" % value_mean, file=stderr)
     else:
         value_mean = False
 
@@ -183,18 +184,18 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
     else:
         track_line=True
         
-    print >>stderr, "@@@Pergola_rules.py: track_line set to............................ %s" % track_line
+    print("@@@Pergola_rules.py: track_line set to............................ %s" % track_line, file=stderr)
     
     # Handling input file field delimiter    
     if not separator:
         separator = "\t"
-        print >> stderr, "@@@Pergola_rules.py input file field separator set by default to...... \"\\t\"."
+        print("@@@Pergola_rules.py input file field separator set by default to...... \"\\t\".", file=stderr)
     else:        
-        print >>stderr, "@@@Pergola_rules.py input file field separator set to..... \"%s\"" % separator
+        print("@@@Pergola_rules.py input file field separator set to..... \"%s\"" % separator, file=stderr)
     
     if bed_lab_sw:
         bed_lab = True
-        print >>stderr, "@@@Pergola_rules.py: bed_label set to......................... %s" % bed_lab
+        print("@@@Pergola_rules.py: bed_label set to......................... %s" % bed_lab, file=stderr)
     else:
         bed_lab = False
 
@@ -209,18 +210,18 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
         start = 0
         end = intData.max - intData.min
 
-    print >> stderr, "@@@Pergola_rules.py: min time in trajectory......................... %d" % start
-    print >> stderr, "@@@Pergola_rules.py: max time in trajectory......................... %d" % end
+    print("@@@Pergola_rules.py: min time in trajectory......................... %d" % start, file=stderr)
+    print("@@@Pergola_rules.py: max time in trajectory......................... %d" % end, file=stderr)
 
     if min_t or min_t == 0:
         min_time = min_t
-        print >> stderr, "@@@Pergola_rules.py: min_time set by user to.............. %d" % min_t
+        print("@@@Pergola_rules.py: min_time set by user to.............. %d" % min_t, file=stderr)
     else:
         min_time = start
 
     if max_t:
         max_time = max_t
-        print >> stderr, "@@@Pergola_rules.py: max_time set by user to............... %d" % max_t
+        print("@@@Pergola_rules.py: max_time set by user to............... %d" % max_t, file=stderr)
     else:
         if interval_step:
             max_time = end + interval_step
@@ -228,29 +229,29 @@ def pergola_rules(path, map_file_path, sel_tracks=None, list=None, range=None, t
             max_time = end + 1
 
     # Phases option
-    print >> stderr, "@@@Pergola_rules.py: Phases file set to............................%s" % phases
+    print("@@@Pergola_rules.py: Phases file set to............................%s" % phases, file=stderr)
 
     # Genome option
-    print >> stderr, "@@@Pergola_rules.py: Genome option set to..........................%s" % genome
+    print("@@@Pergola_rules.py: Genome option set to..........................%s" % genome, file=stderr)
 
     # Output file name
-    print >> stderr, "@@@Pergola_rules.py: Output file/s name set t......................%s" % output_file_name
+    print("@@@Pergola_rules.py: Output file/s name set t......................%s" % output_file_name, file=stderr)
 
     # Starting phase option
     if starting_phase:
         if phases:
-            print >> stderr, "@@@Pergola_rules.py: Starting phase set to.............. %s" % starting_phase
+            print("@@@Pergola_rules.py: Starting phase set to.............. %s" % starting_phase, file=stderr)
         else:
             raise ValueError("Starting phase needs phases option to be set to true")
     else:
         starting_phase = "light"
     if shift:
         time_shift = shift
-        print >> stderr, "@@@Pergola_rules.py: Time shift set to....................... %d" % shift
+        print("@@@Pergola_rules.py: Time shift set to....................... %d" % shift, file=stderr)
     else:
         #         window_size = 300
         time_shift = 0
-        print >> stderr, "@@@Pergola_rules.py: Window size set by default to............ %d" % window_size
+        print("@@@Pergola_rules.py: Window size set by default to............ %d" % window_size, file=stderr)
 
     if multiply_f:
         min_time = min_time * multiply_f

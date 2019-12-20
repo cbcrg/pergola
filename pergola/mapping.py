@@ -31,10 +31,13 @@ from a mapping file.
  
 """
 from re      import compile, match, split
+from __future__ import print_function
+from __future__ import absolute_import
+from re      import compile, match
 from os      import getcwd
 from sys     import stderr, exit
 from os.path import join
-from tracks  import Track
+from .tracks  import Track
 
 _genome_file_ext = ".fa"
 _generic_nt = "N"
@@ -80,9 +83,17 @@ class MappingInfo():
 
         with open(path) as config_file:
             # Eliminates possible empty lines at the end
+<<<<<<< HEAD
             config_file_list = filter(lambda x: not match(r'^\s*$', x), config_file)
 
             file_list_no_comments = [l for l in config_file_list if l[0] != "!" if l[0] != "#"]
+=======
+            config_file_list = list(filter(lambda x:  not match(r'^\s*$', x), config_file))
+            
+            if config_file_list[0][0] == '#':
+                del config_file_list[0]
+                return self._tab_config(config_file_list)
+>>>>>>> python_3
 
             for i, line in enumerate(file_list_no_comments):
                 if not match(r"^\w+\:[\"\w\"]|[\w]+\s\>\s\w+\:\w+] ", line) and not match(r"(\w+)\s+(\w+)", line):
@@ -186,12 +197,12 @@ class MappingInfo():
         """
 
         for key, value in self.correspondence.iteritems():
-            print '\t' * indent + str(key),
+            print('\t' * indent + str(key), end=' ')
             
             if isinstance(value, dict):
                 self.write(value, indent+1)
             else:
-                print '\t' * (indent+1) + str(value)
+                print('\t' * (indent+1) + str(value))
 
 
 def check_path(path):
@@ -204,11 +215,13 @@ def check_path(path):
     
     """
 
-    assert isinstance(path, basestring), "Expected string or unicode, found %s." % type(path)
+    assert isinstance(path, str), "Expected string or unicode, found %s." % type(path)
     try:
-        open(path, "r")
+        f = open(path, "r")
     except IOError:
         raise IOError('File does not exist: %s' % path)
+    finally:
+        f.close()
     return path      
 
 
@@ -230,8 +243,8 @@ def write_chr(self, mode="w", path_w=None, min_c=None, max_c=None):
     
     if not path_w: 
         path = getcwd()
-        print >>stderr, 'Chromosome fasta like file will be dump into \"%s\" ' \
-                       'as it has not been set using path_w' % (path)
+        print('Chromosome fasta like file will be dump into \"%s\" ' \
+                       'as it has not been set using path_w' % (path), file=stderr)
     else:
         path = path_w
 
@@ -246,7 +259,7 @@ def write_chr(self, mode="w", path_w=None, min_c=None, max_c=None):
     # genomeFile.write(_generic_nt * int(self.max - self.min) + "\n")
     genomeFile.write(_generic_nt * int(max_c - min_c) + "\n")
     genomeFile.close()
-    print >>stderr, 'Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext)
+    print('Genome fasta file created: %s' % (path + "/" + chrom + _genome_file_ext), file=stderr)
 
 
 def write_chr_sizes(self, mode="w", path_w=None, file_n=None, min_c=None, max_c=None):
@@ -274,8 +287,8 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None, min_c=None, max_c=
     
     if not path_w: 
         path = getcwd()
-        print >>stderr, 'chromsizes text file will be dump into \"%s\" ' \
-                       'as it has not been set using path_w' % (path)
+        print('chromsizes text file will be dump into \"%s\" ' \
+                       'as it has not been set using path_w' % (path), file=stderr)
     else:
         path = path_w
 
@@ -292,7 +305,7 @@ def write_chr_sizes(self, mode="w", path_w=None, file_n=None, min_c=None, max_c=
 #     chrom_size_f.write('%d\n' % (self.max + 2))
     chrom_size_f.write('%d\n' % (max_c - min_c + 2))
     chrom_size_f.close()
-    print >>stderr, 'File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext)
+    print('File containing chrom sizes created: %s' % (path + "/" + file_sizes_n + _chrm_size_ext), file=stderr)
 
 
 def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", path_w=None, lab_bed=True, track_line=True):
@@ -334,10 +347,10 @@ def write_cytoband(end, start=0, delta=43200, start_phase="light", mode="w", pat
      
     if not path_w: 
         path = getcwd()
-        print >>stderr, 'Cytoband like file will be dump into \"%s\" ' \
-                        'as it has not been set using path_w' % (path) 
-        print >>stderr, 'Bed files with phases will be dump into \"%s\" ' \
-                        'as it has not been set using path_w' % (path)     
+        print('Cytoband like file will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (path), file=stderr) 
+        print('Bed files with phases will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (path), file=stderr)     
     else:
         path = path_w
              
@@ -445,8 +458,8 @@ def write_period_seq (end, start=0, delta=43200, tag="day", mode="w", path_w=Non
      
     if not path_w: 
         path = getcwd()
-        print >>stderr, 'Bed files with period sequence will be dump into \"%s\" ' \
-                        'as it has not been set using path_w' % (path)     
+        print('Bed files with period sequence will be dump into \"%s\" ' \
+                        'as it has not been set using path_w' % (path), file=stderr)     
     else:
         path = path_w
              
