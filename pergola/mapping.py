@@ -30,10 +30,9 @@ It provides a class :class:`~pergola.mapping.MappingInfo` that reads the informa
 from a mapping file.
  
 """
-from re      import compile, match, split
 from __future__ import print_function
 from __future__ import absolute_import
-from re      import compile, match
+from re      import compile, match, split
 from os      import getcwd
 from sys     import stderr, exit
 from os.path import join
