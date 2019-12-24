@@ -89,13 +89,13 @@ jobs:
               echo "Not a release, skipping build"
             fi
       - run:
-        name: Run Tests
-        command: |
-          coverage run pergola/test/test_all.py
-          coverage report
-          coverage html  # open htmlcov/index.html in a browser
+          name: Run Tests
+          command: |
+            coverage run pergola/test/test_all.py
+            coverage report
+            coverage html  # open htmlcov/index.html in a browser
       - store_artifacts:
-        path: htmlcov
+          path: htmlcov
 
 workflows:
   version: 2
