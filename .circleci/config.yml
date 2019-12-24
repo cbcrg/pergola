@@ -81,8 +81,9 @@ jobs:
               echo "Not a release, skipping build"
             fi
       - run:
-          name: Run Tests
+          name: Run Coverage
           command: |
+            sudo python setup.py install
             coverage run pergola/test/test_all.py
             coverage report
             coverage html  # open htmlcov/index.html in a browser
