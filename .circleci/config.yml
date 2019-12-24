@@ -18,9 +18,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Pergola.  If not, see <http://www.gnu.org/licenses/>.
 
-version: 2.1
-orbs:
-  codecov: codecov/codecov@1.0.2
+version: 2
 jobs:
   build:
     docker:
@@ -40,14 +38,7 @@ jobs:
             sudo pip install twine
             sudo pip install coverage
             sudo python setup.py install
-            coverage run pergola/test/test_all.py
-      
-      - run: mkdir test-reports
-      - run: coverage report && coverage xml -o test-reports/coverage.xml
-      - store_test_results:
-        path: test-reports
-      - store_artifacts:
-        path: test-reports
+            python pergola/test/test_all.py
 
       - save_cache:
           key: dependency-cache-{{ checksum "setup.py" }}
@@ -66,6 +57,7 @@ jobs:
             sudo pip install -r requirements.txt
             sudo pip install scipy
             sudo pip install twine
+            sudo pip install coverage
 
       - run:
           name: init .pypirc
