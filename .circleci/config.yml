@@ -35,9 +35,7 @@ jobs:
           command: |
             sudo pip install -r requirements.txt
             sudo pip install scipy
-            sudo pip install twine
-            sudo pip install coverage
-            sudo pip install codecov
+            sudo pip install twine            
             sudo python setup.py install
             python pergola/test/test_all.py
 
@@ -59,6 +57,7 @@ jobs:
             sudo pip install scipy
             sudo pip install twine
             sudo pip install coverage
+            sudo pip install codecov
 
       - run:
           name: init .pypirc
@@ -86,7 +85,7 @@ jobs:
           command: |
             sudo python setup.py install
             coverage run pergola/test/test_all.py
-            codecov
+            codecov --token=$CODECOV_TOKEN
             coverage report
             coverage html  # open htmlcov/index.html in a browser
       - store_artifacts:
